@@ -34,7 +34,7 @@ namespace Common.Formatting
                 int index = i * 3;
                 string name = ((JsonElement)list[index]).GetString();
                 int typeId = ((JsonElement)list[index + 1]).GetInt32();
-                object value;
+                object value = null;
 
                 var element = (JsonElement)list[index + 2];
                 if (Helper.IdToType(typeId) == typeof(DataList))
@@ -102,6 +102,13 @@ namespace Common.Formatting
                     else
                     {
                         return null;
+                    }
+                }
+                else if (Helper.IdToType(typeId) == null)
+                {
+                    if (element.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
                     }
                 }
                 else
