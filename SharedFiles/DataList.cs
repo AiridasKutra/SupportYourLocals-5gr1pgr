@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.IO;
-using System.Drawing;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 
 namespace Common
 {
