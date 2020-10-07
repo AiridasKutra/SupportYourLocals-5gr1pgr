@@ -226,7 +226,7 @@ for (int i = 0; i < data.Size(); i++)
         object obj = ((DataList)data.items[i]).Get("name");
         if (obj == null) continue;
         if (obj.GetType() != typeof(string)) continue;
-        if ((string)o == "LKL")
+        if ((string)obj == "LKL")
         {
             event = (DataList)data.items[i];
             break;
