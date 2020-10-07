@@ -149,8 +149,8 @@ row4:
 - `static List<object> ToList(DataList data)` - Returns the `DataList` as a `List<object>`. Used to convert to Json;
 - `static DataList FromList(List<object> list)` - Returns the `List<object>` as a `DataList`. Used to convert from Json;
 - `string ToString()` - Returns a string to visualize the `DataList` structure;
-- `items` - List containing all items, accessed directly;
-- `names` - List containing all names, accessed directly.
+- `List<object> items` - List containing all items, accessed directly;
+- `List<string> names` - List containing all names, accessed directly.
 
 **Other notes**:
 
