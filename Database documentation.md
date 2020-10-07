@@ -41,6 +41,8 @@ The main command is `SELECT attr FROM tablename`, where `attr` can be many attri
 |row 3||9|
 |row 4||6|
 
+Specifying no attributes returns the entire table.
+
 ### Modifiers:
 The select command can be supplied with modifiers which help to narrow down the returned results. Currently, the following modifiers can be used:
 - `ROW x (TO y)` - Only includes rows x to y. The `TO y` part can be ommited which will mean that only the x-th row is returned.
