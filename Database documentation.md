@@ -223,7 +223,10 @@ for (int i = 0; i < data.Size(); i++)
     // The data.items are different events, while data.names is usually just the row number
     if (data.items[i].GetType() == typeof(DataList))
     {
-        if ((string)((DataList)data.items[i]).Get("name") == "LKL")
+        object obj = ((DataList)data.items[i]).Get("name");
+        if (obj == null) continue;
+        if (obj.GetType() != typeof(string)) continue;
+        if ((string)o == "LKL")
         {
             event = (DataList)data.items[i];
             break;
