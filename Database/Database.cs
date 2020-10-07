@@ -62,11 +62,12 @@ namespace Database
                 table.Add(row3, "3");
                 table.Add(row4, "4");
 
-                data.Add(table, "birkakakliu_kaimo_perlai");
+                //data.Add(table, "birkakakliu_kaimo_perlai");
+                data.Add(table, "table1");
             }
 
-            //SaveToFile("data.json");
-            Load(new JsonFileReader("data.json"));
+            Save(new JsonFileWriter("data1.json"));
+            Load(new JsonFileReader("data1.json"));
         }
 
         public object Execute(string command, object[] args)
