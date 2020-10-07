@@ -32,6 +32,9 @@ namespace Common.Network
 
             // Create socket which listens for new connections
             thisClient = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            thisClient.Connect(localEndPoint);
+            if (!thisClient.Connected)
+                return false;
 
             // Start thread which accepts and handles new connections
             packetHandler = new Thread(new ThreadStart(PacketHandler));
