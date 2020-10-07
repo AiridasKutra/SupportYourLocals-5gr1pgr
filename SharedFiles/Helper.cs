@@ -23,6 +23,9 @@ namespace Common
 
         public static int TypeToId(Type type)
         {
+            if (type == null)
+                return -1;
+
             if (type == typeof(string))
                 return 0;
             else if (type == typeof(DataList))

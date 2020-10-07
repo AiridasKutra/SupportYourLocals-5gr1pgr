@@ -58,14 +58,22 @@ namespace Common
             for (int i = 0; i < data.items.Count; i++)
             {
                 list.Add(data.names[i]);
-                list.Add(Helper.TypeToId(data.items[i].GetType()));
-                if (data.items[i].GetType() == typeof(DataList))
+                if (data.items[i] == null)
                 {
-                    list.Add(ToList((DataList)data.items[i]));
+                    list.Add(Helper.TypeToId(null));
+                    list.Add(null);
                 }
                 else
                 {
-                    list.Add(data.items[i]);
+                    list.Add(Helper.TypeToId(data.items[i].GetType()));
+                    if (data.items[i].GetType() == typeof(DataList))
+                    {
+                        list.Add(ToList((DataList)data.items[i]));
+                    }
+                    else
+                    {
+                        list.Add(data.items[i]);
+                    }
                 }
             }
 
