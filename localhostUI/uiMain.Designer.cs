@@ -28,36 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuTabs = new System.Windows.Forms.TabControl();
+            this.profileTab = new System.Windows.Forms.TabPage();
+            this.eventManagerTab = new System.Windows.Forms.TabPage();
+            this.managerTabs = new System.Windows.Forms.TabControl();
+            this.yourEventsTab = new System.Windows.Forms.TabPage();
+            this.newEventTab = new System.Windows.Forms.TabPage();
             this.currentEventsTab = new System.Windows.Forms.TabPage();
             this.eventsTabs = new System.Windows.Forms.TabControl();
             this.sportsTab = new System.Windows.Forms.TabPage();
             this.nearbyTab = new System.Windows.Forms.TabPage();
             this.soonTab = new System.Windows.Forms.TabPage();
-            this.eventManagerTab = new System.Windows.Forms.TabPage();
-            this.managerTabs = new System.Windows.Forms.TabControl();
-            this.yourEventsTab = new System.Windows.Forms.TabPage();
-            this.newEventTab = new System.Windows.Forms.TabPage();
-            this.profileTab = new System.Windows.Forms.TabPage();
-            this.menuTabs.SuspendLayout();
-            this.currentEventsTab.SuspendLayout();
-            this.eventsTabs.SuspendLayout();
+            this.menuTabs = new System.Windows.Forms.TabControl();
+            this.eventList = new System.Windows.Forms.ListView();
+            this.eventHeader = new System.Windows.Forms.Label();
             this.eventManagerTab.SuspendLayout();
             this.managerTabs.SuspendLayout();
+            this.currentEventsTab.SuspendLayout();
+            this.eventsTabs.SuspendLayout();
+            this.soonTab.SuspendLayout();
+            this.menuTabs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuTabs
+            // profileTab
             // 
-            this.menuTabs.Controls.Add(this.currentEventsTab);
-            this.menuTabs.Controls.Add(this.eventManagerTab);
-            this.menuTabs.Controls.Add(this.profileTab);
-            this.menuTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuTabs.ItemSize = new System.Drawing.Size(266, 21);
-            this.menuTabs.Location = new System.Drawing.Point(0, 0);
-            this.menuTabs.Name = "menuTabs";
-            this.menuTabs.SelectedIndex = 0;
-            this.menuTabs.Size = new System.Drawing.Size(800, 450);
-            this.menuTabs.TabIndex = 0;
+            this.profileTab.Location = new System.Drawing.Point(4, 25);
+            this.profileTab.Name = "profileTab";
+            this.profileTab.Padding = new System.Windows.Forms.Padding(3);
+            this.profileTab.Size = new System.Drawing.Size(792, 421);
+            this.profileTab.TabIndex = 2;
+            this.profileTab.Text = "Profile settings";
+            this.profileTab.UseVisualStyleBackColor = true;
+            // 
+            // eventManagerTab
+            // 
+            this.eventManagerTab.Controls.Add(this.managerTabs);
+            this.eventManagerTab.Location = new System.Drawing.Point(4, 25);
+            this.eventManagerTab.Name = "eventManagerTab";
+            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.eventManagerTab.Size = new System.Drawing.Size(792, 421);
+            this.eventManagerTab.TabIndex = 1;
+            this.eventManagerTab.Text = "Event manager";
+            this.eventManagerTab.UseVisualStyleBackColor = true;
+            // 
+            // managerTabs
+            // 
+            this.managerTabs.Controls.Add(this.yourEventsTab);
+            this.managerTabs.Controls.Add(this.newEventTab);
+            this.managerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.managerTabs.Location = new System.Drawing.Point(3, 3);
+            this.managerTabs.Name = "managerTabs";
+            this.managerTabs.SelectedIndex = 0;
+            this.managerTabs.Size = new System.Drawing.Size(786, 415);
+            this.managerTabs.TabIndex = 0;
+            // 
+            // yourEventsTab
+            // 
+            this.yourEventsTab.Location = new System.Drawing.Point(4, 25);
+            this.yourEventsTab.Name = "yourEventsTab";
+            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.yourEventsTab.Size = new System.Drawing.Size(778, 386);
+            this.yourEventsTab.TabIndex = 0;
+            this.yourEventsTab.Text = "Manage your events";
+            this.yourEventsTab.UseVisualStyleBackColor = true;
+            // 
+            // newEventTab
+            // 
+            this.newEventTab.Location = new System.Drawing.Point(4, 33);
+            this.newEventTab.Name = "newEventTab";
+            this.newEventTab.Padding = new System.Windows.Forms.Padding(3);
+            this.newEventTab.Size = new System.Drawing.Size(778, 378);
+            this.newEventTab.TabIndex = 1;
+            this.newEventTab.Text = "Create a new event";
+            this.newEventTab.UseVisualStyleBackColor = true;
             // 
             // currentEventsTab
             // 
@@ -103,65 +145,51 @@
             // 
             // soonTab
             // 
-            this.soonTab.Location = new System.Drawing.Point(4, 25);
+            this.soonTab.Controls.Add(this.eventHeader);
+            this.soonTab.Controls.Add(this.eventList);
+            this.soonTab.Location = new System.Drawing.Point(4, 33);
             this.soonTab.Name = "soonTab";
             this.soonTab.Padding = new System.Windows.Forms.Padding(3);
-            this.soonTab.Size = new System.Drawing.Size(778, 386);
+            this.soonTab.Size = new System.Drawing.Size(778, 378);
             this.soonTab.TabIndex = 2;
             this.soonTab.Text = "Happening soon";
             this.soonTab.UseVisualStyleBackColor = true;
             // 
-            // eventManagerTab
+            // menuTabs
             // 
-            this.eventManagerTab.Controls.Add(this.managerTabs);
-            this.eventManagerTab.Location = new System.Drawing.Point(4, 25);
-            this.eventManagerTab.Name = "eventManagerTab";
-            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.eventManagerTab.Size = new System.Drawing.Size(792, 421);
-            this.eventManagerTab.TabIndex = 1;
-            this.eventManagerTab.Text = "Event manager";
-            this.eventManagerTab.UseVisualStyleBackColor = true;
+            this.menuTabs.Controls.Add(this.currentEventsTab);
+            this.menuTabs.Controls.Add(this.eventManagerTab);
+            this.menuTabs.Controls.Add(this.profileTab);
+            this.menuTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.menuTabs.Font = new System.Drawing.Font("Comic Sans MS", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuTabs.ItemSize = new System.Drawing.Size(266, 21);
+            this.menuTabs.Location = new System.Drawing.Point(0, 0);
+            this.menuTabs.Name = "menuTabs";
+            this.menuTabs.SelectedIndex = 0;
+            this.menuTabs.Size = new System.Drawing.Size(800, 450);
+            this.menuTabs.TabIndex = 0;
             // 
-            // managerTabs
+            // eventList
             // 
-            this.managerTabs.Controls.Add(this.yourEventsTab);
-            this.managerTabs.Controls.Add(this.newEventTab);
-            this.managerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.managerTabs.Location = new System.Drawing.Point(3, 3);
-            this.managerTabs.Name = "managerTabs";
-            this.managerTabs.SelectedIndex = 0;
-            this.managerTabs.Size = new System.Drawing.Size(786, 415);
-            this.managerTabs.TabIndex = 0;
+            this.eventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventList.HideSelection = false;
+            this.eventList.Location = new System.Drawing.Point(3, 29);
+            this.eventList.Name = "eventList";
+            this.eventList.Size = new System.Drawing.Size(772, 346);
+            this.eventList.TabIndex = 0;
+            this.eventList.UseCompatibleStateImageBehavior = false;
             // 
-            // yourEventsTab
+            // eventHeader
             // 
-            this.yourEventsTab.Location = new System.Drawing.Point(4, 25);
-            this.yourEventsTab.Name = "yourEventsTab";
-            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.yourEventsTab.Size = new System.Drawing.Size(778, 386);
-            this.yourEventsTab.TabIndex = 0;
-            this.yourEventsTab.Text = "Manage your events";
-            this.yourEventsTab.UseVisualStyleBackColor = true;
-            // 
-            // newEventTab
-            // 
-            this.newEventTab.Location = new System.Drawing.Point(4, 25);
-            this.newEventTab.Name = "newEventTab";
-            this.newEventTab.Padding = new System.Windows.Forms.Padding(3);
-            this.newEventTab.Size = new System.Drawing.Size(778, 386);
-            this.newEventTab.TabIndex = 1;
-            this.newEventTab.Text = "Create a new event";
-            this.newEventTab.UseVisualStyleBackColor = true;
-            // 
-            // profileTab
-            // 
-            this.profileTab.Location = new System.Drawing.Point(4, 25);
-            this.profileTab.Name = "profileTab";
-            this.profileTab.Padding = new System.Windows.Forms.Padding(3);
-            this.profileTab.Size = new System.Drawing.Size(792, 421);
-            this.profileTab.TabIndex = 2;
-            this.profileTab.Text = "Profile settings";
-            this.profileTab.UseVisualStyleBackColor = true;
+            this.eventHeader.AutoSize = true;
+            this.eventHeader.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eventHeader.Location = new System.Drawing.Point(6, 0);
+            this.eventHeader.Name = "eventHeader";
+            this.eventHeader.Size = new System.Drawing.Size(219, 28);
+            this.eventHeader.TabIndex = 1;
+            this.eventHeader.Text = "Events happening soon";
             // 
             // uiMain
             // 
@@ -170,30 +198,34 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.menuTabs);
             this.Name = "uiMain";
-            this.Text = "Form1";
+            this.Text = "localhost";
             this.Load += new System.EventHandler(this.MainLoad);
-            this.menuTabs.ResumeLayout(false);
-            this.currentEventsTab.ResumeLayout(false);
-            this.eventsTabs.ResumeLayout(false);
             this.eventManagerTab.ResumeLayout(false);
             this.managerTabs.ResumeLayout(false);
+            this.currentEventsTab.ResumeLayout(false);
+            this.eventsTabs.ResumeLayout(false);
+            this.soonTab.ResumeLayout(false);
+            this.soonTab.PerformLayout();
+            this.menuTabs.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl menuTabs;
-        private System.Windows.Forms.TabPage currentEventsTab;
-        private System.Windows.Forms.TabPage eventManagerTab;
         private System.Windows.Forms.TabPage profileTab;
+        private System.Windows.Forms.TabPage eventManagerTab;
+        private System.Windows.Forms.TabControl managerTabs;
+        private System.Windows.Forms.TabPage yourEventsTab;
+        private System.Windows.Forms.TabPage newEventTab;
+        private System.Windows.Forms.TabPage currentEventsTab;
         private System.Windows.Forms.TabControl eventsTabs;
         private System.Windows.Forms.TabPage sportsTab;
         private System.Windows.Forms.TabPage nearbyTab;
         private System.Windows.Forms.TabPage soonTab;
-        private System.Windows.Forms.TabControl managerTabs;
-        private System.Windows.Forms.TabPage yourEventsTab;
-        private System.Windows.Forms.TabPage newEventTab;
+        private System.Windows.Forms.TabControl menuTabs;
+        private System.Windows.Forms.ListView eventList;
+        private System.Windows.Forms.Label eventHeader;
     }
 }
 
