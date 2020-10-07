@@ -2,8 +2,8 @@
 {
     class Packet
     {
-        public uint PacketId;
-        public uint SenderId;
+        public uint PacketId = 0;
+        public uint SenderId = 0;
         public byte[] Data;
     }
 }
