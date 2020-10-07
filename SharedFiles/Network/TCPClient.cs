@@ -27,7 +27,7 @@ namespace Common.Network
         {
             // Set up address information
             IPHostEntry ipHost = Dns.GetHostEntry(ip);
-            IPAddress ipAddr = ipHost.AddressList[1];
+            IPAddress ipAddr = ipHost.AddressList.Length == 1 ? ipHost.AddressList[0] : ipHost.AddressList[1];
             IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
 
             // Create socket which listens for new connections
