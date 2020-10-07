@@ -90,6 +90,7 @@ class DataList
 }
 ```
 That is it.
+
 The SKL commands just interpret a few top layers of `DataList` as a table, even though it's actually just nested lists. When you send an SKL command to the server, it returns a JSON string, which you can convert to a `DataList` structure. For example, the command `SELECT attr1 attr2 FROM table1` (from above) returns:
 ```json
 [
@@ -141,7 +142,7 @@ row4:
 ### DataList overview
 - `void Add(object item, string name)` - Adds an item with the specified name to the DataList;
 - `object Get(int index)` - Returns the object at the specified index. `null` if invalid index;
-- `object Get(string name)` - Returns the first object with the specified name. If more than 1 objects with the same name exist the bahaviour is undefined. If no objects with the name exist, returns `null`;
+- `object Get(string name)` - Returns the first object with the specified name. If more than 1 objects with the same name exist the behaviour is undefined. If no objects with the name exist, returns `null`;
 - `int Size()` - Returns item count;
 - `static List<object> ToList(DataList data)` - Returns the `DataList` as a `List<object>`. Used to convert to Json;
 - `static DataList FromList(List<object> list)` - Returns the `List<object>` as a `DataList`. Used to convert from Json;
