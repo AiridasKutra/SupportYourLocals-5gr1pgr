@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Common
 {
-    class DataList
+    class DataList : IEnumerable
     {
         public List<object> items;
         public List<string> names;
@@ -121,6 +123,76 @@ namespace Common
             }
 
             return str;
+        }
+
+        // IEnumerable implementation
+        public DataListEnum GetEnumerator()
+        {
+            return new DataListEnum(this);
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator)GetEnumerator();
+        }
+    }
+
+    class ListItem
+    {
+        public object item;
+        public string name;
+    }
+
+    class DataListEnum : IEnumerator
+    {
+        public List<object> items;
+        public List<string> names;
+
+        // Enumerators are positioned before the first element
+        // until the first MoveNext() call.
+        int position = -1;
+
+        public DataListEnum(DataList list)
+        {
+            items = list.items;
+            names = list.names;
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < items.Count);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public ListItem Current
+        {
+            get
+            {
+                try
+                {
+                    return new ListItem
+                    {
+                        item = items[position],
+                        name = names[position]
+                    };
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
         }
     }
 }
