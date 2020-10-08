@@ -1,8 +1,10 @@
-﻿using localhostUI.NoInternetConnection;
+﻿using Common.Network;
+using localhostUI.NoInternetConnection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,17 +15,39 @@ namespace localhostUI
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        private static readonly TCPClient client = new TCPClient();
+        public static TCPClient Client
+        {
+            get
+            {
+                return client;
+            }
+        }
         [STAThread]
+
+        
         static void Main()
         {
+            /*
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!CheckForInternetConnection()) Application.Run(new noInternetMain());
-            else{
-                Application.Run(new uiMain());
+            string ip = "90.140.218.197";
+            ushort port = 54000;
+            */
+
+            if (CheckForInternetConnection()// && ConnectToDb(ip, port)
+                ) Application.Run(new uiMain());
+            else
+            {
+                Application.Run(new noInternetMain());
             }
         }
 
+        public static bool ConnectToDb(string ip, ushort port)
+        {
+            if (client.Connect(ip, port)) return true;
+            return false;
+        }
         public static bool CheckForInternetConnection()
         {
             try

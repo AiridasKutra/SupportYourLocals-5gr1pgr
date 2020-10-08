@@ -85,6 +85,7 @@ namespace Common.Network
             {
                 try
                 {
+                    
                     int byteNum = thisClient.Receive(buffer);
                     if (byteNum < 4) continue;
 

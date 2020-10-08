@@ -4,6 +4,19 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <StartupObject>localhostUI.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\DataList.cs" Link="ServerSideLinks\DataList.cs" />
+    <Compile Include="..\SharedFiles\Formatting\Json.cs" Link="ServerSideLinks\Json.cs" />
+    <Compile Include="..\SharedFiles\Helper.cs" Link="ServerSideLinks\Helper.cs" />
+    <Compile Include="..\SharedFiles\Network\Packet.cs" Link="ServerSideLinks\Packet.cs" />
+    <Compile Include="..\SharedFiles\Network\TCPClient.cs" Link="ServerSideLinks\TCPClient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ServerSideLinks\" />
+  </ItemGroup>
 
 </Project>
