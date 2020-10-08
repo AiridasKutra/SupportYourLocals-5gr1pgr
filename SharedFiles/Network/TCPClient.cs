@@ -59,6 +59,11 @@ namespace Common.Network
             return true;
         }
 
+        public bool Connected()
+        {
+            return thisClient.Connected && packetHandler.IsAlive;
+        }
+
         public int PacketCount()
         {
             if (!packetHandler.IsAlive) return -1;
