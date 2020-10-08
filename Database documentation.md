@@ -41,6 +41,8 @@ The main command is `SELECT attr FROM tablename`, where `attr` can be many attri
 |row 3||9|
 |row 4||6|
 
+Specifying no attributes returns the entire table.
+
 ### Modifiers:
 The select command can be supplied with modifiers which help to narrow down the returned results. Currently, the following modifiers can be used:
 - `ROW x (TO y)` - Only includes rows x to y. The `TO y` part can be ommited which will mean that only the x-th row is returned.
@@ -90,6 +92,7 @@ class DataList
 }
 ```
 That is it.
+
 The SKL commands just interpret a few top layers of `DataList` as a table, even though it's actually just nested lists. When you send an SKL command to the server, it returns a JSON string, which you can convert to a `DataList` structure. For example, the command `SELECT attr1 attr2 FROM table1` (from above) returns:
 ```json
 [
@@ -141,11 +144,13 @@ row4:
 ### DataList overview
 - `void Add(object item, string name)` - Adds an item with the specified name to the DataList;
 - `object Get(int index)` - Returns the object at the specified index. `null` if invalid index;
-- `object Get(string name)` - Returns the first object with the specified name. If more than 1 objects with the same name exist the bahaviour is undefined. If no objects with the name exist, returns `null`;
+- `object Get(string name)` - Returns the first object with the specified name. If more than 1 objects with the same name exist the behaviour is undefined. If no objects with the name exist, returns `null`;
 - `int Size()` - Returns item count;
 - `static List<object> ToList(DataList data)` - Returns the `DataList` as a `List<object>`. Used to convert to Json;
 - `static DataList FromList(List<object> list)` - Returns the `List<object>` as a `DataList`. Used to convert from Json;
-- `string ToString()` - Returns a string to visualize the `DataList` structure.
+- `string ToString()` - Returns a string to visualize the `DataList` structure;
+- `List<object> items` - List containing all items, accessed directly;
+- `List<string> names` - List containing all names, accessed directly.
 
 **Other notes**:
 
@@ -223,7 +228,10 @@ for (int i = 0; i < data.Size(); i++)
     // The data.items are different events, while data.names is usually just the row number
     if (data.items[i].GetType() == typeof(DataList))
     {
-        if (((DataList)data.items[i]).Get("name") == "LKL")
+        object obj = ((DataList)data.items[i]).Get("name");
+        if (obj == null) continue;
+        if (obj.GetType() != typeof(string)) continue;
+        if ((string)obj == "LKL")
         {
             event = (DataList)data.items[i];
             break;
