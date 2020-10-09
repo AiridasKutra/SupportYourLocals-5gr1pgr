@@ -136,7 +136,7 @@ namespace Common.Network
                             }
                             else
                             {
-                                buffer = new byte[packet.Data.Length + 4];
+                                buffer = new byte[bytesLeft + 4];
                                 Buffer.BlockCopy(packetId, 0, buffer, 0, 4);
                                 Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                                 bytesLeft = 0;
