@@ -12,6 +12,7 @@
     <Compile Include="..\SharedFiles\Formatting\Json.cs" Link="ServerSideLinks\Json.cs" />
     <Compile Include="..\SharedFiles\Helper.cs" Link="ServerSideLinks\Helper.cs" />
     <Compile Include="..\SharedFiles\Network\Packet.cs" Link="ServerSideLinks\Packet.cs" />
+    <Compile Include="..\SharedFiles\Network\PacketEnum.cs" Link="ServerSideLinks\PacketEnum.cs" />
     <Compile Include="..\SharedFiles\Network\TCPClient.cs" Link="ServerSideLinks\TCPClient.cs" />
   </ItemGroup>
 
