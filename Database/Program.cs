@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Formatting;
 using Common.Network;
+using Database.Network;
 using System;
 using System.Text;
 using System.Threading;
@@ -15,11 +16,15 @@ namespace Database
         static void Main(string[] args)
         {
             db = new Database("data.json");
-            db.Print();
+            //db.Print();
             mData = new Mutex();
 
-            Thread serverThread = new Thread(new ThreadStart(RunServer));
-            serverThread.Start();
+            TCPServer server = new TCPServer(54000);
+            RequestHandler requestHandler = new RequestHandler(db, server);
+            requestHandler.Start();
+
+            //Thread serverThread = new Thread(new ThreadStart(RunServer));
+            //serverThread.Start();
 
             while (true)
             {
@@ -27,7 +32,7 @@ namespace Database
                 object result;
                 lock (mData)
                 {
-                    result = db.Execute(input, null);
+                    result = db.Execute(input);
                 }
                 if (result != null)
                     Console.WriteLine(result);
@@ -51,7 +56,7 @@ namespace Database
                         object result;
                         lock (mData)
                         {
-                            result = db.Execute(message, null);
+                            result = db.Execute(message);
                         }
                         if (result != null)
                         {
