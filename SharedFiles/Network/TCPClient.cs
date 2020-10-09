@@ -54,7 +54,7 @@ namespace Common.Network
         public bool Send(Packet packet)
         {
             // Inform server about packet count
-            uint packetCount = (uint)packet.Data.Length / (MaxPacketSize - 4) + 1;
+            uint packetCount = (uint)Math.Ceiling((uint)packet.Data.Length / (double)(MaxPacketSize - 4));
             byte[] buffer;
             if (packetCount > 1)
             {
@@ -177,6 +177,11 @@ namespace Common.Network
                 {
                     thisClient.Close();
                     Thread.CurrentThread.Abort();
+                }
+                catch (SocketException)
+                {
+                    thisClient.Close();
+                    return;
                 }
             }
         }
