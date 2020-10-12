@@ -86,7 +86,10 @@ namespace Common.Network
                     Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                     bytesLeft = 0;
                 }
-                thisClient.Send(buffer);
+                // Send the size of the buffer
+                if (thisClient.Send(BitConverter.GetBytes(buffer.Length)) == 0) return false;
+                // Send the buffer
+                if (thisClient.Send(buffer) == 0) return false;
             }
 
             return true;
@@ -127,7 +130,13 @@ namespace Common.Network
             {
                 try
                 {
-                    int byteNum = thisClient.Receive(buffer);
+                    // Read length of message
+                    byte[] msgLengthBuffer = new byte[4];
+                    thisClient.Receive(msgLengthBuffer, 4, SocketFlags.None);
+                    int msgLength = BitConverter.ToInt32(msgLengthBuffer);
+
+                    // Read message
+                    int byteNum = thisClient.Receive(buffer, msgLength, SocketFlags.None);
                     if (byteNum < 4) continue;
 
                     uint packetId = BitConverter.ToUInt32(buffer, 0);

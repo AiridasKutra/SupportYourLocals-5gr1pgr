@@ -118,6 +118,7 @@ namespace Common.Network
                             byte[] packCountBuffer = BitConverter.GetBytes(packetCount);
                             Buffer.BlockCopy(packTypeBuffer, 0, buffer, 0, 4);
                             Buffer.BlockCopy(packCountBuffer, 0, buffer, 4, 4);
+                            clients[i].sock.Send(BitConverter.GetBytes(8));
                             clients[i].sock.Send(buffer);
                         }
 
@@ -141,7 +142,10 @@ namespace Common.Network
                                 Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                                 bytesLeft = 0;
                             }
-                            clients[i].sock.Send(buffer);
+                            // Send the size of the buffer
+                            if (clients[i].sock.Send(BitConverter.GetBytes(buffer.Length)) == 0) return false;
+                            // Send the buffer
+                            if (clients[i].sock.Send(buffer) == 0) return false;
                         }
 
                         return true;
@@ -196,13 +200,20 @@ namespace Common.Network
                     {
                         int index = clients.Count;
                         clients.Add(new Client(clientSocket));
-                        clients[index].sock.Send(Encoding.ASCII.GetBytes("\0\0\0\0Connected."));
+
+                        string message = "\0\0\0\0Connected.";
+                        clients[index].sock.Send(BitConverter.GetBytes(message.Length));
+                        clients[index].sock.Send(Encoding.ASCII.GetBytes(message));
+
                         clientThreads.Add(new Thread(new ParameterizedThreadStart(PacketHandler)));
                         clientThreads[index].Start(clients[index]);
                     }
                     else
                     {
-                        clientSocket.Send(Encoding.ASCII.GetBytes("\0\0\0\0Server full."));
+                        string message = "\0\0\0\0Server is full.";
+                        clientSocket.Send(BitConverter.GetBytes(message.Length));
+                        clientSocket.Send(Encoding.ASCII.GetBytes(message));
+
                         clientSocket.Close();
                     }
                 }
@@ -222,7 +233,13 @@ namespace Common.Network
             {
                 try
                 {
-                    int byteNum = client.sock.Receive(buffer);
+                    // Read length of message
+                    byte[] msgLengthBuffer = new byte[4];
+                    client.sock.Receive(msgLengthBuffer, 4, SocketFlags.None);
+                    int msgLength = BitConverter.ToInt32(msgLengthBuffer);
+
+                    // Read message
+                    int byteNum = client.sock.Receive(buffer, msgLength, SocketFlags.None);
                     if (byteNum < 4) continue;
 
                     uint packetId = BitConverter.ToUInt32(buffer, 0);
