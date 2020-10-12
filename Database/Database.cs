@@ -66,7 +66,7 @@ namespace Database
                 table.Add(row4, "4");
 
                 //data.Add(table, "birkakakliu_kaimo_perlai");
-                data.Add(table, "table1");
+                //data.Add(table, "table1");
             }
 
             //Save(new JsonFileWriter("data1.json"));
@@ -323,13 +323,13 @@ namespace Database
 
         public void AddEntry(DataList entry, string tableName)
         {
-            int index = entry.names.IndexOf(tableName);
+            int index = data.names.IndexOf(tableName);
 
             // Create new table
             if (index == -1)
             {
                 data.Add(new DataList(), tableName);
-                index = entry.names.IndexOf(tableName);
+                index = data.names.IndexOf(tableName);
             }
 
             // Add entry
