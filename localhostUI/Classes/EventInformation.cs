@@ -16,22 +16,14 @@ namespace localhostUI.Classes
 
         //Hey so I dunno if havin multiple lists breaks the class single responsibility whatever. help...
         private List<Event> events;
-        private List<string> sportTypes;
-        public List<Event> Events { get; set; }
-        public List<string> SportTypes { get; set; }
 
-        public void AddSport(string sport)
-        {   
-            //I dunno i created a seperate method cos i dunno how to make setter do the job
-            //and setter thows a null exception or im just a pinhead
-            this.SportTypes.Add(sport);
-        }
+        public List<Event> Events { get; set; }
 
         public EventInformation()
         {
             //Just this now so no Null whatever bullshittery.
             this.Events = new List<Event>();
-            this.SportTypes = new List<string>();
+
             //Read data from file or server and put it into the list pls.
         }
 

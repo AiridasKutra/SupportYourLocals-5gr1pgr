@@ -10,6 +10,7 @@ namespace localhostUI
     {
 
         private EventInformation eventsInformation;
+        private SportTypes sportTypes;
         public uiMain()
         {
             InitializeComponent();
@@ -19,16 +20,22 @@ namespace localhostUI
         {
 
             eventsInformation = new EventInformation();
+            sportTypes = new SportTypes();
 
-            //Placeholder. Added so some choices would appear in the drop down menu.
-            eventsInformation.AddSport("Football");
-            eventsInformation.AddSport("Basketball");
-            eventsInformation.AddSport("Volleyball");
-            eventsInformation.AddSport("Tennis");
-            eventsInformation.AddSport("Table Tennis");
-            eventsInformation.AddSport("Golf");
-            eventsInformation.AddSport("Rugby");
-            sportBox.Items.AddRange(eventsInformation.SportTypes.ToArray());
+            //  [Placeholder]   . Added so some choices would appear in the drop down menu.
+            sportTypes.SportList.Add("Football");
+            sportTypes.SportList.Add("Basketball");
+            sportTypes.SportList.Add("Volleyball");
+            sportTypes.SportList.Add("Tennis");
+            sportTypes.SportList.Add("Table Tennis");
+            sportTypes.SportList.Add("Golf");
+            sportTypes.SportList.Add("Rugby");
+
+            //  [Placeholder]   . Added user adress to locate nearby events in the future.
+            userAdressBox.Text = "Vilnius, Didlaukio g. 59";
+
+            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
+            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             //sorry if ur eyes r bleeding.
         }
 
@@ -37,11 +44,42 @@ namespace localhostUI
             //So like i dunno press button add event to list.
             //i think its pretty simple but i also think peugeots are good who am i to speak;
             if (eventsInformation == null) eventsInformation = new EventInformation();
-            Event newEvent = new Event(nameBox.Text, dateBox.Value, sportBox.Text, descriptionBox.Text, (float)priceBox.Value);
+            Event newEvent = new Event(nameBox.Text, dateBox.Value, sportBox.Text, descriptionBox.Text, eventAdressBox.Text, (float)priceBox.Value);
             eventsInformation.Events.Add(newEvent);
         }
 
+        private void addSport(object sender, EventArgs e)
+        {
+            if (sportTypes.SportList.Contains(addSportBox.Text))
+            {
+                MessageBox.Show("You cannot add this sport. It already exists in the list.", "Matching sport found.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            sportTypes.SportList.Add(addSportBox.Text);
 
+            sportBox.Items.Clear();
+            removeSportBox.Items.Clear();
+            
+            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
+            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
+        }
+
+        private void removeSport(object sender, EventArgs e)
+        {
+            if (!sportTypes.SportList.Contains(removeSportBox.Text))
+            {
+                MessageBox.Show("You cannot remove this sport. It does not exist in the list.", "No such sport found.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            sportTypes.SportList.Remove(removeSportBox.Text);
+
+            sportBox.Items.Clear();
+            removeSportBox.Items.Clear();
+
+            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
+            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
+            removeSportBox.Text = "";
+        }
     }
 }
 
@@ -78,4 +116,5 @@ namespace localhostUI
                 /*DataList events = (DataList) data.Get("5");
                 DataList teams = (DataList) events.Get("teams");
                 DataList players = (DataList) teams.Get("vu");
-                int a = 5;}*/
+                int a = 5;}
+*/

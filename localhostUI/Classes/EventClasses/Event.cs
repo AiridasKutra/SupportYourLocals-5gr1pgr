@@ -11,19 +11,22 @@ namespace localhostUI.EventClasses
         private string sport;
         private float price;
         private string description;
-        private string location;
+        private string adress;
         private List<Team> team;
         
-        public Event(string name, DateTime date, string sport, string description, float price = 0)
+        public Event(string name, DateTime date, string sport, string description, string adress, float price = 0)
         {
             this.name = name;
             this.date = date;
             this.sport = sport;
             this.description = description;
+            this.adress = adress;
             this.price = price;
         }
+        
         public override string ToString()
         {
+            /*return $"{name} {date} {sport} {price}";*/
             return this.name + " " + this.date.ToString() + " " + sport + " " + price;
         }
         /*

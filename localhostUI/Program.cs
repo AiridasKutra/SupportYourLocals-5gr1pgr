@@ -28,10 +28,10 @@ namespace localhostUI
         
         static void Main()
         {
-            /*
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            string ip = "90.140.218.197";
+            /*string ip = "90.140.218.197";
             ushort port = 54000;
             */
 
@@ -53,8 +53,12 @@ namespace localhostUI
             try
             {
                 using (var client = new WebClient())
-                using (client.OpenRead("http://google.com/generate_204"))
-                    return true;
+                {
+                    using (client.OpenRead("http://google.com/generate_204")) 
+                    { 
+                        return true;
+                    }
+                }
             }
             catch
             {
