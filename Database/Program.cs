@@ -29,6 +29,8 @@ namespace Database
             while (true)
             {
                 string input = Console.ReadLine();
+                if (input == "quit") return;
+
                 object result;
                 lock (mData)
                 {
