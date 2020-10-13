@@ -35,7 +35,7 @@ namespace Common.Network
         private ushort port;
         private int maxClients;
         private bool running;
-        public const uint MaxPacketSize = 8192;
+        public const uint MaxPacketSize = 1024;
 
         private List<Client> clients;
         private List<Thread> clientThreads;
@@ -100,6 +100,26 @@ namespace Common.Network
             return true;
         }
 
+        private int Send(Socket sock, byte[] buffer, int id = -1)
+        {
+            int prefixSent = sock.Send(BitConverter.GetBytes(buffer.Length));
+            int messageSent = sock.Send(buffer);
+
+            // Change color to red if something is wrong
+            if (prefixSent != 4)
+                Console.ForegroundColor = ConsoleColor.Red;
+            if (buffer.Length != messageSent)
+                Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write($"[User {id}] ");
+            Console.Write($"|Prefix size: {prefixSent}| ");
+            Console.WriteLine($"Sending {buffer.Length} bytes ({messageSent} sent)");
+
+            // Reset color back to white
+            Console.ForegroundColor = ConsoleColor.White;
+            return prefixSent + messageSent;
+        }
+
         public bool Send(Packet packet)
         {
             lock (mCon)
@@ -118,8 +138,7 @@ namespace Common.Network
                             byte[] packCountBuffer = BitConverter.GetBytes(packetCount);
                             Buffer.BlockCopy(packTypeBuffer, 0, buffer, 0, 4);
                             Buffer.BlockCopy(packCountBuffer, 0, buffer, 4, 4);
-                            clients[i].sock.Send(BitConverter.GetBytes(8));
-                            clients[i].sock.Send(buffer);
+                            if (Send(clients[i].sock, buffer) == 0) return false;
                         }
 
                         byte[] packetId = BitConverter.GetBytes(packet.PacketId);
@@ -142,10 +161,7 @@ namespace Common.Network
                                 Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                                 bytesLeft = 0;
                             }
-                            // Send the size of the buffer
-                            if (clients[i].sock.Send(BitConverter.GetBytes(buffer.Length)) == 0) return false;
-                            // Send the buffer
-                            if (clients[i].sock.Send(buffer) == 0) return false;
+                            if (Send(clients[i].sock, buffer) == 0) return false;
                         }
 
                         return true;
@@ -207,6 +223,8 @@ namespace Common.Network
 
                         clientThreads.Add(new Thread(new ParameterizedThreadStart(PacketHandler)));
                         clientThreads[index].Start(clients[index]);
+
+                        Console.WriteLine($"New connection: {clientSocket.LocalEndPoint}");
                     }
                     else
                     {
@@ -239,7 +257,18 @@ namespace Common.Network
                     int msgLength = BitConverter.ToInt32(msgLengthBuffer);
 
                     // Read message
-                    int byteNum = client.sock.Receive(buffer, msgLength, SocketFlags.None);
+                    int byteNum;
+                    while (true)
+                    {
+                        // Only receive full messages
+                        byteNum = client.sock.Receive(buffer, msgLength, SocketFlags.Peek);
+                        if (byteNum == msgLength)
+                        {
+                            break;
+                        }
+                        Thread.Sleep(1);
+                    }
+                    byteNum = client.sock.Receive(buffer, msgLength, SocketFlags.None);
                     if (byteNum < 4) continue;
 
                     uint packetId = BitConverter.ToUInt32(buffer, 0);
