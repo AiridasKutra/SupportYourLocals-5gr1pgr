@@ -19,13 +19,31 @@ namespace Database
             //db.Print();
             mData = new Mutex();
 
-            TCPServer server = new TCPServer(54000);
+            ushort port;
+            while (true)
+            {
+                Console.Write("Enter the port: ");
+                string portStr = Console.ReadLine();
+                try
+                {
+                    port = ushort.Parse(portStr);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid port");
+                    continue;
+                }
+                break;
+            }
+
+            TCPServer server = new TCPServer(port);
             RequestHandler requestHandler = new RequestHandler(db, server);
             requestHandler.Start();
 
             //Thread serverThread = new Thread(new ThreadStart(RunServer));
             //serverThread.Start();
 
+            Console.WriteLine("Server started.");
             while (true)
             {
                 string input = Console.ReadLine();
