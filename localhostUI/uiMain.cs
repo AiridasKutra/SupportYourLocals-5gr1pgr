@@ -8,14 +8,11 @@ namespace localhostUI
 {
     public partial class uiMain : Form
     {
-        private bool offline;
         private EventInformation eventsInformation;
         private SportTypes sportTypes;
         public uiMain()
         {
             InitializeComponent();
-            this.offline = offline;
-            connectionStatus.Visible = offline;
         }
 
         private void MainLoad(object sender, EventArgs e)
