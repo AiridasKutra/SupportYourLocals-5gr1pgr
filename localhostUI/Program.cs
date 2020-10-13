@@ -29,10 +29,9 @@ namespace localhostUI
         
         static void Main()
         {
-            /*
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            */
+
             //string ip = "193.219.91.103";
             string ip = "doesntexist";
             ushort port = 8485;
