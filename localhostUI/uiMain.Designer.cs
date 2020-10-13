@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(uiMain));
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
             this.profileTab = new System.Windows.Forms.TabPage();
             this.eventManagerTab = new System.Windows.Forms.TabPage();
             this.managerTabs = new System.Windows.Forms.TabControl();
@@ -77,10 +78,9 @@
             // profileTab
             // 
             this.profileTab.Location = new System.Drawing.Point(4, 25);
-            this.profileTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.profileTab.Name = "profileTab";
-            this.profileTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.profileTab.Size = new System.Drawing.Size(792, 533);
+            this.profileTab.Padding = new System.Windows.Forms.Padding(3);
+            this.profileTab.Size = new System.Drawing.Size(692, 393);
             this.profileTab.TabIndex = 2;
             this.profileTab.Text = "Profile settings";
             this.profileTab.UseVisualStyleBackColor = true;
@@ -89,10 +89,9 @@
             // 
             this.eventManagerTab.Controls.Add(this.managerTabs);
             this.eventManagerTab.Location = new System.Drawing.Point(4, 25);
-            this.eventManagerTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.eventManagerTab.Name = "eventManagerTab";
-            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.eventManagerTab.Size = new System.Drawing.Size(792, 533);
+            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3);
+            this.eventManagerTab.Size = new System.Drawing.Size(692, 393);
             this.eventManagerTab.TabIndex = 1;
             this.eventManagerTab.Text = "Event manager";
             this.eventManagerTab.UseVisualStyleBackColor = true;
@@ -102,20 +101,18 @@
             this.managerTabs.Controls.Add(this.yourEventsTab);
             this.managerTabs.Controls.Add(this.newEventTab);
             this.managerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.managerTabs.Location = new System.Drawing.Point(3, 4);
-            this.managerTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.managerTabs.Location = new System.Drawing.Point(3, 3);
             this.managerTabs.Name = "managerTabs";
             this.managerTabs.SelectedIndex = 0;
-            this.managerTabs.Size = new System.Drawing.Size(786, 525);
+            this.managerTabs.Size = new System.Drawing.Size(686, 387);
             this.managerTabs.TabIndex = 0;
             // 
             // yourEventsTab
             // 
-            this.yourEventsTab.Location = new System.Drawing.Point(4, 33);
-            this.yourEventsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.yourEventsTab.Location = new System.Drawing.Point(4, 28);
             this.yourEventsTab.Name = "yourEventsTab";
-            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.yourEventsTab.Size = new System.Drawing.Size(778, 488);
+            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.yourEventsTab.Size = new System.Drawing.Size(678, 355);
             this.yourEventsTab.TabIndex = 0;
             this.yourEventsTab.Text = "Manage your events";
             this.yourEventsTab.UseVisualStyleBackColor = true;
@@ -134,20 +131,20 @@
             this.newEventTab.Controls.Add(this.dateLabel);
             this.newEventTab.Controls.Add(this.nameLabel);
             this.newEventTab.Controls.Add(this.creatorHeader);
-            this.newEventTab.Location = new System.Drawing.Point(4, 33);
-            this.newEventTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.newEventTab.Location = new System.Drawing.Point(4, 28);
             this.newEventTab.Name = "newEventTab";
-            this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.newEventTab.Size = new System.Drawing.Size(778, 488);
+            this.newEventTab.Padding = new System.Windows.Forms.Padding(3);
+            this.newEventTab.Size = new System.Drawing.Size(678, 355);
             this.newEventTab.TabIndex = 1;
             this.newEventTab.Text = "Create a new event";
             this.newEventTab.UseVisualStyleBackColor = true;
             // 
             // createEventButton
             // 
-            this.createEventButton.Location = new System.Drawing.Point(37, 394);
+            this.createEventButton.Location = new System.Drawing.Point(32, 296);
+            this.createEventButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.createEventButton.Name = "createEventButton";
-            this.createEventButton.Size = new System.Drawing.Size(137, 47);
+            this.createEventButton.Size = new System.Drawing.Size(120, 35);
             this.createEventButton.TabIndex = 12;
             this.createEventButton.Text = "Create";
             this.createEventButton.UseVisualStyleBackColor = true;
@@ -155,92 +152,97 @@
             // 
             // descriptionBox
             // 
-            this.descriptionBox.Location = new System.Drawing.Point(37, 232);
+            this.descriptionBox.Location = new System.Drawing.Point(32, 174);
+            this.descriptionBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionBox.Multiline = true;
             this.descriptionBox.Name = "descriptionBox";
             this.descriptionBox.PlaceholderText = "Input extra information about the event.";
             this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionBox.Size = new System.Drawing.Size(722, 156);
+            this.descriptionBox.Size = new System.Drawing.Size(632, 118);
             this.descriptionBox.TabIndex = 11;
             // 
             // priceBox
             // 
             this.priceBox.DecimalPlaces = 2;
-            this.priceBox.Location = new System.Drawing.Point(246, 146);
+            this.priceBox.Location = new System.Drawing.Point(215, 110);
+            this.priceBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.priceBox.Maximum = new decimal(new int[] {
             65373,
             0,
             0,
             0});
             this.priceBox.Name = "priceBox";
-            this.priceBox.Size = new System.Drawing.Size(529, 31);
+            this.priceBox.Size = new System.Drawing.Size(463, 26);
             this.priceBox.TabIndex = 10;
             // 
             // sportBox
             // 
             this.sportBox.FormattingEnabled = true;
-            this.sportBox.Location = new System.Drawing.Point(246, 107);
+            this.sportBox.Location = new System.Drawing.Point(215, 80);
+            this.sportBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sportBox.Name = "sportBox";
-            this.sportBox.Size = new System.Drawing.Size(529, 32);
+            this.sportBox.Size = new System.Drawing.Size(463, 27);
             this.sportBox.TabIndex = 9;
             // 
             // dateBox
             // 
-            this.dateBox.Location = new System.Drawing.Point(246, 70);
+            this.dateBox.Location = new System.Drawing.Point(215, 52);
+            this.dateBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(529, 31);
+            this.dateBox.Size = new System.Drawing.Size(463, 26);
             this.dateBox.TabIndex = 8;
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(246, 32);
+            this.nameBox.Location = new System.Drawing.Point(215, 24);
+            this.nameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nameBox.Name = "nameBox";
             this.nameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
-            this.nameBox.Size = new System.Drawing.Size(529, 31);
+            this.nameBox.Size = new System.Drawing.Size(463, 26);
             this.nameBox.TabIndex = 7;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(37, 192);
+            this.label5.Location = new System.Drawing.Point(32, 144);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(299, 24);
+            this.label5.Size = new System.Drawing.Size(244, 19);
             this.label5.TabIndex = 6;
             this.label5.Text = "Description (additional information):";
             // 
             // priceLabel
             // 
             this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(37, 146);
+            this.priceLabel.Location = new System.Drawing.Point(32, 110);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(186, 24);
+            this.priceLabel.Size = new System.Drawing.Size(151, 19);
             this.priceLabel.TabIndex = 5;
             this.priceLabel.Text = "Entry price (optional):";
             // 
             // sportLabel
             // 
             this.sportLabel.AutoSize = true;
-            this.sportLabel.Location = new System.Drawing.Point(37, 107);
+            this.sportLabel.Location = new System.Drawing.Point(32, 80);
             this.sportLabel.Name = "sportLabel";
-            this.sportLabel.Size = new System.Drawing.Size(57, 24);
+            this.sportLabel.Size = new System.Drawing.Size(47, 19);
             this.sportLabel.TabIndex = 4;
             this.sportLabel.Text = "Sport";
             // 
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(37, 70);
+            this.dateLabel.Location = new System.Drawing.Point(32, 52);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(54, 24);
+            this.dateLabel.Size = new System.Drawing.Size(45, 19);
             this.dateLabel.TabIndex = 3;
             this.dateLabel.Text = "Date:";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(37, 32);
+            this.nameLabel.Location = new System.Drawing.Point(32, 24);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(107, 24);
+            this.nameLabel.Size = new System.Drawing.Size(88, 19);
             this.nameLabel.TabIndex = 2;
             this.nameLabel.Text = "Event name:";
             // 
@@ -248,9 +250,9 @@
             // 
             this.creatorHeader.AutoSize = true;
             this.creatorHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.creatorHeader.Location = new System.Drawing.Point(37, 4);
+            this.creatorHeader.Location = new System.Drawing.Point(32, 3);
             this.creatorHeader.Name = "creatorHeader";
-            this.creatorHeader.Size = new System.Drawing.Size(202, 24);
+            this.creatorHeader.Size = new System.Drawing.Size(165, 19);
             this.creatorHeader.TabIndex = 1;
             this.creatorHeader.Text = "Input event information";
             // 
@@ -258,10 +260,9 @@
             // 
             this.currentEventsTab.Controls.Add(this.eventsTabs);
             this.currentEventsTab.Location = new System.Drawing.Point(4, 25);
-            this.currentEventsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.currentEventsTab.Name = "currentEventsTab";
-            this.currentEventsTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.currentEventsTab.Size = new System.Drawing.Size(792, 533);
+            this.currentEventsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.currentEventsTab.Size = new System.Drawing.Size(692, 393);
             this.currentEventsTab.TabIndex = 0;
             this.currentEventsTab.Text = "Current events";
             this.currentEventsTab.UseVisualStyleBackColor = true;
@@ -272,30 +273,27 @@
             this.eventsTabs.Controls.Add(this.nearbyTab);
             this.eventsTabs.Controls.Add(this.soonTab);
             this.eventsTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.eventsTabs.Location = new System.Drawing.Point(3, 4);
-            this.eventsTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.eventsTabs.Location = new System.Drawing.Point(3, 3);
             this.eventsTabs.Name = "eventsTabs";
             this.eventsTabs.SelectedIndex = 0;
-            this.eventsTabs.Size = new System.Drawing.Size(786, 525);
+            this.eventsTabs.Size = new System.Drawing.Size(686, 387);
             this.eventsTabs.TabIndex = 0;
             // 
             // sportsTab
             // 
-            this.sportsTab.Location = new System.Drawing.Point(4, 33);
-            this.sportsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.sportsTab.Location = new System.Drawing.Point(4, 28);
             this.sportsTab.Name = "sportsTab";
-            this.sportsTab.Size = new System.Drawing.Size(778, 488);
+            this.sportsTab.Size = new System.Drawing.Size(678, 355);
             this.sportsTab.TabIndex = 0;
             this.sportsTab.Text = "Sports";
             this.sportsTab.UseVisualStyleBackColor = true;
             // 
             // nearbyTab
             // 
-            this.nearbyTab.Location = new System.Drawing.Point(4, 33);
-            this.nearbyTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.nearbyTab.Location = new System.Drawing.Point(4, 28);
             this.nearbyTab.Name = "nearbyTab";
-            this.nearbyTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.nearbyTab.Size = new System.Drawing.Size(778, 488);
+            this.nearbyTab.Padding = new System.Windows.Forms.Padding(3);
+            this.nearbyTab.Size = new System.Drawing.Size(678, 355);
             this.nearbyTab.TabIndex = 1;
             this.nearbyTab.Text = "Near you";
             this.nearbyTab.UseVisualStyleBackColor = true;
@@ -304,11 +302,10 @@
             // 
             this.soonTab.Controls.Add(this.eventList);
             this.soonTab.Controls.Add(this.eventHeader);
-            this.soonTab.Location = new System.Drawing.Point(4, 33);
-            this.soonTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.soonTab.Location = new System.Drawing.Point(4, 28);
             this.soonTab.Name = "soonTab";
-            this.soonTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.soonTab.Size = new System.Drawing.Size(778, 488);
+            this.soonTab.Padding = new System.Windows.Forms.Padding(3);
+            this.soonTab.Size = new System.Drawing.Size(678, 355);
             this.soonTab.TabIndex = 2;
             this.soonTab.Text = "Happening soon";
             this.soonTab.UseVisualStyleBackColor = true;
@@ -327,10 +324,11 @@
             this.eventList.GridLines = true;
             this.eventList.HideSelection = false;
             this.eventList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.eventList.Location = new System.Drawing.Point(3, 41);
+            listViewItem2});
+            this.eventList.Location = new System.Drawing.Point(3, 31);
+            this.eventList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eventList.Name = "eventList";
-            this.eventList.Size = new System.Drawing.Size(772, 443);
+            this.eventList.Size = new System.Drawing.Size(676, 333);
             this.eventList.TabIndex = 2;
             this.eventList.UseCompatibleStateImageBehavior = false;
             // 
@@ -358,9 +356,9 @@
             // 
             this.eventHeader.AutoSize = true;
             this.eventHeader.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.eventHeader.Location = new System.Drawing.Point(7, 0);
+            this.eventHeader.Location = new System.Drawing.Point(6, 0);
             this.eventHeader.Name = "eventHeader";
-            this.eventHeader.Size = new System.Drawing.Size(219, 28);
+            this.eventHeader.Size = new System.Drawing.Size(170, 23);
             this.eventHeader.TabIndex = 1;
             this.eventHeader.Text = "Events happening soon";
             // 
@@ -373,19 +371,17 @@
             this.menuTabs.Font = new System.Drawing.Font("Comic Sans MS", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.menuTabs.ItemSize = new System.Drawing.Size(266, 21);
             this.menuTabs.Location = new System.Drawing.Point(0, 0);
-            this.menuTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.menuTabs.Name = "menuTabs";
             this.menuTabs.SelectedIndex = 0;
-            this.menuTabs.Size = new System.Drawing.Size(800, 562);
+            this.menuTabs.Size = new System.Drawing.Size(700, 422);
             this.menuTabs.TabIndex = 0;
             // 
             // uiMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 562);
+            this.ClientSize = new System.Drawing.Size(700, 422);
             this.Controls.Add(this.menuTabs);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "uiMain";
             this.Text = "localhost";
             this.Load += new System.EventHandler(this.MainLoad);

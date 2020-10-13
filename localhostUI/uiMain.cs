@@ -8,11 +8,14 @@ namespace localhostUI
 {
     public partial class uiMain : Form
     {
-
+        private bool offline;
         private EventInformation eventsInformation;
-        public uiMain()
+
+        public uiMain(bool offline = false)
         {
             InitializeComponent();
+            this.offline = offline;
+            connectionStatus.Visible = offline;
         }
 
         private void MainLoad(object sender, EventArgs e)
@@ -40,8 +43,6 @@ namespace localhostUI
             Event newEvent = new Event(nameBox.Text, dateBox.Value, sportBox.Text, descriptionBox.Text, (float)priceBox.Value);
             eventsInformation.Events.Add(newEvent);
         }
-
-
     }
 }
 
