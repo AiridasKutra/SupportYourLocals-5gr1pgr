@@ -31,12 +31,13 @@ namespace Common.Network
             // Set up address information
             //IPHostEntry ipHost = Dns.GetHostEntry(ip);
             //IPAddress ipAddr = ipHost.AddressList.Length == 1 ? ipHost.AddressList[0] : ipHost.AddressList[1];
-            IPAddress ipAddr = IPAddress.Parse(ip);
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
 
-            // Create socket which listens for new connections
             try
             {
+                IPAddress ipAddr = IPAddress.Parse(ip);
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
+
+                // Create socket which listens for new connections
                 thisClient = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 thisClient.Connect(localEndPoint);
                 if (!thisClient.Connected)

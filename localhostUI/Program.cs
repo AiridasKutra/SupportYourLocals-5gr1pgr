@@ -1,4 +1,5 @@
 ﻿using Common.Network;
+using localhostUI.NoDatabaseConnection;
 using localhostUI.NoInternetConnection;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace localhostUI
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        private static readonly TCPClient client = new TCPClient();
-        public static TCPClient Client
+        private static readonly ClientWrapper client = new ClientWrapper();
+        public static ClientWrapper Client
         {
             get
             {
@@ -28,18 +29,26 @@ namespace localhostUI
         
         static void Main()
         {
-            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            /*string ip = "90.140.218.197";
-            ushort port = 54000;
-            */
 
-            if (CheckForInternetConnection()// && ConnectToDb(ip, port)
-                ) Application.Run(new uiMain());
-            else
+            //string ip = "193.219.91.103";
+            string ip = "doesntexist";
+            ushort port = 8485;
+
+            // Check if internet is available
+            if (!CheckForInternetConnection())
             {
                 Application.Run(new noInternetMain());
+            }
+            else
+            {
+                // Check if connection to database exists
+                if (!ConnectToDb(ip, port))
+                {
+                    Application.Run(new NoDatabaseMain());
+                }
+                Application.Run(new uiMain());
             }
         }
 
@@ -53,12 +62,8 @@ namespace localhostUI
             try
             {
                 using (var client = new WebClient())
-                {
-                    using (client.OpenRead("http://google.com/generate_204")) 
-                    { 
-                        return true;
-                    }
-                }
+                using (client.OpenRead("http://google.com/generate_204"))
+                    return true;
             }
             catch
             {
