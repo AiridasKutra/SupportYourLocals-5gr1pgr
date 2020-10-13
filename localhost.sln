@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Databa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedFiles", "SharedFiles\SharedFiles.csproj", "{7D0A9B3F-CB5C-4A51-B959-3FD10F3A6465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "localhostUI", "localhostUI\localhostUI.csproj", "{ADE78A10-1E21-4E7A-9C39-93531E12B7B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "localhostUI", "localhostUI\localhostUI.csproj", "{ADE78A10-1E21-4E7A-9C39-93531E12B7B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
