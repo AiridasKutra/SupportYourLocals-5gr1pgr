@@ -8,5 +8,8 @@ namespace localhostUI.EventClasses
     {
         private string name;
         private List<Player> teamPlayers;
+
+        public string Name { get => name; set => name = value; }
+        public List<Player> TeamPlayers { get => teamPlayers; set => teamPlayers = value; }
     }
 }

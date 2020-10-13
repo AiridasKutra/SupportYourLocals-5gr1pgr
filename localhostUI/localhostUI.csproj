@@ -19,4 +19,8 @@
     <Folder Include="ServerSideLinks\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedFiles\SharedFiles.csproj" />
+  </ItemGroup>
+
 </Project>

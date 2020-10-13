@@ -13,18 +13,30 @@ namespace localhostUI.EventClasses
         private string description;
         private string location;
         private List<Team> team;
+
         
+
         public Event(string name, DateTime date, string sport, string description, float price = 0)
         {
-            this.name = name;
-            this.date = date;
-            this.sport = sport;
-            this.description = description;
-            this.price = price;
+            this.Name = name;
+            this.Date = date;
+            this.Sport = sport;
+            this.Description = description;
+            this.Price = price;
+            this.Team = new List<Team>();
         }
+
+        public string Name { get => name; set => name = value; }
+        public DateTime Date { get => date; set => date = value; }
+        public string Sport { get => sport; set => sport = value; }
+        public float Price { get => price; set => price = value; }
+        public string Description { get => description; set => description = value; }
+        public string Location { get => location; set => location = value; }
+        public List<Team> Team { get => team; set => team = value; }
+
         public override string ToString()
         {
-            return this.name + " " + this.date.ToString() + " " + sport + " " + price;
+            return this.Name + " " + this.Date.ToString() + " " + Sport + " " + Price;
         }
         /*
          * More to come:
