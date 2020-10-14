@@ -208,6 +208,7 @@ namespace Common.Network
                     {
                         clients.RemoveAt(i);
                         clientThreads.RemoveAt(i);
+                        i--;
                     }
                 }
             }
