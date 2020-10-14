@@ -6,6 +6,7 @@ using Common;
 using Common.Formatting;
 using localhostUI.Classes;
 using localhostUI.EventClasses;
+using Newtonsoft.Json;
 
 namespace localhostUI
 {
@@ -21,8 +22,7 @@ namespace localhostUI
         private void MainLoad(object sender, EventArgs e)
         {
 
-            eventsInformation = new EventInformation();
-            LoadEvents();
+            eventsInformation = LoadEvents();
             //Placeholder. Added so some choices would appear in the drop down menu.
             eventsInformation.AddSport("Football");
             eventsInformation.AddSport("Basketball");
@@ -43,6 +43,7 @@ namespace localhostUI
             Event newEvent = new Event(nameBox.Text, dateBox.Value, sportBox.Text, descriptionBox.Text, (float)priceBox.Value);
             eventsInformation.Events.Add(newEvent);
             SaveEvents();
+
         }
         private void SaveEvents()
         {
@@ -58,7 +59,7 @@ namespace localhostUI
             foreach (Event ev in eventsInformation.Events)
             {
                 events.Add(ev.Name);
-                events.Add(ev.Date.ToString()); //check if it'll break
+                events.Add(ev.Date.ToString());
                 events.Add(ev.Sport);
                 events.Add(ev.Price);
                 events.Add(ev.Description);
@@ -93,7 +94,7 @@ namespace localhostUI
             File.WriteAllText("EventsInfo.json", jsonstr);
         }
 
-        private void LoadEvents()
+        private EventInformation LoadEvents()
         {
             string jsonstr = File.ReadAllText("EventsInfo.json");
             
@@ -153,15 +154,19 @@ namespace localhostUI
                             {
                                 extraInfo.Add((string)extraInfo1.items[l]);
                             }
-                            var p1 = new Player();
-                            p1.Age = age;
-                            p1.Name = playerName;
-                            p1.ExtraInfo = extraInfo;
+                            var p1 = new Player
+                            {
+                                Age = age,
+                                Name = playerName,
+                                ExtraInfo = extraInfo
+                            };
                             player.Add(p1);
                         }
-                        var p = new Team();
-                        p.Name = teamName;
-                        p.TeamPlayers = player;
+                        var p = new Team
+                        {
+                            Name = teamName,
+                            TeamPlayers = player
+                        };
                         team.Add(p);
                     }
                     e1.Team = team;
@@ -173,8 +178,11 @@ namespace localhostUI
 
                 throw e;
             }
-            
-            
+
+            EventInformation eventInformation = new EventInformation();
+            eventInformation.SportTypes = SportTypes;
+            eventInformation.Events = Events;
+            return eventInformation;
         }
 
 

@@ -17,8 +17,9 @@ namespace localhostUI.Classes
         //Hey so I dunno if havin multiple lists breaks the class single responsibility whatever. help...
         private List<Event> events;
         private List<string> sportTypes;
-        public List<Event> Events { get; set; }
-        public List<string> SportTypes { get; set; }
+
+        internal List<Event> Events { get => events; set => events = value; }
+        public List<string> SportTypes { get => sportTypes; set => sportTypes = value; }
 
         public void AddSport(string sport)
         {   
