@@ -47,7 +47,15 @@ namespace Database
             while (true)
             {
                 string input = Console.ReadLine();
-                if (input == "quit") Environment.Exit(0);
+                if (input == "quit" || input == "exit")
+                {
+                    Environment.Exit(0);
+                }
+                else if (input == "clients")
+                {
+                    Console.WriteLine($"{server.ClientCount()} clients | {server.ThreadCount()} threads");
+                    continue;
+                }
 
                 object result;
                 lock (mData)
