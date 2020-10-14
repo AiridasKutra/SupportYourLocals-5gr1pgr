@@ -11,6 +11,7 @@
     <Compile Include="..\SharedFiles\DataList.cs" Link="ServerSideLinks\DataList.cs" />
     <Compile Include="..\SharedFiles\Formatting\Json.cs" Link="ServerSideLinks\Json.cs" />
     <Compile Include="..\SharedFiles\Helper.cs" Link="ServerSideLinks\Helper.cs" />
+    <Compile Include="..\SharedFiles\Network\ClientWrapper.cs" Link="ServerSideLinks\ClientWrapper.cs" />
     <Compile Include="..\SharedFiles\Network\Packet.cs" Link="ServerSideLinks\Packet.cs" />
     <Compile Include="..\SharedFiles\Network\PacketEnum.cs" Link="ServerSideLinks\PacketEnum.cs" />
     <Compile Include="..\SharedFiles\Network\TCPClient.cs" Link="ServerSideLinks\TCPClient.cs" />
@@ -18,6 +19,21 @@
 
   <ItemGroup>
     <Folder Include="ServerSideLinks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

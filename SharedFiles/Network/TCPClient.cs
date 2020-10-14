@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 namespace Common.Network
@@ -13,7 +14,7 @@ namespace Common.Network
 
         private Queue<Packet> incomingPackets;
 
-        public const uint MaxPacketSize = 8192;
+        public const uint MaxPacketSize = 1024;
 
         // Mutexes
         Mutex mPak;
@@ -28,15 +29,24 @@ namespace Common.Network
         public bool Connect(string ip, ushort port)
         {
             // Set up address information
-            IPHostEntry ipHost = Dns.GetHostEntry(ip);
-            IPAddress ipAddr = ipHost.AddressList.Length == 1 ? ipHost.AddressList[0] : ipHost.AddressList[1];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
+            //IPHostEntry ipHost = Dns.GetHostEntry(ip);
+            //IPAddress ipAddr = ipHost.AddressList.Length == 1 ? ipHost.AddressList[0] : ipHost.AddressList[1];
 
-            // Create socket which listens for new connections
-            thisClient = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            thisClient.Connect(localEndPoint);
-            if (!thisClient.Connected)
+            try
+            {
+                IPAddress ipAddr = IPAddress.Parse(ip);
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
+
+                // Create socket which listens for new connections
+                thisClient = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                thisClient.Connect(localEndPoint);
+                if (!thisClient.Connected)
+                    return false;
+            }
+            catch
+            {
                 return false;
+            }
 
             // Start thread which accepts and handles new connections
             packetHandler = new Thread(new ThreadStart(PacketHandler));
@@ -51,6 +61,26 @@ namespace Common.Network
             return true;
         }
 
+        private int Send(Socket sock, byte[] buffer, int id = -1)
+        {
+            int prefixSent = sock.Send(BitConverter.GetBytes(buffer.Length));
+            int messageSent = sock.Send(buffer);
+
+            // Change color to red if something is wrong
+            if (prefixSent != 4)
+                Console.ForegroundColor = ConsoleColor.Red;
+            if (buffer.Length != messageSent)
+                Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write($"[User {id}] ");
+            Console.Write($"|Prefix size: {prefixSent}| ");
+            Console.WriteLine($"Sending {buffer.Length} bytes ({messageSent} sent)");
+
+            // Reset color back to white
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return prefixSent + messageSent;
+        }
+
         public bool Send(Packet packet)
         {
             // Inform server about packet count
@@ -63,7 +93,7 @@ namespace Common.Network
                 byte[] packCountBuffer = BitConverter.GetBytes(packetCount);
                 Buffer.BlockCopy(packTypeBuffer, 0, buffer, 0, 4);
                 Buffer.BlockCopy(packCountBuffer, 0, buffer, 4, 4);
-                thisClient.Send(buffer);
+                if (Send(thisClient, buffer) == 0) return false;
             }
 
             byte[] packetId = BitConverter.GetBytes(packet.PacketId);
@@ -86,10 +116,7 @@ namespace Common.Network
                     Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                     bytesLeft = 0;
                 }
-                // Send the size of the buffer
-                if (thisClient.Send(BitConverter.GetBytes(buffer.Length)) == 0) return false;
-                // Send the buffer
-                if (thisClient.Send(buffer) == 0) return false;
+                if (Send(thisClient, buffer) == 0) return false;
             }
 
             return true;
@@ -136,8 +163,21 @@ namespace Common.Network
                     int msgLength = BitConverter.ToInt32(msgLengthBuffer);
 
                     // Read message
-                    int byteNum = thisClient.Receive(buffer, msgLength, SocketFlags.None);
+                    int byteNum;
+                    while (true)
+                    {
+                        // Only receive full messages
+                        byteNum = thisClient.Receive(buffer, msgLength, SocketFlags.Peek);
+                        if (byteNum == msgLength)
+                        {
+                            break;
+                        }
+                        Thread.Sleep(1);
+                    }
+                    byteNum = thisClient.Receive(buffer, msgLength, SocketFlags.None);
                     if (byteNum < 4) continue;
+
+                    Console.WriteLine($"Receiving {byteNum} bytes (Expected {msgLength})");
 
                     uint packetId = BitConverter.ToUInt32(buffer, 0);
 
