@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.Formatting;
 using Common.Network;
+using Database.Network;
 using System;
 using System.Text;
 using System.Threading;
@@ -15,19 +16,43 @@ namespace Database
         static void Main(string[] args)
         {
             db = new Database("data.json");
-            db.Print();
+            //db.Print();
             mData = new Mutex();
 
-            Thread serverThread = new Thread(new ThreadStart(RunServer));
-            serverThread.Start();
+            ushort port;
+            while (true)
+            {
+                Console.Write("Enter the port: ");
+                string portStr = Console.ReadLine();
+                try
+                {
+                    port = ushort.Parse(portStr);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid port");
+                    continue;
+                }
+                break;
+            }
 
+            TCPServer server = new TCPServer(port);
+            RequestHandler requestHandler = new RequestHandler(db, server);
+            requestHandler.Start();
+
+            //Thread serverThread = new Thread(new ThreadStart(RunServer));
+            //serverThread.Start();
+
+            Console.WriteLine("Server started.");
             while (true)
             {
                 string input = Console.ReadLine();
+                if (input == "quit") Environment.Exit(0);
+
                 object result;
                 lock (mData)
                 {
-                    result = db.Execute(input, null);
+                    result = db.Execute(input);
                 }
                 if (result != null)
                     Console.WriteLine(result);
@@ -51,7 +76,7 @@ namespace Database
                         object result;
                         lock (mData)
                         {
-                            result = db.Execute(message, null);
+                            result = db.Execute(message);
                         }
                         if (result != null)
                         {

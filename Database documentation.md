@@ -2,26 +2,23 @@
 
 This document outlines the basic usage of the database. Keep in mind that the database will be updated as new features are implemented, therefore, **backwards compatibility is NOT guaranteed**. I will try to make sure old things don't break unexpectedly, and if you run into issues just ask.
 
-**THE CURRENT VERSION WILL BE REPLACED BY A WRAPPER CLASS WHICH WILL SIMPLIFY MANY OF THE THINGS COVERED HERE. THIS WARNING INDICATES THAT THE CURRENT VERSION IS WIP, UNSTANDARDIZED, AND IS HARDER TO WORK WITH THAN LATER VERSIONS.**
-The documentation will be updated with every change.
+The documentation will be updated.
 
 # Setup
 
-To use the database, you first need to connect to the server. This is done by creating a `TCPClient` class instance and calling its `Connect(string ip, ushort port)` function. The function returns `true` if the connection succeeded and `false` otherwise.
+To use the database, you first need to connect to the server. This is done by creating a `ClientWrapper` class instance and calling its `Connect(string ip, ushort port)` function. The function returns `true` if the connection succeeded and `false` otherwise.
 
 If you have the database running locally, the `ip` field should be either `localhost` or `127.0.0.1`. Otherwise pass the ip of the user running the database. The port will be `54000` in virtually all cases.
 
-# Sending packets
+# Receiving data
 
-To send packets you first need to create a `Packet` class instance. The fields `PacketId` and `ClientId` are unused and can be safely ignored. The `Data` field contains the bytes of what you want to send. Currently you can only send text, which is done by assigning the bytes of the text to the `Data` field and calling `Send(Packet packet)` on a `TCPClient` instance. To convert a string to a byte array you must use `Encoding.ASCII.GetBytes("your text")`.
+To receive data from the database, call the `ExecuteCommand(string command)` function. The parameter for this function is an SKL command (details below). The function returns a `DataList` object. Its usage will be expanded below.
 
-# Receiving packets
+# Uploading data
 
-Incoming packets are saved in a queue which returns the oldest received packet by calling `GetPacket()` on a `TCPClient` instance. Before calling the function you should call `PacketCount()` which returns the number of packets currently in the buffer. Trying to get a packet when there are none will throw an `InvalidOperationException`.
+There are 2 functions which allow you to add data: `AddEntry(DataList entry, string tableName)` and `ModifyEntry(DataList entry, string tableName, string rowName)`. They take the data in `entry` and place it into the table `tableName` and, in the case of `ModifyEntry`, replace the specified row.
 
-To receive the contents of the packet in a string use `Encoding.ASCII.GetString(packet.Data)`
-
-**Important:** The first received packet after calling `Connect()` will either be the text "Connected." or "Server full.". You should wait until the packet is received before doing any further sending/receiving.
+To get row names use `ExecuteCommand` and look at the names in the first layer.
 
 # SKL commands (SQL parody)
 

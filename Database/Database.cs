@@ -3,16 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Common;
+using System.Threading;
 
 namespace Database
 {
     class Database
     {
         private DataList data;
+        private Mutex dbLock;
 
         public Database(string filename)
         {
             data = new DataList();
+            dbLock = new Mutex();
             {
                 DataList row1 = new DataList();
                 row1.Add("birkaciulpis", "name");
@@ -63,14 +66,14 @@ namespace Database
                 table.Add(row4, "4");
 
                 //data.Add(table, "birkakakliu_kaimo_perlai");
-                data.Add(table, "table1");
+                //data.Add(table, "table1");
             }
 
-            Save(new JsonFileWriter("data1.json"));
+            //Save(new JsonFileWriter("data1.json"));
             Load(new JsonFileReader("data1.json"));
         }
 
-        public object Execute(string command, object[] args)
+        public DataList Execute(string command)
         {
             string[] commlets = command.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (commlets.Length == 0) return null;
@@ -90,7 +93,7 @@ namespace Database
             }
         }
 
-        private object ExSelect(string[] commlets)
+        private DataList ExSelect(string[] commlets)
         {
             try
             {
@@ -124,6 +127,7 @@ namespace Database
                         int upperBound;
                         if (int.TryParse(commlets[++comIndex], out lowerBound))
                         {
+                            lowerBound--;
                             if (comIndex == commlets.Length - 1)
                             {
                                 upperBound = lowerBound;
@@ -137,6 +141,7 @@ namespace Database
                                 {
                                     return null;
                                 }
+                                upperBound--;
                             }
                             else
                             {
@@ -213,92 +218,95 @@ namespace Database
                     comIndex++;
                 }
 
-
-                // Select appropriate items
-                int tableIndex = data.names.IndexOf(tableName);
-                if (tableIndex == -1) return null;
-                if (data.items[tableIndex].GetType() != typeof(DataList)) return null;
-
-                DataList table = (DataList)data.items[tableIndex];
-                DataList finalTable = new DataList();
-                for (int i = rowLower; i <= rowUpper && i < table.Size(); i++)
+                // Lock database data
+                lock (dbLock)
                 {
-                    object rowItem = table.items[i];
-                    string rowName = table.names[i];
-                    if (rowItem.GetType() != typeof(DataList)) continue;
-                    DataList row = (DataList)rowItem;
+                    // Select appropriate items
+                    int tableIndex = data.names.IndexOf(tableName);
+                    if (tableIndex == -1) return null;
+                    if (data.items[tableIndex].GetType() != typeof(DataList)) return null;
 
-                    // Check for required attributes
-                    bool isComplete = true;
-                    bool hasAttributes = true;
-                    void Loop()
+                    DataList table = (DataList)data.items[tableIndex];
+                    DataList finalTable = new DataList();
+                    for (int i = rowLower; i <= rowUpper && i < table.Size(); i++)
                     {
-                        if (complete)
+                        object rowItem = table.items[i];
+                        string rowName = table.names[i];
+                        if (rowItem.GetType() != typeof(DataList)) continue;
+                        DataList row = (DataList)rowItem;
+
+                        // Check for required attributes
+                        bool isComplete = true;
+                        bool hasAttributes = true;
+                        void Loop()
                         {
-                            for (int j = 0; j < attrs.Count; j++)
+                            if (complete)
                             {
-                                if (row.names.IndexOf(attrs[j]) == -1)
+                                for (int j = 0; j < attrs.Count; j++)
                                 {
-                                    isComplete = false;
+                                    if (row.names.IndexOf(attrs[j]) == -1)
+                                    {
+                                        isComplete = false;
+                                        return;
+                                    }
+                                }
+                            }
+                            for (int k = 0; k < mustContain.Count; k++)
+                            {
+                                if (row.names.IndexOf(mustContain[k]) == -1)
+                                {
+                                    hasAttributes = false;
                                     return;
                                 }
                             }
                         }
-                        for (int k = 0; k < mustContain.Count; k++)
-                        {
-                            if (row.names.IndexOf(mustContain[k]) == -1)
-                            {
-                                hasAttributes = false;
-                                return;
-                            }
-                        }
-                    }
-                    Loop();
-                    if (!isComplete) continue;
-                    if (!hasAttributes) continue;
+                        Loop();
+                        if (!isComplete) continue;
+                        if (!hasAttributes) continue;
 
-                    // Filter out
-                    bool passes = true;
-                    for (int j = 0; j < attrNames.Count; j++)
-                    {
-                        int index = row.names.IndexOf(attrNames[j]);
-                        if (index != -1)
+                        // Filter out
+                        bool passes = true;
+                        for (int j = 0; j < attrNames.Count; j++)
                         {
-                            if (!filters[j].Test(row.items[index]))
+                            int index = row.names.IndexOf(attrNames[j]);
+                            if (index != -1)
                             {
-                                passes = false;
-                                break;
+                                if (!filters[j].Test(row.items[index]))
+                                {
+                                    passes = false;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    if (!passes) continue;
+                        if (!passes) continue;
 
-                    // Add row items to final table
-                    if (attrs.Count == 0)
-                    {
-                        finalTable.Add(row, rowName);
-                    }
-                    else
-                    {
-                        DataList trimmedRow = new DataList();
-                        for (int j = 0; j < attrs.Count; j++)
+                        // Add row items to final table
+                        if (attrs.Count == 0)
                         {
-                            int index = row.names.IndexOf(attrs[j]);
-                            if (index == -1)
-                            {
-                                trimmedRow.Add(null, attrs[j]);
-                            }
-                            else
-                            {
-                                trimmedRow.Add(row.items[index], attrs[j]);
-                            }
+                            finalTable.Add(row, rowName);
                         }
-                        finalTable.Add(trimmedRow, rowName);
+                        else
+                        {
+                            DataList trimmedRow = new DataList();
+                            for (int j = 0; j < attrs.Count; j++)
+                            {
+                                int index = row.names.IndexOf(attrs[j]);
+                                if (index == -1)
+                                {
+                                    trimmedRow.Add(null, attrs[j]);
+                                }
+                                else
+                                {
+                                    trimmedRow.Add(row.items[index], attrs[j]);
+                                }
+                            }
+                            finalTable.Add(trimmedRow, rowName);
+                        }
                     }
+
+                    // Return final table
+                    return finalTable;
                 }
-
-                // Return final table
-                return finalTable;
             }
             catch (IndexOutOfRangeException e)
             {
@@ -313,27 +321,66 @@ namespace Database
 
         }
 
+        public void AddEntry(DataList entry, string tableName)
+        {
+            int index = data.names.IndexOf(tableName);
+
+            // Create new table
+            if (index == -1)
+            {
+                data.Add(new DataList(), tableName);
+                index = data.names.IndexOf(tableName);
+            }
+
+            // Add entry
+            ((DataList)data.Get(index)).Add(entry, (index + 1).ToString());
+        }
+
+        public void EditEntry(DataList entry, string tableName, string rowName)
+        {
+            int tableIndex = entry.names.IndexOf(tableName);
+            if (tableIndex == -1) return;
+
+            // Find entry
+            DataList table = (DataList)data.Get(tableIndex);
+            int rowIndex = table.names.IndexOf(rowName);
+            if (rowIndex == -1) return;
+
+            // Edit entry
+            ((DataList)data.Get(tableIndex)).items[rowIndex] = entry;
+            //table.items[rowIndex] = entry;
+        }
+
         public void Save(IDataWriter writer)
         {
             //JsonFileIO.Write(filename, DataList.ToList(data));
-            writer.Write(data);
+            lock (dbLock)
+            {
+                writer.Write(data);
+            }
         }
 
         public void Load(IDataReader reader)
         {
             //data = DataList.FromList(JsonFileIO.Read(filename));
-            reader.Read(out data);
+            lock (dbLock)
+            {
+                reader.Read(out data);
+            }
         }
 
         public void Print()
         {
-            for (int i = 0; i < data.Size(); i++)
+            lock (dbLock)
             {
-                Console.WriteLine("-----------------------------");
-                Console.WriteLine("| " + data.names[i] + " |");
-                Console.WriteLine("-----------------------------");
-                Console.Write(data.items[i].ToString());
-                Console.WriteLine("-----------------------------");
+                for (int i = 0; i < data.Size(); i++)
+                {
+                    Console.WriteLine("-----------------------------");
+                    Console.WriteLine("| " + data.names[i] + " |");
+                    Console.WriteLine("-----------------------------");
+                    Console.Write(data.items[i].ToString());
+                    Console.WriteLine("-----------------------------");
+                }
             }
         }
     }

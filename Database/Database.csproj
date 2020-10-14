@@ -10,11 +10,11 @@
     <Compile Include="..\SharedFiles\Formatting\Json.cs" Link="Formatting\Json.cs" />
     <Compile Include="..\SharedFiles\Helper.cs" Link="Helper.cs" />
     <Compile Include="..\SharedFiles\Network\Packet.cs" Link="Network\Packet.cs" />
+    <Compile Include="..\SharedFiles\Network\PacketEnum.cs" Link="Network\PacketEnum.cs" />
     <Compile Include="..\SharedFiles\Network\TCPServer.cs" Link="Network\TCPServer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Network\" />
     <Folder Include="Formatting\" />
   </ItemGroup>
 
