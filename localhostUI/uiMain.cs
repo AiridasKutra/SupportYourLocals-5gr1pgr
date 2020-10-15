@@ -36,6 +36,8 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             //sorry if ur eyes r bleeding.
+
+            refreshSportsTable();
         }
 
         private void createEvent(object sender, EventArgs e)
@@ -61,6 +63,8 @@ namespace localhostUI
             
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
+
+            refreshSportsTable();
         }
 
         private void removeSport(object sender, EventArgs e)
@@ -78,6 +82,17 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Text = "";
+
+            refreshSportsTable();
+        }
+
+        private void refreshSportsTable()
+        {
+            listView1.Items.Clear();
+            for (int i = 0; i < sportTypes.SportList.Count; i++)
+            {
+                listView1.Items.Add(sportTypes.SportList[i]);
+            }
         }
     }
 }
