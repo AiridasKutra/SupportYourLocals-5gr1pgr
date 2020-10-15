@@ -1,6 +1,6 @@
 ﻿namespace localhostUI
 {
-    partial class uiMain
+    partial class UiMain
     {
         /// <summary>
         /// Required designer variable.
@@ -215,7 +215,7 @@
             this.createEventButton.TabIndex = 12;
             this.createEventButton.Text = "Create";
             this.createEventButton.UseVisualStyleBackColor = true;
-            this.createEventButton.Click += new System.EventHandler(this.createEvent);
+            this.createEventButton.Click += new System.EventHandler(this.CreateEvent);
             // 
             // descriptionBox
             // 
@@ -342,7 +342,7 @@
             this.removeButton.TabIndex = 5;
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
-            this.removeButton.Click += new System.EventHandler(this.removeSport);
+            this.removeButton.Click += new System.EventHandler(this.RemoveSport);
             // 
             // removeSportBox
             // 
@@ -369,7 +369,7 @@
             this.addButton.TabIndex = 2;
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addSport);
+            this.addButton.Click += new System.EventHandler(this.AddSport);
             // 
             // addSportBox
             // 
@@ -447,8 +447,8 @@
             // 
             // eventList
             // 
-            this.eventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.eventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.eventList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.name,
@@ -591,4 +591,3 @@
         private System.Windows.Forms.ComboBox removeSportBox;
     }
 }
-

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,8 +26,6 @@ namespace localhostUI
             }
         }
         [STAThread]
-
-        
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -48,9 +47,11 @@ namespace localhostUI
                 {
                     Application.Run(new NoDatabaseMain());
                 }
-                Application.Run(new uiMain());
+                Application.Run(new UiMain());
             }
         }
+
+        
 
         public static bool ConnectToDb(string ip, ushort port)
         {

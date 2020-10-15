@@ -18,7 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="libs\" />
     <Folder Include="ServerSideLinks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Database\Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Device">
+      <HintPath>libs\System.Device.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
