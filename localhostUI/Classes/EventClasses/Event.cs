@@ -11,12 +11,12 @@ namespace localhostUI.EventClasses
         private string sport;
         private float price;
         private string description;
-        private string location;
+        private string adress;
         private List<Team> team;
 
         
 
-        public Event(string name, DateTime date, string sport, string description, float price = 0)
+        public Event(string name, DateTime date, string sport, string description, string adress, float price = 0)
         {
             this.Name = name;
             this.Date = date;
@@ -31,7 +31,7 @@ namespace localhostUI.EventClasses
         public string Sport { get => sport; set => sport = value; }
         public float Price { get => price; set => price = value; }
         public string Description { get => description; set => description = value; }
-        public string Location { get => location; set => location = value; }
+        public string Adress { get => adress; set => adress = value; }
         public List<Team> Team { get => team; set => team = value; }
 
         public override string ToString()

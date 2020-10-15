@@ -51,6 +51,7 @@ namespace localhostUI
             eventsInformation.Events.Add(newEvent);
             SaveEvents();
 
+
         }
         private void SaveEvents()
         {
@@ -70,7 +71,7 @@ namespace localhostUI
                 events.Add(ev.Sport);
                 events.Add(ev.Price);
                 events.Add(ev.Description);
-                events.Add(ev.Location);
+                events.Add(ev.Adress);
                 
                 DataList teams = new DataList();
                 foreach (Team team in ev.Team)
@@ -127,7 +128,7 @@ namespace localhostUI
             string sport;
             float price;
             string description;
-            string location;
+            string adress;
             List<Team> team = new List<Team>();
             List<Player> player = new List<Player>();
             List<string> extraInfo = new List<string>();
@@ -140,11 +141,11 @@ namespace localhostUI
                     sport = (string)events.items[i + 2];
                     price = (float)events.items[i + 3];
                     description = (string)events.items[i + 4];
-                    location = (string)events.items[i + 5];
+                    adress = (string)events.items[i + 5];
                     var teee = (DataList)events.items[i + 6];
-                    var e1 = new Event(name, date, sport, description, price)
+                    var e1 = new Event(name, date, sport, description, adress, price)
                     {
-                        Location = location
+                        Adress = adress
                     };
 
                     
@@ -192,7 +193,14 @@ namespace localhostUI
             return eventInformation;
         }
 
-
+        private void addSport(object sender, EventArgs e)
+        {
+            if (sportTypes.SportList.Contains(addSportBox.Text))
+            {
+                MessageBox.Show("You cannot add this sport. It already exists in the list.", "Matching sport found.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            sportTypes.SportList.Add(addSportBox.Text);
 
             sportBox.Items.Clear();
             removeSportBox.Items.Clear();
