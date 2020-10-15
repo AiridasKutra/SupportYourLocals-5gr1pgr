@@ -88,10 +88,10 @@ namespace localhostUI
 
         private void refreshSportsTable()
         {
-            listView1.Items.Clear();
+            comboBox1.Items.Clear();
             for (int i = 0; i < sportTypes.SportList.Count; i++)
             {
-                listView1.Items.Add(sportTypes.SportList[i]);
+                comboBox1.Items.Add(sportTypes.SportList[i]);
             }
         }
     }
