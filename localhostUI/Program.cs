@@ -1,4 +1,6 @@
 ﻿using Common.Network;
+using localhostUI.Backend;
+using localhostUI.Backend.DataManagement;
 using localhostUI.NoDatabaseConnection;
 using localhostUI.NoInternetConnection;
 using System;
@@ -13,9 +15,6 @@ namespace localhostUI
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         private static readonly ClientWrapper client = new ClientWrapper();
         public static ClientWrapper Client
         {
@@ -24,9 +23,35 @@ namespace localhostUI
                 return client;
             }
         }
-        [STAThread]
 
-        
+        private static readonly DataPool dataPool = new DataPool();
+        public static DataPool DataPool
+        {
+            get
+            {
+                return dataPool;
+            }
+        }
+
+        private static readonly DataManager dataManager = new DataManager();
+        public static DataManager DataManager
+        {
+            get
+            {
+                return dataManager;
+            }
+        }
+
+        private static readonly EventDataProvider dataProvider = new EventDataProvider();
+        public static EventDataProvider DataProvider
+        {
+            get
+            {
+                return dataProvider;
+            }
+        }
+
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
