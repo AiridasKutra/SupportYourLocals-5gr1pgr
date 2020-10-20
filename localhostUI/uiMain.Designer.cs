@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UiMain));
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.profileTab = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.locationButton = new System.Windows.Forms.Button();
             this.profileManagerLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.userAdressBox = new System.Windows.Forms.TextBox();
@@ -37,6 +40,7 @@
             this.managerTabs = new System.Windows.Forms.TabControl();
             this.yourEventsTab = new System.Windows.Forms.TabPage();
             this.newEventTab = new System.Windows.Forms.TabPage();
+            this.mapsBrowserButton = new System.Windows.Forms.Button();
             this.eventAdressBox = new System.Windows.Forms.TextBox();
             this.adressLabel = new System.Windows.Forms.Label();
             this.createEventButton = new System.Windows.Forms.Button();
@@ -90,6 +94,8 @@
             // 
             // profileTab
             // 
+            this.profileTab.Controls.Add(this.button1);
+            this.profileTab.Controls.Add(this.locationButton);
             this.profileTab.Controls.Add(this.profileManagerLabel);
             this.profileTab.Controls.Add(this.label1);
             this.profileTab.Controls.Add(this.userAdressBox);
@@ -101,6 +107,27 @@
             this.profileTab.TabIndex = 2;
             this.profileTab.Text = "Profile manager";
             this.profileTab.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.Location = new System.Drawing.Point(211, 97);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(42, 41);
+            this.button1.TabIndex = 15;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.UserSearchMapsBrowser);
+            // 
+            // locationButton
+            // 
+            this.locationButton.Location = new System.Drawing.Point(23, 97);
+            this.locationButton.Name = "locationButton";
+            this.locationButton.Size = new System.Drawing.Size(182, 41);
+            this.locationButton.TabIndex = 3;
+            this.locationButton.Text = "Search coordinates";
+            this.locationButton.UseVisualStyleBackColor = true;
+            this.locationButton.Click += new System.EventHandler(this.SearchCoordinatesAsync);
             // 
             // profileManagerLabel
             // 
@@ -126,6 +153,7 @@
             this.userAdressBox.BackColor = System.Drawing.SystemColors.HighlightText;
             this.userAdressBox.Location = new System.Drawing.Point(140, 60);
             this.userAdressBox.Name = "userAdressBox";
+            this.userAdressBox.PlaceholderText = "Didlaukio g. 59";
             this.userAdressBox.Size = new System.Drawing.Size(644, 31);
             this.userAdressBox.TabIndex = 0;
             // 
@@ -167,6 +195,7 @@
             // 
             // newEventTab
             // 
+            this.newEventTab.Controls.Add(this.mapsBrowserButton);
             this.newEventTab.Controls.Add(this.eventAdressBox);
             this.newEventTab.Controls.Add(this.adressLabel);
             this.newEventTab.Controls.Add(this.createEventButton);
@@ -190,12 +219,24 @@
             this.newEventTab.Text = "Create a new event";
             this.newEventTab.UseVisualStyleBackColor = true;
             // 
+            // mapsBrowserButton
+            // 
+            this.mapsBrowserButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("mapsBrowserButton.BackgroundImage")));
+            this.mapsBrowserButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.mapsBrowserButton.Location = new System.Drawing.Point(741, 183);
+            this.mapsBrowserButton.Margin = new System.Windows.Forms.Padding(0);
+            this.mapsBrowserButton.Name = "mapsBrowserButton";
+            this.mapsBrowserButton.Size = new System.Drawing.Size(34, 34);
+            this.mapsBrowserButton.TabIndex = 15;
+            this.mapsBrowserButton.UseVisualStyleBackColor = true;
+            this.mapsBrowserButton.Click += new System.EventHandler(this.SearchMapsBrowser);
+            // 
             // eventAdressBox
             // 
             this.eventAdressBox.Location = new System.Drawing.Point(246, 184);
             this.eventAdressBox.Name = "eventAdressBox";
             this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.eventAdressBox.Size = new System.Drawing.Size(529, 31);
+            this.eventAdressBox.Size = new System.Drawing.Size(489, 31);
             this.eventAdressBox.TabIndex = 14;
             // 
             // adressLabel
@@ -447,8 +488,8 @@
             // 
             // eventList
             // 
-            this.eventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.eventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.eventList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.name,
@@ -459,7 +500,7 @@
             this.eventList.GridLines = true;
             this.eventList.HideSelection = false;
             this.eventList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem1});
             this.eventList.Location = new System.Drawing.Point(3, 41);
             this.eventList.Name = "eventList";
             this.eventList.Size = new System.Drawing.Size(772, 443);
@@ -511,14 +552,14 @@
             this.menuTabs.Size = new System.Drawing.Size(800, 562);
             this.menuTabs.TabIndex = 0;
             // 
-            // uiMain
+            // UiMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 562);
             this.Controls.Add(this.menuTabs);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "uiMain";
+            this.Name = "UiMain";
             this.Text = "localhost";
             this.Load += new System.EventHandler(this.MainLoad);
             this.profileTab.ResumeLayout(false);
@@ -589,5 +630,8 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.ComboBox removeSportBox;
+        private System.Windows.Forms.Button locationButton;
+        private System.Windows.Forms.Button mapsBrowserButton;
+        private System.Windows.Forms.Button button1;
     }
 }

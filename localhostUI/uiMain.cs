@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Device.Location;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using localhostUI.Classes;
 using localhostUI.EventClasses;
+using System.Linq;
+using Geocoding.Google;
+using GoogleMaps.LocationServices;
+using localhostUI.Classes.LocationClasses;
 
 namespace localhostUI
 {
@@ -30,6 +34,8 @@ namespace localhostUI
         {
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
+            
+
 
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
             sportTypes.SportList.Add("Football");
@@ -41,7 +47,7 @@ namespace localhostUI
             sportTypes.SportList.Add("Rugby");
 
             //  [Placeholder]   . Added user adress to locate nearby events in the future.
-            userAdressBox.Text = "Vilnius, Didlaukio g. 59";
+            userAdressBox.Text = "Didlaukio g. 59, Vilnius";
 
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
@@ -116,6 +122,28 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Text = "";
+        }
+
+        private void SearchCoordinatesAsync(object sender, EventArgs e)
+        {
+
+            // [Placeholder] display for funcitonality.
+            MapPoint coordinates = LocationInformation.LatLongFromAddress(userAdressBox.Text);
+            Console.WriteLine($"lat: {coordinates.Latitude}\nlong: {coordinates.Longitude}");
+            AddressData addressData = LocationInformation.AddressFromLatLong(coordinates.Latitude, coordinates.Longitude);
+            Console.WriteLine(addressData.Address);
+        
+        
+        }
+
+        private void SearchMapsBrowser(object sender, EventArgs e)
+        {
+            LocationInformation.OpenAdressInBrowser(eventAdressBox.Text);
+        }
+
+        private void UserSearchMapsBrowser(object sender, EventArgs e)
+        {
+            LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
         }
     }
 }
