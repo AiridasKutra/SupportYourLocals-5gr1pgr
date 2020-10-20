@@ -187,6 +187,16 @@ namespace Common.Network
             }
         }
 
+        public int ClientCount()
+        {
+            return clients.Count;
+        }
+
+        public int ThreadCount()
+        {
+            return clientThreads.Count;
+        }
+
         // Goes through all clients and removes closed sockets from array
         public void Cleanup()
         {
@@ -197,8 +207,8 @@ namespace Common.Network
                     if (!clients[i].sock.Connected)
                     {
                         clients.RemoveAt(i);
-                        clientThreads[i].Abort();
                         clientThreads.RemoveAt(i);
+                        i--;
                     }
                 }
             }
@@ -214,6 +224,8 @@ namespace Common.Network
                 {
                     if (clients.Count < maxClients)
                     {
+                        Cleanup();
+
                         int index = clients.Count;
                         clients.Add(new Client(clientSocket));
 

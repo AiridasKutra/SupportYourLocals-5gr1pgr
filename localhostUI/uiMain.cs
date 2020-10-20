@@ -14,7 +14,6 @@ namespace localhostUI
 {
     public partial class UiMain : Form
     {
-
         private EventInformation eventsInformation;
         private SportTypes sportTypes;
         private (bool isActiveLocation, double latitude, double longitude) coordInfo = (false, 0, 0);
@@ -52,6 +51,8 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             //sorry if ur eyes r bleeding.
+
+            refreshSportsTable();
         }
 
 
@@ -105,6 +106,8 @@ namespace localhostUI
 
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
+
+            refreshSportsTable();
         }
 
         private void RemoveSport(object sender, EventArgs e)
@@ -122,6 +125,17 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Text = "";
+
+            refreshSportsTable();
+        }
+
+        private void refreshSportsTable()
+        {
+            comboBox1.Items.Clear();
+            for (int i = 0; i < sportTypes.SportList.Count; i++)
+            {
+                comboBox1.Items.Add(sportTypes.SportList[i]);
+            }
         }
 
         private void SearchCoordinatesAsync(object sender, EventArgs e)
