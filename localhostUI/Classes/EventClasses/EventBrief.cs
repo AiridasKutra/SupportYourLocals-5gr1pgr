@@ -12,17 +12,20 @@ namespace localhostUI.Classes.EventClasses
         private string name;
         private List<string> sports;
         private List<Team> teams;
-        // Coordinate structure TODO
+        private double latitude;
+        private double longitude;
         private DateTime startDate;
         private DateTime endDate;
         private decimal price;
         private string thumbnail; // Links to images (first one always the thumbnail)
 
-        public string Name { get { return name; } set { name = value; } }
-        public DateTime StartDate { get { return startDate; } set { startDate = value; } }
-        public DateTime EndDate { get { return endDate; } set { endDate = value; } }
-        public decimal Price { get { return price; } set { price = value; } }
-        public string Thumbnail { get { return thumbnail; } set { thumbnail = value; } }
+        public string Name { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal Price { get; set; }
+        public string Thumbnail { get; set; }
         public List<string> GetSports()
         {
             return sports;
@@ -38,6 +41,8 @@ namespace localhostUI.Classes.EventClasses
             teams = new List<Team>();
 
             name = "";
+            latitude = 0.0;
+            longitude = 0.0;
             startDate = new DateTime(0L);
             endDate = new DateTime(0L);
             price = 0;
@@ -60,6 +65,14 @@ namespace localhostUI.Classes.EventClasses
                 if (nameObj != null)
                 {
                     name = (string)nameObj;
+                }
+                object coordinatesObj = data.Get("coordinates");
+                if (coordinatesObj != null)
+                {
+                    object latitudeObj = ((DataList)coordinatesObj).Get(0);
+                    object longitudeObj = ((DataList)coordinatesObj).Get(1);
+                    if (latitudeObj != null) latitude = (double)latitudeObj;
+                    if (longitudeObj != null) longitude = (double)longitudeObj;
                 }
                 object startDateObj = data.Get("start_date");
                 if (startDateObj != null)
@@ -111,6 +124,8 @@ namespace localhostUI.Classes.EventClasses
                                 players.Add(new Player((string)player.item));
                             }
                         }
+
+                        teams.Add(new Team(name, players));
                     }
                 }
             }
@@ -144,7 +159,7 @@ namespace localhostUI.Classes.EventClasses
                 DataList playersDl = new DataList();
                 foreach (Player player in team.GetPlayers())
                 {
-                    playersDl.Add(player);
+                    playersDl.Add(player.Name);
                 }
                 teamsDl.Add(playersDl, team.Name);
             }

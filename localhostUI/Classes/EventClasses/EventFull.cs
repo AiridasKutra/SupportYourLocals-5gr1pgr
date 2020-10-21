@@ -13,7 +13,8 @@ namespace localhostUI.Classes.EventClasses
         private string name;
         private List<string> sports;
         private List<Team> teams;
-        // Coordinate structure TODO
+        private double latitude;
+        private double longitude;
         private string address;
         private DateTime startDate;
         private DateTime endDate;
@@ -23,6 +24,8 @@ namespace localhostUI.Classes.EventClasses
         private List<string> images; // Links to images (first one always the thumbnail)
 
         public string Name { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string Address { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -53,6 +56,8 @@ namespace localhostUI.Classes.EventClasses
             images = new List<string>();
 
             name = "";
+            latitude = 0.0;
+            longitude = 0.0;
             address = "";
             startDate = new DateTime(0L);
             endDate = new DateTime(0L);
@@ -76,6 +81,14 @@ namespace localhostUI.Classes.EventClasses
                 if (nameObj != null)
                 {
                     name = (string)nameObj;
+                }
+                object coordinatesObj = data.Get("coordinates");
+                if (coordinatesObj != null)
+                {
+                    object latitudeObj = ((DataList)coordinatesObj).Get(0);
+                    object longitudeObj = ((DataList)coordinatesObj).Get(1);
+                    if (latitudeObj != null) latitude = (double)latitudeObj;
+                    if (longitudeObj != null) longitude = (double)longitudeObj;
                 }
                 object addressObj = data.Get("address");
                 if (addressObj != null)
@@ -144,6 +157,8 @@ namespace localhostUI.Classes.EventClasses
                                 players.Add(new Player((string)player.item));
                             }
                         }
+
+                        teams.Add(new Team(name, players));
                     }
                 }
             }
@@ -187,7 +202,7 @@ namespace localhostUI.Classes.EventClasses
                 DataList playersDl = new DataList();
                 foreach (Player player in team.GetPlayers())
                 {
-                    playersDl.Add(player);
+                    playersDl.Add(player.Name);
                 }
                 teamsDl.Add(playersDl, team.Name);
             }
