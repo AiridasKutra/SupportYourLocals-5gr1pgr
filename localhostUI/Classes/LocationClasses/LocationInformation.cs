@@ -10,7 +10,7 @@ namespace localhostUI.Classes.LocationClasses
 {
     class LocationInformation
     {
-        private const string apiKey = "AIzaSyBFAaEgPGgYfkRbWTG2_A2wjw5HuNODYDY";
+        private const string apiKey = "";
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Address { get; set; }
