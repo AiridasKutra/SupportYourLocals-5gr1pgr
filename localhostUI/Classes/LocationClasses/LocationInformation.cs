@@ -1,17 +1,15 @@
 ﻿using GoogleMaps.LocationServices;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace localhostUI.Classes.LocationClasses
 {
     class LocationInformation
     {
-        private const string apiKey = "AIzaSyAHyOhmJm7xITclXehvUFDJG_SqPLWmKUo";
+        private const string apiKey = "AIzaSyBFAaEgPGgYfkRbWTG2_A2wjw5HuNODYDY";
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Address { get; set; }
@@ -30,10 +28,11 @@ namespace localhostUI.Classes.LocationClasses
 
             this.Address = AddressFromLatLong(latitude, longitude).Address;
         }
-    
+
         public static MapPoint LatLongFromAddress(string address, string country = "Lithuania")
         {
-            AddressData addressObject = new AddressData{
+            AddressData addressObject = new AddressData
+            {
                 Address = address,
                 State = null,
                 Country = country
@@ -43,9 +42,9 @@ namespace localhostUI.Classes.LocationClasses
             return locationService.GetLatLongFromAddress(addressObject);
         }
         public static AddressData AddressFromLatLong(double latitude, double longitude)
-        {
-                var locationService = new GoogleLocationService(apiKey);
-                return  locationService.GetAddressFromLatLang(latitude, longitude);
+        {   
+            var locationService = new GoogleLocationService(apiKey);
+            return locationService.GetAddressFromLatLang(latitude, longitude);
         }
         public static AddressData AddressFromLatLong(MapPoint latLong)
         {
@@ -102,6 +101,50 @@ namespace localhostUI.Classes.LocationClasses
                     throw;
                 }
             }
+        }
+        public static double Distance(MapPoint user, MapPoint destination)
+        {
+            try
+            {
+                double resultLatitude = MathSupplement.DegreesToRadians(destination.Latitude - user.Latitude);
+                double resultLongitude = MathSupplement.DegreesToRadians(destination.Longitude - user.Longitude);
+
+                user.Latitude = MathSupplement.DegreesToRadians(user.Latitude);
+                destination.Latitude = MathSupplement.DegreesToRadians(destination.Latitude);
+
+                double coordinateDestination = Math.Pow(Math.Sin(resultLatitude / 2), 2) +
+                                                Math.Pow(Math.Sin(resultLongitude / 2), 2) * Math.Cos(user.Latitude) * Math.Cos(destination.Latitude);
+
+                double tangededDestination = 2 * Math.Atan2(Math.Sqrt(coordinateDestination), Math.Sqrt(1 - coordinateDestination));
+
+                return MathSupplement.EarthRadius * tangededDestination;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
+        public static double Distance(double userLatitude, double userLongitude, double destinationLatitude, double destinationLongitude)
+        {
+            try
+            {
+                double resultLatitude = MathSupplement.DegreesToRadians(destinationLatitude - userLatitude);
+                double resultLongitude = MathSupplement.DegreesToRadians(destinationLongitude - userLongitude);
+
+                userLatitude = MathSupplement.DegreesToRadians(userLatitude);
+                destinationLatitude = MathSupplement.DegreesToRadians(destinationLatitude);
+
+                double coordinateDestination = Math.Pow(Math.Sin(resultLatitude / 2), 2) +
+                                            Math.Pow(Math.Sin(resultLongitude / 2), 2) * Math.Cos(userLatitude) * Math.Cos(destinationLatitude);
+                double tangededDestination = 2 * Math.Atan2(Math.Sqrt(coordinateDestination), Math.Sqrt(1 - coordinateDestination));
+
+                return MathSupplement.EarthRadius * tangededDestination;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+
         }
     }
 }

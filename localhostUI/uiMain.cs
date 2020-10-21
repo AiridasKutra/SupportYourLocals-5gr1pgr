@@ -33,8 +33,6 @@ namespace localhostUI
         {
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
-            
-
 
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
             sportTypes.SportList.Add("Football");
