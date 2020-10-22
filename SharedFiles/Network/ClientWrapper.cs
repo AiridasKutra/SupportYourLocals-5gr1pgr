@@ -94,6 +94,9 @@ namespace Common.Network
         {
             if (!client.Connected()) return false;
 
+            // Remove id attribute
+            entry.Remove("id");
+
             Packet packInfo = new Packet
             {
                 PacketId = (uint)PacketType.MULTIPLE_PACKETS,
@@ -119,9 +122,14 @@ namespace Common.Network
             return true;
         }
 
-        public bool ModifyEntry(DataList entry, string tableName, string rowName)
+        public bool ModifyEntry(DataList entry, string tableName, int id)
         {
             if (!client.Connected()) return false;
+
+            // Remove id attribute
+            entry.Remove("id");
+
+            string rowName = id.ToString();
 
             Packet packInfo = new Packet
             {
@@ -151,6 +159,37 @@ namespace Common.Network
             client.Send(pack1);
             client.Send(pack2);
             client.Send(pack3);
+
+            return true;
+        }
+
+        public bool RemoveEntry(string tableName, int id)
+        {
+            if (!client.Connected()) return false;
+
+            string rowName = id.ToString();
+
+            Packet packInfo = new Packet
+            {
+                PacketId = (uint)PacketType.MULTIPLE_PACKETS,
+                Data = BitConverter.GetBytes(2u)
+            };
+
+            Packet pack1 = new Packet
+            {
+                PacketId = (uint)PacketType.REMOVE_ENTRY_TABLENAME,
+                Data = Encoding.ASCII.GetBytes(tableName)
+            };
+
+            Packet pack2 = new Packet
+            {
+                PacketId = (uint)PacketType.REMOVE_ENTRY_ROWNAME,
+                Data = Encoding.ASCII.GetBytes(rowName)
+            };
+
+            client.Send(packInfo);
+            client.Send(pack1);
+            client.Send(pack2);
 
             return true;
         }
