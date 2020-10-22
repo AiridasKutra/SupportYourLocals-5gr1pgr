@@ -18,14 +18,15 @@ namespace localhostUI.Classes.EventClasses
         private DateTime endDate;
         private decimal price;
         private string thumbnail; // Links to images (first one always the thumbnail)
+        private List<string> tags;
 
-        public string Name { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public decimal Price { get; set; }
-        public string Thumbnail { get; set; }
+        public string Name { get { return name; } set { name = value; } }
+        public double Latitude { get { return latitude; } set { latitude = value; } }
+        public double Longitude { get { return longitude; } set { longitude = value; } }
+        public DateTime StartDate { get { return startDate; } set { startDate = value; } }
+        public DateTime EndDate { get { return endDate; } set { endDate = value; } }
+        public decimal Price { get { return price; } set { price = value; } }
+        public string Thumbnail { get { return thumbnail; } set { thumbnail = value; } }
         public List<string> GetSports()
         {
             return sports;
@@ -34,11 +35,16 @@ namespace localhostUI.Classes.EventClasses
         {
             return teams;
         }
+        public List<string> GetTags()
+        {
+            return tags;
+        }
 
         private void Init()
         {
             sports = new List<string>();
             teams = new List<Team>();
+            tags = new List<string>();
 
             name = "";
             latitude = 0.0;
@@ -74,15 +80,22 @@ namespace localhostUI.Classes.EventClasses
                     if (latitudeObj != null) latitude = (double)latitudeObj;
                     if (longitudeObj != null) longitude = (double)longitudeObj;
                 }
-                object startDateObj = data.Get("start_date");
-                if (startDateObj != null)
+                try
                 {
-                    startDate = DateTime.ParseExact((string)startDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    object startDateObj = data.Get("start_date");
+                    if (startDateObj != null)
+                    {
+                        startDate = DateTime.ParseExact((string)startDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    }
+                    object endDateObj = data.Get("end_date");
+                    if (endDateObj != null)
+                    {
+                        endDate = DateTime.ParseExact((string)endDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    }
                 }
-                object endDateObj = data.Get("end_date");
-                if (startDateObj != null)
+                catch (FormatException)
                 {
-                    endDate = DateTime.ParseExact((string)startDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    // TODO: log incident
                 }
                 object priceObj = data.Get("price");
                 if (priceObj != null)
@@ -128,6 +141,14 @@ namespace localhostUI.Classes.EventClasses
                         teams.Add(new Team(name, players));
                     }
                 }
+                object tagsObj = data.Get("tags");
+                if (tagsObj != null)
+                {
+                    foreach (var tag in (DataList)tagsObj)
+                    {
+                        tags.Add((string)tag.item);
+                    }
+                }
             }
             catch (InvalidCastException)
             {
@@ -163,10 +184,20 @@ namespace localhostUI.Classes.EventClasses
                 }
                 teamsDl.Add(playersDl, team.Name);
             }
+            DataList tagsDl = new DataList();
+            foreach (string tag in ev.tags)
+            {
+                tagsDl.Add(tag);
+            }
+            DataList coordinatesDl = new DataList();
+            coordinatesDl.Add(ev.latitude);
+            coordinatesDl.Add(ev.longitude);
 
             data.Add(sportsDl, "sports");
             data.Add(imagesDl, "images");
             data.Add(teamsDl, "teams");
+            data.Add(tagsDl, "tags");
+            data.Add(coordinatesDl, "coordinates");
 
             return data;
         }
