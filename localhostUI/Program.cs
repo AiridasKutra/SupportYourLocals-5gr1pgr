@@ -78,10 +78,14 @@ namespace localhostUI
                 if (!ConnectToDb(ip, port))
                 {
                     Application.Run(new NoDatabaseMain());
+                    if (ContinueOffline)
+                    {
+                        Application.Run(new UiMain());
+                    }
                 }
-                if (ContinueOffline)
+                else
                 {
-                    Application.Run(new uiMain());
+                    Application.Run(new UiMain());
                 }
             }
 
