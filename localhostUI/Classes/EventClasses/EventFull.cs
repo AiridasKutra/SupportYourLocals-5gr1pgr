@@ -10,6 +10,8 @@ namespace localhostUI.Classes.EventClasses
 {
     class EventFull : EventBase
     {
+        public int Id { get; private set; }
+
         private string name;
         private List<string> sports;
         private List<Team> teams;
@@ -55,6 +57,8 @@ namespace localhostUI.Classes.EventClasses
 
         private void Init()
         {
+            Id = -1;
+
             sports = new List<string>();
             teams = new List<Team>();
             links = new List<string>();
@@ -82,6 +86,12 @@ namespace localhostUI.Classes.EventClasses
 
             try
             {
+                object idObj = data.Get("id");
+                if (idObj != null)
+                {
+                    Id = (int)idObj;
+                }
+
                 // Basic conversions
                 object nameObj = data.Get("name");
                 if (nameObj != null)
