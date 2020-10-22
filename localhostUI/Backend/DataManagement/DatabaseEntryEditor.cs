@@ -16,7 +16,7 @@ namespace localhostUI.Backend.DataManagement
 
         public void Write(DataList data)
         {
-            Program.Client.ModifyEntry(data, tableName, "");
+            Program.Client.ModifyEntry(data, tableName, -1);
         }
     }
 }

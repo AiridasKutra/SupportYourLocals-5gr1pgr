@@ -1,6 +1,7 @@
 ﻿using Common.Network;
 using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
+using localhostUI.Classes.EventClasses;
 using localhostUI.NoDatabaseConnection;
 using localhostUI.NoInternetConnection;
 using System;
@@ -51,15 +52,19 @@ namespace localhostUI
             }
         }
 
+        public static bool ContinueOffline { get; set; } = false;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //string ip = "193.219.91.103";
-            string ip = "doesntexist";
-            ushort port = 8485;
+            string ip = "193.219.91.103";
+            //string ip = "doesntexist";
+            //string ip = "127.0.0.1";
+            ushort port = 2776;
+            //ushort port = 54000;
 
             // Check if internet is available
             if (!CheckForInternetConnection())
@@ -73,14 +78,18 @@ namespace localhostUI
                 {
                     Application.Run(new NoDatabaseMain());
                 }
-                Application.Run(new uiMain());
+                if (ContinueOffline)
+                {
+                    Application.Run(new uiMain());
+                }
             }
+
+            Client.Disconnect();
         }
 
         public static bool ConnectToDb(string ip, ushort port)
         {
-            if (client.Connect(ip, port)) return true;
-            return false;
+            return client.Connect(ip, port);
         }
         public static bool CheckForInternetConnection()
         {
