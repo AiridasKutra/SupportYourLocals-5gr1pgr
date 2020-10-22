@@ -1,23 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Device.Location;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using localhostUI.Classes;
 using localhostUI.EventClasses;
+using System.Linq;
+using Geocoding.Google;
+using GoogleMaps.LocationServices;
+using localhostUI.Classes.LocationClasses;
 
 namespace localhostUI
 {
-    public partial class uiMain : Form
+    public partial class UiMain : Form
     {
         private EventInformation eventsInformation;
         private SportTypes sportTypes;
-        public uiMain()
+        private (bool isActiveLocation, double latitude, double longitude) coordInfo = (false, 0, 0);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
+
+        public UiMain()
         {
+            AllocConsole();
+            GetLocationProperty(ref this.coordInfo);
             InitializeComponent();
         }
 
         private void MainLoad(object sender, EventArgs e)
         {
-
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
 
@@ -31,7 +44,7 @@ namespace localhostUI
             sportTypes.SportList.Add("Rugby");
 
             //  [Placeholder]   . Added user adress to locate nearby events in the future.
-            userAdressBox.Text = "Vilnius, Didlaukio g. 59";
+            userAdressBox.Text = "Didlaukio g. 59, Vilnius";
 
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
@@ -40,7 +53,35 @@ namespace localhostUI
             refreshSportsTable();
         }
 
-        private void createEvent(object sender, EventArgs e)
+
+        //This function allows us to get the device location if it is allowed. 
+        //The whole function returns whether we could obtain the location.
+        [System.Security.SecurityCritical]
+        private bool GetLocationProperty(ref (bool isActiveLocation, double latitude, double longitude) coordInfoRef)
+        {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+
+            // Do not suppress prompt, and wait 1000 milliseconds to start.
+            watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
+
+            GeoCoordinate coord = watcher.Position.Location;
+
+            if (coord.IsUnknown != true)
+            {
+                coordInfoRef = (true, coord.Latitude, coord.Longitude);
+                Console.WriteLine("Lat: {0}, Long: {1}",
+                    coordInfoRef.latitude,
+                    coordInfoRef.longitude);
+            }
+            else
+            {
+                Console.WriteLine("Unknown latitude and longitude.");
+            }
+            return coordInfoRef.isActiveLocation;
+        }
+
+        //Sport managing functions. All of which names correspond to their function.
+        private void CreateEvent(object sender, EventArgs e)
         {
             //So like i dunno press button add event to list.
             //i think its pretty simple but i also think peugeots are good who am i to speak;
@@ -49,7 +90,7 @@ namespace localhostUI
             eventsInformation.Events.Add(newEvent);
         }
 
-        private void addSport(object sender, EventArgs e)
+        private void AddSport(object sender, EventArgs e)
         {
             if (sportTypes.SportList.Contains(addSportBox.Text))
             {
@@ -60,14 +101,14 @@ namespace localhostUI
 
             sportBox.Items.Clear();
             removeSportBox.Items.Clear();
-            
+
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
 
             refreshSportsTable();
         }
 
-        private void removeSport(object sender, EventArgs e)
+        private void RemoveSport(object sender, EventArgs e)
         {
             if (!sportTypes.SportList.Contains(removeSportBox.Text))
             {
@@ -94,6 +135,28 @@ namespace localhostUI
                 comboBox1.Items.Add(sportTypes.SportList[i]);
             }
         }
+
+        private void SearchCoordinatesAsync(object sender, EventArgs e)
+        {
+
+            // [Placeholder] display for funcitonality.
+            MapPoint coordinates = LocationInformation.LatLongFromAddress(userAdressBox.Text);
+            Console.WriteLine($"lat: {coordinates.Latitude}\nlong: {coordinates.Longitude}");
+            AddressData addressData = LocationInformation.AddressFromLatLong(coordinates.Latitude, coordinates.Longitude);
+            Console.WriteLine(addressData.Address);
+        
+        
+        }
+
+        private void SearchMapsBrowser(object sender, EventArgs e)
+        {
+            LocationInformation.OpenAdressInBrowser(eventAdressBox.Text);
+        }
+
+        private void UserSearchMapsBrowser(object sender, EventArgs e)
+        {
+            LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
+        }
     }
 }
 
@@ -107,14 +170,12 @@ namespace localhostUI
             }
             Packet result = client.GetPacket();
             Console.WriteLine(Encoding.ASCII.GetString(result.Data));
-
             Packet pack = new Packet
             {
                 PacketId = 0,
                 SenderId = 0,
                 Data = Encoding.ASCII.GetBytes("SELECT FROM table1")
             };
-
             client.Send(pack);
             while (client.PacketCount() < 1)
             {
@@ -126,7 +187,6 @@ namespace localhostUI
                 string jsonStr = Encoding.ASCII.GetString(packet.Data, 0, packet.Data.Length);
                 DataList data = DataList.FromList(Json.ToList(jsonStr));
                 //eventList.View = View.Details;
-
                 /*DataList events = (DataList) data.Get("5");
                 DataList teams = (DataList) events.Get("teams");
                 DataList players = (DataList) teams.Get("vu");

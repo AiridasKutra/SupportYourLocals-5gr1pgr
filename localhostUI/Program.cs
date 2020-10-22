@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -86,6 +87,8 @@ namespace localhostUI
 
             Client.Disconnect();
         }
+
+        
 
         public static bool ConnectToDb(string ip, ushort port)
         {
