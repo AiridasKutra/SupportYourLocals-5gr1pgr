@@ -124,6 +124,9 @@ namespace Common.Network
 
         public bool Connected()
         {
+            if (thisClient == null) return false;
+            if (packetHandler == null) return false;
+
             return thisClient.Connected && packetHandler.IsAlive;
         }
 

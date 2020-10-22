@@ -65,9 +65,15 @@ namespace Database.Network
                         packets[2] = server.GetPacket();
                         EditEntry(packets);
                     }
+                    else if (packet.PacketId == (uint)PacketType.REMOVE_ENTRY_TABLENAME)
+                    {
+                        Packet[] packets = new Packet[2];
+                        packets[0] = packet;
+                        packets[1] = server.GetPacket();
+                        RemoveEntry(packets);
+                    }
 
 
-                    
                 }
                 Thread.Sleep(10);
             }
@@ -113,6 +119,13 @@ namespace Database.Network
             string jsonStr = Encoding.ASCII.GetString(data[2].Data);
             DataList entry = DataList.FromList(Json.ToList(jsonStr));
             database.EditEntry(entry, tableName, rowName);
+        }
+
+        private void RemoveEntry(Packet[] data)
+        {
+            string tableName = Encoding.ASCII.GetString(data[0].Data);
+            string rowName = Encoding.ASCII.GetString(data[1].Data);
+            database.RemoveEntry(tableName, rowName);
         }
     }
 }

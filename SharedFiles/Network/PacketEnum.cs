@@ -11,6 +11,8 @@
         EDIT_ENTRY_TABLENAME,
         EDIT_ENTRY_ROWNAME,
         EDIT_ENTRY_DATA,
+        REMOVE_ENTRY_TABLENAME,
+        REMOVE_ENTRY_ROWNAME,
 
         SPLIT_PACKETS = 0x10000000,     // Specifies number of following packets to combine
         MULTIPLE_PACKETS = 0x10000001   // Specifies number of following packets to receive before pushing

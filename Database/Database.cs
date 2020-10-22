@@ -288,6 +288,15 @@ namespace Database
                         else
                         {
                             DataList trimmedRow = new DataList();
+                            try
+                            {
+                                trimmedRow.Add(int.Parse(rowName), "id");
+                            }
+                            catch // Any int.Parse exception
+                            {
+                                trimmedRow.Add(-1, "id");
+                            }
+
                             for (int j = 0; j < attrs.Count; j++)
                             {
                                 int index = row.names.IndexOf(attrs[j]);
@@ -338,7 +347,7 @@ namespace Database
 
         public void EditEntry(DataList entry, string tableName, string rowName)
         {
-            int tableIndex = entry.names.IndexOf(tableName);
+            int tableIndex = data.names.IndexOf(tableName);
             if (tableIndex == -1) return;
 
             // Find entry
@@ -349,6 +358,21 @@ namespace Database
             // Edit entry
             ((DataList)data.Get(tableIndex)).items[rowIndex] = entry;
             //table.items[rowIndex] = entry;
+        }
+
+        public void RemoveEntry(string tableName, string rowName)
+        {
+            int tableIndex = data.names.IndexOf(tableName);
+            if (tableIndex == -1) return;
+
+            // Find entry
+            DataList table = (DataList)data.Get(tableIndex);
+            int rowIndex = table.names.IndexOf(rowName);
+            if (rowIndex == -1) return;
+
+            // Edit entry
+            ((DataList)data.Get(tableIndex)).items.RemoveAt(rowIndex);
+            ((DataList)data.Get(tableIndex)).names.RemoveAt(rowIndex);
         }
 
         public void Save(IDataWriter writer)

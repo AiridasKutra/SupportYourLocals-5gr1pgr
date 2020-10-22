@@ -44,6 +44,28 @@ namespace Common
                 return null;
         }
 
+        public void Remove(int index)
+        {
+            if (index >= 0 && index < items.Count)
+            {
+                names.RemoveAt(index);
+                items.RemoveAt(index);
+            }
+        }
+
+        public void Remove(string name)
+        {
+            for (int i = 0; i < names.Count; i++)
+            {
+                if (names[i] == name)
+                {
+                    names.RemoveAt(i);
+                    items.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
         public static List<object> ToList(DataList data)
         {
             List<object> list = new List<object>();
