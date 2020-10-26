@@ -5,12 +5,12 @@ using System.Text;
 
 namespace localhostUI.Backend.DataManagement
 {
-    class DatabaseEntryEditor : IDataWriter
+    class DatabaseEntryRemover : IDataWriter
     {
         private string tableName;
         private int id;
 
-        public DatabaseEntryEditor(string tableName, int id)
+        public DatabaseEntryRemover(string tableName, int id)
         {
             this.tableName = tableName;
             this.id = id;
@@ -18,7 +18,7 @@ namespace localhostUI.Backend.DataManagement
 
         public void Write(DataList data)
         {
-            Program.Client.ModifyEntry(data, tableName, id);
+            Program.Client.RemoveEntry(tableName, id);
         }
     }
 }
