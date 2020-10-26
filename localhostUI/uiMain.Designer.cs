@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UiMain));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.profileTab = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.locationButton = new System.Windows.Forms.Button();
@@ -63,17 +62,18 @@
             this.addSportBox = new System.Windows.Forms.TextBox();
             this.addSportLabel = new System.Windows.Forms.Label();
             this.currentEventsTab = new System.Windows.Forms.TabPage();
+            this.CurrentEventsTable = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
             this.profileTab.SuspendLayout();
             this.eventManagerTab.SuspendLayout();
             this.managerTabs.SuspendLayout();
@@ -146,7 +146,7 @@
             this.userAdressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.userAdressBox.Name = "userAdressBox";
             this.userAdressBox.PlaceholderText = "Didlaukio g. 59";
-            this.userAdressBox.Size = new System.Drawing.Size(644, 31);
+            this.userAdressBox.Size = new System.Drawing.Size(644, 26);
             this.userAdressBox.TabIndex = 0;
             // 
             // eventManagerTab
@@ -225,7 +225,7 @@
             this.eventAdressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eventAdressBox.Name = "eventAdressBox";
             this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.eventAdressBox.Size = new System.Drawing.Size(489, 31);
+            this.eventAdressBox.Size = new System.Drawing.Size(489, 26);
             this.eventAdressBox.TabIndex = 14;
             // 
             // adressLabel
@@ -431,6 +431,8 @@
             // 
             // currentEventsTab
             // 
+            this.currentEventsTab.AutoScroll = true;
+            this.currentEventsTab.Controls.Add(this.CurrentEventsTable);
             this.currentEventsTab.Controls.Add(this.label4);
             this.currentEventsTab.Controls.Add(this.dateTimePicker1);
             this.currentEventsTab.Controls.Add(this.comboBox1);
@@ -443,6 +445,64 @@
             this.currentEventsTab.TabIndex = 0;
             this.currentEventsTab.Text = "Current events";
             this.currentEventsTab.UseVisualStyleBackColor = true;
+            // 
+            // CurrentEventsTable
+            // 
+            this.CurrentEventsTable.AutoSize = true;
+            this.CurrentEventsTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CurrentEventsTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.CurrentEventsTable.ColumnCount = 1;
+            this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.CurrentEventsTable.Location = new System.Drawing.Point(24, 166);
+            this.CurrentEventsTable.Name = "CurrentEventsTable";
+            this.CurrentEventsTable.RowCount = 1;
+            this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.CurrentEventsTable.Size = new System.Drawing.Size(2, 2);
+            this.CurrentEventsTable.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(24, 106);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 19);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Date";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(101, 104);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
+            this.dateTimePicker1.TabIndex = 3;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(101, 60);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 27);
+            this.comboBox1.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(24, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 19);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Sport";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(317, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 19);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Filter";
             // 
             // menuTabs
             // 
@@ -457,50 +517,8 @@
             this.menuTabs.SelectedIndex = 0;
             this.menuTabs.Size = new System.Drawing.Size(700, 422);
             this.menuTabs.TabIndex = 0;
+            this.menuTabs.SelectedIndexChanged += new System.EventHandler(this.menuTabs_SelectedIndexChanged);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(317, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 19);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Filter";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 19);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Sport";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(101, 60);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 27);
-            this.comboBox1.TabIndex = 2;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(101, 104);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 106);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 19);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Date";
-            // 
-            // uiMain
             // UiMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -574,5 +592,6 @@
         private System.Windows.Forms.Button locationButton;
         private System.Windows.Forms.Button mapsBrowserButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TableLayoutPanel CurrentEventsTable;
     }
 }

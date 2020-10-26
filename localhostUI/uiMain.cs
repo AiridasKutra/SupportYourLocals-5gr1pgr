@@ -51,6 +51,7 @@ namespace localhostUI
             //sorry if ur eyes r bleeding.
 
             refreshSportsTable();
+            LoadMainEvents();
         }
 
 
@@ -156,6 +157,19 @@ namespace localhostUI
         private void UserSearchMapsBrowser(object sender, EventArgs e)
         {
             LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
+        }
+
+        private void menuTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabControl tabControl = (TabControl)sender;
+            switch (tabControl.SelectedIndex)
+            {
+                case 0:
+                    LoadMainEvents();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
