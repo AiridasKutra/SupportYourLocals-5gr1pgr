@@ -9,6 +9,7 @@ using System.Linq;
 using Geocoding.Google;
 using GoogleMaps.LocationServices;
 using localhostUI.Classes.LocationClasses;
+using localhostUI.Backend;
 
 namespace localhostUI
 {
@@ -51,7 +52,7 @@ namespace localhostUI
             //sorry if ur eyes r bleeding.
 
             refreshSportsTable();
-            LoadMainEvents();
+            LoadMainEvents(new EventOptions());
         }
 
 
@@ -165,7 +166,7 @@ namespace localhostUI
             switch (tabControl.SelectedIndex)
             {
                 case 0:
-                    LoadMainEvents();
+                    LoadMainEvents(new EventOptions());
                     break;
                 default:
                     break;
