@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Device.Location;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using localhostUI.Classes;
 using localhostUI.EventClasses;
-using System.Linq;
-using Geocoding.Google;
 using GoogleMaps.LocationServices;
 using localhostUI.Classes.LocationClasses;
 
@@ -18,13 +15,13 @@ namespace localhostUI
         private SportTypes sportTypes;
         private (bool isActiveLocation, double latitude, double longitude) coordInfo = (false, 0, 0);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        /*[DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
+        static extern bool AllocConsole();*/
 
         public UiMain()
         {
-            AllocConsole();
+/*            AllocConsole();*/
             GetLocationProperty(ref this.coordInfo);
             InitializeComponent();
         }
@@ -33,7 +30,6 @@ namespace localhostUI
         {
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
-
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
             sportTypes.SportList.Add("Football");
             sportTypes.SportList.Add("Basketball");
@@ -140,7 +136,8 @@ namespace localhostUI
         {
 
             // [Placeholder] display for funcitonality.
-            MapPoint coordinates = LocationInformation.LatLongFromAddress(userAdressBox.Text);
+            /*MapPoint coordinates = LocationInformation.LatLongFromAddress(userAdressBox.Text);*/
+            MapPoint coordinates = userAdressBox.Text.LatLongFromString();
             Console.WriteLine($"lat: {coordinates.Latitude}\nlong: {coordinates.Longitude}");
             AddressData addressData = LocationInformation.AddressFromLatLong(coordinates.Latitude, coordinates.Longitude);
             Console.WriteLine(addressData.Address);

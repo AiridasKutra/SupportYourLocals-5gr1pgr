@@ -8,28 +8,22 @@ using System.Windows.Forms;
 
 namespace localhostUI.Classes.LocationClasses
 {
-    class LocationInformation
+    static class LocationInformation
     {
         private const string apiKey = "";
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public string Address { get; set; }
-        public LocationInformation(string address)
+
+        public static MapPoint LatLongFromString(this string address)
         {
-            this.Address = address;
-            var coordinates = LatLongFromAddress(address);
-            this.Latitude = coordinates.Latitude;
-            this.Longitude = coordinates.Longitude;
+            AddressData addressObject = new AddressData
+            {
+                Address = address,
+                State = null,
+                Country = "Lithuania"
+            };
+
+            var locationService = new GoogleLocationService(apiKey);
+            return locationService.GetLatLongFromAddress(addressObject);
         }
-
-        public LocationInformation(double latitude, double longitude)
-        {
-            this.Latitude = latitude;
-            this.Longitude = longitude;
-
-            this.Address = AddressFromLatLong(latitude, longitude).Address;
-        }
-
         public static MapPoint LatLongFromAddress(string address, string country = "Lithuania")
         {
             AddressData addressObject = new AddressData
