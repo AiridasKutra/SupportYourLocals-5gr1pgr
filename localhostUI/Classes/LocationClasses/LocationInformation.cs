@@ -10,15 +10,15 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "";
+        private const string apiKey = "AIzaSyA0Ijjj9Pmt4Yx3ZWdRlApgK0bFhkWzsPo";
 
-        public static MapPoint LatLongFromString(this string address)
+        public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
             {
                 Address = address,
                 State = null,
-                Country = "Lithuania"
+                Country = country
             };
 
             var locationService = new GoogleLocationService(apiKey);
