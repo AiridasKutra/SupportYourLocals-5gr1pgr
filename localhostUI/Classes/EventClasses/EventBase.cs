@@ -4,7 +4,7 @@ using System.Text;
 
 namespace localhostUI.Classes.EventClasses
 {
-    class EventBase
+    public class EventBase
     {
     }
 }

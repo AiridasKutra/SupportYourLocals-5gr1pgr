@@ -7,7 +7,7 @@ using System.Text;
 
 namespace localhostUI.Classes.EventClasses
 {
-    class EventBrief
+    public class EventBrief
     {
         public int Id { get; private set; }
 
