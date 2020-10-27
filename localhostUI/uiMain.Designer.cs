@@ -450,8 +450,7 @@
             // 
             this.CurrentEventsTable.AutoSize = true;
             this.CurrentEventsTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.CurrentEventsTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.CurrentEventsTable.ColumnCount = 1;
+            this.CurrentEventsTable.ColumnCount = 2;
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.Location = new System.Drawing.Point(24, 166);
@@ -459,7 +458,7 @@
             this.CurrentEventsTable.RowCount = 1;
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CurrentEventsTable.Size = new System.Drawing.Size(2, 2);
+            this.CurrentEventsTable.Size = new System.Drawing.Size(0, 0);
             this.CurrentEventsTable.TabIndex = 5;
             // 
             // label4
