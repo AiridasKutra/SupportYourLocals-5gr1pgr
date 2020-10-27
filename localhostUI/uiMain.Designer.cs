@@ -39,6 +39,7 @@
             this.managerTabs = new System.Windows.Forms.TabControl();
             this.yourEventsTab = new System.Windows.Forms.TabPage();
             this.newEventTab = new System.Windows.Forms.TabPage();
+            this.saveAsDraftButton = new System.Windows.Forms.Button();
             this.mapsBrowserButton = new System.Windows.Forms.Button();
             this.eventAdressBox = new System.Windows.Forms.TextBox();
             this.adressLabel = new System.Windows.Forms.Label();
@@ -184,6 +185,7 @@
             // 
             // newEventTab
             // 
+            this.newEventTab.Controls.Add(this.saveAsDraftButton);
             this.newEventTab.Controls.Add(this.mapsBrowserButton);
             this.newEventTab.Controls.Add(this.eventAdressBox);
             this.newEventTab.Controls.Add(this.adressLabel);
@@ -206,6 +208,17 @@
             this.newEventTab.TabIndex = 1;
             this.newEventTab.Text = "Create a new event";
             this.newEventTab.UseVisualStyleBackColor = true;
+            // 
+            // saveAsDraftButton
+            // 
+            this.saveAsDraftButton.Location = new System.Drawing.Point(158, 322);
+            this.saveAsDraftButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.saveAsDraftButton.Name = "saveAsDraftButton";
+            this.saveAsDraftButton.Size = new System.Drawing.Size(120, 35);
+            this.saveAsDraftButton.TabIndex = 12;
+            this.saveAsDraftButton.Text = "Save as draft";
+            this.saveAsDraftButton.UseVisualStyleBackColor = true;
+            this.saveAsDraftButton.Click += new System.EventHandler(this.SaveDraftFile);
             // 
             // mapsBrowserButton
             // 
@@ -592,5 +605,6 @@
         private System.Windows.Forms.Button mapsBrowserButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel CurrentEventsTable;
+        private System.Windows.Forms.Button saveAsDraftButton;
     }
 }

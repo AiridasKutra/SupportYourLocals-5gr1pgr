@@ -49,6 +49,7 @@ namespace localhostUI
 
             refreshSportsTable();
             LoadMainEvents(new EventOptions());
+            Program.DataPool.LoadDrafts();
         }
 
 
@@ -169,6 +170,8 @@ namespace localhostUI
                     break;
             }
         }
+
+        
     }
 }
 
