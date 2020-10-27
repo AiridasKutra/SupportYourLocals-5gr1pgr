@@ -33,7 +33,6 @@ namespace localhostUI.Backend
                     foreach (ListItem ev in data)
                     {
                         eventsDraft.Add((DataList)ev.item);
-                        Console.WriteLine(((DataList)ev.item).items[0].ToString());
                     }
                 }
                 catch (InvalidCastException)
@@ -41,10 +40,6 @@ namespace localhostUI.Backend
                     Console.WriteLine("Invalid cast exception thrown");
                     eventsDraft.Clear();
                 }
-            }
-            else
-            {
-                eventsDraft = null;
             }
             
         }
@@ -66,6 +61,7 @@ namespace localhostUI.Backend
             {
                 throw;
             }
+            
 
         }
 
