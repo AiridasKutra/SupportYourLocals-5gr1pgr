@@ -41,6 +41,18 @@ namespace localhostUI.Classes.EventClasses
         {
             return tags;
         }
+        public void AddSport(string sport)
+        {
+            sports.Add(sport);
+        }
+        public void AddTeam(Team team)
+        {
+            teams.Add(team);
+        }
+        public void AddTag(string tag)
+        {
+            tags.Add(tag);
+        }
 
         private void Init()
         {
