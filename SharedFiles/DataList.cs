@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Common
 {
-    class DataList : IEnumerable
+    public class DataList : IEnumerable
     {
         public List<object> items;
         public List<string> names;
@@ -158,13 +158,13 @@ namespace Common
         }
     }
 
-    class ListItem
+    public class ListItem
     {
         public object item;
         public string name;
     }
 
-    class DataListEnum : IEnumerator
+    public class DataListEnum : IEnumerator
     {
         public List<object> items;
         public List<string> names;

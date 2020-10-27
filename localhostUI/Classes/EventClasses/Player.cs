@@ -4,7 +4,7 @@ using System.Text;
 
 namespace localhostUI.EventClasses
 {
-    class Player
+    public class Player
     {
         private int age;
         private string name;
