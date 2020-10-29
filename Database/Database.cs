@@ -266,7 +266,7 @@ namespace Database
                         object rowItem = table.items[i];
                         string rowName = table.names[i];
                         if (rowItem.GetType() != typeof(DataList)) continue;
-                        DataList row = (DataList)rowItem;
+                        DataList row = new DataList((DataList)rowItem);
 
                         // Check for required attributes
                         bool isComplete = true;
