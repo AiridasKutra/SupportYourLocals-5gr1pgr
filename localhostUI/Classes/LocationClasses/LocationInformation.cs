@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -10,8 +9,7 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "AIzaSyA0Ijjj9Pmt4Yx3ZWdRlApgK0bFhkWzsPo";
-
+        private const string apiKey = "AIzaSyAZi39nB5EAaAgj3fdiCRwZTbY7lxIO-0Y";
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -37,14 +35,21 @@ namespace localhostUI.Classes.LocationClasses
             return locationService.GetLatLongFromAddress(addressObject);
         }
         public static AddressData AddressFromLatLong(double latitude, double longitude)
-        {   
+        {
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetAddressFromLatLang(latitude, longitude);
         }
         public static AddressData AddressFromLatLong(MapPoint latLong)
         {
             var locationService = new GoogleLocationService(apiKey);
+    
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
+        }
+        public static string FormatAddress(string address)
+        {
+            var locationService = new GoogleLocationService(apiKey);
+            var addressData = locationService.GetAddressesListFromAddress(address);
+            return addressData[0];
         }
         public static void OpenAdressInBrowser(string address)
         {
@@ -124,6 +129,20 @@ namespace localhostUI.Classes.LocationClasses
                 return -1;
             }
 
+        }
+
+        public static bool IsValidAddress(string address)
+        {
+            try
+            {
+                MapPoint location = LocationInformation.LatLongFromAddress(address);
+                location.ToString();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -1,22 +1,19 @@
 ﻿using Common.Network;
 using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
-using localhostUI.Classes.EventClasses;
+using localhostUI.Classes.UserInformationClasses;
 using localhostUI.NoDatabaseConnection;
 using localhostUI.NoInternetConnection;
+using localhostUI.UserInformationForm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace localhostUI
 {
     static class Program
     {
+
         private static readonly ClientWrapper client = new ClientWrapper();
         public static ClientWrapper Client
         {
@@ -44,6 +41,8 @@ namespace localhostUI
             }
         }
 
+        public static UserDataManager UserDataManager { get;/*set;*/} = new UserDataManager();
+
         private static readonly EventDataProvider dataProvider = new EventDataProvider();
         public static EventDataProvider DataProvider
         {
@@ -54,6 +53,8 @@ namespace localhostUI
         }
 
         public static bool ContinueOffline { get; set; } = false;
+
+        public static bool UserInfoNaturallyClosed { get; set; }=false;
 
         [STAThread]
         static void Main()
@@ -66,6 +67,7 @@ namespace localhostUI
             //string ip = "127.0.0.1";
             ushort port = 2776;
             //ushort port = 54000;
+
 
             // Check if internet is available
             if (!CheckForInternetConnection())
@@ -80,20 +82,33 @@ namespace localhostUI
                     Application.Run(new NoDatabaseMain());
                     if (ContinueOffline)
                     {
+                        
                         Application.Run(new UiMain());
                     }
                 }
                 else
                 {
-                    Application.Run(new UiMain());
+
+                    if (UserDataManager.UserData == null) 
+                    {
+                        Application.Run(new UserInfoInputForm());
+                        if (UserInfoNaturallyClosed)
+                        {
+                            Application.Run(new UiMain());
+                        }
+                    }
+                    else
+                    {
+                        Application.Run(new UiMain());
+                    }
                 }
             }
 
             Client.Disconnect();
+            DataPool.SaveDrafts();
         }
 
         
-
         public static bool ConnectToDb(string ip, ushort port)
         {
             return client.Connect(ip, port);

@@ -23,6 +23,45 @@ namespace localhostUI.Backend
 
         public void LoadDrafts()
         {
+            string fileName = "FileDrafts.json";
+            DraftFileReader draftFileReader = new DraftFileReader(fileName);
+            Program.DataManager.Read(draftFileReader, out DataList data);
+            if(data != null)
+            {
+                try
+                {
+                    foreach (ListItem ev in data)
+                    {
+                        eventsDraft.Add((DataList)ev.item);
+                    }
+                }
+                catch (InvalidCastException)
+                {
+                    Console.WriteLine("Invalid cast exception thrown");
+                    eventsDraft.Clear();
+                }
+            }
+            
+        }
+
+        public void SaveDrafts()
+        {
+            string fileName = "FileDrafts.json";
+            DataList dataList = new DataList();
+            DraftFileWriter draftFileWriter = new DraftFileWriter(fileName);
+            try
+            {
+                foreach (DataList draft in eventsDraft)
+                {
+                    dataList.Add(draft);
+                }
+                Program.DataManager.Write(draftFileWriter, dataList);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
 
         }
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Device.Location;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using localhostUI.Classes;
 using localhostUI.EventClasses;
-using GoogleMaps.LocationServices;
 using localhostUI.Classes.LocationClasses;
 using localhostUI.Backend;
+using localhostUI.Classes.UserInformationClasses;
+using System.Drawing;
 
 namespace localhostUI
 {
@@ -14,7 +14,7 @@ namespace localhostUI
     {
         private EventInformation eventsInformation;
         private SportTypes sportTypes;
-        private (bool isActiveLocation, double latitude, double longitude) coordInfo = (false, 0, 0);
+
 
         /*[DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -22,8 +22,6 @@ namespace localhostUI
 
         public UiMain()
         {
-/*            AllocConsole();*/
-            GetLocationProperty(ref this.coordInfo);
             InitializeComponent();
         }
 
@@ -41,7 +39,14 @@ namespace localhostUI
             sportTypes.SportList.Add("Rugby");
 
             //  [Placeholder]   . Added user adress to locate nearby events in the future.
-            userAdressBox.Text = "Didlaukio g. 59, Vilnius";
+            Console.WriteLine("USER DATA READ: "+ (Program.UserDataManager.UserData != null));
+            Console.WriteLine("USER ADDRESS AVAILABLE: " + (Program.UserDataManager.UserData.Address != null));
+
+            if (Program.UserDataManager.UserData != null && Program.UserDataManager.UserData.Address != null)
+            {
+                userAdressBox.Text = Program.UserDataManager.UserData.Address;
+                usernameBox.Text = Program.UserDataManager.UserData.Username;
+            }
 
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
@@ -49,6 +54,7 @@ namespace localhostUI
 
             refreshSportsTable();
             LoadMainEvents(new EventOptions());
+            Program.DataPool.LoadDrafts();
         }
 
 
@@ -81,6 +87,13 @@ namespace localhostUI
         //Sport managing functions. All of which names correspond to their function.
         private void CreateEvent(object sender, EventArgs e)
         {
+            if (!LocationInformation.IsValidAddress(eventAdressBox.Text) || eventAdressBox.Text.Length == 0)
+            {
+                eventCreationResultLabel.Text = "Event address is invalid.";
+                eventCreationResultLabel.ForeColor = Color.FromArgb(255, 128, 128);
+                return;
+            }
+            
             //So like i dunno press button add event to list.
             //i think its pretty simple but i also think peugeots are good who am i to speak;
             if (eventsInformation == null) eventsInformation = new EventInformation();
@@ -127,24 +140,11 @@ namespace localhostUI
 
         private void refreshSportsTable()
         {
-            comboBox1.Items.Clear();
+            filterComboBox.Items.Clear();
             for (int i = 0; i < sportTypes.SportList.Count; i++)
             {
-                comboBox1.Items.Add(sportTypes.SportList[i]);
+                filterComboBox.Items.Add(sportTypes.SportList[i]);
             }
-        }
-
-        private void SearchCoordinatesAsync(object sender, EventArgs e)
-        {
-
-            // [Placeholder] display for funcitonality.
-            /*MapPoint coordinates = LocationInformation.LatLongFromAddress(userAdressBox.Text);*/
-            MapPoint coordinates = userAdressBox.Text.LatLongFromString();
-            Console.WriteLine($"lat: {coordinates.Latitude}\nlong: {coordinates.Longitude}");
-            AddressData addressData = LocationInformation.AddressFromLatLong(coordinates.Latitude, coordinates.Longitude);
-            Console.WriteLine(addressData.Address);
-        
-        
         }
 
         private void SearchMapsBrowser(object sender, EventArgs e)
@@ -169,38 +169,85 @@ namespace localhostUI
                     break;
             }
         }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            EventOptions options = new EventOptions();
+            options.AddSport((string)filterComboBox.SelectedItem);
+            //options.SetMaxPrice(filterSlider.Value);
+            
+            LoadMainEvents(options);
+        }
+
+        private void trackBarFilter_Scroll(object sender, EventArgs e)
+        {
+            priceScrollerLabel.Text=filterSlider.Value.ToString();
+        }
+    
+
+
+        private void ChangeUserAddress(object sender, EventArgs e)
+        {
+            
+            if(userAdressBox.Text == Program.UserDataManager.UserData.Address)
+            {
+                addressResultLabel.Text = "This is already your address.";
+                addressResultLabel.ForeColor = Color.Black;
+                return;
+            }
+            //Bug here, after changing it to an invalid address, and then changing it to a valid one, the line still reads invalid.
+            if (Program.UserDataManager.UserData.ChangeAddress(userAdressBox.Text))
+            {
+                addressResultLabel.Text = "Address has been accepted.";
+                addressResultLabel.ForeColor = Color.Black;
+                Program.UserDataManager.SaveToDataPool();
+            }
+            else
+            {
+                addressResultLabel.Text = "Address is invalid.";
+                addressResultLabel.ForeColor = Color.FromArgb(255, 128, 128);
+            }
+        }
+
+        private void ChangeUsername(object sender, EventArgs e)
+        {
+            try
+            {
+                if(usernameBox.Text == Program.UserDataManager.UserData.Username)
+                {
+                    usernameChangeResultLabel.Text = "This is already your username";
+                    return;
+                }
+                if (usernameBox.Text.Length < 3)
+                {
+                    usernameChangeResultLabel.Text = "Username must be atleast 3 characters";
+                    usernameChangeResultLabel.ForeColor = Color.FromArgb(255, 128, 128);
+                    return;
+                }
+                else
+                {
+                    Program.UserDataManager.UserData.Username = usernameBox.Text;
+                    Program.UserDataManager.SaveToDataPool();
+                    usernameChangeResultLabel.Text = "Username changed successfully";
+                    usernameChangeResultLabel.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                usernameChangeResultLabel.Text = "Something went wrong while changing username";
+                usernameChangeResultLabel.ForeColor = Color.FromArgb(255, 128, 128);
+            }
+        }
+
+        private void SaveToFile(object sender, FormClosingEventArgs e)
+        {
+            Program.UserDataManager.Save();
+        }
+
+        private void FormattAdressButton(object sender, EventArgs e)
+        {
+            Console.WriteLine(LocationInformation.FormatAddress(userAdressBox.Text));
+        }
     }
 }
 
-/*Code by Kutra lol.
- * 
-            TCPClient client = Program.Client;
-            // Wait for response
-            while (client.PacketCount() < 1)
-            {
-                Thread.Sleep(10);
-            }
-            Packet result = client.GetPacket();
-            Console.WriteLine(Encoding.ASCII.GetString(result.Data));
-            Packet pack = new Packet
-            {
-                PacketId = 0,
-                SenderId = 0,
-                Data = Encoding.ASCII.GetBytes("SELECT FROM table1")
-            };
-            client.Send(pack);
-            while (client.PacketCount() < 1)
-            {
-                Thread.Sleep(50);
-            }
-            while (client.PacketCount() > 0)
-            {
-                Packet packet = client.GetPacket();
-                string jsonStr = Encoding.ASCII.GetString(packet.Data, 0, packet.Data.Length);
-                DataList data = DataList.FromList(Json.ToList(jsonStr));
-                //eventList.View = View.Details;
-                /*DataList events = (DataList) data.Get("5");
-                DataList teams = (DataList) events.Get("teams");
-                DataList players = (DataList) teams.Get("vu");
-                int a = 5;}
-*/
