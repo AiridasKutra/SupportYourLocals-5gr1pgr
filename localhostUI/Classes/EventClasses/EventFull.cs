@@ -104,6 +104,8 @@ namespace localhostUI.Classes.EventClasses
         {
             Init();
 
+            if (data == null) return;
+
             try
             {
                 object idObj = data.Get("id");
