@@ -321,14 +321,6 @@ namespace Database
                         else
                         {
                             DataList trimmedRow = new DataList();
-                            try
-                            {
-                                trimmedRow.Add(int.Parse(rowName), "id");
-                            }
-                            catch // Any int.Parse exception
-                            {
-                                trimmedRow.Add(-1, "id");
-                            }
 
                             for (int j = 0; j < attrs.Count; j++)
                             {
@@ -344,6 +336,16 @@ namespace Database
                             }
                             finalTable.Add(trimmedRow, rowName);
                         }
+                    }
+
+                    // Add ids to final table
+                    for (int i = 0; i < finalTable.Size(); i++)
+                    {
+                        try
+                        {
+                            ((DataList)finalTable.items[i]).Add(int.Parse(finalTable.names[i]), "id");
+                        }
+                        catch { } // Any int.Parse exception
                     }
 
                     // Return final table
