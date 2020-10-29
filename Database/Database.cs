@@ -117,6 +117,7 @@ namespace Database
                 List<string> attrNames = new List<string>();
                 int rowLower = 0;
                 int rowUpper = int.MaxValue;
+                int entryId = -1;
                 bool complete = false;
                 List<string> mustContain = new List<string>();
                 while (comIndex < commlets.Length)
@@ -153,6 +154,19 @@ namespace Database
 
                         rowLower = lowerBound;
                         rowUpper = upperBound;
+                    }
+                    else if (commlets[comIndex] == "id")
+                    {
+                        if (int.TryParse(commlets[++comIndex], out entryId))
+                        {
+                            if (entryId < 0)
+                            {
+                                entryId = -1;
+                            }
+                        }
+                        else {
+                            entryId = -1;
+                        }
                     }
                     else if (commlets[comIndex] == "complete")
                     {
@@ -228,6 +242,25 @@ namespace Database
 
                     DataList table = (DataList)data.items[tableIndex];
                     DataList finalTable = new DataList();
+
+                    // Find entry with correct id /////////////////////////////////////////// (TODO: using binary search)
+                    if (entryId != -1)
+                    {
+                        for (int i = 0; i < table.Size(); i++)
+                        {
+                            int id;
+                            if (int.TryParse(table.names[i], out id))
+                            {
+                                if (id == entryId)
+                                {
+                                    rowLower = i;
+                                    rowUpper = i;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     for (int i = rowLower; i <= rowUpper && i < table.Size(); i++)
                     {
                         object rowItem = table.items[i];
