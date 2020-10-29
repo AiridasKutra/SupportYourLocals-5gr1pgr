@@ -188,6 +188,7 @@ namespace localhostUI
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {
+            
             if(userAdressBox.Text == Program.UserDataManager.UserData.Address)
             {
                 addressResultLabel.Text = "This is already your address.";
@@ -242,6 +243,11 @@ namespace localhostUI
         {
             Program.UserDataManager.Save();
         }
-}
+
+        private void FormattAdressButton(object sender, EventArgs e)
+        {
+            Console.WriteLine(LocationInformation.FormatAddress(userAdressBox.Text));
+        }
+    }
 }
 

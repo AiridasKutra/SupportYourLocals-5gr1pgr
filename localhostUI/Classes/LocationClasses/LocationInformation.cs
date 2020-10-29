@@ -9,7 +9,7 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "AIzaSyBM3XhIG3DaGe8nvwMc6Vwzl0iEF6psS1A";
+        private const string apiKey = "AIzaSyAZi39nB5EAaAgj3fdiCRwZTbY7lxIO-0Y";
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -42,7 +42,14 @@ namespace localhostUI.Classes.LocationClasses
         public static AddressData AddressFromLatLong(MapPoint latLong)
         {
             var locationService = new GoogleLocationService(apiKey);
+    
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
+        }
+        public static string FormatAddress(string address)
+        {
+            var locationService = new GoogleLocationService(apiKey);
+            var addressData = locationService.GetAddressesListFromAddress(address);
+            return addressData[0];
         }
         public static void OpenAdressInBrowser(string address)
         {

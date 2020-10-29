@@ -87,7 +87,6 @@
             this.usernameTextBox.PlaceholderText = "BelovedUser";
             this.usernameTextBox.Size = new System.Drawing.Size(607, 27);
             this.usernameTextBox.TabIndex = 4;
-            this.usernameTextBox.Text = "penisLover420";
             // 
             // addressBox
             // 
@@ -96,7 +95,6 @@
             this.addressBox.PlaceholderText = "Gedimino pr. 69";
             this.addressBox.Size = new System.Drawing.Size(572, 27);
             this.addressBox.TabIndex = 4;
-            this.addressBox.Text = "Didlaukio g. 59";
             // 
             // nextButton
             // 

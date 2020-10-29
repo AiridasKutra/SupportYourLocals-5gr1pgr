@@ -20,7 +20,7 @@ namespace localhostUI.Classes.UserInformationClasses
         }
         public UserData(string address, string userName)
         {
-            this.Address = address;
+            this.Address = LocationInformation.FormatAddress(address);
             this.Username = userName;
 
             MapPoint location = LocationInformation.LatLongFromAddress(address);
@@ -29,7 +29,7 @@ namespace localhostUI.Classes.UserInformationClasses
         }
         public UserData(string address, double latitude, double longitude, string username)
         {
-            this.Address = address;
+            this.Address = LocationInformation.FormatAddress(address);
             this.Latitude = latitude;
             this.Longitude = longitude;
             this.Username = username;
@@ -49,7 +49,7 @@ namespace localhostUI.Classes.UserInformationClasses
                 if (username != null && address != null)
                 {
                     this.Username = (string)username;
-                    this.Address = (string)address;
+                    this.Address = LocationInformation.FormatAddress((string)address);
                     MapPoint location = LocationInformation.LatLongFromAddress(this.Address);
                     this.Latitude = location.Latitude;
                     this.Longitude = location.Longitude;
@@ -67,7 +67,7 @@ namespace localhostUI.Classes.UserInformationClasses
         {
             if (!LocationInformation.IsValidAddress(address)) return false;
             MapPoint location = LocationInformation.LatLongFromAddress(address);
-            this.Address = address;
+            this.Address = LocationInformation.FormatAddress(address);
             this.Longitude = location.Longitude;
             this.Latitude = location.Latitude;
             return true;

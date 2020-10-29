@@ -89,6 +89,7 @@
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.button2 = new System.Windows.Forms.Button();
             this.profileTab.SuspendLayout();
             this.eventManagerTab.SuspendLayout();
             this.managerTabs.SuspendLayout();
@@ -102,6 +103,7 @@
             // 
             // profileTab
             // 
+            this.profileTab.Controls.Add(this.button2);
             this.profileTab.Controls.Add(this.usernameChangeResultLabel);
             this.profileTab.Controls.Add(this.changeUsernameButton);
             this.profileTab.Controls.Add(this.usernameBox);
@@ -679,6 +681,16 @@
             this.menuTabs.TabIndex = 0;
             this.menuTabs.SelectedIndexChanged += new System.EventHandler(this.menuTabs_SelectedIndexChanged);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(656, 110);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 29);
+            this.button2.TabIndex = 21;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.FormattAdressButton);
+            // 
             // UiMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -770,5 +782,6 @@
         private System.Windows.Forms.TextBox filterTextBox;
         private System.Windows.Forms.Label priceScrollerLabel;
         private System.Windows.Forms.Label filterSearchLabel;
+        private System.Windows.Forms.Button button2;
     }
 }
