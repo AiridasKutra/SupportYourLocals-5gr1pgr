@@ -63,11 +63,17 @@
             this.addSportBox = new System.Windows.Forms.TextBox();
             this.addSportLabel = new System.Windows.Forms.Label();
             this.currentEventsTab = new System.Windows.Forms.TabPage();
+            this.filterSearchLabel = new System.Windows.Forms.Label();
+            this.priceScrollerLabel = new System.Windows.Forms.Label();
+            this.filterTextBox = new System.Windows.Forms.TextBox();
+            this.filterButton = new System.Windows.Forms.Button();
+            this.filterSlider = new System.Windows.Forms.TrackBar();
+            this.filterPriceLabel = new System.Windows.Forms.Label();
             this.CurrentEventsTable = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.filterDateLabel = new System.Windows.Forms.Label();
+            this.filterDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.filterComboBox = new System.Windows.Forms.ComboBox();
+            this.filterSportLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.menuTabs = new System.Windows.Forms.TabControl();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
@@ -82,6 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
             this.addSportTab.SuspendLayout();
             this.currentEventsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.filterSlider)).BeginInit();
             this.menuTabs.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -445,11 +452,17 @@
             // currentEventsTab
             // 
             this.currentEventsTab.AutoScroll = true;
+            this.currentEventsTab.Controls.Add(this.filterSearchLabel);
+            this.currentEventsTab.Controls.Add(this.priceScrollerLabel);
+            this.currentEventsTab.Controls.Add(this.filterTextBox);
+            this.currentEventsTab.Controls.Add(this.filterButton);
+            this.currentEventsTab.Controls.Add(this.filterSlider);
+            this.currentEventsTab.Controls.Add(this.filterPriceLabel);
             this.currentEventsTab.Controls.Add(this.CurrentEventsTable);
-            this.currentEventsTab.Controls.Add(this.label4);
-            this.currentEventsTab.Controls.Add(this.dateTimePicker1);
-            this.currentEventsTab.Controls.Add(this.comboBox1);
-            this.currentEventsTab.Controls.Add(this.label3);
+            this.currentEventsTab.Controls.Add(this.filterDateLabel);
+            this.currentEventsTab.Controls.Add(this.filterDateTimePicker);
+            this.currentEventsTab.Controls.Add(this.filterComboBox);
+            this.currentEventsTab.Controls.Add(this.filterSportLabel);
             this.currentEventsTab.Controls.Add(this.label2);
             this.currentEventsTab.Location = new System.Drawing.Point(4, 25);
             this.currentEventsTab.Name = "currentEventsTab";
@@ -458,6 +471,59 @@
             this.currentEventsTab.TabIndex = 0;
             this.currentEventsTab.Text = "Current events";
             this.currentEventsTab.UseVisualStyleBackColor = true;
+            // 
+            // filterSearchLabel
+            // 
+            this.filterSearchLabel.AutoSize = true;
+            this.filterSearchLabel.Location = new System.Drawing.Point(24, 142);
+            this.filterSearchLabel.Name = "filterSearchLabel";
+            this.filterSearchLabel.Size = new System.Drawing.Size(55, 19);
+            this.filterSearchLabel.TabIndex = 11;
+            this.filterSearchLabel.Text = "Search";
+            // 
+            // priceScrollerLabel
+            // 
+            this.priceScrollerLabel.AutoSize = true;
+            this.priceScrollerLabel.Location = new System.Drawing.Point(633, 65);
+            this.priceScrollerLabel.Name = "priceScrollerLabel";
+            this.priceScrollerLabel.Size = new System.Drawing.Size(0, 19);
+            this.priceScrollerLabel.TabIndex = 10;
+            // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Location = new System.Drawing.Point(101, 140);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(264, 26);
+            this.filterTextBox.TabIndex = 9;
+            // 
+            // filterButton
+            // 
+            this.filterButton.Location = new System.Drawing.Point(538, 143);
+            this.filterButton.Name = "filterButton";
+            this.filterButton.Size = new System.Drawing.Size(75, 23);
+            this.filterButton.TabIndex = 8;
+            this.filterButton.Text = "Filter";
+            this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
+            // 
+            // filterSlider
+            // 
+            this.filterSlider.Location = new System.Drawing.Point(473, 60);
+            this.filterSlider.Maximum = 1000;
+            this.filterSlider.Name = "filterSlider";
+            this.filterSlider.Size = new System.Drawing.Size(140, 45);
+            this.filterSlider.TabIndex = 7;
+            this.filterSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.filterSlider.Scroll += new System.EventHandler(this.trackBarFilter_Scroll);
+            // 
+            // filterPriceLabel
+            // 
+            this.filterPriceLabel.AutoSize = true;
+            this.filterPriceLabel.Location = new System.Drawing.Point(402, 63);
+            this.filterPriceLabel.Name = "filterPriceLabel";
+            this.filterPriceLabel.Size = new System.Drawing.Size(42, 19);
+            this.filterPriceLabel.TabIndex = 6;
+            this.filterPriceLabel.Text = "Price";
             // 
             // CurrentEventsTable
             // 
@@ -474,38 +540,38 @@
             this.CurrentEventsTable.Size = new System.Drawing.Size(0, 0);
             this.CurrentEventsTable.TabIndex = 5;
             // 
-            // label4
+            // filterDateLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 106);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 19);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Date";
+            this.filterDateLabel.AutoSize = true;
+            this.filterDateLabel.Location = new System.Drawing.Point(24, 106);
+            this.filterDateLabel.Name = "filterDateLabel";
+            this.filterDateLabel.Size = new System.Drawing.Size(41, 19);
+            this.filterDateLabel.TabIndex = 4;
+            this.filterDateLabel.Text = "Date";
             // 
-            // dateTimePicker1
+            // filterDateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(101, 104);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 3;
+            this.filterDateTimePicker.Location = new System.Drawing.Point(101, 104);
+            this.filterDateTimePicker.Name = "filterDateTimePicker";
+            this.filterDateTimePicker.Size = new System.Drawing.Size(200, 26);
+            this.filterDateTimePicker.TabIndex = 3;
             // 
-            // comboBox1
+            // filterComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(101, 60);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 27);
-            this.comboBox1.TabIndex = 2;
+            this.filterComboBox.FormattingEnabled = true;
+            this.filterComboBox.Location = new System.Drawing.Point(101, 60);
+            this.filterComboBox.Name = "filterComboBox";
+            this.filterComboBox.Size = new System.Drawing.Size(121, 27);
+            this.filterComboBox.TabIndex = 2;
             // 
-            // label3
+            // filterSportLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 19);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Sport";
+            this.filterSportLabel.AutoSize = true;
+            this.filterSportLabel.Location = new System.Drawing.Point(24, 68);
+            this.filterSportLabel.Name = "filterSportLabel";
+            this.filterSportLabel.Size = new System.Drawing.Size(47, 19);
+            this.filterSportLabel.TabIndex = 1;
+            this.filterSportLabel.Text = "Sport";
             // 
             // label2
             // 
@@ -552,6 +618,7 @@
             this.addSportTab.PerformLayout();
             this.currentEventsTab.ResumeLayout(false);
             this.currentEventsTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.filterSlider)).EndInit();
             this.menuTabs.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -596,15 +663,21 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.ComboBox removeSportBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label filterDateLabel;
+        private System.Windows.Forms.DateTimePicker filterDateTimePicker;
+        private System.Windows.Forms.ComboBox filterComboBox;
+        private System.Windows.Forms.Label filterSportLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button locationButton;
         private System.Windows.Forms.Button mapsBrowserButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel CurrentEventsTable;
         private System.Windows.Forms.Button saveAsDraftButton;
+        private System.Windows.Forms.Button filterButton;
+        private System.Windows.Forms.TrackBar filterSlider;
+        private System.Windows.Forms.Label filterPriceLabel;
+        private System.Windows.Forms.TextBox filterTextBox;
+        private System.Windows.Forms.Label priceScrollerLabel;
+        private System.Windows.Forms.Label filterSearchLabel;
     }
 }
