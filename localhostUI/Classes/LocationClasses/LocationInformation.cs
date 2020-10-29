@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -10,8 +9,7 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "AIzaSyA0Ijjj9Pmt4Yx3ZWdRlApgK0bFhkWzsPo";
-
+        private const string apiKey = "AIzaSyBM3XhIG3DaGe8nvwMc6Vwzl0iEF6psS1A";
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -37,7 +35,7 @@ namespace localhostUI.Classes.LocationClasses
             return locationService.GetLatLongFromAddress(addressObject);
         }
         public static AddressData AddressFromLatLong(double latitude, double longitude)
-        {   
+        {
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetAddressFromLatLang(latitude, longitude);
         }
@@ -124,6 +122,20 @@ namespace localhostUI.Classes.LocationClasses
                 return -1;
             }
 
+        }
+
+        public static bool IsValidAddress(string address)
+        {
+            try
+            {
+                MapPoint location = LocationInformation.LatLongFromAddress(address);
+                location.ToString();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
