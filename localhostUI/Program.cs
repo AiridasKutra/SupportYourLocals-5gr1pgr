@@ -105,6 +105,7 @@ namespace localhostUI
             }
 
             Client.Disconnect();
+            DataPool.SaveDrafts();
         }
 
         

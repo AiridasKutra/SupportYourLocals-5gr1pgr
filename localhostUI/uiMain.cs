@@ -54,6 +54,7 @@ namespace localhostUI
 
             refreshSportsTable();
             LoadMainEvents(new EventOptions());
+            Program.DataPool.LoadDrafts();
         }
 
 
@@ -139,10 +140,10 @@ namespace localhostUI
 
         private void refreshSportsTable()
         {
-            comboBox1.Items.Clear();
+            filterComboBox.Items.Clear();
             for (int i = 0; i < sportTypes.SportList.Count; i++)
             {
-                comboBox1.Items.Add(sportTypes.SportList[i]);
+                filterComboBox.Items.Add(sportTypes.SportList[i]);
             }
         }
 
@@ -168,6 +169,22 @@ namespace localhostUI
                     break;
             }
         }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            EventOptions options = new EventOptions();
+            options.AddSport((string)filterComboBox.SelectedItem);
+            //options.SetMaxPrice(filterSlider.Value);
+            
+            LoadMainEvents(options);
+        }
+
+        private void trackBarFilter_Scroll(object sender, EventArgs e)
+        {
+            priceScrollerLabel.Text=filterSlider.Value.ToString();
+        }
+    }
+}
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {
