@@ -96,6 +96,8 @@ namespace Common
 
         public static DataList FromList(List<object> list)
         {
+            if (list == null) return null;
+
             if (list.Count % 3 != 0) return null;
 
             DataList dlist = new DataList();
