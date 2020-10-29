@@ -15,6 +15,13 @@ namespace Common
             names = new List<string>();
         }
 
+        public DataList(DataList src)
+        {
+            DataList dest = FromList(ToList(src));
+            items = dest.items;
+            names = dest.names;
+        }
+
         public int Size()
         {
             return items.Count;
