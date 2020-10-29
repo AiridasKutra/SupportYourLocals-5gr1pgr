@@ -183,8 +183,8 @@ namespace localhostUI
         {
             priceScrollerLabel.Text=filterSlider.Value.ToString();
         }
-    }
-}
+    
+
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {
@@ -242,7 +242,6 @@ namespace localhostUI
         {
             Program.UserDataManager.Save();
         }
-    }
 }
-
+}
 
