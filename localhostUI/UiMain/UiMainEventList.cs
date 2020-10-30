@@ -1,5 +1,6 @@
 ﻿using localhostUI.Backend;
 using localhostUI.Classes.EventClasses;
+using localhostUI.UiEvent;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,10 +32,19 @@ namespace localhostUI
                 eventPanel.Margin = new Padding(8);
                 eventPanel.BorderStyle = BorderStyle.Fixed3D;
 
+                eventPanel.Click += (sender, e) =>
+                {
+                    new UiEventDisplay(eBrief.Id, this).Show();
+                };
+
                 // Thumbnail
                 PictureBox thumbnail = new PictureBox();
                 thumbnail.Size = new Size(240, 180);
                 thumbnail.Location = new Point(0, 0);
+                thumbnail.Click += (sender, e) =>
+                {
+                    new UiEventDisplay(eBrief.Id, this).Show();
+                };
                 try
                 {
                     using (WebClient client = new WebClient())

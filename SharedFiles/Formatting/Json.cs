@@ -25,6 +25,8 @@ namespace Common.Formatting
         // Decodes json data recursively
         public static List<object> DecodeList(List<object> list)
         {
+            if (list == null) return null;
+
             // Must contain sets of 3 elements
             if (list.Count % 3 != 0) return null;
 
