@@ -43,6 +43,7 @@ namespace localhostUI.UserInformationForm
             if(adressCheckBox.Checked) user = new UserData(addressBox.Text, usernameTextBox.Text);
                 else user = new UserData(usernameTextBox.Text);
             DataList userData = UserData.ToDataList(user);
+            //Program.SaveUserData();
             Program.UserDataManager.UserData = user;
             Program.DataPool.userData = userData;
             Program.UserInfoNaturallyClosed = true;

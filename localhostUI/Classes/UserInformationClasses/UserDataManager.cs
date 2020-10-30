@@ -35,22 +35,23 @@ namespace localhostUI.Classes.UserInformationClasses
 
         public void Load()
         {
+            //fix dis error pls
             string userJson;
             try
             {
+                if (Directory.Exists(FileDirectory()))
+                {
+                    Directory.Delete(FileDirectory());
+                }
+                
+                Directory.CreateDirectory(writeDirectory);
                 userJson = File.ReadAllText(FileDirectory());
-            }catch(FileNotFoundException e)
-            {
-                return;
-            }
-            try 
-            {
                 Console.WriteLine(userJson);
                 this.UserData = JsonConvert.DeserializeObject<UserData>(userJson);
                 Program.DataPool.userData = UserData.ToDataList(this.UserData);
                 Console.WriteLine(this.UserData.ToString());
             }
-            catch
+            catch(FileNotFoundException e)
             {
                 return;
             }
@@ -71,10 +72,17 @@ namespace localhostUI.Classes.UserInformationClasses
                 throw e;
             }
             string jsonUser = System.Text.Json.JsonSerializer.Serialize(UserData);
-            Console.WriteLine(writeDirectory);
-            Directory.CreateDirectory(writeDirectory);
-            File.WriteAllText(FileDirectory(), jsonUser);
-            Console.WriteLine(@$"\JSON file: {UserData}\");
+            try
+            {
+                Console.WriteLine(writeDirectory);
+                Directory.CreateDirectory(writeDirectory);
+                File.WriteAllText(FileDirectory(), jsonUser);
+            }
+            catch
+            {
+                ;
+            }
+            
         }
         public UserData GetData()
         {

@@ -7,6 +7,7 @@ using localhostUI.Classes.LocationClasses;
 using localhostUI.Backend;
 using localhostUI.Classes.UserInformationClasses;
 using System.Drawing;
+using GoogleMaps.LocationServices;
 
 namespace localhostUI
 {
@@ -154,7 +155,21 @@ namespace localhostUI
 
         private void UserSearchMapsBrowser(object sender, EventArgs e)
         {
-            LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
+            try
+            {
+                LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show("Your adress contains characters which are not allowed.\nUnallowed characters: ! * ' ( ) ; : @ & = + $ / ? % # [ ]", "Illegal characters found.",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("We were unable to open this address in the browser.", "Something went wrong.",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
         }
 
         private void menuTabs_SelectedIndexChanged(object sender, EventArgs e)
