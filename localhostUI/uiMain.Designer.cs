@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UiMain));
             this.profileTab = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.usernameChangeResultLabel = new System.Windows.Forms.Label();
             this.changeUsernameButton = new System.Windows.Forms.Button();
             this.usernameBox = new System.Windows.Forms.TextBox();
@@ -76,8 +77,6 @@
             this.filterSlider = new System.Windows.Forms.TrackBar();
             this.filterPriceLabel = new System.Windows.Forms.Label();
             this.CurrentEventsTable = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.filterDateLabel = new System.Windows.Forms.Label();
             this.filterDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.filterComboBox = new System.Windows.Forms.ComboBox();
@@ -89,7 +88,6 @@
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.button2 = new System.Windows.Forms.Button();
             this.profileTab.SuspendLayout();
             this.eventManagerTab.SuspendLayout();
             this.managerTabs.SuspendLayout();
@@ -115,27 +113,38 @@
             this.profileTab.Controls.Add(this.changeAddressLabel);
             this.profileTab.Controls.Add(this.userAdressBox);
             this.profileTab.Location = new System.Drawing.Point(4, 25);
-            this.profileTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.profileTab.Name = "profileTab";
-            this.profileTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.profileTab.Size = new System.Drawing.Size(805, 534);
+            this.profileTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.profileTab.Size = new System.Drawing.Size(703, 393);
             this.profileTab.TabIndex = 2;
             this.profileTab.Text = "Profile manager";
             this.profileTab.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(574, 82);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(82, 22);
+            this.button2.TabIndex = 21;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.FormattAdressButton);
+            // 
             // usernameChangeResultLabel
             // 
             this.usernameChangeResultLabel.AutoSize = true;
-            this.usernameChangeResultLabel.Location = new System.Drawing.Point(297, 240);
+            this.usernameChangeResultLabel.Location = new System.Drawing.Point(260, 180);
             this.usernameChangeResultLabel.Name = "usernameChangeResultLabel";
-            this.usernameChangeResultLabel.Size = new System.Drawing.Size(0, 24);
+            this.usernameChangeResultLabel.Size = new System.Drawing.Size(0, 19);
             this.usernameChangeResultLabel.TabIndex = 20;
             // 
             // changeUsernameButton
             // 
-            this.changeUsernameButton.Location = new System.Drawing.Point(23, 231);
+            this.changeUsernameButton.Location = new System.Drawing.Point(20, 173);
+            this.changeUsernameButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.changeUsernameButton.Name = "changeUsernameButton";
-            this.changeUsernameButton.Size = new System.Drawing.Size(208, 43);
+            this.changeUsernameButton.Size = new System.Drawing.Size(182, 32);
             this.changeUsernameButton.TabIndex = 19;
             this.changeUsernameButton.Text = "Change username";
             this.changeUsernameButton.UseVisualStyleBackColor = true;
@@ -143,48 +152,47 @@
             // 
             // usernameBox
             // 
-            this.usernameBox.Location = new System.Drawing.Point(170, 186);
+            this.usernameBox.Location = new System.Drawing.Point(149, 140);
+            this.usernameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.usernameBox.Name = "usernameBox";
             this.usernameBox.PlaceholderText = "User69420";
-            this.usernameBox.Size = new System.Drawing.Size(614, 31);
+            this.usernameBox.Size = new System.Drawing.Size(538, 26);
             this.usernameBox.TabIndex = 18;
             // 
             // changeNameLabel
             // 
             this.changeNameLabel.AutoSize = true;
-            this.changeNameLabel.Location = new System.Drawing.Point(23, 189);
+            this.changeNameLabel.Location = new System.Drawing.Point(20, 142);
             this.changeNameLabel.Name = "changeNameLabel";
-            this.changeNameLabel.Size = new System.Drawing.Size(134, 24);
+            this.changeNameLabel.Size = new System.Drawing.Size(109, 19);
             this.changeNameLabel.TabIndex = 17;
             this.changeNameLabel.Text = "Your username:";
             // 
             // addressResultLabel
             // 
             this.addressResultLabel.AutoSize = true;
-            this.addressResultLabel.Location = new System.Drawing.Point(297, 110);
+            this.addressResultLabel.Location = new System.Drawing.Point(260, 82);
             this.addressResultLabel.Name = "addressResultLabel";
             this.addressResultLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.addressResultLabel.Size = new System.Drawing.Size(0, 24);
+            this.addressResultLabel.Size = new System.Drawing.Size(0, 19);
             this.addressResultLabel.TabIndex = 16;
             // 
             // button1
             // 
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(237, 101);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button1.Location = new System.Drawing.Point(207, 76);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(43, 43);
+            this.button1.Size = new System.Drawing.Size(38, 32);
             this.button1.TabIndex = 15;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.UserSearchMapsBrowser);
             // 
             // locationButton
             // 
-            this.locationButton.Location = new System.Drawing.Point(23, 101);
-            this.locationButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.locationButton.Location = new System.Drawing.Point(20, 76);
             this.locationButton.Name = "locationButton";
-            this.locationButton.Size = new System.Drawing.Size(208, 43);
+            this.locationButton.Size = new System.Drawing.Size(182, 32);
             this.locationButton.TabIndex = 3;
             this.locationButton.Text = "Change address";
             this.locationButton.UseVisualStyleBackColor = true;
@@ -194,38 +202,38 @@
             // 
             this.profileManagerLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.profileManagerLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.profileManagerLabel.Location = new System.Drawing.Point(23, 9);
+            this.profileManagerLabel.Location = new System.Drawing.Point(20, 7);
             this.profileManagerLabel.Name = "profileManagerLabel";
-            this.profileManagerLabel.Size = new System.Drawing.Size(290, 48);
+            this.profileManagerLabel.Size = new System.Drawing.Size(254, 36);
             this.profileManagerLabel.TabIndex = 2;
             this.profileManagerLabel.Text = "Your profile";
             // 
             // changeAddressLabel
             // 
             this.changeAddressLabel.AutoSize = true;
-            this.changeAddressLabel.Location = new System.Drawing.Point(23, 63);
+            this.changeAddressLabel.Location = new System.Drawing.Point(20, 47);
             this.changeAddressLabel.Name = "changeAddressLabel";
-            this.changeAddressLabel.Size = new System.Drawing.Size(111, 24);
+            this.changeAddressLabel.Size = new System.Drawing.Size(91, 19);
             this.changeAddressLabel.TabIndex = 1;
             this.changeAddressLabel.Text = "Your adress:";
             // 
             // userAdressBox
             // 
             this.userAdressBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.userAdressBox.Location = new System.Drawing.Point(170, 60);
+            this.userAdressBox.Location = new System.Drawing.Point(149, 45);
+            this.userAdressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.userAdressBox.Name = "userAdressBox";
             this.userAdressBox.PlaceholderText = "Didlaukio g. 59";
-            this.userAdressBox.Size = new System.Drawing.Size(614, 31);
+            this.userAdressBox.Size = new System.Drawing.Size(538, 26);
             this.userAdressBox.TabIndex = 0;
             // 
             // eventManagerTab
             // 
             this.eventManagerTab.Controls.Add(this.managerTabs);
             this.eventManagerTab.Location = new System.Drawing.Point(4, 25);
-            this.eventManagerTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.eventManagerTab.Name = "eventManagerTab";
-            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.eventManagerTab.Size = new System.Drawing.Size(805, 534);
+            this.eventManagerTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.eventManagerTab.Size = new System.Drawing.Size(703, 393);
             this.eventManagerTab.TabIndex = 1;
             this.eventManagerTab.Text = "Event manager";
             this.eventManagerTab.UseVisualStyleBackColor = true;
@@ -236,20 +244,18 @@
             this.managerTabs.Controls.Add(this.newEventTab);
             this.managerTabs.Controls.Add(this.addSportTab);
             this.managerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.managerTabs.Location = new System.Drawing.Point(3, 4);
-            this.managerTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.managerTabs.Location = new System.Drawing.Point(3, 3);
             this.managerTabs.Name = "managerTabs";
             this.managerTabs.SelectedIndex = 2;
-            this.managerTabs.Size = new System.Drawing.Size(799, 526);
+            this.managerTabs.Size = new System.Drawing.Size(697, 387);
             this.managerTabs.TabIndex = 0;
             // 
             // yourEventsTab
             // 
-            this.yourEventsTab.Location = new System.Drawing.Point(4, 33);
-            this.yourEventsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.yourEventsTab.Location = new System.Drawing.Point(4, 28);
             this.yourEventsTab.Name = "yourEventsTab";
-            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.yourEventsTab.Size = new System.Drawing.Size(791, 489);
+            this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.yourEventsTab.Size = new System.Drawing.Size(689, 355);
             this.yourEventsTab.TabIndex = 0;
             this.yourEventsTab.Text = "Manage your events";
             this.yourEventsTab.UseVisualStyleBackColor = true;
@@ -273,11 +279,10 @@
             this.newEventTab.Controls.Add(this.dateLabel);
             this.newEventTab.Controls.Add(this.nameLabel);
             this.newEventTab.Controls.Add(this.creatorHeader);
-            this.newEventTab.Location = new System.Drawing.Point(4, 33);
-            this.newEventTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.newEventTab.Location = new System.Drawing.Point(4, 28);
             this.newEventTab.Name = "newEventTab";
-            this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.newEventTab.Size = new System.Drawing.Size(791, 489);
+            this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.newEventTab.Size = new System.Drawing.Size(689, 355);
             this.newEventTab.TabIndex = 1;
             this.newEventTab.Text = "Create a new event";
             this.newEventTab.UseVisualStyleBackColor = true;
@@ -285,17 +290,17 @@
             // eventCreationResultLabel
             // 
             this.eventCreationResultLabel.AutoSize = true;
-            this.eventCreationResultLabel.Location = new System.Drawing.Point(182, 429);
+            this.eventCreationResultLabel.Location = new System.Drawing.Point(159, 322);
             this.eventCreationResultLabel.Name = "eventCreationResultLabel";
-            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 24);
+            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 19);
             this.eventCreationResultLabel.TabIndex = 16;
             // 
             // saveAsDraftButton
             // 
-            this.saveAsDraftButton.Location = new System.Drawing.Point(158, 322);
+            this.saveAsDraftButton.Location = new System.Drawing.Point(138, 242);
             this.saveAsDraftButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveAsDraftButton.Name = "saveAsDraftButton";
-            this.saveAsDraftButton.Size = new System.Drawing.Size(120, 35);
+            this.saveAsDraftButton.Size = new System.Drawing.Size(105, 26);
             this.saveAsDraftButton.TabIndex = 12;
             this.saveAsDraftButton.Text = "Save as draft";
             this.saveAsDraftButton.UseVisualStyleBackColor = true;
@@ -305,36 +310,38 @@
             // 
             this.mapsBrowserButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("mapsBrowserButton.BackgroundImage")));
             this.mapsBrowserButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.mapsBrowserButton.Location = new System.Drawing.Point(736, 184);
+            this.mapsBrowserButton.Location = new System.Drawing.Point(644, 138);
             this.mapsBrowserButton.Margin = new System.Windows.Forms.Padding(0);
             this.mapsBrowserButton.Name = "mapsBrowserButton";
-            this.mapsBrowserButton.Size = new System.Drawing.Size(39, 31);
+            this.mapsBrowserButton.Size = new System.Drawing.Size(34, 23);
             this.mapsBrowserButton.TabIndex = 15;
             this.mapsBrowserButton.UseVisualStyleBackColor = true;
             this.mapsBrowserButton.Click += new System.EventHandler(this.SearchMapsBrowser);
             // 
             // eventAdressBox
             // 
-            this.eventAdressBox.Location = new System.Drawing.Point(246, 184);
+            this.eventAdressBox.Location = new System.Drawing.Point(215, 138);
+            this.eventAdressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eventAdressBox.Name = "eventAdressBox";
             this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.eventAdressBox.Size = new System.Drawing.Size(476, 31);
+            this.eventAdressBox.Size = new System.Drawing.Size(417, 26);
             this.eventAdressBox.TabIndex = 14;
             // 
             // adressLabel
             // 
             this.adressLabel.AutoSize = true;
-            this.adressLabel.Location = new System.Drawing.Point(37, 184);
+            this.adressLabel.Location = new System.Drawing.Point(32, 138);
             this.adressLabel.Name = "adressLabel";
-            this.adressLabel.Size = new System.Drawing.Size(71, 24);
+            this.adressLabel.Size = new System.Drawing.Size(59, 19);
             this.adressLabel.TabIndex = 13;
             this.adressLabel.Text = "Adress:";
             // 
             // createEventButton
             // 
-            this.createEventButton.Location = new System.Drawing.Point(37, 429);
+            this.createEventButton.Location = new System.Drawing.Point(32, 322);
+            this.createEventButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.createEventButton.Name = "createEventButton";
-            this.createEventButton.Size = new System.Drawing.Size(137, 47);
+            this.createEventButton.Size = new System.Drawing.Size(120, 35);
             this.createEventButton.TabIndex = 12;
             this.createEventButton.Text = "Create";
             this.createEventButton.UseVisualStyleBackColor = true;
@@ -342,92 +349,97 @@
             // 
             // descriptionBox
             // 
-            this.descriptionBox.Location = new System.Drawing.Point(37, 256);
+            this.descriptionBox.Location = new System.Drawing.Point(32, 192);
+            this.descriptionBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionBox.Multiline = true;
             this.descriptionBox.Name = "descriptionBox";
             this.descriptionBox.PlaceholderText = "Input extra information about the event.";
             this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionBox.Size = new System.Drawing.Size(722, 157);
+            this.descriptionBox.Size = new System.Drawing.Size(632, 119);
             this.descriptionBox.TabIndex = 11;
             // 
             // priceBox
             // 
             this.priceBox.DecimalPlaces = 2;
-            this.priceBox.Location = new System.Drawing.Point(246, 147);
+            this.priceBox.Location = new System.Drawing.Point(215, 110);
+            this.priceBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.priceBox.Maximum = new decimal(new int[] {
             65373,
             0,
             0,
             0});
             this.priceBox.Name = "priceBox";
-            this.priceBox.Size = new System.Drawing.Size(529, 31);
+            this.priceBox.Size = new System.Drawing.Size(463, 26);
             this.priceBox.TabIndex = 10;
             // 
             // sportBox
             // 
             this.sportBox.FormattingEnabled = true;
-            this.sportBox.Location = new System.Drawing.Point(246, 107);
+            this.sportBox.Location = new System.Drawing.Point(215, 80);
+            this.sportBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sportBox.Name = "sportBox";
-            this.sportBox.Size = new System.Drawing.Size(529, 32);
+            this.sportBox.Size = new System.Drawing.Size(463, 27);
             this.sportBox.TabIndex = 9;
             // 
             // dateBox
             // 
-            this.dateBox.Location = new System.Drawing.Point(246, 69);
+            this.dateBox.Location = new System.Drawing.Point(215, 52);
+            this.dateBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(529, 31);
+            this.dateBox.Size = new System.Drawing.Size(463, 26);
             this.dateBox.TabIndex = 8;
             // 
             // nameBox
             // 
-            this.nameBox.Location = new System.Drawing.Point(246, 32);
+            this.nameBox.Location = new System.Drawing.Point(215, 24);
+            this.nameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nameBox.Name = "nameBox";
             this.nameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
-            this.nameBox.Size = new System.Drawing.Size(529, 31);
+            this.nameBox.Size = new System.Drawing.Size(463, 26);
             this.nameBox.TabIndex = 7;
             // 
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(37, 229);
+            this.descriptionLabel.Location = new System.Drawing.Point(32, 172);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(299, 24);
+            this.descriptionLabel.Size = new System.Drawing.Size(244, 19);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "Description (additional information):";
             // 
             // priceLabel
             // 
             this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(37, 147);
+            this.priceLabel.Location = new System.Drawing.Point(32, 110);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(186, 24);
+            this.priceLabel.Size = new System.Drawing.Size(151, 19);
             this.priceLabel.TabIndex = 5;
             this.priceLabel.Text = "Entry price (optional):";
             // 
             // sportLabel
             // 
             this.sportLabel.AutoSize = true;
-            this.sportLabel.Location = new System.Drawing.Point(37, 107);
+            this.sportLabel.Location = new System.Drawing.Point(32, 80);
             this.sportLabel.Name = "sportLabel";
-            this.sportLabel.Size = new System.Drawing.Size(57, 24);
+            this.sportLabel.Size = new System.Drawing.Size(47, 19);
             this.sportLabel.TabIndex = 4;
             this.sportLabel.Text = "Sport";
             // 
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(37, 69);
+            this.dateLabel.Location = new System.Drawing.Point(32, 52);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(54, 24);
+            this.dateLabel.Size = new System.Drawing.Size(45, 19);
             this.dateLabel.TabIndex = 3;
             this.dateLabel.Text = "Date:";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(37, 32);
+            this.nameLabel.Location = new System.Drawing.Point(32, 24);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(107, 24);
+            this.nameLabel.Size = new System.Drawing.Size(88, 19);
             this.nameLabel.TabIndex = 2;
             this.nameLabel.Text = "Event name:";
             // 
@@ -435,9 +447,9 @@
             // 
             this.creatorHeader.AutoSize = true;
             this.creatorHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.creatorHeader.Location = new System.Drawing.Point(37, 4);
+            this.creatorHeader.Location = new System.Drawing.Point(32, 3);
             this.creatorHeader.Name = "creatorHeader";
-            this.creatorHeader.Size = new System.Drawing.Size(202, 24);
+            this.creatorHeader.Size = new System.Drawing.Size(165, 19);
             this.creatorHeader.TabIndex = 1;
             this.creatorHeader.Text = "Input event information";
             // 
@@ -449,19 +461,21 @@
             this.addSportTab.Controls.Add(this.addButton);
             this.addSportTab.Controls.Add(this.addSportBox);
             this.addSportTab.Controls.Add(this.addSportLabel);
-            this.addSportTab.Location = new System.Drawing.Point(4, 33);
+            this.addSportTab.Location = new System.Drawing.Point(4, 28);
+            this.addSportTab.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addSportTab.Name = "addSportTab";
-            this.addSportTab.Padding = new System.Windows.Forms.Padding(3);
-            this.addSportTab.Size = new System.Drawing.Size(791, 489);
+            this.addSportTab.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.addSportTab.Size = new System.Drawing.Size(689, 355);
             this.addSportTab.TabIndex = 2;
             this.addSportTab.Text = "Add Sport (placeholder)";
             this.addSportTab.UseVisualStyleBackColor = true;
             // 
             // removeButton
             // 
-            this.removeButton.Location = new System.Drawing.Point(630, 121);
+            this.removeButton.Location = new System.Drawing.Point(551, 91);
+            this.removeButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.removeButton.Name = "removeButton";
-            this.removeButton.Size = new System.Drawing.Size(134, 32);
+            this.removeButton.Size = new System.Drawing.Size(117, 24);
             this.removeButton.TabIndex = 5;
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
@@ -470,25 +484,27 @@
             // removeSportBox
             // 
             this.removeSportBox.FormattingEnabled = true;
-            this.removeSportBox.Location = new System.Drawing.Point(178, 121);
+            this.removeSportBox.Location = new System.Drawing.Point(156, 91);
+            this.removeSportBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.removeSportBox.Name = "removeSportBox";
-            this.removeSportBox.Size = new System.Drawing.Size(445, 32);
+            this.removeSportBox.Size = new System.Drawing.Size(390, 27);
             this.removeSportBox.TabIndex = 4;
             // 
             // removeSportLabel
             // 
             this.removeSportLabel.AutoSize = true;
-            this.removeSportLabel.Location = new System.Drawing.Point(25, 121);
+            this.removeSportLabel.Location = new System.Drawing.Point(22, 91);
             this.removeSportLabel.Name = "removeSportLabel";
-            this.removeSportLabel.Size = new System.Drawing.Size(125, 24);
+            this.removeSportLabel.Size = new System.Drawing.Size(102, 19);
             this.removeSportLabel.TabIndex = 3;
             this.removeSportLabel.Text = "Remove sport:";
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(630, 75);
+            this.addButton.Location = new System.Drawing.Point(551, 56);
+            this.addButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(134, 31);
+            this.addButton.Size = new System.Drawing.Size(117, 23);
             this.addButton.TabIndex = 2;
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
@@ -496,18 +512,19 @@
             // 
             // addSportBox
             // 
-            this.addSportBox.Location = new System.Drawing.Point(178, 75);
+            this.addSportBox.Location = new System.Drawing.Point(156, 56);
+            this.addSportBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addSportBox.Name = "addSportBox";
             this.addSportBox.PlaceholderText = "Sport";
-            this.addSportBox.Size = new System.Drawing.Size(445, 31);
+            this.addSportBox.Size = new System.Drawing.Size(390, 26);
             this.addSportBox.TabIndex = 1;
             // 
             // addSportLabel
             // 
             this.addSportLabel.AutoSize = true;
-            this.addSportLabel.Location = new System.Drawing.Point(25, 75);
+            this.addSportLabel.Location = new System.Drawing.Point(22, 56);
             this.addSportLabel.Name = "addSportLabel";
-            this.addSportLabel.Size = new System.Drawing.Size(136, 24);
+            this.addSportLabel.Size = new System.Drawing.Size(110, 19);
             this.addSportLabel.TabIndex = 0;
             this.addSportLabel.Text = "Add sport type:";
             // 
@@ -521,18 +538,15 @@
             this.currentEventsTab.Controls.Add(this.filterSlider);
             this.currentEventsTab.Controls.Add(this.filterPriceLabel);
             this.currentEventsTab.Controls.Add(this.CurrentEventsTable);
-            this.currentEventsTab.Controls.Add(this.label4);
-            this.currentEventsTab.Controls.Add(this.dateTimePicker1);
             this.currentEventsTab.Controls.Add(this.filterDateLabel);
             this.currentEventsTab.Controls.Add(this.filterDateTimePicker);
             this.currentEventsTab.Controls.Add(this.filterComboBox);
             this.currentEventsTab.Controls.Add(this.filterSportLabel);
             this.currentEventsTab.Controls.Add(this.label2);
             this.currentEventsTab.Location = new System.Drawing.Point(4, 25);
-            this.currentEventsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.currentEventsTab.Name = "currentEventsTab";
-            this.currentEventsTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.currentEventsTab.Size = new System.Drawing.Size(805, 534);
+            this.currentEventsTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.currentEventsTab.Size = new System.Drawing.Size(703, 393);
             this.currentEventsTab.TabIndex = 0;
             this.currentEventsTab.Text = "Current events";
             this.currentEventsTab.UseVisualStyleBackColor = true;
@@ -540,32 +554,35 @@
             // filterSearchLabel
             // 
             this.filterSearchLabel.AutoSize = true;
-            this.filterSearchLabel.Location = new System.Drawing.Point(24, 142);
+            this.filterSearchLabel.Location = new System.Drawing.Point(24, 110);
             this.filterSearchLabel.Name = "filterSearchLabel";
-            this.filterSearchLabel.Size = new System.Drawing.Size(67, 24);
+            this.filterSearchLabel.Size = new System.Drawing.Size(55, 19);
             this.filterSearchLabel.TabIndex = 11;
             this.filterSearchLabel.Text = "Search";
             // 
             // priceScrollerLabel
             // 
             this.priceScrollerLabel.AutoSize = true;
-            this.priceScrollerLabel.Location = new System.Drawing.Point(633, 65);
+            this.priceScrollerLabel.Location = new System.Drawing.Point(588, 58);
             this.priceScrollerLabel.Name = "priceScrollerLabel";
-            this.priceScrollerLabel.Size = new System.Drawing.Size(0, 24);
+            this.priceScrollerLabel.Size = new System.Drawing.Size(18, 19);
             this.priceScrollerLabel.TabIndex = 10;
+            this.priceScrollerLabel.Text = "0";
             // 
             // filterTextBox
             // 
-            this.filterTextBox.Location = new System.Drawing.Point(101, 140);
+            this.filterTextBox.Location = new System.Drawing.Point(88, 106);
+            this.filterTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(264, 31);
+            this.filterTextBox.Size = new System.Drawing.Size(260, 26);
             this.filterTextBox.TabIndex = 9;
             // 
             // filterButton
             // 
-            this.filterButton.Location = new System.Drawing.Point(538, 139);
+            this.filterButton.Location = new System.Drawing.Point(488, 105);
+            this.filterButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(75, 32);
+            this.filterButton.Size = new System.Drawing.Size(66, 24);
             this.filterButton.TabIndex = 8;
             this.filterButton.Text = "Filter";
             this.filterButton.UseVisualStyleBackColor = true;
@@ -573,10 +590,11 @@
             // 
             // filterSlider
             // 
-            this.filterSlider.Location = new System.Drawing.Point(473, 60);
+            this.filterSlider.Location = new System.Drawing.Point(460, 45);
+            this.filterSlider.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterSlider.Maximum = 1000;
             this.filterSlider.Name = "filterSlider";
-            this.filterSlider.Size = new System.Drawing.Size(140, 56);
+            this.filterSlider.Size = new System.Drawing.Size(122, 45);
             this.filterSlider.TabIndex = 7;
             this.filterSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             this.filterSlider.Scroll += new System.EventHandler(this.trackBarFilter_Scroll);
@@ -584,11 +602,11 @@
             // filterPriceLabel
             // 
             this.filterPriceLabel.AutoSize = true;
-            this.filterPriceLabel.Location = new System.Drawing.Point(402, 63);
+            this.filterPriceLabel.Location = new System.Drawing.Point(381, 58);
             this.filterPriceLabel.Name = "filterPriceLabel";
-            this.filterPriceLabel.Size = new System.Drawing.Size(50, 24);
+            this.filterPriceLabel.Size = new System.Drawing.Size(73, 19);
             this.filterPriceLabel.TabIndex = 6;
-            this.filterPriceLabel.Text = "Price";
+            this.filterPriceLabel.Text = "Max price";
             // 
             // CurrentEventsTable
             // 
@@ -597,8 +615,7 @@
             this.CurrentEventsTable.ColumnCount = 2;
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CurrentEventsTable.Location = new System.Drawing.Point(27, 221);
-            this.CurrentEventsTable.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.CurrentEventsTable.Location = new System.Drawing.Point(24, 166);
             this.CurrentEventsTable.Name = "CurrentEventsTable";
             this.CurrentEventsTable.RowCount = 1;
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -606,62 +623,47 @@
             this.CurrentEventsTable.Size = new System.Drawing.Size(0, 0);
             this.CurrentEventsTable.TabIndex = 5;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 141);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 24);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Date";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(115, 139);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(228, 31);
-            this.dateTimePicker1.TabIndex = 3;
-            // 
             // filterDateLabel
             // 
             this.filterDateLabel.AutoSize = true;
-            this.filterDateLabel.Location = new System.Drawing.Point(24, 106);
+            this.filterDateLabel.Location = new System.Drawing.Point(24, 80);
             this.filterDateLabel.Name = "filterDateLabel";
-            this.filterDateLabel.Size = new System.Drawing.Size(49, 24);
+            this.filterDateLabel.Size = new System.Drawing.Size(41, 19);
             this.filterDateLabel.TabIndex = 4;
             this.filterDateLabel.Text = "Date";
             // 
             // filterDateTimePicker
             // 
-            this.filterDateTimePicker.Location = new System.Drawing.Point(101, 104);
+            this.filterDateTimePicker.Location = new System.Drawing.Point(88, 76);
+            this.filterDateTimePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterDateTimePicker.Name = "filterDateTimePicker";
-            this.filterDateTimePicker.Size = new System.Drawing.Size(264, 31);
+            this.filterDateTimePicker.Size = new System.Drawing.Size(260, 26);
             this.filterDateTimePicker.TabIndex = 3;
             // 
             // filterComboBox
             // 
             this.filterComboBox.FormattingEnabled = true;
-            this.filterComboBox.Location = new System.Drawing.Point(101, 60);
+            this.filterComboBox.Location = new System.Drawing.Point(88, 45);
+            this.filterComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterComboBox.Name = "filterComboBox";
-            this.filterComboBox.Size = new System.Drawing.Size(121, 32);
+            this.filterComboBox.Size = new System.Drawing.Size(106, 27);
             this.filterComboBox.TabIndex = 2;
             // 
             // filterSportLabel
             // 
             this.filterSportLabel.AutoSize = true;
-            this.filterSportLabel.Location = new System.Drawing.Point(24, 68);
+            this.filterSportLabel.Location = new System.Drawing.Point(24, 49);
             this.filterSportLabel.Name = "filterSportLabel";
-            this.filterSportLabel.Size = new System.Drawing.Size(57, 24);
+            this.filterSportLabel.Size = new System.Drawing.Size(47, 19);
             this.filterSportLabel.TabIndex = 1;
             this.filterSportLabel.Text = "Sport";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(362, 28);
+            this.label2.Location = new System.Drawing.Point(317, 21);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 24);
+            this.label2.Size = new System.Drawing.Size(48, 19);
             this.label2.TabIndex = 0;
             this.label2.Text = "Filter";
             // 
@@ -674,30 +676,19 @@
             this.menuTabs.Font = new System.Drawing.Font("Comic Sans MS", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.menuTabs.ItemSize = new System.Drawing.Size(266, 21);
             this.menuTabs.Location = new System.Drawing.Point(0, 0);
-            this.menuTabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.menuTabs.Name = "menuTabs";
             this.menuTabs.SelectedIndex = 0;
-            this.menuTabs.Size = new System.Drawing.Size(813, 563);
+            this.menuTabs.Size = new System.Drawing.Size(711, 422);
             this.menuTabs.TabIndex = 0;
             this.menuTabs.SelectedIndexChanged += new System.EventHandler(this.menuTabs_SelectedIndexChanged);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(656, 110);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 29);
-            this.button2.TabIndex = 21;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.FormattAdressButton);
-            // 
             // UiMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 563);
+            this.ClientSize = new System.Drawing.Size(711, 422);
             this.Controls.Add(this.menuTabs);
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "UiMain";
             this.Text = "localhost";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveToFile);
@@ -758,8 +749,6 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.ComboBox removeSportBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label filterDateLabel;
         private System.Windows.Forms.DateTimePicker filterDateTimePicker;
         private System.Windows.Forms.ComboBox filterComboBox;
