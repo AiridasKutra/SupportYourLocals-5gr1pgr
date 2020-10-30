@@ -9,7 +9,9 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "AIzaSyAZi39nB5EAaAgj3fdiCRwZTbY7lxIO-0Y";
+        private const string apiKey = "AIzaSyA5obyzC68cu1-owCalX4A90Dwb5Bb7iPc";
+
+        //MapPoint location = address.LatLongFromString();
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -22,6 +24,7 @@ namespace localhostUI.Classes.LocationClasses
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetLatLongFromAddress(addressObject);
         }
+        //MapPoint location = LocationInformation.LatLongFromString(address);
         public static MapPoint LatLongFromAddress(string address, string country = "Lithuania")
         {
             AddressData addressObject = new AddressData
@@ -34,17 +37,29 @@ namespace localhostUI.Classes.LocationClasses
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetLatLongFromAddress(addressObject);
         }
+
+
         public static AddressData AddressFromLatLong(double latitude, double longitude)
         {
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetAddressFromLatLang(latitude, longitude);
         }
+
         public static AddressData AddressFromLatLong(MapPoint latLong)
+        {
+            var locationService = new GoogleLocationService(apiKey);
+
+            return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
+        }
+        public static AddressData AddressFromMapPoint(this MapPoint latLong)
         {
             var locationService = new GoogleLocationService(apiKey);
     
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
         }
+        
+
+
         public static string FormatAddress(string address)
         {
             var locationService = new GoogleLocationService(apiKey);
@@ -67,9 +82,7 @@ namespace localhostUI.Classes.LocationClasses
             }
             else if (address.Any(c => invalidCharacters.Contains(c)))
             {
-                MessageBox.Show("Your adress contains characters which are not allowed.\nUnallowed characters: ! * ' ( ) ; : @ & = + $ / ? % # [ ]", "Illegal characters found.",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                throw new FormatException("Illegal characters");
             }
 
             //Constructing the link.
@@ -98,11 +111,13 @@ namespace localhostUI.Classes.LocationClasses
                 }
                 else
                 {
+
                     throw;
                 }
             }
         }
 
+        
         //Returned values are in meters
         public static double Distance(MapPoint user, MapPoint destination)
         {
@@ -130,12 +145,14 @@ namespace localhostUI.Classes.LocationClasses
             }
 
         }
-
+        
+        
         public static bool IsValidAddress(string address)
         {
             try
             {
                 MapPoint location = LocationInformation.LatLongFromAddress(address);
+                if (location == null) return false;
                 location.ToString();
             }
             catch (Exception e)
