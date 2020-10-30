@@ -4,6 +4,7 @@ using Common.Network;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 
@@ -109,7 +110,11 @@ namespace Database.Network
             string tableName = Encoding.ASCII.GetString(data[0].Data);
             string jsonStr = Encoding.ASCII.GetString(data[1].Data);
             DataList entry = DataList.FromList(Json.ToList(jsonStr));
-            database.AddEntry(entry, tableName);
+
+            if (tableName == "events_full")
+            {
+                AddEvent(tableName, entry);
+            }
         }
 
         private void EditEntry(Packet[] data)
@@ -118,14 +123,60 @@ namespace Database.Network
             string rowName = Encoding.ASCII.GetString(data[1].Data);
             string jsonStr = Encoding.ASCII.GetString(data[2].Data);
             DataList entry = DataList.FromList(Json.ToList(jsonStr));
-            database.EditEntry(entry, tableName, rowName);
+
+            if (tableName == "events_full")
+            {
+                EditEvent(tableName, rowName, entry);
+            }
         }
 
         private void RemoveEntry(Packet[] data)
         {
             string tableName = Encoding.ASCII.GetString(data[0].Data);
             string rowName = Encoding.ASCII.GetString(data[1].Data);
-            database.RemoveEntry(tableName, rowName);
+
+            if (tableName == "events_full")
+            {
+                RemoveEvent(tableName, rowName);
+            }
+        }
+
+        private void AddEvent(string tableName, DataList entry)
+        {
+            entry.Remove("id");
+
+            // Create brief copy
+            DataList brief = new DataList(entry);
+            brief.Remove("address");
+            brief.Remove("description");
+            brief.Remove("links");
+
+            database.AddEntry(brief, "events_brief");
+            database.AddEntry(entry, "events_full");
+
+            // Create chatroom
+        }
+
+        private void EditEvent(string tableName, string rowName, DataList entry)
+        {
+            entry.Remove("id");
+
+            // Create brief copy
+            DataList brief = new DataList(entry);
+            brief.Remove("address");
+            brief.Remove("description");
+            brief.Remove("links");
+
+            database.EditEntry(brief, "events_brief", rowName);
+            database.EditEntry(entry, "events_full", rowName);
+        }
+
+        private void RemoveEvent(string tableName, string rowName)
+        {
+            database.RemoveEntry("events_brief", rowName);
+            database.RemoveEntry("events_full", rowName);
+
+            // Delete chatroom
         }
     }
 }
