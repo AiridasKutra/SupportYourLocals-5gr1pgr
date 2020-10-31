@@ -34,6 +34,13 @@ namespace Common
             return true;
         }
 
+        public bool Add(ListItem item)
+        {
+            items.Add(item.item);
+            names.Add(item.name);
+            return true;
+        }
+
         public object Get(int index)
         {
             if (index >= 0 && index < items.Count)
