@@ -193,5 +193,36 @@ namespace Common.Network
 
             return true;
         }
+
+        public bool SendMessage(string message, int eventId)
+        {
+            if (!client.Connected()) return false;
+
+            string idString = eventId.ToString();
+
+            Packet packInfo = new Packet
+            {
+                PacketId = (uint)PacketType.MULTIPLE_PACKETS,
+                Data = BitConverter.GetBytes(2u)
+            };
+
+            Packet pack1 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_TEXT,
+                Data = Encoding.ASCII.GetBytes(message)
+            };
+
+            Packet pack2 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_EVENT_ID,
+                Data = Encoding.ASCII.GetBytes(idString)
+            };
+
+            client.Send(packInfo);
+            client.Send(pack1);
+            client.Send(pack2);
+
+            return true;
+        }
     }
 }
