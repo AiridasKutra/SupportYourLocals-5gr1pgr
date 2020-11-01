@@ -73,6 +73,11 @@ namespace Database
             Load(new JsonFileReader("data1.json"));
         }
 
+        public ref readonly DataList GetData()
+        {
+            return ref data;
+        }
+
         public DataList Execute(string command)
         {
             string[] commlets = command.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -408,6 +413,23 @@ namespace Database
             // Edit entry
             ((DataList)data.Get(tableIndex)).items.RemoveAt(rowIndex);
             ((DataList)data.Get(tableIndex)).names.RemoveAt(rowIndex);
+        }
+
+        public void AppendEntry(DataList data, string tableName, string rowName)
+        {
+            int tableIndex = data.names.IndexOf(tableName);
+            if (tableIndex == -1) return;
+
+            // Find entry
+            DataList table = (DataList)data.Get(tableIndex);
+            int rowIndex = table.names.IndexOf(rowName);
+            if (rowIndex == -1) return;
+
+            // Edit entry
+            foreach (var item in data)
+            {
+                ((DataList)((DataList)data.Get(tableIndex)).items[rowIndex]).Add(item);
+            }
         }
 
         public void Save(IDataWriter writer)
