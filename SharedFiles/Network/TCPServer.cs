@@ -192,6 +192,19 @@ namespace Common.Network
             return clients.Count;
         }
 
+        public uint[] GetClientIds()
+        {
+            lock (mCon)
+            {
+                uint[] ids = new uint[ClientCount()];
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    ids[i] = clients[i].id;
+                }
+                return ids;
+            }
+        }
+
         public int ThreadCount()
         {
             return clientThreads.Count;
