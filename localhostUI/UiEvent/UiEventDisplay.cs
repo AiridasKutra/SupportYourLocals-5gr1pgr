@@ -1,5 +1,6 @@
 ﻿using Common;
 using GoogleMaps.LocationServices;
+using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
@@ -19,6 +20,8 @@ namespace localhostUI.UiEvent
     {
         private Form caller;
         private EventFull @event;
+
+        private ChatManager chatManager;
 
         public UiEventDisplay(int eventId, Form caller)
         {
@@ -87,6 +90,18 @@ namespace localhostUI.UiEvent
 
                 Controls.Add(linkText);
             }
+
+            // Chat
+            chatMessageTextBox.KeyPress += new KeyPressEventHandler(Key_Press);
+
+            chatPanel.HorizontalScroll.Maximum = 0;
+            chatPanel.AutoScroll = false;
+            chatPanel.VerticalScroll.Visible = false;
+            chatPanel.AutoScroll = true;
+
+            // Start chat
+            chatManager = new ChatManager();
+            chatManager.Connect(@event.Id, chatPanel);
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
@@ -106,6 +121,40 @@ namespace localhostUI.UiEvent
                 MessageBox.Show("A mistake was made in opening the address.", "Something went wrong.",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void Key_Press(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                e.Handled = true;
+                if (chatMessageTextBox.Text.Length == 0) return;
+
+                SendMessage(chatMessageTextBox.Text);
+                chatMessageTextBox.Text = "";
+                //e.SuppressKeyPress = true;
+            }
+        }
+
+        private void SendMessage_Click(object sender, EventArgs e)
+        {
+            if (chatMessageTextBox.Text.Length == 0) return;
+
+            SendMessage(chatMessageTextBox.Text);
+            chatMessageTextBox.Text = "";
+        }
+
+        private void SendMessage(string message)
+        {
+            chatManager.SendMessage(message);
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+
+            // Properly disconnect and close chat manager
+            chatManager.Disconnect();
         }
     }
 }
