@@ -62,11 +62,11 @@ namespace localhostUI.Backend
         {
             try
             {
-                //string ip = "193.219.91.103";
+                string ip = "193.219.91.103";
                 //string ip = "doesntexist";
-                string ip = "127.0.0.1";
-                //ushort port = 2776;
-                ushort port = 54000;
+                //string ip = "127.0.0.1";
+                ushort port = 2776;
+                //ushort port = 54000;
 
                 if (client.Connect(ip, port))
                 {
