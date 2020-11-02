@@ -102,6 +102,12 @@ namespace Common.Network
 
         private int Send(Socket sock, byte[] buffer, int id = -1)
         {
+            if (!sock.Connected)
+            {
+                Console.WriteLine($"Send failed: user {id} socket closed");
+                return 0;
+            }
+
             int prefixSent = sock.Send(BitConverter.GetBytes(buffer.Length));
             int messageSent = sock.Send(buffer);
 
@@ -116,7 +122,7 @@ namespace Common.Network
             Console.WriteLine($"Sending {buffer.Length} bytes ({messageSent} sent)");
 
             // Reset color back to white
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
             return prefixSent + messageSent;
         }
 
