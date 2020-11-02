@@ -15,6 +15,7 @@ namespace Database.Network
         private readonly Database database;
         private readonly TCPServer server;
         private Thread handler;
+        private bool threadStop;
 
         private ChatMessageSender chatMessageSender;
 
@@ -28,13 +29,14 @@ namespace Database.Network
 
         public void Start()
         {
+            threadStop = false;
             handler = new Thread(new ThreadStart(HandlerThread));
             handler.Start();
         }
 
         public void Stop()
         {
-            handler.Abort();
+            threadStop = true;
         }
 
         private void HandlerThread()
@@ -47,6 +49,8 @@ namespace Database.Network
 
             while (true)
             {
+                if (threadStop) return;
+
                 while (server.PacketCount() > 0)
                 {
                     Packet packet = server.GetPacket();

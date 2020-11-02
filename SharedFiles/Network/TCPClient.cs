@@ -227,13 +227,15 @@ namespace Common.Network
                 // Client disconnected
                 catch (ObjectDisposedException)
                 {
-                    thisClient.Close();
-                    Thread.CurrentThread.Abort();
+                    return;
                 }
                 catch (SocketException)
                 {
-                    thisClient.Close();
                     return;
+                }
+                finally
+                {
+                    thisClient.Close();
                 }
             }
         }
