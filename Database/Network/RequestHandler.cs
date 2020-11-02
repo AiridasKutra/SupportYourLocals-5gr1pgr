@@ -186,7 +186,14 @@ namespace Database.Network
 
             // Get messages
             string eventId = Encoding.ASCII.GetString(data[0].Data);
-            DataList messages = database.Execute($"select from event_chatrooms id {eventId}");
+            DataList chatroom = database.Execute($"select from event_chatrooms id {eventId}");
+            if (chatroom == null)
+            {
+                return;
+            }
+
+            DataList messages = (DataList)chatroom.items[0];
+            messages.Remove("id");
 
             // Send message count
             server.Send(new Packet
@@ -251,6 +258,8 @@ namespace Database.Network
 
         private void SendChatMessage(string message, string eventId)
         {
+            if (message.Length == 0) return;
+
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd|HH:mm:ss");
 
             DataList messageData = new DataList();

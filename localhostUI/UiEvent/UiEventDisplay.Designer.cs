@@ -36,6 +36,9 @@
             this.showMapsButton = new System.Windows.Forms.Button();
             this.addressLabel = new System.Windows.Forms.Label();
             this.descriptionLabel = new System.Windows.Forms.Label();
+            this.chatMessageTextBox = new System.Windows.Forms.TextBox();
+            this.sendMessageButton = new System.Windows.Forms.Button();
+            this.chatPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // eventName
@@ -99,15 +102,47 @@
             this.descriptionLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.descriptionLabel.Location = new System.Drawing.Point(35, 168);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(427, 165);
+            this.descriptionLabel.Size = new System.Drawing.Size(385, 194);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "Description";
+            // 
+            // chatMessageTextBox
+            // 
+            this.chatMessageTextBox.Location = new System.Drawing.Point(426, 339);
+            this.chatMessageTextBox.MaxLength = 255;
+            this.chatMessageTextBox.Name = "chatMessageTextBox";
+            this.chatMessageTextBox.PlaceholderText = "Enter a message...";
+            this.chatMessageTextBox.Size = new System.Drawing.Size(209, 23);
+            this.chatMessageTextBox.TabIndex = 8;
+            // 
+            // sendMessageButton
+            // 
+            this.sendMessageButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.sendMessageButton.Location = new System.Drawing.Point(641, 338);
+            this.sendMessageButton.Name = "sendMessageButton";
+            this.sendMessageButton.Size = new System.Drawing.Size(25, 25);
+            this.sendMessageButton.TabIndex = 9;
+            this.sendMessageButton.Text = "»";
+            this.sendMessageButton.UseVisualStyleBackColor = true;
+            this.sendMessageButton.Click += new System.EventHandler(this.SendMessage_Click);
+            // 
+            // chatPanel
+            // 
+            this.chatPanel.BackColor = System.Drawing.Color.White;
+            this.chatPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chatPanel.Location = new System.Drawing.Point(426, 168);
+            this.chatPanel.Name = "chatPanel";
+            this.chatPanel.Size = new System.Drawing.Size(239, 165);
+            this.chatPanel.TabIndex = 10;
             // 
             // UiEventDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(700, 422);
+            this.Controls.Add(this.chatPanel);
+            this.Controls.Add(this.sendMessageButton);
+            this.Controls.Add(this.chatMessageTextBox);
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.addressLabel);
             this.Controls.Add(this.showMapsButton);
@@ -118,6 +153,7 @@
             this.Name = "UiEventDisplay";
             this.Text = "UiEventDisplay";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,5 +166,8 @@
         private System.Windows.Forms.Button showMapsButton;
         private System.Windows.Forms.Label addressLabel;
         private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.TextBox chatMessageTextBox;
+        private System.Windows.Forms.Button sendMessageButton;
+        private System.Windows.Forms.Panel chatPanel;
     }
 }
