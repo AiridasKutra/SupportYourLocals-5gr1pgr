@@ -146,7 +146,7 @@ namespace localhostUI.UiEvent
 
         private void SendMessage(string message)
         {
-            chatManager.SendMessage(message);
+            chatManager.SendMessage($"{Program.UserDataManager.GetData().Username}: {message}");
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

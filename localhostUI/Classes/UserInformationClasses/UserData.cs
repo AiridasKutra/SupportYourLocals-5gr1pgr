@@ -17,7 +17,12 @@ namespace localhostUI.Classes.UserInformationClasses
         //--------------------------------------------------------
         public UserData()
         {
+            Address = "";
+            Latitude = 0;
+            Longitude = 0;
+            Username = "Anon";
         }
+
         public UserData(string address, string userName)
         {
             this.Address = LocationInformation.FormatAddress(address);
