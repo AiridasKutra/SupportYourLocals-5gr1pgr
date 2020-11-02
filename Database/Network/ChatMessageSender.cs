@@ -14,6 +14,7 @@ namespace Database.Network
         public ChatMessageSender(TCPServer server)
         {
             this.server = server;
+            this.clients = new List<uint>();
         }
 
         public void AddClient(uint client)
@@ -59,6 +60,9 @@ namespace Database.Network
         {
             List<uint> connectedClients = new List<uint>(server.GetClientIds());
 
+            clients.RemoveAll((id) => !connectedClients.Contains(id));
+
+            /*
             foreach (uint id in clients)
             {
                 if (!connectedClients.Contains(id))
@@ -66,6 +70,7 @@ namespace Database.Network
                     clients.Remove(id);
                 }
             }
+            */
         }
     }
 }
