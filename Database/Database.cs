@@ -251,6 +251,7 @@ namespace Database
                     // Find entry with correct id /////////////////////////////////////////// (TODO: using binary search)
                     if (entryId != -1)
                     {
+                        bool found = false;
                         for (int i = 0; i < table.Size(); i++)
                         {
                             int id;
@@ -260,9 +261,15 @@ namespace Database
                                 {
                                     rowLower = i;
                                     rowUpper = i;
+                                    found = true;
                                     break;
                                 }
                             }
+                        }
+
+                        if (!found)
+                        {
+                            return null;
                         }
                     }
 
@@ -415,7 +422,7 @@ namespace Database
             ((DataList)data.Get(tableIndex)).names.RemoveAt(rowIndex);
         }
 
-        public void AppendEntry(DataList data, string tableName, string rowName)
+        public void AppendEntry(DataList items, string tableName, string rowName)
         {
             int tableIndex = data.names.IndexOf(tableName);
             if (tableIndex == -1) return;
@@ -426,9 +433,9 @@ namespace Database
             if (rowIndex == -1) return;
 
             // Edit entry
-            foreach (var item in data)
+            foreach (var item in items)
             {
-                ((DataList)((DataList)data.Get(tableIndex)).items[rowIndex]).Add(item);
+                ((DataList)table.items[rowIndex]).Add(item);
             }
         }
 
