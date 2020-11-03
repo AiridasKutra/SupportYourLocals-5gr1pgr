@@ -39,12 +39,13 @@
             this.chatMessageTextBox = new System.Windows.Forms.TextBox();
             this.sendMessageButton = new System.Windows.Forms.Button();
             this.chatPanel = new System.Windows.Forms.Panel();
+            this.picturePanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // eventName
             // 
             this.eventName.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.eventName.Location = new System.Drawing.Point(110, 23);
+            this.eventName.Location = new System.Drawing.Point(110, 33);
             this.eventName.Name = "eventName";
             this.eventName.Size = new System.Drawing.Size(480, 29);
             this.eventName.TabIndex = 0;
@@ -67,7 +68,7 @@
             // 
             // returnButton
             // 
-            this.returnButton.Location = new System.Drawing.Point(35, 23);
+            this.returnButton.Location = new System.Drawing.Point(35, 33);
             this.returnButton.Name = "returnButton";
             this.returnButton.Size = new System.Drawing.Size(69, 29);
             this.returnButton.TabIndex = 3;
@@ -102,7 +103,7 @@
             this.descriptionLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.descriptionLabel.Location = new System.Drawing.Point(35, 168);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(385, 194);
+            this.descriptionLabel.Size = new System.Drawing.Size(385, 301);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "Description";
             // 
@@ -135,11 +136,20 @@
             this.chatPanel.Size = new System.Drawing.Size(239, 165);
             this.chatPanel.TabIndex = 10;
             // 
+            // picturePanel
+            // 
+            this.picturePanel.Location = new System.Drawing.Point(672, 33);
+            this.picturePanel.Name = "picturePanel";
+            this.picturePanel.Size = new System.Drawing.Size(256, 436);
+            this.picturePanel.TabIndex = 11;
+            // 
             // UiEventDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 422);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(964, 502);
+            this.Controls.Add(this.picturePanel);
             this.Controls.Add(this.chatPanel);
             this.Controls.Add(this.sendMessageButton);
             this.Controls.Add(this.chatMessageTextBox);
@@ -169,5 +179,6 @@
         private System.Windows.Forms.TextBox chatMessageTextBox;
         private System.Windows.Forms.Button sendMessageButton;
         private System.Windows.Forms.Panel chatPanel;
+        private System.Windows.Forms.Panel picturePanel;
     }
 }

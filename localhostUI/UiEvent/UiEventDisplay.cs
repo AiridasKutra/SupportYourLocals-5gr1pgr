@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
@@ -86,10 +88,40 @@ namespace localhostUI.UiEvent
                 {
                     Process.Start(new ProcessStartInfo("cmd", $"/c start {linkSplit[0]}"));
                 };
-                linkText.Location = new Point(470, 168 + (i * 20));
+                linkText.Location = new Point(426, 370 + (i * 20));
 
                 Controls.Add(linkText);
             }
+
+            // Load images
+            List<string> imageLinks = @event.GetImages();
+            for (int i = 0; i < imageLinks.Count; i++)
+            {
+                PictureBox picture = new PictureBox();
+                picture.Size = new Size(240, 180);
+                picture.Location = new Point(0, 200 * i);
+                picture.BorderStyle = BorderStyle.Fixed3D;
+                try
+                {
+                    using (WebClient client = new WebClient())
+                    {
+                        Stream stream = client.OpenRead(imageLinks[i]);
+                        Bitmap bitmap = new Bitmap(stream);
+                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(240, 180));
+                        picture.Image = bitmapScaled;
+
+                        stream.Flush();
+                        stream.Close();
+                    }
+                }
+                catch { }
+                picturePanel.Controls.Add(picture);
+            }
+
+            picturePanel.HorizontalScroll.Maximum = 0;
+            picturePanel.AutoScroll = false;
+            picturePanel.VerticalScroll.Visible = false;
+            picturePanel.AutoScroll = true;
 
             // Chat
             chatMessageTextBox.KeyPress += new KeyPressEventHandler(Key_Press);
