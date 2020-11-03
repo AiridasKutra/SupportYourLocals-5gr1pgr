@@ -31,6 +31,7 @@ namespace localhostUI
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
+            sportTypes.SportList.Add("Any");
             sportTypes.SportList.Add("Football");
             sportTypes.SportList.Add("Basketball");
             sportTypes.SportList.Add("Volleyball");
@@ -54,7 +55,7 @@ namespace localhostUI
             //sorry if ur eyes r bleeding.
 
             refreshSportsTable();
-            LoadMainEvents(new EventOptions());
+            SetUpCurrentEventsTab();
             Program.DataPool.LoadDrafts();
         }
 
@@ -178,28 +179,12 @@ namespace localhostUI
             switch (tabControl.SelectedIndex)
             {
                 case 0:
-                    LoadMainEvents(new EventOptions());
+                    SetUpCurrentEventsTab();
                     break;
                 default:
                     break;
             }
         }
-
-        private void filterButton_Click(object sender, EventArgs e)
-        {
-            EventOptions options = new EventOptions();
-            options.AddSport((string)filterSportSelector.SelectedItem);
-            //options.SetMaxPrice(filterSlider.Value);
-            
-            LoadMainEvents(options);
-        }
-
-        private void trackBarFilter_Scroll(object sender, EventArgs e)
-        {
-            filterPriceValueLabel.Text=filterPriceSlider.Value.ToString();
-        }
-    
-
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {

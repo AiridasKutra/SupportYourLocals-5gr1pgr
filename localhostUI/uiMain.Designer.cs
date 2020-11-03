@@ -568,9 +568,9 @@
             this.filterDistanceValueLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterDistanceValueLabel.Location = new System.Drawing.Point(611, 81);
             this.filterDistanceValueLabel.Name = "filterDistanceValueLabel";
-            this.filterDistanceValueLabel.Size = new System.Drawing.Size(16, 17);
+            this.filterDistanceValueLabel.Size = new System.Drawing.Size(48, 17);
             this.filterDistanceValueLabel.TabIndex = 10;
-            this.filterDistanceValueLabel.Text = "0";
+            this.filterDistanceValueLabel.Text = "0.0km";
             // 
             // filterDistanceSlider
             // 
@@ -582,7 +582,7 @@
             this.filterDistanceSlider.Size = new System.Drawing.Size(116, 23);
             this.filterDistanceSlider.TabIndex = 7;
             this.filterDistanceSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.filterDistanceSlider.Scroll += new System.EventHandler(this.trackBarFilter_Scroll);
+            this.filterDistanceSlider.Scroll += new System.EventHandler(this.filterDistanceSlider_Scroll);
             // 
             // filterDistanceLabel
             // 
@@ -603,6 +603,7 @@
             this.searchButton.TabIndex = 14;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // filterDateSepratorLabel
             // 
@@ -629,9 +630,9 @@
             this.filterPriceValueLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterPriceValueLabel.Location = new System.Drawing.Point(611, 51);
             this.filterPriceValueLabel.Name = "filterPriceValueLabel";
-            this.filterPriceValueLabel.Size = new System.Drawing.Size(16, 17);
+            this.filterPriceValueLabel.Size = new System.Drawing.Size(36, 17);
             this.filterPriceValueLabel.TabIndex = 10;
-            this.filterPriceValueLabel.Text = "0";
+            this.filterPriceValueLabel.Text = "0.0€";
             // 
             // searchTextBox
             // 
@@ -663,7 +664,7 @@
             this.filterPriceSlider.Size = new System.Drawing.Size(116, 23);
             this.filterPriceSlider.TabIndex = 7;
             this.filterPriceSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.filterPriceSlider.Scroll += new System.EventHandler(this.trackBarFilter_Scroll);
+            this.filterPriceSlider.Scroll += new System.EventHandler(this.filterPriceSlider_Scroll);
             // 
             // filterPriceLabel
             // 
@@ -683,7 +684,7 @@
             this.CurrentEventsTable.ColumnCount = 2;
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CurrentEventsTable.Location = new System.Drawing.Point(24, 245);
+            this.CurrentEventsTable.Location = new System.Drawing.Point(26, 245);
             this.CurrentEventsTable.Name = "CurrentEventsTable";
             this.CurrentEventsTable.RowCount = 1;
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -713,11 +714,12 @@
             // 
             // filterSportSelector
             // 
+            this.filterSportSelector.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.filterSportSelector.FormattingEnabled = true;
             this.filterSportSelector.Location = new System.Drawing.Point(88, 45);
             this.filterSportSelector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterSportSelector.Name = "filterSportSelector";
-            this.filterSportSelector.Size = new System.Drawing.Size(260, 27);
+            this.filterSportSelector.Size = new System.Drawing.Size(260, 25);
             this.filterSportSelector.TabIndex = 2;
             // 
             // filterSportLabel
