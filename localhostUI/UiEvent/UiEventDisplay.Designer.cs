@@ -160,6 +160,8 @@
             this.Controls.Add(this.teamDisplayBar);
             this.Controls.Add(this.sportDisplayBar);
             this.Controls.Add(this.eventName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "UiEventDisplay";
             this.Text = "UiEventDisplay";
             this.ResumeLayout(false);
