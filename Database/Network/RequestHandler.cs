@@ -199,12 +199,20 @@ namespace Database.Network
             DataList messages = (DataList)chatroom.items[0];
             messages.Remove("id");
 
-            // Send message count
+            // Send message count (+1 for a confirmation packet)
             server.Send(new Packet
             {
                 PacketId = (uint)PacketType.MULTIPLE_PACKETS,
                 SenderId = data[0].SenderId,
-                Data = BitConverter.GetBytes((uint)messages.Size())
+                Data = BitConverter.GetBytes((uint)messages.Size() + 1)
+            });
+
+            // Send confirmation packet
+            server.Send(new Packet
+            {
+                PacketId = (uint)PacketType.NONE,
+                SenderId = data[0].SenderId,
+                Data = new byte[1]
             });
 
             // Send messages
