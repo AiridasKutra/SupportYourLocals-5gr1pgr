@@ -141,10 +141,10 @@ namespace localhostUI
 
         private void refreshSportsTable()
         {
-            filterComboBox.Items.Clear();
+            filterSportSelector.Items.Clear();
             for (int i = 0; i < sportTypes.SportList.Count; i++)
             {
-                filterComboBox.Items.Add(sportTypes.SportList[i]);
+                filterSportSelector.Items.Add(sportTypes.SportList[i]);
             }
         }
 
@@ -188,7 +188,7 @@ namespace localhostUI
         private void filterButton_Click(object sender, EventArgs e)
         {
             EventOptions options = new EventOptions();
-            options.AddSport((string)filterComboBox.SelectedItem);
+            options.AddSport((string)filterSportSelector.SelectedItem);
             //options.SetMaxPrice(filterSlider.Value);
             
             LoadMainEvents(options);
@@ -196,7 +196,7 @@ namespace localhostUI
 
         private void trackBarFilter_Scroll(object sender, EventArgs e)
         {
-            priceScrollerLabel.Text=filterSlider.Value.ToString();
+            filterPriceValueLabel.Text=filterPriceSlider.Value.ToString();
         }
     
 
