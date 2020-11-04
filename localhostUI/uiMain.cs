@@ -181,6 +181,9 @@ namespace localhostUI
                 case 0:
                     SetUpCurrentEventsTab();
                     break;
+                case 1:
+                    SetUpEventManagerTab();
+                    break;
                 default:
                     break;
             }

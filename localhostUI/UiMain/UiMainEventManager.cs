@@ -1,10 +1,14 @@
 ﻿using Common;
+using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
 using localhostUI.Classes.EventClasses;
+using localhostUI.UiEvent;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
 namespace localhostUI
@@ -12,6 +16,7 @@ namespace localhostUI
     public partial class UiMain
     {
         private List<DataList> drafts = Program.DataPool.eventsDraft;
+
         private void SaveDraftFile(object sender, EventArgs e)
         {   
             AddDraftFileToList();
@@ -24,7 +29,7 @@ namespace localhostUI
                 Name = nameBox.Text,
                 Address = eventAdressBox.Text,
                 StartDate = dateBox.Value,
-                Price = (decimal)priceBox.Value,
+                Price = priceBox.Value,
                 Description = descriptionBox.Text
             };
             eventFull.AddSport(sportBox.Text);
@@ -33,6 +38,124 @@ namespace localhostUI
             drafts.Add(data);
         }
 
-        
+        private void SetUpEventManagerTab()
+        {
+            // Make horizontal scrollbar invisible
+            emanagerMyEventsPanel.HorizontalScroll.Maximum = 0;
+            emanagerMyEventsPanel.AutoScroll = false;
+            emanagerMyEventsPanel.VerticalScroll.Visible = false;
+            emanagerMyEventsPanel.AutoScroll = true;
+
+            emanagerDraftsPanel.HorizontalScroll.Maximum = 0;
+            emanagerDraftsPanel.AutoScroll = false;
+            emanagerDraftsPanel.VerticalScroll.Visible = false;
+            emanagerDraftsPanel.AutoScroll = true;
+
+            // Load panels
+            LoadMyEvents();
+            LoadDrafts();
+        }
+
+        /// <summary>
+        /// For now this function loads all events in the database,
+        /// but in the future it will be changed to only display
+        /// the events of the currently logged in user.
+        /// </summary>
+        public void LoadMyEvents()
+        {
+            emanagerMyEventsPanel.Controls.Clear();
+
+            // Get all events
+            List<EventBrief> events = Program.DataProvider.GetEventsBrief(new EventOptions());
+
+            // Add events to display
+            int counter = 0;
+            foreach (var @event in events)
+            {
+                Panel eventPanel = new Panel();
+                eventPanel.Location = new Point(0, counter * 35);
+                eventPanel.Size = new Size(300, 35);
+
+                Label eventName = new Label();
+                eventName.Font = new Font("Arial", 13.0f, FontStyle.Bold);
+                eventName.Text = @event.Name;
+                eventName.AutoSize = false;
+                eventName.Location = new Point(0, counter * 35);
+                eventName.Size = new Size(300, 35);
+                eventName.TextAlign = ContentAlignment.MiddleLeft;
+                int color = 225 + (counter % 2) * 10;
+                eventName.BackColor = Color.FromArgb(color, color, color);
+
+                eventName.Click += (sender, e) =>
+                {
+                    // Get full event data from database
+                    DataList eventData = new DataList();
+                    Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
+                    try
+                    {
+                        new EventEditor(this, new EventFull((DataList)eventData.items[0])).Show();
+                    }
+                    catch (InvalidCastException)
+                    {
+                        Console.WriteLine($"ERROR: Event \"{@event.Name}\" can't be opened (invalid data)");
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Console.WriteLine($"ERROR: No events with id '{@event.Id}' retrieved from database");
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Console.WriteLine($"ERROR: database reader returned null");
+                    }
+                };
+
+                emanagerMyEventsPanel.Controls.Add(eventName);
+                counter++;
+            }
+        }
+
+        public void LoadDrafts()
+        {
+            emanagerDraftsPanel.Controls.Clear();
+
+            // Get all events
+            Program.DataPool.LoadDrafts();
+            List<EventFull> drafts = new List<EventFull>();
+            foreach (var draft in Program.DataPool.eventsDraft)
+            {
+                drafts.Add(new EventFull(draft));
+            }
+
+            // Add drafts to display
+            int counter = 0;
+            foreach (var draft in drafts)
+            {
+                Panel eventPanel = new Panel();
+                eventPanel.Location = new Point(0, counter * 35);
+                eventPanel.Size = new Size(300, 35);
+
+                Label eventName = new Label();
+                eventName.Font = new Font("Arial", 13.0f, FontStyle.Bold);
+                eventName.Text = draft.Name;
+                eventName.AutoSize = false;
+                eventName.Location = new Point(0, counter * 35);
+                eventName.Size = new Size(300, 35);
+                eventName.TextAlign = ContentAlignment.MiddleLeft;
+                int color = 225 + (counter % 2) * 10;
+                eventName.BackColor = Color.FromArgb(color, color, color);
+
+                eventName.Click += (sender, e) =>
+                {
+                    new EventEditor(this, draft, true).Show();
+                };
+
+                emanagerDraftsPanel.Controls.Add(eventName);
+            }
+        }
+
+        private void emanagerCreateNewEventButton_Click(object sender, EventArgs e)
+        {
+            new EventEditor(this).Show();
+        }
     }
 }
