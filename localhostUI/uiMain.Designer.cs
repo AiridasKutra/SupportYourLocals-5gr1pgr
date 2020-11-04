@@ -44,24 +44,6 @@
             this.eventManagerTab = new System.Windows.Forms.TabPage();
             this.managerTabs = new System.Windows.Forms.TabControl();
             this.yourEventsTab = new System.Windows.Forms.TabPage();
-            this.newEventTab = new System.Windows.Forms.TabPage();
-            this.eventCreationResultLabel = new System.Windows.Forms.Label();
-            this.saveAsDraftButton = new System.Windows.Forms.Button();
-            this.mapsBrowserButton = new System.Windows.Forms.Button();
-            this.eventAdressBox = new System.Windows.Forms.TextBox();
-            this.adressLabel = new System.Windows.Forms.Label();
-            this.createEventButton = new System.Windows.Forms.Button();
-            this.descriptionBox = new System.Windows.Forms.TextBox();
-            this.priceBox = new System.Windows.Forms.NumericUpDown();
-            this.sportBox = new System.Windows.Forms.ComboBox();
-            this.dateBox = new System.Windows.Forms.DateTimePicker();
-            this.nameBox = new System.Windows.Forms.TextBox();
-            this.descriptionLabel = new System.Windows.Forms.Label();
-            this.priceLabel = new System.Windows.Forms.Label();
-            this.sportLabel = new System.Windows.Forms.Label();
-            this.dateLabel = new System.Windows.Forms.Label();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.creatorHeader = new System.Windows.Forms.Label();
             this.addSportTab = new System.Windows.Forms.TabPage();
             this.removeButton = new System.Windows.Forms.Button();
             this.removeSportBox = new System.Windows.Forms.ComboBox();
@@ -93,16 +75,34 @@
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.creatorHeader = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.dateLabel = new System.Windows.Forms.Label();
+            this.sportLabel = new System.Windows.Forms.Label();
+            this.priceLabel = new System.Windows.Forms.Label();
+            this.descriptionLabel = new System.Windows.Forms.Label();
+            this.nameBox = new System.Windows.Forms.TextBox();
+            this.dateBox = new System.Windows.Forms.DateTimePicker();
+            this.sportBox = new System.Windows.Forms.ComboBox();
+            this.priceBox = new System.Windows.Forms.NumericUpDown();
+            this.descriptionBox = new System.Windows.Forms.TextBox();
+            this.createEventButton = new System.Windows.Forms.Button();
+            this.adressLabel = new System.Windows.Forms.Label();
+            this.eventAdressBox = new System.Windows.Forms.TextBox();
+            this.mapsBrowserButton = new System.Windows.Forms.Button();
+            this.saveAsDraftButton = new System.Windows.Forms.Button();
+            this.eventCreationResultLabel = new System.Windows.Forms.Label();
+            this.newEventTab = new System.Windows.Forms.TabPage();
             this.profileTab.SuspendLayout();
             this.eventManagerTab.SuspendLayout();
             this.managerTabs.SuspendLayout();
-            this.newEventTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
             this.addSportTab.SuspendLayout();
             this.currentEventsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDistanceSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterPriceSlider)).BeginInit();
             this.menuTabs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
+            this.newEventTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // profileTab
@@ -268,192 +268,6 @@
             this.yourEventsTab.Text = "Manage your events";
             this.yourEventsTab.UseVisualStyleBackColor = true;
             // 
-            // newEventTab
-            // 
-            this.newEventTab.Controls.Add(this.eventCreationResultLabel);
-            this.newEventTab.Controls.Add(this.saveAsDraftButton);
-            this.newEventTab.Controls.Add(this.mapsBrowserButton);
-            this.newEventTab.Controls.Add(this.eventAdressBox);
-            this.newEventTab.Controls.Add(this.adressLabel);
-            this.newEventTab.Controls.Add(this.createEventButton);
-            this.newEventTab.Controls.Add(this.descriptionBox);
-            this.newEventTab.Controls.Add(this.priceBox);
-            this.newEventTab.Controls.Add(this.sportBox);
-            this.newEventTab.Controls.Add(this.dateBox);
-            this.newEventTab.Controls.Add(this.nameBox);
-            this.newEventTab.Controls.Add(this.descriptionLabel);
-            this.newEventTab.Controls.Add(this.priceLabel);
-            this.newEventTab.Controls.Add(this.sportLabel);
-            this.newEventTab.Controls.Add(this.dateLabel);
-            this.newEventTab.Controls.Add(this.nameLabel);
-            this.newEventTab.Controls.Add(this.creatorHeader);
-            this.newEventTab.Location = new System.Drawing.Point(4, 33);
-            this.newEventTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.newEventTab.Name = "newEventTab";
-            this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.newEventTab.Size = new System.Drawing.Size(791, 633);
-            this.newEventTab.TabIndex = 1;
-            this.newEventTab.Text = "Create a new event";
-            this.newEventTab.UseVisualStyleBackColor = true;
-            // 
-            // eventCreationResultLabel
-            // 
-            this.eventCreationResultLabel.AutoSize = true;
-            this.eventCreationResultLabel.Location = new System.Drawing.Point(182, 429);
-            this.eventCreationResultLabel.Name = "eventCreationResultLabel";
-            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 24);
-            this.eventCreationResultLabel.TabIndex = 16;
-            // 
-            // saveAsDraftButton
-            // 
-            this.saveAsDraftButton.Location = new System.Drawing.Point(158, 323);
-            this.saveAsDraftButton.Name = "saveAsDraftButton";
-            this.saveAsDraftButton.Size = new System.Drawing.Size(120, 35);
-            this.saveAsDraftButton.TabIndex = 12;
-            this.saveAsDraftButton.Text = "Save as draft";
-            this.saveAsDraftButton.UseVisualStyleBackColor = true;
-            this.saveAsDraftButton.Click += new System.EventHandler(this.SaveDraftFile);
-            // 
-            // mapsBrowserButton
-            // 
-            this.mapsBrowserButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("mapsBrowserButton.BackgroundImage")));
-            this.mapsBrowserButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.mapsBrowserButton.Location = new System.Drawing.Point(736, 184);
-            this.mapsBrowserButton.Margin = new System.Windows.Forms.Padding(0);
-            this.mapsBrowserButton.Name = "mapsBrowserButton";
-            this.mapsBrowserButton.Size = new System.Drawing.Size(39, 31);
-            this.mapsBrowserButton.TabIndex = 15;
-            this.mapsBrowserButton.UseVisualStyleBackColor = true;
-            this.mapsBrowserButton.Click += new System.EventHandler(this.SearchMapsBrowser);
-            // 
-            // eventAdressBox
-            // 
-            this.eventAdressBox.Location = new System.Drawing.Point(246, 184);
-            this.eventAdressBox.Name = "eventAdressBox";
-            this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.eventAdressBox.Size = new System.Drawing.Size(476, 31);
-            this.eventAdressBox.TabIndex = 14;
-            // 
-            // adressLabel
-            // 
-            this.adressLabel.AutoSize = true;
-            this.adressLabel.Location = new System.Drawing.Point(37, 184);
-            this.adressLabel.Name = "adressLabel";
-            this.adressLabel.Size = new System.Drawing.Size(71, 24);
-            this.adressLabel.TabIndex = 13;
-            this.adressLabel.Text = "Adress:";
-            // 
-            // createEventButton
-            // 
-            this.createEventButton.Location = new System.Drawing.Point(37, 429);
-            this.createEventButton.Name = "createEventButton";
-            this.createEventButton.Size = new System.Drawing.Size(137, 47);
-            this.createEventButton.TabIndex = 12;
-            this.createEventButton.Text = "Create";
-            this.createEventButton.UseVisualStyleBackColor = true;
-            this.createEventButton.Click += new System.EventHandler(this.CreateEvent);
-            // 
-            // descriptionBox
-            // 
-            this.descriptionBox.Location = new System.Drawing.Point(37, 256);
-            this.descriptionBox.Multiline = true;
-            this.descriptionBox.Name = "descriptionBox";
-            this.descriptionBox.PlaceholderText = "Input extra information about the event.";
-            this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionBox.Size = new System.Drawing.Size(722, 157);
-            this.descriptionBox.TabIndex = 11;
-            // 
-            // priceBox
-            // 
-            this.priceBox.DecimalPlaces = 2;
-            this.priceBox.Location = new System.Drawing.Point(246, 147);
-            this.priceBox.Maximum = new decimal(new int[] {
-            65373,
-            0,
-            0,
-            0});
-            this.priceBox.Name = "priceBox";
-            this.priceBox.Size = new System.Drawing.Size(529, 31);
-            this.priceBox.TabIndex = 10;
-            // 
-            // sportBox
-            // 
-            this.sportBox.FormattingEnabled = true;
-            this.sportBox.Location = new System.Drawing.Point(246, 107);
-            this.sportBox.Name = "sportBox";
-            this.sportBox.Size = new System.Drawing.Size(529, 32);
-            this.sportBox.TabIndex = 9;
-            // 
-            // dateBox
-            // 
-            this.dateBox.Location = new System.Drawing.Point(246, 69);
-            this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(529, 31);
-            this.dateBox.TabIndex = 8;
-            // 
-            // nameBox
-            // 
-            this.nameBox.Location = new System.Drawing.Point(246, 32);
-            this.nameBox.Name = "nameBox";
-            this.nameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
-            this.nameBox.Size = new System.Drawing.Size(529, 31);
-            this.nameBox.TabIndex = 7;
-            // 
-            // descriptionLabel
-            // 
-            this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(37, 229);
-            this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(299, 24);
-            this.descriptionLabel.TabIndex = 6;
-            this.descriptionLabel.Text = "Description (additional information):";
-            // 
-            // priceLabel
-            // 
-            this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(37, 147);
-            this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(186, 24);
-            this.priceLabel.TabIndex = 5;
-            this.priceLabel.Text = "Entry price (optional):";
-            // 
-            // sportLabel
-            // 
-            this.sportLabel.AutoSize = true;
-            this.sportLabel.Location = new System.Drawing.Point(37, 107);
-            this.sportLabel.Name = "sportLabel";
-            this.sportLabel.Size = new System.Drawing.Size(57, 24);
-            this.sportLabel.TabIndex = 4;
-            this.sportLabel.Text = "Sport";
-            // 
-            // dateLabel
-            // 
-            this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(37, 69);
-            this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(54, 24);
-            this.dateLabel.TabIndex = 3;
-            this.dateLabel.Text = "Date:";
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(37, 32);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(107, 24);
-            this.nameLabel.TabIndex = 2;
-            this.nameLabel.Text = "Event name:";
-            // 
-            // creatorHeader
-            // 
-            this.creatorHeader.AutoSize = true;
-            this.creatorHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.creatorHeader.Location = new System.Drawing.Point(37, 4);
-            this.creatorHeader.Name = "creatorHeader";
-            this.creatorHeader.Size = new System.Drawing.Size(202, 24);
-            this.creatorHeader.TabIndex = 1;
-            this.creatorHeader.Text = "Input event information";
-            // 
             // addSportTab
             // 
             this.addSportTab.Controls.Add(this.removeButton);
@@ -464,7 +278,7 @@
             this.addSportTab.Controls.Add(this.addSportLabel);
             this.addSportTab.Location = new System.Drawing.Point(4, 33);
             this.addSportTab.Name = "addSportTab";
-            this.addSportTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.addSportTab.Padding = new System.Windows.Forms.Padding(3);
             this.addSportTab.Size = new System.Drawing.Size(791, 633);
             this.addSportTab.TabIndex = 2;
             this.addSportTab.Text = "Add Sport (placeholder)";
@@ -746,6 +560,191 @@
             this.menuTabs.TabIndex = 0;
             this.menuTabs.SelectedIndexChanged += new System.EventHandler(this.menuTabs_SelectedIndexChanged);
             // 
+            // creatorHeader
+            // 
+            this.creatorHeader.AutoSize = true;
+            this.creatorHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.creatorHeader.Location = new System.Drawing.Point(37, 4);
+            this.creatorHeader.Name = "creatorHeader";
+            this.creatorHeader.Size = new System.Drawing.Size(202, 24);
+            this.creatorHeader.TabIndex = 1;
+            this.creatorHeader.Text = "Input event information";
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(37, 32);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(107, 24);
+            this.nameLabel.TabIndex = 2;
+            this.nameLabel.Text = "Event name:";
+            // 
+            // dateLabel
+            // 
+            this.dateLabel.AutoSize = true;
+            this.dateLabel.Location = new System.Drawing.Point(37, 69);
+            this.dateLabel.Name = "dateLabel";
+            this.dateLabel.Size = new System.Drawing.Size(54, 24);
+            this.dateLabel.TabIndex = 3;
+            this.dateLabel.Text = "Date:";
+            // 
+            // sportLabel
+            // 
+            this.sportLabel.AutoSize = true;
+            this.sportLabel.Location = new System.Drawing.Point(37, 107);
+            this.sportLabel.Name = "sportLabel";
+            this.sportLabel.Size = new System.Drawing.Size(57, 24);
+            this.sportLabel.TabIndex = 4;
+            this.sportLabel.Text = "Sport";
+            // 
+            // priceLabel
+            // 
+            this.priceLabel.AutoSize = true;
+            this.priceLabel.Location = new System.Drawing.Point(37, 147);
+            this.priceLabel.Name = "priceLabel";
+            this.priceLabel.Size = new System.Drawing.Size(186, 24);
+            this.priceLabel.TabIndex = 5;
+            this.priceLabel.Text = "Entry price (optional):";
+            // 
+            // descriptionLabel
+            // 
+            this.descriptionLabel.AutoSize = true;
+            this.descriptionLabel.Location = new System.Drawing.Point(37, 229);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(299, 24);
+            this.descriptionLabel.TabIndex = 6;
+            this.descriptionLabel.Text = "Description (additional information):";
+            // 
+            // nameBox
+            // 
+            this.nameBox.Location = new System.Drawing.Point(246, 32);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
+            this.nameBox.Size = new System.Drawing.Size(529, 31);
+            this.nameBox.TabIndex = 7;
+            // 
+            // dateBox
+            // 
+            this.dateBox.Location = new System.Drawing.Point(246, 69);
+            this.dateBox.Name = "dateBox";
+            this.dateBox.Size = new System.Drawing.Size(529, 31);
+            this.dateBox.TabIndex = 8;
+            // 
+            // sportBox
+            // 
+            this.sportBox.FormattingEnabled = true;
+            this.sportBox.Location = new System.Drawing.Point(246, 107);
+            this.sportBox.Name = "sportBox";
+            this.sportBox.Size = new System.Drawing.Size(529, 32);
+            this.sportBox.TabIndex = 9;
+            // 
+            // priceBox
+            // 
+            this.priceBox.DecimalPlaces = 2;
+            this.priceBox.Location = new System.Drawing.Point(246, 147);
+            this.priceBox.Maximum = new decimal(new int[] {
+            65373,
+            0,
+            0,
+            0});
+            this.priceBox.Name = "priceBox";
+            this.priceBox.Size = new System.Drawing.Size(529, 31);
+            this.priceBox.TabIndex = 10;
+            // 
+            // descriptionBox
+            // 
+            this.descriptionBox.Location = new System.Drawing.Point(37, 256);
+            this.descriptionBox.Multiline = true;
+            this.descriptionBox.Name = "descriptionBox";
+            this.descriptionBox.PlaceholderText = "Input extra information about the event.";
+            this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.descriptionBox.Size = new System.Drawing.Size(722, 157);
+            this.descriptionBox.TabIndex = 11;
+            // 
+            // createEventButton
+            // 
+            this.createEventButton.Location = new System.Drawing.Point(37, 429);
+            this.createEventButton.Name = "createEventButton";
+            this.createEventButton.Size = new System.Drawing.Size(137, 47);
+            this.createEventButton.TabIndex = 12;
+            this.createEventButton.Text = "Create";
+            this.createEventButton.UseVisualStyleBackColor = true;
+            this.createEventButton.Click += new System.EventHandler(this.CreateEvent);
+            // 
+            // adressLabel
+            // 
+            this.adressLabel.AutoSize = true;
+            this.adressLabel.Location = new System.Drawing.Point(37, 184);
+            this.adressLabel.Name = "adressLabel";
+            this.adressLabel.Size = new System.Drawing.Size(71, 24);
+            this.adressLabel.TabIndex = 13;
+            this.adressLabel.Text = "Adress:";
+            // 
+            // eventAdressBox
+            // 
+            this.eventAdressBox.Location = new System.Drawing.Point(246, 184);
+            this.eventAdressBox.Name = "eventAdressBox";
+            this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
+            this.eventAdressBox.Size = new System.Drawing.Size(476, 31);
+            this.eventAdressBox.TabIndex = 14;
+            // 
+            // mapsBrowserButton
+            // 
+            this.mapsBrowserButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.mapsBrowserButton.Location = new System.Drawing.Point(736, 184);
+            this.mapsBrowserButton.Margin = new System.Windows.Forms.Padding(0);
+            this.mapsBrowserButton.Name = "mapsBrowserButton";
+            this.mapsBrowserButton.Size = new System.Drawing.Size(39, 31);
+            this.mapsBrowserButton.TabIndex = 15;
+            this.mapsBrowserButton.UseVisualStyleBackColor = true;
+            this.mapsBrowserButton.Click += new System.EventHandler(this.SearchMapsBrowser);
+            // 
+            // saveAsDraftButton
+            // 
+            this.saveAsDraftButton.Location = new System.Drawing.Point(158, 323);
+            this.saveAsDraftButton.Name = "saveAsDraftButton";
+            this.saveAsDraftButton.Size = new System.Drawing.Size(120, 35);
+            this.saveAsDraftButton.TabIndex = 12;
+            this.saveAsDraftButton.Text = "Save as draft";
+            this.saveAsDraftButton.UseVisualStyleBackColor = true;
+            this.saveAsDraftButton.Click += new System.EventHandler(this.SaveDraftFile);
+            // 
+            // eventCreationResultLabel
+            // 
+            this.eventCreationResultLabel.AutoSize = true;
+            this.eventCreationResultLabel.Location = new System.Drawing.Point(182, 429);
+            this.eventCreationResultLabel.Name = "eventCreationResultLabel";
+            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 24);
+            this.eventCreationResultLabel.TabIndex = 16;
+            // 
+            // newEventTab
+            // 
+            this.newEventTab.Controls.Add(this.eventCreationResultLabel);
+            this.newEventTab.Controls.Add(this.saveAsDraftButton);
+            this.newEventTab.Controls.Add(this.mapsBrowserButton);
+            this.newEventTab.Controls.Add(this.eventAdressBox);
+            this.newEventTab.Controls.Add(this.adressLabel);
+            this.newEventTab.Controls.Add(this.createEventButton);
+            this.newEventTab.Controls.Add(this.descriptionBox);
+            this.newEventTab.Controls.Add(this.priceBox);
+            this.newEventTab.Controls.Add(this.sportBox);
+            this.newEventTab.Controls.Add(this.dateBox);
+            this.newEventTab.Controls.Add(this.nameBox);
+            this.newEventTab.Controls.Add(this.descriptionLabel);
+            this.newEventTab.Controls.Add(this.priceLabel);
+            this.newEventTab.Controls.Add(this.sportLabel);
+            this.newEventTab.Controls.Add(this.dateLabel);
+            this.newEventTab.Controls.Add(this.nameLabel);
+            this.newEventTab.Controls.Add(this.creatorHeader);
+            this.newEventTab.Location = new System.Drawing.Point(4, 33);
+            this.newEventTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.newEventTab.Name = "newEventTab";
+            this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.newEventTab.Size = new System.Drawing.Size(791, 633);
+            this.newEventTab.TabIndex = 1;
+            this.newEventTab.Text = "Create a new event";
+            this.newEventTab.UseVisualStyleBackColor = true;
+            // 
             // UiMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -761,9 +760,6 @@
             this.profileTab.PerformLayout();
             this.eventManagerTab.ResumeLayout(false);
             this.managerTabs.ResumeLayout(false);
-            this.newEventTab.ResumeLayout(false);
-            this.newEventTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
             this.addSportTab.ResumeLayout(false);
             this.addSportTab.PerformLayout();
             this.currentEventsTab.ResumeLayout(false);
@@ -771,6 +767,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.filterDistanceSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterPriceSlider)).EndInit();
             this.menuTabs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
+            this.newEventTab.ResumeLayout(false);
+            this.newEventTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -781,32 +780,17 @@
         private System.Windows.Forms.TabPage eventManagerTab;
         private System.Windows.Forms.TabControl managerTabs;
         private System.Windows.Forms.TabPage yourEventsTab;
-        private System.Windows.Forms.TabPage newEventTab;
         private System.Windows.Forms.TabPage currentEventsTab;
         private System.Windows.Forms.TabControl menuTabs;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader Date;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Label creatorHeader;
-        private System.Windows.Forms.Label descriptionLabel;
-        private System.Windows.Forms.Label priceLabel;
-        private System.Windows.Forms.Label sportLabel;
-        private System.Windows.Forms.Label dateLabel;
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.NumericUpDown priceBox;
-        private System.Windows.Forms.ComboBox sportBox;
-        private System.Windows.Forms.DateTimePicker dateBox;
-        private System.Windows.Forms.TextBox nameBox;
-        private System.Windows.Forms.TextBox descriptionBox;
-        private System.Windows.Forms.Button createEventButton;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Label changeAddressLabel;
         private System.Windows.Forms.TextBox userAdressBox;
         private System.Windows.Forms.Label profileManagerLabel;
-        private System.Windows.Forms.TextBox eventAdressBox;
-        private System.Windows.Forms.Label adressLabel;
         private System.Windows.Forms.TabPage addSportTab;
         private System.Windows.Forms.TextBox addSportBox;
         private System.Windows.Forms.Label addSportLabel;
@@ -820,7 +804,6 @@
         private System.Windows.Forms.Label filterSportLabel;
         private System.Windows.Forms.Label currentEventsTitleLabel;
         private System.Windows.Forms.Button locationButton;
-        private System.Windows.Forms.Button mapsBrowserButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel CurrentEventsTable;
         private System.Windows.Forms.Label addressResultLabel;
@@ -828,8 +811,6 @@
         private System.Windows.Forms.Button changeUsernameButton;
         private System.Windows.Forms.TextBox usernameBox;
         private System.Windows.Forms.Label usernameChangeResultLabel;
-        private System.Windows.Forms.Label eventCreationResultLabel;
-        private System.Windows.Forms.Button saveAsDraftButton;
         private System.Windows.Forms.Button filterButton;
         private System.Windows.Forms.TrackBar filterPriceSlider;
         private System.Windows.Forms.Label filterPriceLabel;
@@ -843,5 +824,23 @@
         private System.Windows.Forms.Label nceLabel;
         private System.Windows.Forms.TrackBar filterDistanceSlider;
         private System.Windows.Forms.Label filterDistanceValueLabel;
+        private System.Windows.Forms.TabPage newEventTab;
+        private System.Windows.Forms.Label eventCreationResultLabel;
+        private System.Windows.Forms.Button saveAsDraftButton;
+        private System.Windows.Forms.Button mapsBrowserButton;
+        private System.Windows.Forms.TextBox eventAdressBox;
+        private System.Windows.Forms.Label adressLabel;
+        private System.Windows.Forms.Button createEventButton;
+        private System.Windows.Forms.TextBox descriptionBox;
+        private System.Windows.Forms.NumericUpDown priceBox;
+        private System.Windows.Forms.ComboBox sportBox;
+        private System.Windows.Forms.DateTimePicker dateBox;
+        private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.Label priceLabel;
+        private System.Windows.Forms.Label sportLabel;
+        private System.Windows.Forms.Label dateLabel;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Label creatorHeader;
     }
 }
