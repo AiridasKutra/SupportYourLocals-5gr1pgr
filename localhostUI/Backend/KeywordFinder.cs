@@ -61,7 +61,7 @@ namespace localhostUI.Backend
                 string[] words = ((string)data).Split(" ,.!?\"~*/\\()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 foreach (var word in words)
                 {
-                    if (keyword == word)
+                    if (keyword == word.ToLower())
                     {
                         count++;
                     }
