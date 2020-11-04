@@ -4,6 +4,7 @@ using Common.Network;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Reflection.PortableExecutable;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
@@ -244,6 +245,8 @@ namespace Database.Network
             database.AddEntry(entry, "events_full");
 
             // Create chatroom
+            DataList chatroom = new DataList();
+            database.AddEntry(chatroom, "event_chatrooms");
         }
 
         private void EditEvent(string tableName, string rowName, DataList entry)
@@ -266,6 +269,7 @@ namespace Database.Network
             database.RemoveEntry("events_full", rowName);
 
             // Delete chatroom
+            database.RemoveEntry("event_chatrooms", rowName);
         }
 
         private void SendChatMessage(string message, string eventId)
