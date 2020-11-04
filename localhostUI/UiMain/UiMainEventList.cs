@@ -177,9 +177,13 @@ namespace localhostUI
         private EventOptions GetEventOptionsFromFilters()
         {
             EventOptions options = new EventOptions();
-            if (filterSportSelector.SelectedIndex != 0)
+            if (filterSportSelector.SelectedIndex > 0)
             {
                 options.AddSport((string)filterSportSelector.SelectedItem);
+            }
+            else if (filterSportSelector.SelectedIndex == -1)
+            {
+                options.AddSport(filterSportSelector.Text);
             }
             options.SetLowerDate(filterStartDate.Value);
             options.SetUpperDate(filterEndDate.Value);
