@@ -23,25 +23,29 @@ namespace localhostUI.Backend
 
         public void LoadDrafts()
         {
+            eventsDraft.Clear();
+
             string fileName = "FileDrafts.json";
             DraftFileReader draftFileReader = new DraftFileReader(fileName);
             Program.DataManager.Read(draftFileReader, out DataList data);
-            if(data != null)
+            if (data != null)
             {
-                try
+                int id = 0;
+                foreach (ListItem ev in data)
                 {
-                    foreach (ListItem ev in data)
+                    try
                     {
+                        ((DataList)ev.item).Remove("id");
+                        ((DataList)ev.item).Add(id, "id");
                         eventsDraft.Add((DataList)ev.item);
                     }
-                }
-                catch (InvalidCastException)
-                {
-                    Console.WriteLine("Invalid cast exception thrown");
-                    eventsDraft.Clear();
+                    catch (InvalidCastException)
+                    {
+                        Console.WriteLine("Invalid draft data...");
+                    }
+                    id++;
                 }
             }
-            
         }
 
         public void SaveDrafts()
@@ -59,10 +63,8 @@ namespace localhostUI.Backend
             }
             catch (Exception)
             {
-                throw;
+                Console.WriteLine("Error saving drafts...");
             }
-            
-
         }
 
         public void LoadEventsBrief()
