@@ -9,7 +9,7 @@ namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
-        private const string apiKey = "AIzaSyA5obyzC68cu1-owCalX4A90Dwb5Bb7iPc";
+        private static readonly string apiKey = ApiKeys.GoogleApiKey;
 
         //MapPoint location = address.LatLongFromString();
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")

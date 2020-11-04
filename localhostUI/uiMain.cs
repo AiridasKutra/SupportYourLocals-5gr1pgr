@@ -200,6 +200,7 @@ namespace localhostUI
             {
                 addressResultLabel.Text = "Address has been accepted.";
                 addressResultLabel.ForeColor = Color.Black;
+                userAdressBox.Text = Program.UserDataManager.UserData.Address;
                 Program.UserDataManager.SaveToDataPool();
             }
             else

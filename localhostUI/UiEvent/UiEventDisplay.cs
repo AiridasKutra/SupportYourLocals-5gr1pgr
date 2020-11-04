@@ -157,15 +157,7 @@ namespace localhostUI.UiEvent
         private void ShowAddressButton_Click(object sender, EventArgs e)
         {
             AddressData data = LocationInformation.AddressFromLatLong(@event.Latitude, @event.Longitude);
-            try
-            {
-                LocationInformation.OpenAdressInBrowser(data.Address);
-            }
-            catch
-            {
-                MessageBox.Show("A mistake was made in opening the address.", "Something went wrong.",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            LocationInformation.OpenAdressInBrowser(data.Address);
         }
 
         private void Key_Press(object sender, KeyPressEventArgs e)
