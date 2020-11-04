@@ -355,6 +355,17 @@ namespace Common.Network
                     client.sock.Close();
                     return;
                 }
+                // Client sent invalid data
+                catch (ArgumentOutOfRangeException)
+                {
+                    client.sock.Close();
+                    return;
+                }
+                catch
+                {
+                    client.sock.Close();
+                    return;
+                }
             }
         }
 
