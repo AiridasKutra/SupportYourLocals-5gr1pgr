@@ -7,8 +7,8 @@ namespace localhostUI.Backend
 {
     class EventDataProvider
     {
-        public bool InitialLoadDoneBrief { get; private set; }
-        public bool InitialLoadDoneFull { get; private set; }
+        public bool InitialLoadDoneBrief { get; set; }
+        public bool InitialLoadDoneFull { get; set; }
 
         public EventDataProvider()
         {
