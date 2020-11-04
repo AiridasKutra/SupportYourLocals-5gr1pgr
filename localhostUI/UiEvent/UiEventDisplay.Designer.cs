@@ -91,9 +91,9 @@
             // addressLabel
             // 
             this.addressLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressLabel.Location = new System.Drawing.Point(133, 130);
+            this.addressLabel.Location = new System.Drawing.Point(147, 130);
             this.addressLabel.Name = "addressLabel";
-            this.addressLabel.Size = new System.Drawing.Size(532, 35);
+            this.addressLabel.Size = new System.Drawing.Size(518, 35);
             this.addressLabel.TabIndex = 5;
             this.addressLabel.Text = "Long address to test out";
             this.addressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -149,7 +149,7 @@
             this.distanceLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.distanceLabel.Location = new System.Drawing.Point(76, 130);
             this.distanceLabel.Name = "distanceLabel";
-            this.distanceLabel.Size = new System.Drawing.Size(51, 35);
+            this.distanceLabel.Size = new System.Drawing.Size(65, 35);
             this.distanceLabel.TabIndex = 12;
             this.distanceLabel.Text = "3.2km";
             this.distanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
