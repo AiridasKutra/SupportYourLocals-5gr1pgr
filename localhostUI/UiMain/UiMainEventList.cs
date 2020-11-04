@@ -98,7 +98,7 @@ namespace localhostUI
                 Panel eventPanel = new Panel();
                 eventPanel.AutoSize = false;
                 eventPanel.Size = new Size(240, 238);
-                eventPanel.Margin = new Padding(42, 0, 42, 0);
+                eventPanel.Margin = new Padding(42, 10, 42, 10);
                 eventPanel.BorderStyle = BorderStyle.Fixed3D;
 
                 eventPanel.Click += (sender, e) =>
