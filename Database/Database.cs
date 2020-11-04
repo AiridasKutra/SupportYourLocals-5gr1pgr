@@ -16,58 +16,6 @@ namespace Database
         {
             data = new DataList();
             dbLock = new Mutex();
-            {
-                DataList row1 = new DataList();
-                row1.Add("birkaciulpis", "name");
-                row1.Add("tavo mama", "location");
-                row1.Add("bybe ciulpims", "sport");
-                row1.Add(4.20, "price");
-                DataList teams1 = new DataList();
-                teams1.Add("evaldas");
-                teams1.Add("byberis");
-                row1.Add(teams1, "teams");
-
-                DataList row2 = new DataList();
-                row2.Add("birkaciulpis2elektrinisbugalu", "name");
-                row2.Add("tavo mama", "location");
-                row2.Add("bybe ciulpims", "sport");
-                row2.Add(6.99, "price");
-                DataList teams2 = new DataList();
-                teams2.Add("evaldas");
-                teams2.Add("byberis");
-                row2.Add(teams2, "teams");
-                row2.Add("karsti ceburekai drungnas alus", "description");
-
-                DataList row3 = new DataList();
-                row3.Add("birkaciulpis3tugaidys", "name");
-                row3.Add("tavo mama vel", "location");
-                row3.Add("bybe ciulpims", "sport");
-                row3.Add(13.37, "price");
-                DataList teams3 = new DataList();
-                teams3.Add("evaldas");
-                teams3.Add("byberis");
-                row3.Add(teams3, "teams");
-
-                DataList row4 = new DataList();
-                row4.Add("birkaciulpis4tikiuosipenktonebus", "name");
-                row4.Add("tavo mama vis dar", "location");
-                row4.Add("bybe ciulpims", "sport");
-                row4.Add('@', "price");
-                DataList teams4 = new DataList();
-                teams4.Add("evaldas");
-                teams4.Add("byberis");
-                row4.Add(teams4, "teams");
-                row4.Add("nu blet jau paskutinis tikiuojs", "description");
-
-                DataList table = new DataList();
-                table.Add(row1, "1");
-                table.Add(row2, "2");
-                table.Add(row3, "3");
-                table.Add(row4, "4");
-
-                //data.Add(table, "birkakakliu_kaimo_perlai");
-                //data.Add(table, "table1");
-            }
 
             //Save(new JsonFileWriter("data1.json"));
             Load(new JsonFileReader("data1.json"));
@@ -377,7 +325,7 @@ namespace Database
 
         }
 
-        public void AddEntry(DataList entry, string tableName)
+        public void AddEntry(DataList entry, string tableName, string rowName = "")
         {
             int index = data.names.IndexOf(tableName);
 
@@ -388,8 +336,16 @@ namespace Database
                 index = data.names.IndexOf(tableName);
             }
 
+            int id = 0;
+            while (((DataList)data.Get(index)).Get($"{id}") != null)
+            {
+                id++;
+            }
+
+            if (rowName == "") rowName = id.ToString();
+
             // Add entry
-            ((DataList)data.Get(index)).Add(entry, (index + 1).ToString());
+            ((DataList)data.Get(index)).Add(entry, rowName);
         }
 
         public void EditEntry(DataList entry, string tableName, string rowName)
