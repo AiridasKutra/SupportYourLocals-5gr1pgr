@@ -7,11 +7,14 @@ using localhostUI.Classes.UserInformationClasses;
 using localhostUI.UiEvent;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Schema;
 
 namespace localhostUI
 {
@@ -45,7 +48,7 @@ namespace localhostUI
             filterSportSelector.SelectedIndex = 0;
 
             // Load events
-            LoadMainEvents(new EventOptions());
+            filterButton_Click(null, null);
         }
 
         private void LoadMainEvents(EventOptions options)
@@ -54,12 +57,43 @@ namespace localhostUI
 
             // Get events
             List<EventBrief> events = Program.DataProvider.GetEventsBrief(options);
+            List<int> scores = new List<int>();
+
+            if (options.Keywords.Count > 0)
+            {
+                // Calculate scores
+                KeywordFinder kFinder = new KeywordFinder();
+                foreach (var evBrief in events)
+                {
+                    DataList @event = EventBrief.ToDataList(evBrief);
+                    scores.Add(kFinder.Find(options.Keywords.ToArray(), @event));
+                }
+
+                // Sort
+                EventBrief[] eventArray = events.ToArray();
+                int[] scoreArray = scores.ToArray();
+                Array.Sort(scoreArray, eventArray);
+                events = eventArray.ToList();
+                scores = scoreArray.ToList();
+                events.Reverse();
+                scores.Reverse();
+            }
 
             // Add all of them to a list
             int col = 0;
             int count = 0;
             foreach (var eBrief in events)
             {
+                // Skip events with 0 score
+                if (scores.Count > 0)
+                {
+                    if (scores[count] == 0)
+                    {
+                        count++;
+                        continue;
+                    }
+                }
+
                 // Main container
                 Panel eventPanel = new Panel();
                 eventPanel.AutoSize = false;
@@ -104,13 +138,14 @@ namespace localhostUI
                 eventName.AutoSize = true;
                 eventName.Location = new Point(0, 180);
                 eventName.MinimumSize = new Size(240, 30);
-                eventName.Font = new Font("Comic Sans MS", 12);
+                eventName.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
                 eventName.BackColor = Color.FromArgb(240, 240, 240);
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
 
                 // Sport label
                 Label eventSports = new Label();
                 eventSports.Text = "";
+                eventSports.Font = new Font("Arial", 11);
                 foreach (var sport in eBrief.GetSports())
                 {
                     eventSports.Text += $"{sport}  ";
@@ -139,7 +174,7 @@ namespace localhostUI
             CurrentEventsTable.RowCount = (events.Count + 1) / CurrentEventsTable.ColumnCount;
         }
 
-        private void filterButton_Click(object sender, EventArgs e)
+        private EventOptions GetEventOptionsFromFilters()
         {
             EventOptions options = new EventOptions();
             if (filterSportSelector.SelectedIndex != 0)
@@ -154,7 +189,12 @@ namespace localhostUI
                 options.SetMaxDistance(filterDistanceSlider.Value / 10.0);
             }
 
-            LoadMainEvents(options);
+            return options;
+        }
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            LoadMainEvents(GetEventOptionsFromFilters());
         }
 
         private void filterPriceSlider_Scroll(object sender, EventArgs e)
@@ -169,7 +209,15 @@ namespace localhostUI
 
         private void searchButton_Click(object sender, EventArgs e)
         {
+            EventOptions options = GetEventOptionsFromFilters();
 
+            string[] keywords = searchTextBox.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var keyword in keywords)
+            {
+                options.AddKeyword(keyword);
+            }
+
+            LoadMainEvents(options);
         }
     }
 }

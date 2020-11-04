@@ -636,10 +636,11 @@
             // 
             // searchTextBox
             // 
+            this.searchTextBox.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchTextBox.Location = new System.Drawing.Point(214, 167);
             this.searchTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(275, 26);
+            this.searchTextBox.Size = new System.Drawing.Size(275, 25);
             this.searchTextBox.TabIndex = 9;
             // 
             // filterButton
