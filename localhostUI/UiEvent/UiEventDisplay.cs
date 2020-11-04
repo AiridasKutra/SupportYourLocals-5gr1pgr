@@ -4,6 +4,7 @@ using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
+using localhostUI.Classes.UserInformationClasses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,6 +72,18 @@ namespace localhostUI.UiEvent
 
             // Address
             addressLabel.Text = @event.Address;
+
+            // Distance
+            UserData user = Program.UserDataManager.GetData();
+            double distance = LocationInformation.Distance(@event.Latitude, @event.Longitude, user.Latitude, user.Longitude);
+            if (distance < 1000.0)
+            {
+                distanceLabel.Text = $"{distance:0}m";
+            }
+            else
+            {
+                distanceLabel.Text = $"{distance / 1000.0:0.0}km";
+            }
 
             // Description
             descriptionLabel.Text = @event.Description;
