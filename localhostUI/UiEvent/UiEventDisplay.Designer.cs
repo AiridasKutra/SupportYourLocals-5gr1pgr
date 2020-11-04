@@ -39,12 +39,14 @@
             this.chatMessageTextBox = new System.Windows.Forms.TextBox();
             this.sendMessageButton = new System.Windows.Forms.Button();
             this.chatPanel = new System.Windows.Forms.Panel();
+            this.picturePanel = new System.Windows.Forms.Panel();
+            this.distanceLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // eventName
             // 
-            this.eventName.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.eventName.Location = new System.Drawing.Point(110, 23);
+            this.eventName.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.eventName.Location = new System.Drawing.Point(110, 33);
             this.eventName.Name = "eventName";
             this.eventName.Size = new System.Drawing.Size(480, 29);
             this.eventName.TabIndex = 0;
@@ -67,7 +69,7 @@
             // 
             // returnButton
             // 
-            this.returnButton.Location = new System.Drawing.Point(35, 23);
+            this.returnButton.Location = new System.Drawing.Point(35, 33);
             this.returnButton.Name = "returnButton";
             this.returnButton.Size = new System.Drawing.Size(69, 29);
             this.returnButton.TabIndex = 3;
@@ -88,10 +90,10 @@
             // 
             // addressLabel
             // 
-            this.addressLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressLabel.Location = new System.Drawing.Point(76, 130);
+            this.addressLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.addressLabel.Location = new System.Drawing.Point(133, 130);
             this.addressLabel.Name = "addressLabel";
-            this.addressLabel.Size = new System.Drawing.Size(250, 35);
+            this.addressLabel.Size = new System.Drawing.Size(532, 35);
             this.addressLabel.TabIndex = 5;
             this.addressLabel.Text = "Long address to test out";
             this.addressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -102,7 +104,7 @@
             this.descriptionLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.descriptionLabel.Location = new System.Drawing.Point(35, 168);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(385, 194);
+            this.descriptionLabel.Size = new System.Drawing.Size(385, 301);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "Description";
             // 
@@ -135,11 +137,31 @@
             this.chatPanel.Size = new System.Drawing.Size(239, 165);
             this.chatPanel.TabIndex = 10;
             // 
+            // picturePanel
+            // 
+            this.picturePanel.Location = new System.Drawing.Point(672, 33);
+            this.picturePanel.Name = "picturePanel";
+            this.picturePanel.Size = new System.Drawing.Size(256, 436);
+            this.picturePanel.TabIndex = 11;
+            // 
+            // distanceLabel
+            // 
+            this.distanceLabel.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.distanceLabel.Location = new System.Drawing.Point(76, 130);
+            this.distanceLabel.Name = "distanceLabel";
+            this.distanceLabel.Size = new System.Drawing.Size(51, 35);
+            this.distanceLabel.TabIndex = 12;
+            this.distanceLabel.Text = "3.2km";
+            this.distanceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // UiEventDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 422);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(964, 502);
+            this.Controls.Add(this.distanceLabel);
+            this.Controls.Add(this.picturePanel);
             this.Controls.Add(this.chatPanel);
             this.Controls.Add(this.sendMessageButton);
             this.Controls.Add(this.chatMessageTextBox);
@@ -150,6 +172,8 @@
             this.Controls.Add(this.teamDisplayBar);
             this.Controls.Add(this.sportDisplayBar);
             this.Controls.Add(this.eventName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "UiEventDisplay";
             this.Text = "UiEventDisplay";
             this.ResumeLayout(false);
@@ -169,5 +193,7 @@
         private System.Windows.Forms.TextBox chatMessageTextBox;
         private System.Windows.Forms.Button sendMessageButton;
         private System.Windows.Forms.Panel chatPanel;
+        private System.Windows.Forms.Panel picturePanel;
+        private System.Windows.Forms.Label distanceLabel;
     }
 }

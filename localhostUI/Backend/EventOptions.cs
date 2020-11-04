@@ -1,6 +1,10 @@
 ﻿using Common;
+using Geocoding.MapQuest;
+using localhostUI.Classes.LocationClasses;
+using localhostUI.Classes.UserInformationClasses;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Permissions;
 using System.Text;
 
@@ -176,7 +180,7 @@ namespace localhostUI.Backend
                 object date = data.Get("start_date");
                 if (date != null)
                 {
-                    return (DateTime)date >= lowerDate;
+                    return DateTime.ParseExact((string)date, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) >= lowerDate;
                 }
                 else
                 {
@@ -199,7 +203,7 @@ namespace localhostUI.Backend
                 object date = data.Get("start_date");
                 if (date != null)
                 {
-                    return (DateTime)date <= upperDate;
+                    return DateTime.ParseExact((string)date, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) <= upperDate;
                 }
                 else
                 {
@@ -211,6 +215,38 @@ namespace localhostUI.Backend
             if (!filter.AddFilter("date_filter", filterFunc))
             {
                 filter.CreateAndAddFilter("date_filter", true, filterFunc);
+            }
+        }
+
+        public void SetMaxDistance(double kilometers)
+        {
+            Func<DataList, bool> filterFunc = (data) =>
+            {
+                object coords = data.Get("coordinates");
+                if (coords != null)
+                {
+                    object lat = ((DataList)coords).Get(0);
+                    object lon = ((DataList)coords).Get(1);
+                    try
+                    {
+                        UserData user = Program.UserDataManager.GetData();
+                        return LocationInformation.Distance(user.Latitude, user.Longitude, (double)lat, (double)lon) <= kilometers;
+                    }
+                    catch (InvalidCastException)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            };
+
+            // Add filter
+            if (!filter.AddFilter("distance_filter", filterFunc))
+            {
+                filter.CreateAndAddFilter("distance_filter", true, filterFunc);
             }
         }
     }

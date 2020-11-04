@@ -24,31 +24,33 @@ namespace Database.Network
 
         public void EchoMessage(string message, string eventId)
         {
+            // Create packets
+            Packet packInfo = new Packet
+            {
+                PacketId = (uint)PacketType.MULTIPLE_PACKETS,
+                Data = BitConverter.GetBytes(2u)
+            };
+
+            Packet pack1 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_TEXT,
+                Data = Encoding.ASCII.GetBytes(message)
+            };
+
+            Packet pack2 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_EVENT_ID,
+                Data = Encoding.ASCII.GetBytes(eventId)
+            };
+
             RemoveDisconnectedClients();
 
+            // Send packets
             foreach (uint client in clients)
             {
-                // Create and send packets
-                Packet packInfo = new Packet
-                {
-                    PacketId = (uint)PacketType.MULTIPLE_PACKETS,
-                    SenderId = client,
-                    Data = BitConverter.GetBytes(2u)
-                };
-
-                Packet pack1 = new Packet
-                {
-                    PacketId = (uint)PacketType.SEND_MESSAGE_TEXT,
-                    SenderId = client,
-                    Data = Encoding.ASCII.GetBytes(message)
-                };
-
-                Packet pack2 = new Packet
-                {
-                    PacketId = (uint)PacketType.SEND_MESSAGE_EVENT_ID,
-                    SenderId = client,
-                    Data = Encoding.ASCII.GetBytes(eventId)
-                };
+                packInfo.SenderId = client;
+                pack1.SenderId = client;
+                pack2.SenderId = client;
 
                 server.Send(packInfo);
                 server.Send(pack1);

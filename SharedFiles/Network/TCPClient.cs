@@ -228,9 +228,14 @@ namespace Common.Network
                 catch (ObjectDisposedException)
                 {
                     thisClient.Close();
-                    Thread.CurrentThread.Abort();
+                    return;
                 }
                 catch (SocketException)
+                {
+                    thisClient.Close();
+                    return;
+                }
+                catch
                 {
                     thisClient.Close();
                     return;

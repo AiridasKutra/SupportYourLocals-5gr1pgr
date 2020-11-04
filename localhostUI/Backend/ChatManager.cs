@@ -107,6 +107,9 @@ namespace localhostUI.Backend
                     Thread.Sleep(10);
                 }
 
+                // Read confirmation packet
+                client.GetPacket();
+
                 // Load previous messages
                 while (client.PacketCount() > 0)
                 {
