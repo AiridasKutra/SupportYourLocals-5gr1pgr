@@ -66,6 +66,11 @@ namespace localhostUI.Backend
             };
         }
 
+        public void AddKeyword(string keyword)
+        {
+            keywords.Add(keyword);
+        }
+
         public void AddSport(string name)
         {
             // Create filter function
@@ -230,7 +235,7 @@ namespace localhostUI.Backend
                     try
                     {
                         UserData user = Program.UserDataManager.GetData();
-                        return LocationInformation.Distance(user.Latitude, user.Longitude, (double)lat, (double)lon) <= kilometers;
+                        return LocationInformation.Distance(user.Latitude, user.Longitude, (double)lat, (double)lon) <= kilometers * 1000.0;
                     }
                     catch (InvalidCastException)
                     {
