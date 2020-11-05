@@ -117,6 +117,7 @@ namespace localhostUI.UiEvent
 
         private void FillInEvent()
         {
+            this.@event.GetSports().Clear();
             this.@event.Address = this.addressBox.Text;
             this.@event.Name = this.eventNameBox.Text;
             this.@event.StartDate = this.dateBox.Value;
@@ -127,10 +128,10 @@ namespace localhostUI.UiEvent
 
         private void EditEvent(object sender, EventArgs e)
         {
+            FillInEvent();
+
             if (this.addressBox.Text != this.@event.Address)
             {
-                FillInEvent();
-
                 if (LocationInformation.IsValidAddress(this.addressBox.Text))
                 {
                     MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
