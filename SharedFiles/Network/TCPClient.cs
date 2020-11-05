@@ -152,9 +152,10 @@ namespace Common.Network
         {
             byte[] buffer = new byte[MaxPacketSize];
 
-            List<Packet> packetBuffer = new List<Packet>();
-            PacketType bufferUsage = PacketType.NONE;
-            uint bufferSize = 0;
+            List<Packet> packetBufferSplit = new List<Packet>();
+            List<Packet> packetBufferMultiple = new List<Packet>();
+            uint bufferSizeSplit = 0;
+            uint bufferSizeMultiple = 0;
 
             while (true)
             {
@@ -193,35 +194,55 @@ namespace Common.Network
                     // Check for special types
                     if (packetId == (uint)PacketType.SPLIT_PACKETS)
                     {
-                        bufferUsage = PacketType.SPLIT_PACKETS;
-                        bufferSize = BitConverter.ToUInt32(packet.Data, 0);
+                        bufferSizeSplit = BitConverter.ToUInt32(packet.Data, 0);
                         continue;
                     }
                     else if (packetId == (uint)PacketType.MULTIPLE_PACKETS)
                     {
-                        bufferUsage = PacketType.MULTIPLE_PACKETS;
-                        bufferSize = BitConverter.ToUInt32(packet.Data, 0);
+                        if (bufferSizeSplit == 0)
+                        {
+                            bufferSizeMultiple = BitConverter.ToUInt32(packet.Data, 0);
+                            continue;
+                        }
+                    }
+
+                    // Handle split packets
+                    if (bufferSizeSplit > 0)
+                    {
+                        bufferSizeSplit--;
+                        packetBufferSplit.Add(packet);
+
+                        // Combine packets
+                        if (bufferSizeSplit == 0)
+                        {
+                            packet = CombinePackets(packetBufferSplit);
+                            packetBufferSplit.Clear();
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    // Handle multiple packets
+                    if (bufferSizeMultiple > 0)
+                    {
+                        bufferSizeMultiple--;
+                        packetBufferMultiple.Add(packet);
+
+                        // Deposit buffer to packet queue
+                        if (bufferSizeMultiple == 0)
+                        {
+                            DepositPacketBuffer(packetBufferMultiple);
+                            packetBufferMultiple.Clear();
+                        }
                         continue;
                     }
 
-                    if (bufferSize > 0)
+                    // Handle regular packets
+                    lock (mPak)
                     {
-                        bufferSize--;
-                        packetBuffer.Add(packet);
-
-                        // Deposit buffer to packet queue
-                        if (bufferSize == 0)
-                        {
-                            DepositPacketBuffer(packetBuffer, bufferUsage);
-                            packetBuffer.Clear();
-                        }
-                    }
-                    else
-                    {
-                        lock (mPak)
-                        {
-                            incomingPackets.Enqueue(packet);
-                        }
+                        incomingPackets.Enqueue(packet);
                     }
                 }
                 // Client disconnected
@@ -249,56 +270,47 @@ namespace Common.Network
             }
         }
 
-        private void DepositPacketBuffer(List<Packet> buffer, PacketType bufferUsage)
+        private Packet CombinePackets(List<Packet> splitBuffer)
+        {
+            if (splitBuffer.Count == 0) return null;
+
+            // Combine all packets into 1 and push to the main queue
+            Packet combinedPacket = new Packet()
+            {
+                PacketId = splitBuffer[0].PacketId,
+                SenderId = splitBuffer[0].SenderId
+            };
+
+            // Calculate total size
+            uint combinedSize = 0;
+            foreach (Packet packet in splitBuffer)
+            {
+                combinedSize += (uint)packet.Data.Length;
+            }
+
+            // Merge data
+            combinedPacket.Data = new byte[combinedSize];
+            int currentByte = 0;
+            foreach (Packet packet in splitBuffer)
+            {
+                Buffer.BlockCopy(packet.Data, 0, combinedPacket.Data, currentByte, packet.Data.Length);
+                currentByte += packet.Data.Length;
+            }
+
+            return combinedPacket;
+        }
+
+        private void DepositPacketBuffer(List<Packet> buffer)
         {
             if (buffer.Count == 0) return;
 
-            switch (bufferUsage)
+            // Push all packets to the main queue
+            lock (mPak)
             {
-                case PacketType.MULTIPLE_PACKETS:
-                    // Push all packets to the main queue
-                    lock (mPak)
-                    {
-                        foreach (Packet pack in buffer)
-                        {
-                            incomingPackets.Enqueue(pack);
-                        }
-                    }
-                    break;
-
-                case PacketType.SPLIT_PACKETS:
-                    // Combine all packets into 1 and push to the main queue
-                    Packet combinedPacket = new Packet()
-                    {
-                        PacketId = buffer[0].PacketId,
-                        SenderId = buffer[0].SenderId
-                    };
-
-                    // Calculate total size
-                    uint combinedSize = 0;
-                    foreach (Packet packet in buffer)
-                    {
-                        combinedSize += (uint)packet.Data.Length;
-                    }
-
-                    // Merge data
-                    combinedPacket.Data = new byte[combinedSize];
-                    int currentByte = 0;
-                    foreach (Packet packet in buffer)
-                    {
-                        Buffer.BlockCopy(packet.Data, 0, combinedPacket.Data, currentByte, packet.Data.Length);
-                        currentByte += packet.Data.Length;
-                    }
-
-                    // Push to main queue
-                    lock (mPak)
-                    {
-                        incomingPackets.Enqueue(combinedPacket);
-                    }
-                    break;
-
-                default:
-                    break;
+                foreach (Packet pack in buffer)
+                {
+                    incomingPackets.Enqueue(pack);
+                }
             }
         }
     }
