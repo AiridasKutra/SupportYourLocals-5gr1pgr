@@ -118,7 +118,6 @@ namespace localhostUI.UiEvent
         private void FillInEvent()
         {
             this.@event.GetSports().Clear();
-            this.@event.Address = this.addressBox.Text;
             this.@event.Name = this.eventNameBox.Text;
             this.@event.StartDate = this.dateBox.Value;
             this.@event.AddSport(this.sportBox.Text);
@@ -128,12 +127,13 @@ namespace localhostUI.UiEvent
 
         private void EditEvent(object sender, EventArgs e)
         {
-            FillInEvent();
+           
 
             if (this.addressBox.Text != this.@event.Address)
             {
                 if (LocationInformation.IsValidAddress(this.addressBox.Text))
                 {
+                    this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
                     MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
@@ -144,7 +144,7 @@ namespace localhostUI.UiEvent
                     return;
                 }
             }
-
+            FillInEvent();
             Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
             Program.DataProvider.InitialLoadDoneBrief = false;
@@ -155,10 +155,11 @@ namespace localhostUI.UiEvent
 
         private void CreateEvent(object sender, EventArgs e)
         {
-            FillInEvent();
+            
 
             if (LocationInformation.IsValidAddress(this.addressBox.Text))
             {
+                this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
                 MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
@@ -168,7 +169,7 @@ namespace localhostUI.UiEvent
                 finishResultLabel.Text = "Invalid address.";
                 return;
             }
-
+            FillInEvent();
             Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
             Program.DataProvider.InitialLoadDoneBrief = false;
@@ -240,12 +241,14 @@ namespace localhostUI.UiEvent
             }
             this.@event.GetImages()[0] = this.thumbnailLinkBox.Text;
             FillInPhotos();
+            this.thumbnailLinkBox.Clear();
         }
 
         private void AddPhoto(object sender, EventArgs e)
         {
             this.@event.AddImage(this.imagineLinkBox.Text);
             FillInPhotos();
+            this.imagineLinkBox.Clear();
         }
     }
 }
