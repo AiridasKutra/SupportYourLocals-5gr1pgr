@@ -2,6 +2,7 @@
 using GoogleMaps.LocationServices;
 using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
+using localhostUI.Classes;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
 using Microsoft.VisualBasic;
@@ -29,7 +30,7 @@ namespace localhostUI.UiEvent
             this.draft = false;
 
             InitializeComponent();
-
+            this.FillInSports();
             this.Text = "Create event";
             this.finishButton.Text = "Create";
             this.finishButton.Click += CreateEvent;
@@ -48,6 +49,7 @@ namespace localhostUI.UiEvent
             this.Text = "Edit event";
             this.@event = @event;
             this.headerLabel.Text = "Edit event information.";
+            this.FillInSports();
             this.FillInBoxes();
             this.FillInPhotos();
             this.finishButton.Click += EditEvent;
@@ -68,6 +70,7 @@ namespace localhostUI.UiEvent
 
         private void FillInBoxes()
         {
+
             this.eventNameBox.Text = this.@event.Name;
             this.priceBox.Value = this.@event.Price;
             this.addressBox.Text = this.@event.Address;
@@ -82,7 +85,14 @@ namespace localhostUI.UiEvent
                 return;
             }
         }
-
+        private void FillInSports()
+        {
+            List<string> sports = origin.SportList;
+            foreach (string sport in sports)
+            {
+                this.sportBox.Items.Add(sport);
+            }
+        }
         private void FillInPhotos()
         {
             List<string> imageLinks = @event.GetImages();
@@ -131,14 +141,14 @@ namespace localhostUI.UiEvent
 
             if (this.addressBox.Text != this.@event.Address)
             {
-                if (LocationInformation.IsValidAddress(this.addressBox.Text))
+                try
                 {
                     this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
                     MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
                 }
-                else
+                catch
                 {
                     finishResultLabel.Text = "Invalid address.";
                     return;
@@ -155,16 +165,15 @@ namespace localhostUI.UiEvent
 
         private void CreateEvent(object sender, EventArgs e)
         {
-            
 
-            if (LocationInformation.IsValidAddress(this.addressBox.Text))
-            {
+
+            try { 
                 this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
                 MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
             }
-            else
+            catch
             {
                 finishResultLabel.Text = "Invalid address.";
                 return;

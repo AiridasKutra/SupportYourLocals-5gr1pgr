@@ -8,6 +8,7 @@ using localhostUI.Backend;
 using localhostUI.Classes.UserInformationClasses;
 using System.Drawing;
 using GoogleMaps.LocationServices;
+using System.Collections.Generic;
 
 namespace localhostUI
 {
@@ -15,7 +16,13 @@ namespace localhostUI
     {
         private EventInformation eventsInformation;
         private SportTypes sportTypes;
-
+        public List<string> SportList
+        {
+            get
+            {
+                return sportTypes.SportList;
+            }
+        } 
 
         /*[DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -54,7 +61,7 @@ namespace localhostUI
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             //sorry if ur eyes r bleeding.
 
-            refreshSportsTable();
+            RefreshSportsTable();
             SetUpCurrentEventsTab();
             Program.DataPool.LoadDrafts();
         }
@@ -118,7 +125,7 @@ namespace localhostUI
             sportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
 
-            refreshSportsTable();
+            RefreshSportsTable();
         }
 
         private void RemoveSport(object sender, EventArgs e)
@@ -137,10 +144,10 @@ namespace localhostUI
             removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
             removeSportBox.Text = "";
 
-            refreshSportsTable();
+            RefreshSportsTable();
         }
 
-        private void refreshSportsTable()
+        private void RefreshSportsTable()
         {
             filterSportSelector.Items.Clear();
             for (int i = 0; i < sportTypes.SportList.Count; i++)
