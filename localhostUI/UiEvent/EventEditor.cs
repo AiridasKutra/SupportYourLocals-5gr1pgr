@@ -172,14 +172,18 @@ namespace localhostUI.UiEvent
 
         private void EditEvent(object sender, EventArgs e)
         {
-           
 
+            if (this.eventNameBox.Text == "")
+            {
+                finishResultLabel.Text = "You cannot remove the name.";
+                return;
+            }
             if (this.addressBox.Text != this.@event.Address)
             {
                 try
                 {
-                    this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
-                    MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
+                    this.@event.Address = this.addressBox.Text.FormatAddressString();
+                    MapPoint location = this.@event.Address.LatLongFromString();
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
                 }
@@ -201,10 +205,14 @@ namespace localhostUI.UiEvent
         private void CreateEvent(object sender, EventArgs e)
         {
 
-
-            try { 
-                this.@event.Address = LocationInformation.FormatAddress(this.addressBox.Text);
-                MapPoint location = LocationInformation.LatLongFromAddress(this.@event.Address);
+            if(this.eventNameBox.Text == "")
+            {
+                finishResultLabel.Text = "A name is required to create an event.";
+                return;
+            }
+            try {
+                this.@event.Address = this.addressBox.Text.FormatAddressString();
+                MapPoint location = this.@event.Address.LatLongFromString();
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
             }

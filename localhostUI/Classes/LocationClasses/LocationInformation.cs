@@ -66,6 +66,13 @@ namespace localhostUI.Classes.LocationClasses
             var addressData = locationService.GetAddressesListFromAddress(address);
             return addressData[0];
         }
+
+        public static string FormatAddressString(this string address)
+        {
+            var locationService = new GoogleLocationService(apiKey);
+            var addressData = locationService.GetAddressesListFromAddress(address);
+            return addressData[0];
+        }
         public static void OpenAdressInBrowser(string address)
         {
             //Deleted the "," from the array, so if error pile up, add it back in.
