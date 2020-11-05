@@ -55,7 +55,7 @@ namespace localhostUI.UiEvent
                 sportLabel.AutoSize = true;
                 sportLabel.Text = sport;
                 sportLabel.BackColor = Color.FromArgb(230, 230, 230);
-                sportLabel.Font = new Font("Comic Sans MS", 12);
+                sportLabel.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
                 sportDisplayBar.Controls.Add(sportLabel);
             }
 
@@ -66,7 +66,7 @@ namespace localhostUI.UiEvent
                 teamLabel.AutoSize = true;
                 teamLabel.Text = team.Name;
                 teamLabel.BackColor = Color.FromArgb(230, 230, 230);
-                teamLabel.Font = new Font("Comic Sans MS", 12);
+                teamLabel.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
                 teamDisplayBar.Controls.Add(teamLabel);
             }
 

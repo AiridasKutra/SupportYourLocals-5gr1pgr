@@ -281,7 +281,7 @@
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Location = new System.Drawing.Point(4, 7);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(692, 475);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Create a new event";
@@ -470,7 +470,7 @@
             this.tabPage2.Controls.Add(this.label16);
             this.tabPage2.Location = new System.Drawing.Point(4, 7);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(692, 475);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Create a new event";
@@ -490,7 +490,7 @@
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(22, 70);
+            this.dateLabel.Location = new System.Drawing.Point(23, 73);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Size = new System.Drawing.Size(34, 15);
             this.dateLabel.TabIndex = 3;
@@ -499,16 +499,16 @@
             // sportLabel
             // 
             this.sportLabel.AutoSize = true;
-            this.sportLabel.Location = new System.Drawing.Point(22, 98);
+            this.sportLabel.Location = new System.Drawing.Point(23, 100);
             this.sportLabel.Name = "sportLabel";
-            this.sportLabel.Size = new System.Drawing.Size(35, 15);
+            this.sportLabel.Size = new System.Drawing.Size(38, 15);
             this.sportLabel.TabIndex = 4;
-            this.sportLabel.Text = "Sport";
+            this.sportLabel.Text = "Sport:";
             // 
             // priceLabel
             // 
             this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(22, 128);
+            this.priceLabel.Location = new System.Drawing.Point(23, 127);
             this.priceLabel.Name = "priceLabel";
             this.priceLabel.Size = new System.Drawing.Size(121, 15);
             this.priceLabel.TabIndex = 5;
@@ -517,7 +517,7 @@
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(22, 241);
+            this.descriptionLabel.Location = new System.Drawing.Point(23, 235);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(200, 15);
             this.descriptionLabel.TabIndex = 6;
@@ -525,25 +525,25 @@
             // 
             // eventNameBox
             // 
-            this.eventNameBox.Location = new System.Drawing.Point(205, 42);
+            this.eventNameBox.Location = new System.Drawing.Point(170, 42);
             this.eventNameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eventNameBox.Name = "eventNameBox";
             this.eventNameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
-            this.eventNameBox.Size = new System.Drawing.Size(463, 23);
-            this.eventNameBox.TabIndex = 7;
+            this.eventNameBox.Size = new System.Drawing.Size(498, 23);
+            this.eventNameBox.TabIndex = 0;
             // 
             // dateBox
             // 
-            this.dateBox.Location = new System.Drawing.Point(205, 70);
+            this.dateBox.Location = new System.Drawing.Point(170, 69);
             this.dateBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(463, 23);
-            this.dateBox.TabIndex = 8;
+            this.dateBox.Size = new System.Drawing.Size(498, 23);
+            this.dateBox.TabIndex = 1;
             // 
             // eventNameLabel
             // 
             this.eventNameLabel.AutoSize = true;
-            this.eventNameLabel.Location = new System.Drawing.Point(22, 42);
+            this.eventNameLabel.Location = new System.Drawing.Point(23, 46);
             this.eventNameLabel.Name = "eventNameLabel";
             this.eventNameLabel.Size = new System.Drawing.Size(72, 15);
             this.eventNameLabel.TabIndex = 2;
@@ -552,37 +552,37 @@
             // sportBox
             // 
             this.sportBox.FormattingEnabled = true;
-            this.sportBox.Location = new System.Drawing.Point(205, 98);
+            this.sportBox.Location = new System.Drawing.Point(170, 96);
             this.sportBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sportBox.Name = "sportBox";
-            this.sportBox.Size = new System.Drawing.Size(463, 23);
-            this.sportBox.TabIndex = 9;
+            this.sportBox.Size = new System.Drawing.Size(498, 23);
+            this.sportBox.TabIndex = 2;
             // 
             // descriptionBox
             // 
-            this.descriptionBox.Location = new System.Drawing.Point(22, 261);
+            this.descriptionBox.Location = new System.Drawing.Point(23, 258);
             this.descriptionBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionBox.Multiline = true;
             this.descriptionBox.Name = "descriptionBox";
             this.descriptionBox.PlaceholderText = "Input extra information about the event.";
             this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descriptionBox.Size = new System.Drawing.Size(632, 119);
-            this.descriptionBox.TabIndex = 11;
+            this.descriptionBox.Size = new System.Drawing.Size(645, 194);
+            this.descriptionBox.TabIndex = 7;
             // 
             // finishButton
             // 
-            this.finishButton.Location = new System.Drawing.Point(22, 391);
+            this.finishButton.Location = new System.Drawing.Point(22, 456);
             this.finishButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(120, 35);
-            this.finishButton.TabIndex = 12;
+            this.finishButton.TabIndex = 8;
             this.finishButton.Text = "[Create/Edit]";
             this.finishButton.UseVisualStyleBackColor = true;
             // 
             // addressLabel
             // 
             this.addressLabel.AutoSize = true;
-            this.addressLabel.Location = new System.Drawing.Point(22, 156);
+            this.addressLabel.Location = new System.Drawing.Point(23, 154);
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(45, 15);
             this.addressLabel.TabIndex = 13;
@@ -590,28 +590,28 @@
             // 
             // addressBox
             // 
-            this.addressBox.Location = new System.Drawing.Point(205, 156);
+            this.addressBox.Location = new System.Drawing.Point(170, 150);
             this.addressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addressBox.Name = "addressBox";
             this.addressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.addressBox.Size = new System.Drawing.Size(417, 23);
-            this.addressBox.TabIndex = 14;
+            this.addressBox.Size = new System.Drawing.Size(470, 23);
+            this.addressBox.TabIndex = 4;
             // 
             // checkAddressButton
             // 
             this.checkAddressButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkAddressButton.BackgroundImage")));
             this.checkAddressButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.checkAddressButton.Location = new System.Drawing.Point(630, 156);
+            this.checkAddressButton.Location = new System.Drawing.Point(643, 149);
             this.checkAddressButton.Margin = new System.Windows.Forms.Padding(0);
             this.checkAddressButton.Name = "checkAddressButton";
-            this.checkAddressButton.Size = new System.Drawing.Size(24, 20);
+            this.checkAddressButton.Size = new System.Drawing.Size(25, 25);
             this.checkAddressButton.TabIndex = 15;
             this.checkAddressButton.UseVisualStyleBackColor = true;
             this.checkAddressButton.Click += new System.EventHandler(this.SearchMapsBrowser);
             // 
             // saveDraftButton
             // 
-            this.saveDraftButton.Location = new System.Drawing.Point(576, 391);
+            this.saveDraftButton.Location = new System.Drawing.Point(576, 456);
             this.saveDraftButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveDraftButton.Name = "saveDraftButton";
             this.saveDraftButton.Size = new System.Drawing.Size(92, 35);
@@ -623,7 +623,7 @@
             // priceBox
             // 
             this.priceBox.DecimalPlaces = 2;
-            this.priceBox.Location = new System.Drawing.Point(205, 128);
+            this.priceBox.Location = new System.Drawing.Point(170, 123);
             this.priceBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.priceBox.Maximum = new decimal(new int[] {
             65373,
@@ -631,8 +631,8 @@
             0,
             0});
             this.priceBox.Name = "priceBox";
-            this.priceBox.Size = new System.Drawing.Size(463, 23);
-            this.priceBox.TabIndex = 10;
+            this.priceBox.Size = new System.Drawing.Size(498, 23);
+            this.priceBox.TabIndex = 3;
             // 
             // label24
             // 
@@ -645,7 +645,7 @@
             // thumbnailLabel
             // 
             this.thumbnailLabel.AutoSize = true;
-            this.thumbnailLabel.Location = new System.Drawing.Point(22, 187);
+            this.thumbnailLabel.Location = new System.Drawing.Point(23, 181);
             this.thumbnailLabel.Name = "thumbnailLabel";
             this.thumbnailLabel.Size = new System.Drawing.Size(89, 15);
             this.thumbnailLabel.TabIndex = 13;
@@ -653,17 +653,17 @@
             // 
             // thumbnailLinkBox
             // 
-            this.thumbnailLinkBox.Location = new System.Drawing.Point(205, 184);
+            this.thumbnailLinkBox.Location = new System.Drawing.Point(170, 177);
             this.thumbnailLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.thumbnailLinkBox.Name = "thumbnailLinkBox";
             this.thumbnailLinkBox.PlaceholderText = "https://address.com/image.png";
-            this.thumbnailLinkBox.Size = new System.Drawing.Size(417, 23);
-            this.thumbnailLinkBox.TabIndex = 7;
+            this.thumbnailLinkBox.Size = new System.Drawing.Size(447, 23);
+            this.thumbnailLinkBox.TabIndex = 5;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(22, 212);
+            this.label17.Location = new System.Drawing.Point(23, 208);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(72, 15);
             this.label17.TabIndex = 13;
@@ -671,20 +671,20 @@
             // 
             // imagineLinkBox
             // 
-            this.imagineLinkBox.Location = new System.Drawing.Point(205, 212);
+            this.imagineLinkBox.Location = new System.Drawing.Point(170, 204);
             this.imagineLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imagineLinkBox.Name = "imagineLinkBox";
             this.imagineLinkBox.PlaceholderText = "https://address.com/image.png";
-            this.imagineLinkBox.Size = new System.Drawing.Size(417, 23);
-            this.imagineLinkBox.TabIndex = 7;
+            this.imagineLinkBox.Size = new System.Drawing.Size(447, 23);
+            this.imagineLinkBox.TabIndex = 6;
             // 
             // addThumbnailButton
             // 
             this.addThumbnailButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.addThumbnailButton.Location = new System.Drawing.Point(620, 184);
+            this.addThumbnailButton.Location = new System.Drawing.Point(620, 176);
             this.addThumbnailButton.Margin = new System.Windows.Forms.Padding(0);
             this.addThumbnailButton.Name = "addThumbnailButton";
-            this.addThumbnailButton.Size = new System.Drawing.Size(48, 20);
+            this.addThumbnailButton.Size = new System.Drawing.Size(48, 25);
             this.addThumbnailButton.TabIndex = 15;
             this.addThumbnailButton.Text = "Add";
             this.addThumbnailButton.UseVisualStyleBackColor = true;
@@ -693,10 +693,10 @@
             // addPhotoButton
             // 
             this.addPhotoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.addPhotoButton.Location = new System.Drawing.Point(620, 212);
+            this.addPhotoButton.Location = new System.Drawing.Point(620, 203);
             this.addPhotoButton.Margin = new System.Windows.Forms.Padding(0);
             this.addPhotoButton.Name = "addPhotoButton";
-            this.addPhotoButton.Size = new System.Drawing.Size(48, 20);
+            this.addPhotoButton.Size = new System.Drawing.Size(48, 25);
             this.addPhotoButton.TabIndex = 15;
             this.addPhotoButton.Text = "Add";
             this.addPhotoButton.UseVisualStyleBackColor = true;
@@ -705,36 +705,35 @@
             // finishResultLabel
             // 
             this.finishResultLabel.AutoSize = true;
-            this.finishResultLabel.Location = new System.Drawing.Point(154, 391);
+            this.finishResultLabel.Location = new System.Drawing.Point(155, 401);
             this.finishResultLabel.Name = "finishResultLabel";
-            this.finishResultLabel.Size = new System.Drawing.Size(22, 15);
+            this.finishResultLabel.Size = new System.Drawing.Size(0, 15);
             this.finishResultLabel.TabIndex = 17;
-            this.finishResultLabel.Text = "___";
             // 
             // deleteEventButton
             // 
-            this.deleteEventButton.Location = new System.Drawing.Point(576, 391);
+            this.deleteEventButton.Location = new System.Drawing.Point(576, 456);
             this.deleteEventButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deleteEventButton.Name = "deleteEventButton";
             this.deleteEventButton.Size = new System.Drawing.Size(92, 35);
-            this.deleteEventButton.TabIndex = 18;
+            this.deleteEventButton.TabIndex = 9;
             this.deleteEventButton.Text = "Delete";
             this.deleteEventButton.UseVisualStyleBackColor = true;
             this.deleteEventButton.Click += new System.EventHandler(this.DeleteEvent);
             // 
             // photoPanel
             // 
-            this.photoPanel.Location = new System.Drawing.Point(681, 19);
+            this.photoPanel.Location = new System.Drawing.Point(674, 42);
             this.photoPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.photoPanel.Name = "photoPanel";
-            this.photoPanel.Size = new System.Drawing.Size(227, 406);
+            this.photoPanel.Size = new System.Drawing.Size(255, 449);
             this.photoPanel.TabIndex = 19;
             // 
             // EventEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 428);
+            this.ClientSize = new System.Drawing.Size(944, 505);
             this.Controls.Add(this.photoPanel);
             this.Controls.Add(this.deleteEventButton);
             this.Controls.Add(this.finishResultLabel);
@@ -761,17 +760,15 @@
             this.Controls.Add(this.sportLabel);
             this.Controls.Add(this.dateLabel);
             this.Controls.Add(this.headerLabel);
-            //this.Controls.Add(this.tabPage1);
-            //this.Controls.Add(this.tabPage2);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "EventEditor";
             this.Load += new System.EventHandler(this.EventEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            //this.tabPage1.ResumeLayout(false);
-            //this.tabPage1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            //this.tabPage2.ResumeLayout(false);
-            //this.tabPage2.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

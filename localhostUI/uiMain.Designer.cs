@@ -136,7 +136,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(656, 109);
+            this.button2.Location = new System.Drawing.Point(582, 109);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 21;
@@ -149,14 +149,14 @@
             this.usernameChangeResultLabel.AutoSize = true;
             this.usernameChangeResultLabel.Location = new System.Drawing.Point(297, 240);
             this.usernameChangeResultLabel.Name = "usernameChangeResultLabel";
-            this.usernameChangeResultLabel.Size = new System.Drawing.Size(0, 19);
+            this.usernameChangeResultLabel.Size = new System.Drawing.Size(0, 17);
             this.usernameChangeResultLabel.TabIndex = 20;
             // 
             // changeUsernameButton
             // 
-            this.changeUsernameButton.Location = new System.Drawing.Point(23, 231);
+            this.changeUsernameButton.Location = new System.Drawing.Point(23, 205);
             this.changeUsernameButton.Name = "changeUsernameButton";
-            this.changeUsernameButton.Size = new System.Drawing.Size(208, 43);
+            this.changeUsernameButton.Size = new System.Drawing.Size(151, 37);
             this.changeUsernameButton.TabIndex = 19;
             this.changeUsernameButton.Text = "Change username";
             this.changeUsernameButton.UseVisualStyleBackColor = true;
@@ -164,18 +164,18 @@
             // 
             // usernameBox
             // 
-            this.usernameBox.Location = new System.Drawing.Point(170, 187);
+            this.usernameBox.Location = new System.Drawing.Point(149, 163);
             this.usernameBox.Name = "usernameBox";
-            this.usernameBox.PlaceholderText = "User69420";
-            this.usernameBox.Size = new System.Drawing.Size(614, 26);
+            this.usernameBox.PlaceholderText = "User";
+            this.usernameBox.Size = new System.Drawing.Size(527, 25);
             this.usernameBox.TabIndex = 18;
             // 
             // changeNameLabel
             // 
             this.changeNameLabel.AutoSize = true;
-            this.changeNameLabel.Location = new System.Drawing.Point(23, 189);
+            this.changeNameLabel.Location = new System.Drawing.Point(23, 166);
             this.changeNameLabel.Name = "changeNameLabel";
-            this.changeNameLabel.Size = new System.Drawing.Size(109, 19);
+            this.changeNameLabel.Size = new System.Drawing.Size(111, 17);
             this.changeNameLabel.TabIndex = 17;
             this.changeNameLabel.Text = "Your username:";
             // 
@@ -185,17 +185,17 @@
             this.addressResultLabel.Location = new System.Drawing.Point(297, 109);
             this.addressResultLabel.Name = "addressResultLabel";
             this.addressResultLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.addressResultLabel.Size = new System.Drawing.Size(0, 19);
+            this.addressResultLabel.Size = new System.Drawing.Size(0, 17);
             this.addressResultLabel.TabIndex = 16;
             // 
             // button1
             // 
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(237, 101);
+            this.button1.Location = new System.Drawing.Point(180, 102);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(43, 43);
+            this.button1.Size = new System.Drawing.Size(36, 36);
             this.button1.TabIndex = 15;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.UserSearchMapsBrowser);
@@ -205,7 +205,7 @@
             this.locationButton.Location = new System.Drawing.Point(23, 101);
             this.locationButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.locationButton.Name = "locationButton";
-            this.locationButton.Size = new System.Drawing.Size(208, 43);
+            this.locationButton.Size = new System.Drawing.Size(151, 37);
             this.locationButton.TabIndex = 3;
             this.locationButton.Text = "Change address";
             this.locationButton.UseVisualStyleBackColor = true;
@@ -213,11 +213,11 @@
             // 
             // profileManagerLabel
             // 
-            this.profileManagerLabel.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.profileManagerLabel.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.profileManagerLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.profileManagerLabel.Location = new System.Drawing.Point(23, 9);
+            this.profileManagerLabel.Location = new System.Drawing.Point(23, 13);
             this.profileManagerLabel.Name = "profileManagerLabel";
-            this.profileManagerLabel.Size = new System.Drawing.Size(290, 48);
+            this.profileManagerLabel.Size = new System.Drawing.Size(136, 29);
             this.profileManagerLabel.TabIndex = 2;
             this.profileManagerLabel.Text = "Your profile";
             // 
@@ -226,17 +226,17 @@
             this.changeAddressLabel.AutoSize = true;
             this.changeAddressLabel.Location = new System.Drawing.Point(23, 63);
             this.changeAddressLabel.Name = "changeAddressLabel";
-            this.changeAddressLabel.Size = new System.Drawing.Size(91, 19);
+            this.changeAddressLabel.Size = new System.Drawing.Size(90, 17);
             this.changeAddressLabel.TabIndex = 1;
             this.changeAddressLabel.Text = "Your adress:";
             // 
             // userAdressBox
             // 
             this.userAdressBox.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.userAdressBox.Location = new System.Drawing.Point(170, 60);
+            this.userAdressBox.Location = new System.Drawing.Point(149, 60);
             this.userAdressBox.Name = "userAdressBox";
             this.userAdressBox.PlaceholderText = "Didlaukio g. 59";
-            this.userAdressBox.Size = new System.Drawing.Size(614, 26);
+            this.userAdressBox.Size = new System.Drawing.Size(527, 25);
             this.userAdressBox.TabIndex = 0;
             // 
             // eventManagerTab
@@ -266,11 +266,11 @@
             // 
             // yourEventsTab
             // 
-            this.yourEventsTab.Location = new System.Drawing.Point(4, 28);
+            this.yourEventsTab.Location = new System.Drawing.Point(4, 26);
             this.yourEventsTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.yourEventsTab.Name = "yourEventsTab";
             this.yourEventsTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.yourEventsTab.Size = new System.Drawing.Size(689, 461);
+            this.yourEventsTab.Size = new System.Drawing.Size(689, 463);
             this.yourEventsTab.TabIndex = 0;
             this.yourEventsTab.Text = "Manage your events";
             this.yourEventsTab.UseVisualStyleBackColor = true;
@@ -294,11 +294,11 @@
             this.newEventTab.Controls.Add(this.dateLabel);
             this.newEventTab.Controls.Add(this.nameLabel);
             this.newEventTab.Controls.Add(this.creatorHeader);
-            this.newEventTab.Location = new System.Drawing.Point(4, 28);
+            this.newEventTab.Location = new System.Drawing.Point(4, 26);
             this.newEventTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.newEventTab.Name = "newEventTab";
             this.newEventTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.newEventTab.Size = new System.Drawing.Size(689, 461);
+            this.newEventTab.Size = new System.Drawing.Size(689, 463);
             this.newEventTab.TabIndex = 1;
             this.newEventTab.Text = "Create a new event";
             this.newEventTab.UseVisualStyleBackColor = true;
@@ -308,7 +308,7 @@
             this.eventCreationResultLabel.AutoSize = true;
             this.eventCreationResultLabel.Location = new System.Drawing.Point(182, 429);
             this.eventCreationResultLabel.Name = "eventCreationResultLabel";
-            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 19);
+            this.eventCreationResultLabel.Size = new System.Drawing.Size(0, 17);
             this.eventCreationResultLabel.TabIndex = 16;
             // 
             // saveAsDraftButton
@@ -337,7 +337,7 @@
             this.eventAdressBox.Location = new System.Drawing.Point(246, 184);
             this.eventAdressBox.Name = "eventAdressBox";
             this.eventAdressBox.PlaceholderText = "Baltojo tilto aikštynas, Upės gatvė, Vilnius";
-            this.eventAdressBox.Size = new System.Drawing.Size(476, 26);
+            this.eventAdressBox.Size = new System.Drawing.Size(476, 25);
             this.eventAdressBox.TabIndex = 14;
             // 
             // adressLabel
@@ -345,7 +345,7 @@
             this.adressLabel.AutoSize = true;
             this.adressLabel.Location = new System.Drawing.Point(37, 184);
             this.adressLabel.Name = "adressLabel";
-            this.adressLabel.Size = new System.Drawing.Size(59, 19);
+            this.adressLabel.Size = new System.Drawing.Size(58, 17);
             this.adressLabel.TabIndex = 13;
             this.adressLabel.Text = "Adress:";
             // 
@@ -379,7 +379,7 @@
             0,
             0});
             this.priceBox.Name = "priceBox";
-            this.priceBox.Size = new System.Drawing.Size(529, 26);
+            this.priceBox.Size = new System.Drawing.Size(529, 25);
             this.priceBox.TabIndex = 10;
             // 
             // sportBox
@@ -387,14 +387,14 @@
             this.sportBox.FormattingEnabled = true;
             this.sportBox.Location = new System.Drawing.Point(246, 107);
             this.sportBox.Name = "sportBox";
-            this.sportBox.Size = new System.Drawing.Size(529, 27);
+            this.sportBox.Size = new System.Drawing.Size(529, 25);
             this.sportBox.TabIndex = 9;
             // 
             // dateBox
             // 
             this.dateBox.Location = new System.Drawing.Point(246, 69);
             this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(529, 26);
+            this.dateBox.Size = new System.Drawing.Size(529, 25);
             this.dateBox.TabIndex = 8;
             // 
             // nameBox
@@ -402,7 +402,7 @@
             this.nameBox.Location = new System.Drawing.Point(246, 32);
             this.nameBox.Name = "nameBox";
             this.nameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
-            this.nameBox.Size = new System.Drawing.Size(529, 26);
+            this.nameBox.Size = new System.Drawing.Size(529, 25);
             this.nameBox.TabIndex = 7;
             // 
             // descriptionLabel
@@ -410,7 +410,7 @@
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Location = new System.Drawing.Point(37, 229);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(244, 19);
+            this.descriptionLabel.Size = new System.Drawing.Size(237, 17);
             this.descriptionLabel.TabIndex = 6;
             this.descriptionLabel.Text = "Description (additional information):";
             // 
@@ -419,7 +419,7 @@
             this.priceLabel.AutoSize = true;
             this.priceLabel.Location = new System.Drawing.Point(37, 147);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(151, 19);
+            this.priceLabel.Size = new System.Drawing.Size(146, 17);
             this.priceLabel.TabIndex = 5;
             this.priceLabel.Text = "Entry price (optional):";
             // 
@@ -428,7 +428,7 @@
             this.sportLabel.AutoSize = true;
             this.sportLabel.Location = new System.Drawing.Point(37, 107);
             this.sportLabel.Name = "sportLabel";
-            this.sportLabel.Size = new System.Drawing.Size(47, 19);
+            this.sportLabel.Size = new System.Drawing.Size(43, 17);
             this.sportLabel.TabIndex = 4;
             this.sportLabel.Text = "Sport";
             // 
@@ -437,7 +437,7 @@
             this.dateLabel.AutoSize = true;
             this.dateLabel.Location = new System.Drawing.Point(37, 69);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(45, 19);
+            this.dateLabel.Size = new System.Drawing.Size(43, 17);
             this.dateLabel.TabIndex = 3;
             this.dateLabel.Text = "Date:";
             // 
@@ -446,7 +446,7 @@
             this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(37, 32);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(88, 19);
+            this.nameLabel.Size = new System.Drawing.Size(90, 17);
             this.nameLabel.TabIndex = 2;
             this.nameLabel.Text = "Event name:";
             // 
@@ -456,7 +456,7 @@
             this.creatorHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.creatorHeader.Location = new System.Drawing.Point(37, 4);
             this.creatorHeader.Name = "creatorHeader";
-            this.creatorHeader.Size = new System.Drawing.Size(165, 19);
+            this.creatorHeader.Size = new System.Drawing.Size(154, 17);
             this.creatorHeader.TabIndex = 1;
             this.creatorHeader.Text = "Input event information";
             // 
@@ -468,10 +468,10 @@
             this.addSportTab.Controls.Add(this.addButton);
             this.addSportTab.Controls.Add(this.addSportBox);
             this.addSportTab.Controls.Add(this.addSportLabel);
-            this.addSportTab.Location = new System.Drawing.Point(4, 28);
+            this.addSportTab.Location = new System.Drawing.Point(4, 26);
             this.addSportTab.Name = "addSportTab";
             this.addSportTab.Padding = new System.Windows.Forms.Padding(3);
-            this.addSportTab.Size = new System.Drawing.Size(689, 461);
+            this.addSportTab.Size = new System.Drawing.Size(689, 463);
             this.addSportTab.TabIndex = 2;
             this.addSportTab.Text = "Add Sport (placeholder)";
             this.addSportTab.UseVisualStyleBackColor = true;
@@ -491,7 +491,7 @@
             this.removeSportBox.FormattingEnabled = true;
             this.removeSportBox.Location = new System.Drawing.Point(178, 121);
             this.removeSportBox.Name = "removeSportBox";
-            this.removeSportBox.Size = new System.Drawing.Size(445, 27);
+            this.removeSportBox.Size = new System.Drawing.Size(445, 25);
             this.removeSportBox.TabIndex = 4;
             // 
             // removeSportLabel
@@ -499,7 +499,7 @@
             this.removeSportLabel.AutoSize = true;
             this.removeSportLabel.Location = new System.Drawing.Point(25, 121);
             this.removeSportLabel.Name = "removeSportLabel";
-            this.removeSportLabel.Size = new System.Drawing.Size(102, 19);
+            this.removeSportLabel.Size = new System.Drawing.Size(104, 17);
             this.removeSportLabel.TabIndex = 3;
             this.removeSportLabel.Text = "Remove sport:";
             // 
@@ -518,7 +518,7 @@
             this.addSportBox.Location = new System.Drawing.Point(178, 75);
             this.addSportBox.Name = "addSportBox";
             this.addSportBox.PlaceholderText = "Sport";
-            this.addSportBox.Size = new System.Drawing.Size(445, 26);
+            this.addSportBox.Size = new System.Drawing.Size(445, 25);
             this.addSportBox.TabIndex = 1;
             // 
             // addSportLabel
@@ -526,7 +526,7 @@
             this.addSportLabel.AutoSize = true;
             this.addSportLabel.Location = new System.Drawing.Point(25, 75);
             this.addSportLabel.Name = "addSportLabel";
-            this.addSportLabel.Size = new System.Drawing.Size(110, 19);
+            this.addSportLabel.Size = new System.Drawing.Size(105, 17);
             this.addSportLabel.TabIndex = 0;
             this.addSportLabel.Text = "Add sport type:";
             // 
@@ -678,7 +678,6 @@
             // 
             this.CurrentEventsTable.AutoSize = true;
             this.CurrentEventsTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.CurrentEventsTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.CurrentEventsTable.ColumnCount = 2;
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -687,7 +686,7 @@
             this.CurrentEventsTable.RowCount = 1;
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CurrentEventsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CurrentEventsTable.Size = new System.Drawing.Size(3, 2);
+            this.CurrentEventsTable.Size = new System.Drawing.Size(0, 0);
             this.CurrentEventsTable.TabIndex = 5;
             // 
             // filterDateLabel
@@ -747,7 +746,7 @@
             this.menuTabs.Controls.Add(this.profileTab);
             this.menuTabs.Controls.Add(this.eventManagerTab);
             this.menuTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuTabs.Font = new System.Drawing.Font("Comic Sans MS", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.menuTabs.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.menuTabs.ItemSize = new System.Drawing.Size(266, 21);
             this.menuTabs.Location = new System.Drawing.Point(0, 0);
             this.menuTabs.Name = "menuTabs";

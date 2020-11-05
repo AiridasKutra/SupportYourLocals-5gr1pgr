@@ -52,17 +52,18 @@ namespace localhostUI.UiEvent
             this.FillInSports();
             this.FillInBoxes();
             this.FillInPhotos();
-            this.finishButton.Click += EditEvent;
 
             if (draft)
             {
                 finishButton.Text = "Create";
+                this.finishButton.Click += CreateEvent;
                 deleteEventButton.Visible = false;
                 saveDraftButton.Visible = true;
             }
             else
             {
                 finishButton.Text = "Save";
+                this.finishButton.Click += EditEvent;
                 deleteEventButton.Visible = true;
                 saveDraftButton.Visible = false;
             }
@@ -87,6 +88,8 @@ namespace localhostUI.UiEvent
         }
         private void FillInSports()
         {
+            this.sportBox.Items.Clear();
+
             List<string> sports = origin.SportList;
             foreach (string sport in sports)
             {
@@ -95,18 +98,21 @@ namespace localhostUI.UiEvent
         }
         private void FillInPhotos()
         {
-            List<string> imageLinks = @event.GetImages();
-            for (int i = 0; i < imageLinks.Count; i++)
+            photoPanel.Controls.Clear();
+
+            int counter = 0;
+            foreach (var link in @event.GetImages())
             {
+                // Add picture
                 PictureBox picture = new PictureBox();
                 picture.Size = new Size(240, 180);
-                picture.Location = new Point(0, 200 * i);
+                picture.Location = new Point(0, 15 + 200 * counter);
                 picture.BorderStyle = BorderStyle.Fixed3D;
                 try
                 {
                     using (WebClient client = new WebClient())
                     {
-                        Stream stream = client.OpenRead(imageLinks[i]);
+                        Stream stream = client.OpenRead(link);
                         Bitmap bitmap = new Bitmap(stream);
                         Bitmap bitmapScaled = new Bitmap(bitmap, new Size(240, 180));
                         picture.Image = bitmapScaled;
@@ -117,6 +123,35 @@ namespace localhostUI.UiEvent
                 }
                 catch { }
                 photoPanel.Controls.Add(picture);
+
+                // Add remove button
+                Button removeButton = new Button();
+                removeButton.BackgroundImage = Properties.Resources.CloseButton;
+                removeButton.FlatStyle = FlatStyle.Flat;
+                removeButton.FlatAppearance.BorderSize = 0;
+                removeButton.BackColor = Color.Transparent;
+                removeButton.Location = new Point(1, 1 + 200 * counter);
+                removeButton.Size = new Size(13, 13);
+                removeButton.Margin = new Padding(0);
+                removeButton.Padding = new Padding(0);
+                removeButton.Click += (sender, e) =>
+                {
+                    @event.GetImages().Remove(link);
+                    FillInPhotos();
+                };
+                photoPanel.Controls.Add(removeButton);
+
+                // Add thumbnail tag
+                if (counter == 0)
+                {
+                    Label thumbnailTag = new Label();
+                    thumbnailTag.Text = "Thumbnail";
+                    thumbnailTag.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                    thumbnailTag.Location = new Point(20, 200 * counter);
+                    photoPanel.Controls.Add(thumbnailTag);
+                }
+
+                counter++;
             }
 
             photoPanel.HorizontalScroll.Maximum = 0;
@@ -255,9 +290,17 @@ namespace localhostUI.UiEvent
 
         private void AddPhoto(object sender, EventArgs e)
         {
-            this.@event.AddImage(this.imagineLinkBox.Text);
+            int index = @event.GetImages().IndexOf(imagineLinkBox.Text);
+            if (index != -1)
+            {
+                @event.GetImages()[index] = imagineLinkBox.Text;
+            }
+            else
+            {
+                @event.AddImage(imagineLinkBox.Text);
+            }
             FillInPhotos();
-            this.imagineLinkBox.Clear();
+            imagineLinkBox.Clear();
         }
     }
 }

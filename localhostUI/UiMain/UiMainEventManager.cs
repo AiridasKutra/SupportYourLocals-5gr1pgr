@@ -138,18 +138,53 @@ namespace localhostUI
                 eventName.Font = new Font("Arial", 13.0f, FontStyle.Bold);
                 eventName.Text = draft.Name;
                 eventName.AutoSize = false;
-                eventName.Location = new Point(0, counter * 35);
-                eventName.Size = new Size(300, 35);
+                eventName.Location = new Point(0, 0);
+                eventName.Size = new Size(265, 35);
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
                 int color = 225 + (counter % 2) * 10;
                 eventName.BackColor = Color.FromArgb(color, color, color);
+
+                Button removeButton = new Button();
+                removeButton.BackgroundImage = Properties.Resources.CloseButton;
+                removeButton.BackgroundImageLayout = ImageLayout.Center;
+                removeButton.ImageAlign = ContentAlignment.MiddleCenter;
+                removeButton.BackColor = Color.FromArgb(color, color, color);
+                removeButton.FlatStyle = FlatStyle.Flat;
+                removeButton.FlatAppearance.BorderSize = 0;
+                removeButton.Location = new Point(265, 0);
+                removeButton.Size = new Size(35, 35);
+                removeButton.Click += (sender, e) =>
+                {
+                    try
+                    {
+                        for (int i = 0; i < Program.DataPool.eventsDraft.Count; i++)
+                        {
+                            if ((int)Program.DataPool.eventsDraft[i].Get("id") == draft.Id)
+                            {
+                                Program.DataPool.eventsDraft.RemoveAt(i);
+                                Program.DataPool.SaveDrafts();
+                                Program.DataPool.LoadDrafts();
+                                LoadDrafts();
+                                break;
+                            }
+                        }
+                    }
+                    catch (InvalidCastException)
+                    {
+                        Console.WriteLine("ERROR: save failed because a draft is corrupted");
+                    }
+                };
 
                 eventName.Click += (sender, e) =>
                 {
                     new EventEditor(this, draft, true).Show();
                 };
 
-                emanagerDraftsPanel.Controls.Add(eventName);
+                eventPanel.Controls.Add(eventName);
+                eventPanel.Controls.Add(removeButton);
+
+                emanagerDraftsPanel.Controls.Add(eventPanel);
+                counter++;
             }
         }
 
