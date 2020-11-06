@@ -57,10 +57,6 @@ namespace localhostUI
                 usernameBox.Text = Program.UserDataManager.UserData.Username;
             }
 
-            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
-            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
-            //sorry if ur eyes r bleeding.
-
             RefreshSportsTable();
             SetUpCurrentEventsTab();
             Program.DataPool.LoadDrafts();
@@ -93,60 +89,6 @@ namespace localhostUI
             return coordInfoRef.isActiveLocation;
         }
 
-        //Sport managing functions. All of which names correspond to their function.
-        private void CreateEvent(object sender, EventArgs e)
-        {
-            if (!LocationInformation.IsValidAddress(eventAdressBox.Text) || eventAdressBox.Text.Length == 0)
-            {
-                eventCreationResultLabel.Text = "Event address is invalid.";
-                eventCreationResultLabel.ForeColor = Color.FromArgb(255, 128, 128);
-                return;
-            }
-            
-            //So like i dunno press button add event to list.
-            //i think its pretty simple but i also think peugeots are good who am i to speak;
-            if (eventsInformation == null) eventsInformation = new EventInformation();
-            Event newEvent = new Event(nameBox.Text, dateBox.Value, sportBox.Text, descriptionBox.Text, eventAdressBox.Text, (float)priceBox.Value);
-            eventsInformation.Events.Add(newEvent);
-        }
-
-        private void AddSport(object sender, EventArgs e)
-        {
-            if (sportTypes.SportList.Contains(addSportBox.Text))
-            {
-                MessageBox.Show("You cannot add this sport. It already exists in the list.", "Matching sport found.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            sportTypes.SportList.Add(addSportBox.Text);
-
-            sportBox.Items.Clear();
-            removeSportBox.Items.Clear();
-
-            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
-            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
-
-            RefreshSportsTable();
-        }
-
-        private void RemoveSport(object sender, EventArgs e)
-        {
-            if (!sportTypes.SportList.Contains(removeSportBox.Text))
-            {
-                MessageBox.Show("You cannot remove this sport. It does not exist in the list.", "No such sport found.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            sportTypes.SportList.Remove(removeSportBox.Text);
-
-            sportBox.Items.Clear();
-            removeSportBox.Items.Clear();
-
-            sportBox.Items.AddRange(sportTypes.SportList.ToArray());
-            removeSportBox.Items.AddRange(sportTypes.SportList.ToArray());
-            removeSportBox.Text = "";
-
-            RefreshSportsTable();
-        }
-
         private void RefreshSportsTable()
         {
             filterSportSelector.Items.Clear();
@@ -154,11 +96,6 @@ namespace localhostUI
             {
                 filterSportSelector.Items.Add(sportTypes.SportList[i]);
             }
-        }
-
-        private void SearchMapsBrowser(object sender, EventArgs e)
-        {
-            LocationInformation.OpenAdressInBrowser(eventAdressBox.Text);
         }
 
         private void UserSearchMapsBrowser(object sender, EventArgs e)

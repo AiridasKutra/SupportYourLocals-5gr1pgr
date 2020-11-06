@@ -24,18 +24,18 @@ namespace localhostUI
 
         private void AddDraftFileToList()
         {
-            EventFull eventFull = new EventFull
-            {
-                Name = nameBox.Text,
-                Address = eventAdressBox.Text,
-                StartDate = dateBox.Value,
-                Price = priceBox.Value,
-                Description = descriptionBox.Text
-            };
-            eventFull.AddSport(sportBox.Text);
+            //EventFull eventFull = new EventFull
+            //{
+            //    Name = nameBox.Text,
+            //    Address = eventAdressBox.Text,
+            //    StartDate = dateBox.Value,
+            //    Price = priceBox.Value,
+            //    Description = descriptionBox.Text
+            //};
+            //eventFull.AddSport(sportBox.Text);
 
-            DataList data = EventFull.ToDataList(eventFull);
-            drafts.Add(data);
+            //DataList data = EventFull.ToDataList(eventFull);
+            //drafts.Add(data);
         }
 
         private void SetUpEventManagerTab()
