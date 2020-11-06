@@ -18,11 +18,8 @@ namespace localhostUI.Backend
 
         public List<EventBrief> GetEventsBrief(EventOptions options)
         {
-            if (!InitialLoadDoneBrief)
-            {
-                Program.DataPool.LoadEventsBrief();
-                InitialLoadDoneBrief = true;
-            }
+            Program.DataPool.LoadEventsBrief();
+            InitialLoadDoneBrief = true;
 
             List<EventBrief> events = new List<EventBrief>();
             foreach (var evBrief in Program.DataPool.eventsBrief)
@@ -37,11 +34,8 @@ namespace localhostUI.Backend
 
         public List<EventFull> GetEventsFull(EventOptions options)
         {
-            if (!InitialLoadDoneFull)
-            {
-                Program.DataPool.LoadEventsFull();
-                InitialLoadDoneFull = true;
-            }
+            Program.DataPool.LoadEventsFull();
+            InitialLoadDoneFull = true;
 
             List<EventFull> events = new List<EventFull>();
             foreach (var evFull in Program.DataPool.eventsFull)
