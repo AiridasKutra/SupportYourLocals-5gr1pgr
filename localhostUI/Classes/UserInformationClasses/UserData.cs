@@ -6,9 +6,7 @@ using System;
 namespace localhostUI.Classes.UserInformationClasses
 {   
     class UserData
-
     {
-
         //-----------Properties-----------------------------------
         public string Address { get;  set; }
         public double Latitude { get; set; }
@@ -22,7 +20,6 @@ namespace localhostUI.Classes.UserInformationClasses
             Longitude = 0;
             Username = "Anon";
         }
-
         public UserData(string address, string userName)
         {
             this.Address = LocationInformation.FormatAddress(address);
@@ -39,25 +36,32 @@ namespace localhostUI.Classes.UserInformationClasses
             this.Longitude = longitude;
             this.Username = username;
         }
-
         public UserData(string userName)
         {
             this.Username = userName;
         }
-
         public UserData(DataList dataList)
         {
             object username = dataList.Get("username");
             object address = dataList.Get("address");
+            object latitude = dataList.Get("latitude");
+            object longitude = dataList.Get("longitude");
             try
             {
                 if (username != null && address != null)
                 {
                     this.Username = (string)username;
                     this.Address = LocationInformation.FormatAddress((string)address);
-                    MapPoint location = LocationInformation.LatLongFromAddress(this.Address);
-                    this.Latitude = location.Latitude;
-                    this.Longitude = location.Longitude;
+                    if(latitude == null || longitude == null){
+                        MapPoint location = LocationInformation.LatLongFromAddress(this.Address);
+                        this.Latitude = location.Latitude;
+                        this.Longitude = location.Longitude;
+                    }
+                    else
+                    {
+                        this.Longitude = (double)longitude;
+                        this.Latitude = (double)latitude;
+                    }
                 }
             }catch(Exception e)
             {
@@ -67,7 +71,6 @@ namespace localhostUI.Classes.UserInformationClasses
                 this.Longitude = 0;
             }
         }
-
         public bool ChangeAddress(string address)
         {
             if (!LocationInformation.IsValidAddress(address)) return false;
@@ -77,15 +80,15 @@ namespace localhostUI.Classes.UserInformationClasses
             this.Latitude = location.Latitude;
             return true;
         }
-
         public static DataList ToDataList(UserData userData)
         {
             DataList data = new DataList();
             data.Add(userData.Username, "username");
             data.Add(userData.Address, "address");
+            data.Add(userData.Latitude, "latitude");
+            data.Add(userData.Longitude, "longitude");
             return data;
         }
-
         public MapPoint ToMapPoint()
         {
             return LocationInformation.LatLongFromAddress(this.Address);
