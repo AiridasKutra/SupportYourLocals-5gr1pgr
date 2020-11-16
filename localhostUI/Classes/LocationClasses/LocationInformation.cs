@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+
+//EXTENTION METHOD, OPTIONAL ARGUMENT USAGE
 namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
@@ -12,6 +14,7 @@ namespace localhostUI.Classes.LocationClasses
         private static readonly string apiKey = ApiKeys.GoogleApiKey;
 
         //MapPoint location = address.LatLongFromString();
+        //OPTIONAL ARGUMENT USAGE
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -24,6 +27,8 @@ namespace localhostUI.Classes.LocationClasses
             var locationService = new GoogleLocationService(apiKey);
             return locationService.GetLatLongFromAddress(addressObject);
         }
+
+
         //MapPoint location = LocationInformation.LatLongFromString(address);
         public static MapPoint LatLongFromAddress(string address, string country = "Lithuania")
         {
@@ -67,6 +72,8 @@ namespace localhostUI.Classes.LocationClasses
             return addressData[0];
         }
 
+
+        //EXTENTION METHOD
         public static string FormatAddressString(this string address)
         {
             var locationService = new GoogleLocationService(apiKey);

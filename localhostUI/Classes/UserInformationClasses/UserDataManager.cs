@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using System.Text.Json;
 
+
+//READING FROM FILE
 namespace localhostUI.Classes.UserInformationClasses
 {
     class UserDataManager
@@ -11,6 +13,8 @@ namespace localhostUI.Classes.UserInformationClasses
         public UserData UserData { get; set; }
         private readonly string writeDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\localhostPSI";
         private readonly string fileName = "userInfo.json";
+       
+        //JoinPath ždž padaryk
         public string FileDirectory()
         {
             return writeDirectory + @$"\{fileName}";
@@ -33,9 +37,10 @@ namespace localhostUI.Classes.UserInformationClasses
             Program.DataPool.userData = userDataList;
         }
 
+
+        //READING FROM FILE
         public void Load()
         {
-            //fix dis error pls
             string userJson;
             try
             {
@@ -46,10 +51,8 @@ namespace localhostUI.Classes.UserInformationClasses
                 
                 Directory.CreateDirectory(writeDirectory);
                 userJson = File.ReadAllText(FileDirectory());
-                Console.WriteLine(userJson);
                 this.UserData = JsonConvert.DeserializeObject<UserData>(userJson);
                 Program.DataPool.userData = UserData.ToDataList(this.UserData);
-                Console.WriteLine(this.UserData.ToString());
             }
             catch(FileNotFoundException e)
             {

@@ -61,9 +61,10 @@ namespace localhostUI
             List<double> distances = new List<double>();
 
             // Calculate distances
+            UserData user = Program.UserDataManager.GetData();
+            bool isAddressAdded = !(user.Address == "" || user.Address == null || (user.Latitude == 0 && user.Longitude == 0));
             foreach (var evBrief in events)
             {
-                UserData user = Program.UserDataManager.GetData();
                 distances.Add(LocationInformation.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
             }
 
@@ -184,6 +185,10 @@ namespace localhostUI
                 eventDistance.Size = new Size(60, 25);
                 eventDistance.BackColor = Color.FromArgb(230, 230, 230);
                 eventDistance.TextAlign = ContentAlignment.MiddleCenter;
+                if (!isAddressAdded)
+                {
+                    eventDistance.Text = "";
+                }
 
                 // Add everything
                 eventPanel.Controls.Add(thumbnail);

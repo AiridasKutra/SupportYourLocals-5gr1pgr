@@ -24,10 +24,6 @@ namespace localhostUI
             }
         } 
 
-        /*[DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();*/
-
         public UiMain()
         {
             InitializeComponent();
@@ -46,10 +42,6 @@ namespace localhostUI
             sportTypes.SportList.Add("Table Tennis");
             sportTypes.SportList.Add("Golf");
             sportTypes.SportList.Add("Rugby");
-
-            //  [Placeholder]   . Added user adress to locate nearby events in the future.
-            Console.WriteLine("USER DATA READ: "+ (Program.UserDataManager.UserData != null));
-            Console.WriteLine("USER ADDRESS AVAILABLE: " + (Program.UserDataManager.UserData.Address != null));
 
             if (Program.UserDataManager.UserData != null && Program.UserDataManager.UserData.Address != null)
             {
@@ -135,7 +127,12 @@ namespace localhostUI
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {
-            
+            if(userAdressBox.Text == "" || userAdressBox.Text == null)
+            {
+                Program.UserDataManager.UserData.Address = "";
+                addressResultLabel.Text = "Your address information has been deleted.";
+                return;
+            } 
             if(userAdressBox.Text == Program.UserDataManager.UserData.Address)
             {
                 addressResultLabel.Text = "This is already your address.";

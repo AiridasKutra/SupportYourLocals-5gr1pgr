@@ -182,6 +182,7 @@ namespace localhostUI.UiEvent
             {
                 try
                 {
+                    //EXTENTION METHOD
                     this.@event.Address = this.addressBox.Text.FormatAddressString();
                     MapPoint location = this.@event.Address.LatLongFromString();
                     this.@event.Latitude = location.Latitude;
@@ -211,6 +212,7 @@ namespace localhostUI.UiEvent
                 return;
             }
             try {
+                //EXTENSION METHOD
                 this.@event.Address = this.addressBox.Text.FormatAddressString();
                 MapPoint location = this.@event.Address.LatLongFromString();
                 this.@event.Latitude = location.Latitude;
