@@ -10,7 +10,7 @@ namespace localhostUI.Backend.DataManagement
     class DraftFileWriter : IDataWriter
     {
         private string message;
-        private readonly string fileName;
+        private const string fileName = "FileDrafts.json";
         public void Write(DataList data)
         {
             try
@@ -27,10 +27,6 @@ namespace localhostUI.Backend.DataManagement
         public string GetMessage()
         {
             return message;
-        }
-        public DraftFileWriter(string fileName)
-        {
-            this.fileName = fileName;
         }
     }
 }

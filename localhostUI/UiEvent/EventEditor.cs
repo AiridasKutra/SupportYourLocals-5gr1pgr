@@ -197,8 +197,6 @@ namespace localhostUI.UiEvent
             FillInEvent();
             Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             this.Close();
         }
@@ -226,8 +224,6 @@ namespace localhostUI.UiEvent
             FillInEvent();
             Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             this.Close();
         }
@@ -236,8 +232,6 @@ namespace localhostUI.UiEvent
         {
             Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             Close();
         }
