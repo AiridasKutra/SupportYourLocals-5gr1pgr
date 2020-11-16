@@ -23,14 +23,14 @@ namespace localhostUI
             }
         }
 
-        private static readonly DataPool dataPool = new DataPool();
-        public static DataPool DataPool
-        {
-            get
-            {
-                return dataPool;
-            }
-        }
+        //private static readonly DataPool dataPool = new DataPool();
+        //public static DataPool DataPool
+        //{
+        //    get
+        //    {
+        //        return dataPool;
+        //    }
+        //}
 
         private static readonly DataManager dataManager = new DataManager();
         public static DataManager DataManager
