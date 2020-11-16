@@ -26,7 +26,7 @@ namespace localhostUI.Backend
             eventsDraft.Clear();
 
             string fileName = "FileDrafts.json";
-            DraftFileReader draftFileReader = new DraftFileReader(fileName);
+            DraftFileReader draftFileReader = new DraftFileReader();
             Program.DataManager.Read(draftFileReader, out DataList data);
             if (data != null)
             {
@@ -52,7 +52,7 @@ namespace localhostUI.Backend
         {
             string fileName = "FileDrafts.json";
             DataList dataList = new DataList();
-            DraftFileWriter draftFileWriter = new DraftFileWriter(fileName);
+            DraftFileWriter draftFileWriter = new DraftFileWriter();
             try
             {
                 foreach (DataList draft in eventsDraft)

@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -242,21 +243,22 @@ namespace localhostUI.UiEvent
 
             if (!draft)
             {
-                Program.DataPool.eventsDraft.Add(EventFull.ToDataList(@event));
-                Program.DataPool.SaveDrafts();
-                Program.DataPool.LoadDrafts();
+                Program.DraftManager.AddEvent(@event);
+                Program.DraftManager.SaveDrafts();
+                Program.DraftManager.LoadDrafts();
             }
             else
             {
                 try
                 {
-                    for (int i = 0; i < Program.DataPool.eventsDraft.Count; i++)
+                    List<EventFull> drafts = Program.DraftManager.GetEvents();
+                    foreach (var draft in drafts)
                     {
-                        if ((int)Program.DataPool.eventsDraft[i].Get("id") == @event.Id)
+                        if (draft.Id == @event.Id)
                         {
-                            Program.DataPool.eventsDraft[i] = EventFull.ToDataList(@event);
-                            Program.DataPool.SaveDrafts();
-                            Program.DataPool.LoadDrafts();
+                            drafts[drafts.IndexOf(draft)] = @event;
+                            Program.DraftManager.SaveDrafts();
+                            Program.DraftManager.LoadDrafts();
                             break;
                         }
                     }

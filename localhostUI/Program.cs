@@ -41,6 +41,15 @@ namespace localhostUI
             }
         }
 
+        public static readonly EventDraftManager draftManager = new EventDraftManager();
+        public static EventDraftManager DraftManager
+        {
+            get
+            {
+                return draftManager;
+            }
+        }
+
         public static UserDataManager UserDataManager { get;/*set;*/} = new UserDataManager();
 
         private static readonly EventDataProvider dataProvider = new EventDataProvider();
@@ -105,7 +114,7 @@ namespace localhostUI
             }
 
             Client.Disconnect();
-            DataPool.SaveDrafts();
+            DraftManager.SaveDrafts();
         }
 
         

@@ -21,7 +21,7 @@ namespace localhostUI.Backend.DataManagement
                 }
                 Directory.CreateDirectory(UserDataManager.writeDirectory);
                 userJson = File.ReadAllText(UserDataManager.FileDirectory());
-                data = DataList.FromList(Json.DecodeList(userJson));
+                data = DataList.FromList(Json.ToList(userJson));
             }
             catch (FileNotFoundException e)
             {

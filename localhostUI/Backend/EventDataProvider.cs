@@ -12,12 +12,14 @@ namespace localhostUI.Backend
         private DateTime lastLoadTimeBrief;
         private DateTime lastLoadTimeFull;
 
+        private bool initialLoadDone;
+
         private List<DataList> eventsBrief;
         private List<DataList> eventsFull;
 
         public EventDataProvider()
         {
-            LoadEventsBrief();
+            initialLoadDone = false;
             lastLoadTimeBrief = DateTime.UtcNow;
         }
 
@@ -27,6 +29,8 @@ namespace localhostUI.Backend
 
             // Read all brief events
             eventsBrief = LoadEvents("select from events_brief");
+            lastLoadTimeBrief = DateTime.UtcNow;
+            initialLoadDone = true;
         }
 
         public void LoadEventsFull()
@@ -35,6 +39,8 @@ namespace localhostUI.Backend
 
             // Read all full events
             eventsFull = LoadEvents("select from events_full");
+            lastLoadTimeFull = DateTime.UtcNow;
+            initialLoadDone = true;
         }
 
         private List<DataList> LoadEvents(string command)

@@ -42,12 +42,15 @@ namespace localhostUI.Classes.UserInformationClasses
         }
         public UserData(DataList dataList)
         {
-            object username = dataList.Get("username");
-            object address = dataList.Get("address");
-            object latitude = dataList.Get("latitude");
-            object longitude = dataList.Get("longitude");
             try
             {
+                if (dataList == null) throw new ArgumentNullException();
+
+                object username = dataList.Get("username");
+                object address = dataList.Get("address");
+                object latitude = dataList.Get("latitude");
+                object longitude = dataList.Get("longitude");
+
                 if (username != null && address != null)
                 {
                     this.Username = (string)username;
