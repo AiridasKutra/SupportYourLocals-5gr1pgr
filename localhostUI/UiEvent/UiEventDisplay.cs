@@ -75,7 +75,7 @@ namespace localhostUI.UiEvent
 
             // Distance
             UserData user = Program.UserDataManager.GetData();
-            double distance = MathSupplement.Distance(@event.Latitude, @event.Longitude, user.Latitude, user.Longitude);
+            double distance = LocationInformation.Distance(@event.Latitude, @event.Longitude, user.Latitude, user.Longitude);
             if (distance < 1000.0)
             {
                 distanceLabel.Text = $"{distance:0}m";

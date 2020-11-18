@@ -65,7 +65,7 @@ namespace localhostUI
             bool isAddressAdded = !(user.Address == "" || user.Address == null || (user.Latitude == 0 && user.Longitude == 0));
             foreach (var evBrief in events)
             {
-                distances.Add(MathSupplement.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
+                distances.Add(LocationInformation.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
             }
 
             if (options.Keywords.Count > 0)
