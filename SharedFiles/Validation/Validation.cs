@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,6 +10,25 @@ namespace SharedFiles.Validation
     {
         public bool isValid;
         public string message;
+    }
+
+
+    class Hasher
+    {
+        public static string Hash(string inputString)
+        {
+            using (HashAlgorithm algorithm = SHA256.Create())
+            {
+                byte[] buffer = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in buffer)
+                {
+                    sb.Append(b.ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
     }
 
     class Validator
@@ -89,6 +109,27 @@ namespace SharedFiles.Validation
                 isValid = true,
                 message = "Password is great!"
             };
+        }
+
+        public static ValidationResults ValidateEmail(String email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return new ValidationResults
+                {
+                    isValid = addr.Address == email,
+                    message = (addr.Address == email) ? "Email is great!" : "Email does not exist"
+                };
+            }
+            catch
+            {
+                return new ValidationResults
+                {
+                    isValid = false,
+                    message = "Invalid input"
+                };
+            }
         }
     }
 }
