@@ -74,41 +74,26 @@ namespace localhostUI
             if (!CheckForInternetConnection())
             {
                 Application.Run(new noInternetMain());
-                
-            }
-            else if (!ConnectToDb(ip, port))
-            {
-                Application.Run(new NoDatabaseMain());
-                if (ContinueOffline)
-                {
-
-                    Application.Run(new UiMain());
-                }
             }
             else
             {
+                ConnectionEstablished = true;
+            }
+
+            if (!ConnectToDb(ip, port))
+            {
+                Application.Run(new NoDatabaseMain());
+            }
+            else
+            {
+                ContinueOffline = true;
+            }
+
+            if (ConnectionEstablished && ConnectionEstablished)
+            {
                 Application.Run(new UiMain());
             }
-            // Check if connection to database exists
-
-            /*else
-            {
-
-                if (UserDataManager.UserData == null) 
-                {
-                    Application.Run(new UserInfoInputForm());
-                    if (UserInfoNaturallyClosed)
-                    {
-                        Application.Run(new UiMain());
-                    }
-                }
-                else
-                {
-                    Application.Run(new UiMain());
-                }
-            }*/
-
-
+            
             Client.Disconnect();
             DataPool.SaveDrafts();
         }

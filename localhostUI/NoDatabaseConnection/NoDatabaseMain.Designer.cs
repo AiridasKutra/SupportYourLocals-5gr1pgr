@@ -67,7 +67,7 @@
             this.continueOffline.TabIndex = 2;
             this.continueOffline.Text = "Refresh";
             this.continueOffline.UseVisualStyleBackColor = true;
-            this.continueOffline.Click += new System.EventHandler(this.refresh);
+            this.continueOffline.Click += new System.EventHandler(this.Refresh);
             // 
             // mainPanel
             // 
