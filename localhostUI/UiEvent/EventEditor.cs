@@ -35,8 +35,8 @@ namespace localhostUI.UiEvent
             this.finishButton.Text = "Create";
             this.finishButton.Click += CreateEvent;
 
-            deleteEventButton.Visible = false;
-            saveDraftButton.Visible = true;
+            this.deleteordraftEventButton.Text = "Save as draft";
+            this.deleteordraftEventButton.Click += SaveDraft;
         }
 
         public EventEditor(UiMain origin, EventFull @event, bool draft = false)
@@ -57,15 +57,19 @@ namespace localhostUI.UiEvent
             {
                 finishButton.Text = "Create";
                 this.finishButton.Click += CreateEvent;
-                deleteEventButton.Visible = false;
-                saveDraftButton.Visible = true;
+                /*deleteEventButton.Visible = false;
+                saveDraftButton.Visible = true;*/
+                deleteordraftEventButton.Text = "Save as draft";
+                deleteordraftEventButton.Click += SaveDraft;
             }
             else
             {
                 finishButton.Text = "Save";
                 this.finishButton.Click += EditEvent;
-                deleteEventButton.Visible = true;
-                saveDraftButton.Visible = false;
+                /*deleteEventButton.Visible = true;
+                saveDraftButton.Visible = false;*/
+                deleteordraftEventButton.Text = "Delete";
+                deleteordraftEventButton.Click += DeleteEvent;
             }
         }
 
