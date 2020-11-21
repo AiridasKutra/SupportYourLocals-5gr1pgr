@@ -51,7 +51,7 @@ namespace localhostUI
 
             RefreshSportsTable();
             SetUpCurrentEventsTab();
-            Program.DataPool.LoadDrafts();
+            Program.DraftManager.LoadDrafts();
         }
 
 
@@ -145,7 +145,7 @@ namespace localhostUI
                 addressResultLabel.Text = "Address has been accepted.";
                 addressResultLabel.ForeColor = Color.Black;
                 userAdressBox.Text = Program.UserDataManager.UserData.Address;
-                Program.UserDataManager.SaveToDataPool();
+                Program.UserDataManager.Save();
             }
             else
             {
@@ -172,7 +172,7 @@ namespace localhostUI
                 else
                 {
                     Program.UserDataManager.UserData.Username = usernameBox.Text;
-                    Program.UserDataManager.SaveToDataPool();
+                    Program.UserDataManager.Save();
                     usernameChangeResultLabel.Text = "Username changed successfully";
                     usernameChangeResultLabel.ForeColor = Color.Black;
                 }

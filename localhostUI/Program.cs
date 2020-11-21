@@ -23,14 +23,14 @@ namespace localhostUI
             }
         }
 
-        private static readonly DataPool dataPool = new DataPool();
-        public static DataPool DataPool
-        {
-            get
-            {
-                return dataPool;
-            }
-        }
+        //private static readonly DataPool dataPool = new DataPool();
+        //public static DataPool DataPool
+        //{
+        //    get
+        //    {
+        //        return dataPool;
+        //    }
+        //}
 
         private static readonly DataManager dataManager = new DataManager();
         public static DataManager DataManager
@@ -38,6 +38,15 @@ namespace localhostUI
             get
             {
                 return dataManager;
+            }
+        }
+
+        public static readonly EventDraftManager draftManager = new EventDraftManager();
+        public static EventDraftManager DraftManager
+        {
+            get
+            {
+                return draftManager;
             }
         }
 
@@ -105,7 +114,7 @@ namespace localhostUI
             }
 
             Client.Disconnect();
-            DataPool.SaveDrafts();
+            DraftManager.SaveDrafts();
         }
 
         

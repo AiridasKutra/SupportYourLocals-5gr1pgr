@@ -156,5 +156,10 @@ namespace Common.Formatting
 
             return decodedList;
         }
+
+        internal static List<object> DecodeList(string userJson)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
