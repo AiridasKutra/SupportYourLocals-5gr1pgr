@@ -16,5 +16,14 @@ namespace localhostUI.NoInternetConnection
         {
             InitializeComponent();
         }
+
+        private void Refresh(object sender, EventArgs e)
+        {
+            if (Program.CheckForInternetConnection())
+            {
+                Program.ConnectionEstablished = true;
+                Close();
+            }
+        }
     }
 }

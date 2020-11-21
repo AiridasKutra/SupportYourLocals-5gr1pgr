@@ -15,10 +15,13 @@ namespace localhostUI.NoDatabaseConnection
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void refresh(object sender, EventArgs e)
         {
-            Program.ContinueOffline = true;
-            Close();
+            if(Program.ConnectToDb("193.219.91.103", 2776))
+            {
+                Program.ContinueOffline = true;
+                Close();
+            }
         }
     }
 }

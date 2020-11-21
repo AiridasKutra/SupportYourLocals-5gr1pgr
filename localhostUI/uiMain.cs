@@ -1,14 +1,10 @@
-﻿using System;
-using System.Device.Location;
-using System.Windows.Forms;
-using localhostUI.Classes;
-using localhostUI.EventClasses;
+﻿using localhostUI.Classes;
 using localhostUI.Classes.LocationClasses;
-using localhostUI.Backend;
-using localhostUI.Classes.UserInformationClasses;
-using System.Drawing;
-using GoogleMaps.LocationServices;
+using System;
 using System.Collections.Generic;
+using System.Device.Location;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace localhostUI
 {
@@ -22,7 +18,7 @@ namespace localhostUI
             {
                 return sportTypes.SportList;
             }
-        } 
+        }
 
         public UiMain()
         {
@@ -96,17 +92,17 @@ namespace localhostUI
             {
                 LocationInformation.OpenAdressInBrowser(userAdressBox.Text);
             }
-            catch(FormatException ex)
+            catch (FormatException ex)
             {
                 MessageBox.Show("Your adress contains characters which are not allowed.\nUnallowed characters: ! * ' ( ) ; : @ & = + $ / ? % # [ ]", "Illegal characters found.",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Console.WriteLine(ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("We were unable to open this address in the browser.", "Something went wrong.",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
+            }
         }
 
         private void menuTabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,13 +123,13 @@ namespace localhostUI
 
         private void ChangeUserAddress(object sender, EventArgs e)
         {
-            if(userAdressBox.Text == "" || userAdressBox.Text == null)
+            if (userAdressBox.Text == "" || userAdressBox.Text == null)
             {
                 Program.UserDataManager.UserData.Address = "";
                 addressResultLabel.Text = "Your address information has been deleted.";
                 return;
-            } 
-            if(userAdressBox.Text == Program.UserDataManager.UserData.Address)
+            }
+            if (userAdressBox.Text == Program.UserDataManager.UserData.Address)
             {
                 addressResultLabel.Text = "This is already your address.";
                 addressResultLabel.ForeColor = Color.Black;
@@ -158,7 +154,7 @@ namespace localhostUI
         {
             try
             {
-                if(usernameBox.Text == Program.UserDataManager.UserData.Username)
+                if (usernameBox.Text == Program.UserDataManager.UserData.Username)
                 {
                     usernameChangeResultLabel.Text = "This is already your username";
                     return;
