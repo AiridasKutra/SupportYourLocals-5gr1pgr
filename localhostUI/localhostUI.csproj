@@ -54,6 +54,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="UiEvent\EventEditorPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UiEvent\UiEventDisplayPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
