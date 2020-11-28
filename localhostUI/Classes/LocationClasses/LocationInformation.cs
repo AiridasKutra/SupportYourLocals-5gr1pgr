@@ -5,16 +5,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
-//EXTENTION METHOD, OPTIONAL ARGUMENT USAGE
 namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
         private static readonly string apiKey = ApiKeys.GoogleApiKey;
-
-        //MapPoint location = address.LatLongFromString();
-        //OPTIONAL ARGUMENT USAGE
+        private static GoogleLocationService locationService = new GoogleLocationService(apiKey);
         public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
         {
             AddressData addressObject = new AddressData
@@ -24,12 +20,8 @@ namespace localhostUI.Classes.LocationClasses
                 Country = country
             };
 
-            var locationService = new GoogleLocationService(apiKey);
             return locationService.GetLatLongFromAddress(addressObject);
         }
-
-
-        //MapPoint location = LocationInformation.LatLongFromString(address);
         public static MapPoint LatLongFromAddress(string address, string country = "Lithuania")
         {
             AddressData addressObject = new AddressData
@@ -39,44 +31,38 @@ namespace localhostUI.Classes.LocationClasses
                 Country = country
             };
 
-            var locationService = new GoogleLocationService(apiKey);
             return locationService.GetLatLongFromAddress(addressObject);
         }
-
-
         public static AddressData AddressFromLatLong(double latitude, double longitude)
         {
-            var locationService = new GoogleLocationService(apiKey);
             return locationService.GetAddressFromLatLang(latitude, longitude);
         }
-
+        public static string CityFromCoordinates(double latitude, double longitude)
+        {
+            AddressData addressData = locationService.GetAddressFromLatLang(latitude, longitude);
+            var city = addressData.City;
+            return city;
+        }
         public static AddressData AddressFromLatLong(MapPoint latLong)
         {
-            var locationService = new GoogleLocationService(apiKey);
-
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
         }
         public static AddressData AddressFromMapPoint(this MapPoint latLong)
         {
+<<<<<<< Updated upstream
+=======
             var locationService = new GoogleLocationService(apiKey);
-    
+   
+>>>>>>> Stashed changes
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
         }
-        
-
-
         public static string FormatAddress(string address)
         {
-            var locationService = new GoogleLocationService(apiKey);
             var addressData = locationService.GetAddressesListFromAddress(address);
             return addressData[0];
         }
-
-
-        //EXTENTION METHOD
         public static string FormatAddressString(this string address)
         {
-            var locationService = new GoogleLocationService(apiKey);
             var addressData = locationService.GetAddressesListFromAddress(address);
             return addressData[0];
         }
@@ -130,8 +116,9 @@ namespace localhostUI.Classes.LocationClasses
                 }
             }
         }
+<<<<<<< Updated upstream
+=======
 
-        
         //Returned values are in meters
         public static double Distance(MapPoint user, MapPoint destination)
         {
@@ -161,11 +148,12 @@ namespace localhostUI.Classes.LocationClasses
         }
         
         
+>>>>>>> Stashed changes
         public static bool IsValidAddress(string address)
         {
             try
             {
-                MapPoint location = LocationInformation.LatLongFromAddress(address);
+                MapPoint location = LatLongFromAddress(address);
                 if (location == null) return false;
                 location.ToString();
             }
