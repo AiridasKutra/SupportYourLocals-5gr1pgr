@@ -12,6 +12,7 @@ namespace localhostUI.Classes.EventClasses
         public int Id { get; private set; }
 
         private string name;
+        private int author;
         private List<string> sports;
         private List<Team> teams;
         private double latitude;
@@ -20,15 +21,18 @@ namespace localhostUI.Classes.EventClasses
         private DateTime endDate;
         private decimal price;
         private string thumbnail; // Links to images (first one always the thumbnail)
+        private bool visible;
         private List<string> tags;
 
         public string Name { get { return name; } set { name = value; } }
+        public int Author { get { return author; } set { author = value; } }
         public double Latitude { get { return latitude; } set { latitude = value; } }
         public double Longitude { get { return longitude; } set { longitude = value; } }
         public DateTime StartDate { get { return startDate; } set { startDate = value; } }
         public DateTime EndDate { get { return endDate; } set { endDate = value; } }
         public decimal Price { get { return price; } set { price = value; } }
         public string Thumbnail { get { return thumbnail; } set { thumbnail = value; } }
+        public bool Visible { get { return visible; } set { visible = value; } }
         public List<string> GetSports()
         {
             return sports;
@@ -94,6 +98,11 @@ namespace localhostUI.Classes.EventClasses
                 {
                     name = (string)nameObj;
                 }
+                object authorObj = data.Get("author");
+                if (authorObj != null)
+                {
+                    Author = (int)authorObj;
+                }
                 object coordinatesObj = data.Get("coordinates");
                 if (coordinatesObj != null)
                 {
@@ -123,6 +132,11 @@ namespace localhostUI.Classes.EventClasses
                 if (priceObj != null)
                 {
                     price = (decimal)priceObj;
+                }
+                object visibleObj = data.Get("visible");
+                if (visibleObj != null)
+                {
+                    Visible = (bool)visibleObj;
                 }
 
                 // Complex conversions
@@ -184,9 +198,11 @@ namespace localhostUI.Classes.EventClasses
 
             // Simple
             data.Add(ev.name, "name");
+            data.Add(ev.Author, "author");
             data.Add(ev.startDate.ToString("O"), "start_date");
             data.Add(ev.endDate.ToString("O"), "end_date");
             data.Add(ev.price, "price");
+            data.Add(ev.visible, "visible");
 
             // Complex
             DataList sportsDl = new DataList();
