@@ -4,20 +4,27 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Linq;
 
 namespace Common.Network
 {
     class TCPServer
     {
-        class Client
+        public class Client
         {
             public Socket sock;
             public uint id;
+            public int accountId;
+            public ulong vfid;
+
+            public Client() { }
 
             public Client(Socket sock)
             {
                 this.sock = sock;
                 id = GenerateId();
+                accountId = -1;
+                vfid = 0;
             }
 
             // Code for uniquely generating ids
@@ -40,14 +47,18 @@ namespace Common.Network
         private List<Client> clients;
         private List<Thread> clientThreads;
         private Queue<Packet> incomingPackets;
+        private Queue<Packet> outgoingPackets;
 
         //private Socket listenerSocket;
         private TcpListener listener;
         private Thread listenerThread;
 
         // Mutexes
-        Mutex mCon;
-        Mutex mPak;
+        private Mutex mCon;
+        private Mutex mPak;
+
+        // Random number generator for id's
+        private Random vfidGen;
 
         public TCPServer(ushort port, int maxClients = 64)
         {
@@ -58,9 +69,52 @@ namespace Common.Network
             clients = new List<Client>();
             clientThreads = new List<Thread>();
             incomingPackets = new Queue<Packet>();
+            outgoingPackets = new Queue<Packet>();
 
             mCon = new Mutex();
             mPak = new Mutex();
+
+            vfidGen = new Random(DateTime.Now.Ticks.GetHashCode());
+        }
+
+        private ulong RandomUlong()
+        {
+            byte[] bytes = new byte[8];
+            vfidGen.NextBytes(bytes);
+            return BitConverter.ToUInt64(bytes);
+        }
+
+        public ulong GenerateVfid()
+        {
+            int attempt = 0;
+            do
+            {
+                ulong vfid = RandomUlong();
+                if (vfid == 0) continue;
+
+                if (clients.FindIndex(c => c.vfid == vfid) == -1)
+                {
+                    return vfid;
+                }
+            }
+            while (++attempt < 10);
+            return 0;
+        }
+
+        public ulong GenerateVfid(uint id)
+        {
+            lock (mCon)
+            {
+                foreach (var client in clients)
+                {
+                    if (client.id == id)
+                    {
+                        client.vfid = GenerateVfid();
+                        return client.vfid;
+                    }
+                }
+                return 0;
+            }
         }
 
         public bool Start()
@@ -177,6 +231,41 @@ namespace Common.Network
             return false;
         }
 
+        public void AddToSendQueue(Packet packet)
+        {
+            outgoingPackets.Enqueue(packet);
+        }
+
+        public bool SendQueue()
+        {
+            if (outgoingPackets.Count == 0) return false;
+
+            uint clientId = outgoingPackets.Peek().SenderId;
+            if (!Send(new Packet
+            {
+                PacketId = (uint)PacketType.MULTIPLE_PACKETS,
+                SenderId = clientId,
+                Data = BitConverter.GetBytes((uint)outgoingPackets.Count)
+            }))
+            {
+                outgoingPackets.Clear();
+                return false;
+            }
+
+            foreach (var packet in outgoingPackets)
+            {
+                packet.SenderId = clientId;
+                if (!Send(packet))
+                {
+                    outgoingPackets.Clear();
+                    return false;
+                }
+            }
+
+            outgoingPackets.Clear();
+            return true;
+        }
+
         public int PacketCount()
         {
             lock (mPak)
@@ -198,6 +287,18 @@ namespace Common.Network
             return clients.Count;
         }
 
+        public List<Client> GetClients()
+        {
+            lock (mCon)
+            {
+                return clients.Select(item => new Client()
+                {
+                    id = item.id,
+                    vfid = item.vfid
+                }).ToList();
+            }
+        }
+
         public uint[] GetClientIds()
         {
             lock (mCon)
@@ -208,6 +309,49 @@ namespace Common.Network
                     ids[i] = clients[i].id;
                 }
                 return ids;
+            }
+        }
+
+        public ulong[] GetClientVfids()
+        {
+            lock (mCon)
+            {
+                ulong[] vfids = new ulong[ClientCount()];
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    vfids[i] = clients[i].vfid;
+                }
+                return vfids;
+            }
+        }
+
+        public void LinkAccount(uint clientId, int accountId)
+        {
+            lock (mCon)
+            {
+                foreach (var client in clients)
+                {
+                    if (client.id == clientId)
+                    {
+                        client.accountId = accountId;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public void UnlinkAccount(uint clientId)
+        {
+            lock (mCon)
+            {
+                foreach (var client in clients)
+                {
+                    if (client.id == clientId)
+                    {
+                        client.accountId = -1;
+                        return;
+                    }
+                }
             }
         }
 

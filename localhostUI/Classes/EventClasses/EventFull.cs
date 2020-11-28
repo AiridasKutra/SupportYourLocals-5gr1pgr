@@ -1,4 +1,5 @@
 ﻿using Common;
+using localhostUI.Classes.LocationClasses;
 using localhostUI.EventClasses;
 using System;
 using System.Collections.Generic;
@@ -13,27 +14,31 @@ namespace localhostUI.Classes.EventClasses
         public int Id { get; private set; }
 
         private string name;
+        private int author;
         private List<string> sports;
         private List<Team> teams;
         private double latitude;
         private double longitude;
-        private string address;
+        private AddressInfo address;
         private DateTime startDate;
         private DateTime endDate;
         private decimal price;
         private string description;
+        private bool visible;
         private List<string> links;
         private List<string> images; // Links to images (first one always the thumbnail)
         private List<string> tags;
 
         public string Name { get { return name; } set { name = value; } }
+        public int Author { get { return author; } set { author = value; } }
         public double Latitude { get { return latitude; } set { latitude = value; } }
         public double Longitude { get { return longitude; } set { longitude = value; } }
-        public string Address { get { return address; } set { address = value; } }
+        public AddressInfo Address { get { return address; } set { address = value; } }
         public DateTime StartDate { get { return startDate; } set { startDate = value; } }
         public DateTime EndDate { get { return endDate; } set { endDate = value; } }
         public decimal Price { get { return price; } set { price = value; } }
         public string Description { get { return description; } set { description = value; } }
+        public bool Visible { get { return visible; } set { visible = value; } }
         public List<string> GetSports()
         {
             return sports;
@@ -88,7 +93,7 @@ namespace localhostUI.Classes.EventClasses
             name = "";
             latitude = 0.0;
             longitude = 0.0;
-            address = "";
+            address = new AddressInfo();
             startDate = new DateTime(0L);
             endDate = new DateTime(0L);
             price = 0;
@@ -120,6 +125,11 @@ namespace localhostUI.Classes.EventClasses
                 {
                     name = (string)nameObj;
                 }
+                object authorObj = data.Get("author");
+                if (authorObj != null)
+                {
+                    Author = (int)authorObj;
+                }
                 object coordinatesObj = data.Get("coordinates");
                 if (coordinatesObj != null)
                 {
@@ -131,7 +141,7 @@ namespace localhostUI.Classes.EventClasses
                 object addressObj = data.Get("address");
                 if (addressObj != null)
                 {
-                    address = (string)addressObj;
+                    address = AddressInfo.FromString((string)addressObj);
                 }
                 try
                 {
@@ -159,6 +169,11 @@ namespace localhostUI.Classes.EventClasses
                 if (descriptionObj != null)
                 {
                     description = (string)descriptionObj;
+                }
+                object visibleObj = data.Get("visible");
+                if (visibleObj != null)
+                {
+                    Visible = (bool)visibleObj;
                 }
 
                 // Complex conversions
@@ -227,11 +242,13 @@ namespace localhostUI.Classes.EventClasses
 
             // Simple
             data.Add(ev.name, "name");
-            data.Add(ev.address, "address");
+            data.Add(ev.Author, "author");
+            data.Add(ev.address.ToString(), "address");
             data.Add(ev.startDate.ToString("O"), "start_date");
             data.Add(ev.endDate.ToString("O"), "end_date");
             data.Add(ev.price, "price");
             data.Add(ev.description, "description");
+            data.Add(ev.visible, "visible");
 
             // Complex
             DataList sportsDl = new DataList();

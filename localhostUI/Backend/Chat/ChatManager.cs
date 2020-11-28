@@ -1,7 +1,10 @@
-﻿using Common.Network;
+﻿using Common;
+using Common.Formatting;
+using Common.Network;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading;
@@ -18,14 +21,14 @@ namespace localhostUI.Backend
         private Thread receiverThread;
         private bool connected;
 
-        private List<string> messages;
+        private List<Message> messages;
         private int currentHeight;
         private int currentMessage;
 
         public ChatManager()
         {
             client = new TCPClient();
-            messages = new List<string>();
+            messages = new List<Message>();
             currentHeight = 0;
             currentMessage = 0;
             connected = false;
@@ -53,7 +56,7 @@ namespace localhostUI.Backend
             return connected;
         }
 
-        public void SendMessage(string message)
+        public void SendMessage(Message message)
         {
             Program.Client.SendMessage(message, eventId);
         }
@@ -65,7 +68,7 @@ namespace localhostUI.Backend
                 string ip = "193.219.91.103";
                 //string ip = "doesntexist";
                 //string ip = "127.0.0.1";
-                ushort port = 2776;
+                ushort port = 7099;
                 //ushort port = 54000;
 
                 if (client.Connect(ip, port))
@@ -115,8 +118,8 @@ namespace localhostUI.Backend
                 {
                     Packet message = client.GetPacket();
                     string msgString = Encoding.ASCII.GetString(message.Data);
-                    messages.Add(msgString);
-                    Console.WriteLine(msgString);
+                    messages.Add(new Message(DataList.FromList(Json.ToList(msgString))));
+                    Console.WriteLine(messages.Last().Content);
                 }
 
                 // Populate the chat window
@@ -135,11 +138,11 @@ namespace localhostUI.Backend
                         Packet packetMessage = client.GetPacket();
                         Packet packetEventId = client.GetPacket();
 
+                        Message message = new Message(DataList.FromList(Json.ToList(Encoding.ASCII.GetString(packetMessage.Data))));
                         string eventId = Encoding.ASCII.GetString(packetEventId.Data);
                         if (this.eventId.ToString() == eventId)
                         {
-                            string message = Encoding.ASCII.GetString(packetMessage.Data);
-                            Console.WriteLine(message);
+                            Console.WriteLine(message.Content);
                             AddMessage(message);
                         }
                     }
@@ -153,16 +156,18 @@ namespace localhostUI.Backend
             }
         }
 
-        private void AddMessage(string message)
+        private void AddMessage(Message message)
         {
+            string messageText = $"{message.Content}";
+
             Label msgLabel = new Label();
             msgLabel.AutoSize = false;
             msgLabel.Width = chat.Width - SystemInformation.VerticalScrollBarWidth - 2;
 
             // Calculate height of label
-            SizeF size = TextRenderer.MeasureText(message, msgLabel.Font, new Size(msgLabel.Width, 0), TextFormatFlags.WordBreak);
+            SizeF size = TextRenderer.MeasureText(messageText, msgLabel.Font, new Size(msgLabel.Width, 0), TextFormatFlags.WordBreak);
             msgLabel.Height = (int)Math.Ceiling(size.Height);
-            msgLabel.Text = message;
+            msgLabel.Text = messageText;
 
             // Calculate label position
             msgLabel.Location = new Point(0, currentHeight - chat.VerticalScroll.Value);

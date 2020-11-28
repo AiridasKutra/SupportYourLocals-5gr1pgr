@@ -15,8 +15,6 @@ namespace localhostUI
 {
     public partial class UiMain
     {
-        private List<DataList> drafts = Program.DataPool.eventsDraft;
-
         private void SaveDraftFile(object sender, EventArgs e)
         {   
             AddDraftFileToList();
@@ -89,11 +87,11 @@ namespace localhostUI
                 eventName.Click += (sender, e) =>
                 {
                     // Get full event data from database
-                    DataList eventData = new DataList();
-                    Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
+                    List<EventFull> eventData = Program.Client.SelectEventsFull(@event.Id);
+                    //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        new EventEditor(this, new EventFull((DataList)eventData.items[0])).Show();
+                        new EventEditor(this, eventData[0]).Show();
                     }
                     catch (InvalidCastException)
                     {
@@ -119,12 +117,8 @@ namespace localhostUI
             emanagerDraftsPanel.Controls.Clear();
 
             // Get all events
-            Program.DataPool.LoadDrafts();
-            List<EventFull> drafts = new List<EventFull>();
-            foreach (var draft in Program.DataPool.eventsDraft)
-            {
-                drafts.Add(new EventFull(draft));
-            }
+            Program.DraftManager.LoadDrafts();
+            List<EventFull> drafts = Program.DraftManager.GetEvents();
 
             // Add drafts to display
             int counter = 0;
@@ -153,17 +147,20 @@ namespace localhostUI
                 removeButton.FlatAppearance.BorderSize = 0;
                 removeButton.Location = new Point(265, 0);
                 removeButton.Size = new Size(35, 35);
+
+                int draftId = draft.Id;
                 removeButton.Click += (sender, e) =>
                 {
                     try
                     {
-                        for (int i = 0; i < Program.DataPool.eventsDraft.Count; i++)
+                        List<EventFull> draftList = Program.DraftManager.GetEvents();
+                        foreach (var @draft in draftList)
                         {
-                            if ((int)Program.DataPool.eventsDraft[i].Get("id") == draft.Id)
+                            if (@draft.Id == draftId)
                             {
-                                Program.DataPool.eventsDraft.RemoveAt(i);
-                                Program.DataPool.SaveDrafts();
-                                Program.DataPool.LoadDrafts();
+                                draftList.Remove(@draft);
+                                Program.DraftManager.SaveDrafts();
+                                Program.DraftManager.LoadDrafts();
                                 LoadDrafts();
                                 break;
                             }

@@ -19,6 +19,7 @@
     <Compile Include="..\SharedFiles\Network\Packet.cs" Link="ServerSideLinks\Packet.cs" />
     <Compile Include="..\SharedFiles\Network\PacketEnum.cs" Link="ServerSideLinks\PacketEnum.cs" />
     <Compile Include="..\SharedFiles\Network\TCPClient.cs" Link="ServerSideLinks\TCPClient.cs" />
+    <Compile Include="..\SharedFiles\Validation\Validation.cs" Link="ServerSideLinks\Validation.cs" />
   </ItemGroup>
 
   <ItemGroup>

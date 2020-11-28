@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using Common;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Database.TableClasses;
 
 namespace Database
 {
@@ -11,11 +14,13 @@ namespace Database
     {
         private DataList data;
         private Mutex dbLock;
+        public MainDbContext context;
 
-        public Database(string filename)
+        public Database(MainDbContext context)
         {
             data = new DataList();
             dbLock = new Mutex();
+            this.context = context;
 
             //Save(new JsonFileWriter("data1.json"));
             Load(new JsonFileReader("data1.json"));
@@ -393,6 +398,144 @@ namespace Database
             {
                 ((DataList)table.items[rowIndex]).Add(item);
             }
+        }
+
+
+
+
+
+        // Event CRUD
+        public List<Event> QSelectEvents(int id)
+        {
+            if (id == -1)
+            {
+                return context.Events.ToList();
+            }
+            else
+            {
+                return new List<Event>() { context.Events.FirstOrDefault(item => item.Id == id) };
+            }
+        }
+
+        public void QCreateEvent(Event @event)
+        {
+            context.Events.Add(@event);
+        }
+
+        public void QDeleteEvent(int id)
+        {
+            context.Events.RemoveRange(from @event in context.Events
+                                       where @event.Id == id
+                                       select @event);
+        }
+
+        public void QEditEvent(int id, Event @event)
+        {
+            var ev = context.Events.FirstOrDefault(item => item.Id == id);
+            @event.Id = ev.Id;
+            ev = @event;
+        }
+
+        // Account CRUD
+        public List<Account> QSelectAccounts(int id)
+        {
+            if (id == -1)
+            {
+                return context.Accounts.ToList();
+            }
+            else
+            {
+                return new List<Account>() { context.Accounts.FirstOrDefault(item => item.Id == id) };
+            }
+        }
+
+        public void QCreateAccount(Account account)
+        {
+            context.Accounts.Add(account);
+        }
+
+        public void QDeleteAccount(int id)
+        {
+            context.Accounts.RemoveRange(from account in context.Accounts
+                                         where account.Id == id
+                                         select account);
+        }
+
+        public void QEditAccount(int id, Account account)
+        {
+            var ev = context.Accounts.FirstOrDefault(item => item.Id == id);
+            account.Id = ev.Id;
+            ev = account;
+        }
+
+        // Report CRUD
+        public List<Report> QSelectReports(int id)
+        {
+            if (id == -1)
+            {
+                return context.Reports.ToList();
+            }
+            else
+            {
+                return new List<Report>() { context.Reports.FirstOrDefault(item => item.Id == id) };
+            }
+        }
+
+        public void QCreateReport(Report report)
+        {
+            context.Reports.Add(report);
+        }
+
+        public void QDeleteReport(int id)
+        {
+            context.Reports.RemoveRange(from report in context.Reports
+                                        where report.Id == id
+                                        select report);
+        }
+
+        public void QEditReport(int id, Report report)
+        {
+            var ev = context.Reports.FirstOrDefault(item => item.Id == id);
+            report.Id = ev.Id;
+            ev = report;
+        }
+
+        // Sport CRUD
+        public List<Sport> QSelectSports(int id)
+        {
+            if (id == -1)
+            {
+                return context.Sports.ToList();
+            }
+            else
+            {
+                return new List<Sport>() { context.Sports.FirstOrDefault(item => item.Id == id) };
+            }
+        }
+
+        public void QCreateSport(Sport sport)
+        {
+            context.Sports.Add(sport);
+        }
+
+        public void QDeleteSport(int id)
+        {
+            context.Sports.RemoveRange(from sport in context.Sports
+                                       where sport.Id == id
+                                       select sport);
+        }
+
+        public void QEditSport(int id, Sport sport)
+        {
+            var ev = context.Sports.FirstOrDefault(item => item.Id == id);
+            sport.Id = ev.Id;
+            ev = sport;
+        }
+
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
 
         public void Save(IDataWriter writer)
