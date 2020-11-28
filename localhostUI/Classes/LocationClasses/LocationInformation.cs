@@ -5,13 +5,15 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+
+//EXTENTION METHOD, OPTIONAL ARGUMENT USAGE
 namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
     {
         private static readonly string apiKey = ApiKeys.GoogleApiKey;
         private static GoogleLocationService locationService = new GoogleLocationService(apiKey);
-        public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
+        public static MapPoint LatLongFromString(this string address, string country = "Lithuania")
         {
             AddressData addressObject = new AddressData
             {
@@ -49,11 +51,6 @@ namespace localhostUI.Classes.LocationClasses
         }
         public static AddressData AddressFromMapPoint(this MapPoint latLong)
         {
-<<<<<<< Updated upstream
-=======
-            var locationService = new GoogleLocationService(apiKey);
-   
->>>>>>> Stashed changes
             return locationService.GetAddressFromLatLang(latLong.Latitude, latLong.Longitude);
         }
         public static string FormatAddress(string address)
@@ -65,6 +62,19 @@ namespace localhostUI.Classes.LocationClasses
         {
             var addressData = locationService.GetAddressesListFromAddress(address);
             return addressData[0];
+        }
+        public static AddressInfo FormatAddressInfo(this string address)
+        {
+            var point = locationService.GetLatLongFromAddress(address);
+            var addressData = locationService.GetAddressFromLatLang(point.Latitude, point.Longitude);
+            return new AddressInfo
+            {
+                Address = addressData.Address,
+                City = addressData.City,
+                State = addressData.State,
+                Zip = addressData.Zip,
+                Country = addressData.Country
+            };
         }
         public static void OpenAdressInBrowser(string address)
         {
@@ -116,39 +126,6 @@ namespace localhostUI.Classes.LocationClasses
                 }
             }
         }
-<<<<<<< Updated upstream
-=======
-
-        //Returned values are in meters
-        public static double Distance(MapPoint user, MapPoint destination)
-        {
-            return Distance(user.Latitude, user.Longitude, destination.Latitude, destination.Longitude);
-        }
-        public static double Distance(double userLatitude, double userLongitude, double destinationLatitude, double destinationLongitude)
-        {
-            try
-            {
-                double resultLatitude = MathSupplement.DegreesToRadians(destinationLatitude - userLatitude);
-                double resultLongitude = MathSupplement.DegreesToRadians(destinationLongitude - userLongitude);
-
-                userLatitude = MathSupplement.DegreesToRadians(userLatitude);
-                destinationLatitude = MathSupplement.DegreesToRadians(destinationLatitude);
-
-                double coordinateDestination = Math.Pow(Math.Sin(resultLatitude / 2), 2) +
-                                            Math.Pow(Math.Sin(resultLongitude / 2), 2) * Math.Cos(userLatitude) * Math.Cos(destinationLatitude);
-                double tangededDestination = 2 * Math.Atan2(Math.Sqrt(coordinateDestination), Math.Sqrt(1 - coordinateDestination));
-
-                return MathSupplement.EarthRadius * tangededDestination * 1000;
-            }
-            catch (Exception ex)
-            {
-                return -1;
-            }
-
-        }
-        
-        
->>>>>>> Stashed changes
         public static bool IsValidAddress(string address)
         {
             try

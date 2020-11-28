@@ -35,8 +35,8 @@ namespace localhostUI.UiEvent
             this.finishButton.Text = "Create";
             this.finishButton.Click += CreateEvent;
 
-            deleteEventButton.Visible = false;
-            saveDraftButton.Visible = true;
+            this.deleteordraftEventButton.Text = "Save as draft";
+            this.deleteordraftEventButton.Click += SaveDraft;
         }
 
         public EventEditor(UiMain origin, EventFull @event, bool draft = false)
@@ -57,15 +57,19 @@ namespace localhostUI.UiEvent
             {
                 finishButton.Text = "Create";
                 this.finishButton.Click += CreateEvent;
-                deleteEventButton.Visible = false;
-                saveDraftButton.Visible = true;
+                /*deleteEventButton.Visible = false;
+                saveDraftButton.Visible = true;*/
+                deleteordraftEventButton.Text = "Save as draft";
+                deleteordraftEventButton.Click += SaveDraft;
             }
             else
             {
                 finishButton.Text = "Save";
                 this.finishButton.Click += EditEvent;
-                deleteEventButton.Visible = true;
-                saveDraftButton.Visible = false;
+                /*deleteEventButton.Visible = true;
+                saveDraftButton.Visible = false;*/
+                deleteordraftEventButton.Text = "Delete";
+                deleteordraftEventButton.Click += DeleteEvent;
             }
         }
 
@@ -74,7 +78,7 @@ namespace localhostUI.UiEvent
 
             this.eventNameBox.Text = this.@event.Name;
             this.priceBox.Value = this.@event.Price;
-            this.addressBox.Text = this.@event.Address;
+            this.addressBox.Text = this.@event.Address.ToStringNormal();
             this.descriptionBox.Text = this.@event.Description;
             try
             {
@@ -178,13 +182,13 @@ namespace localhostUI.UiEvent
                 finishResultLabel.Text = "You cannot remove the name.";
                 return;
             }
-            if (this.addressBox.Text != this.@event.Address)
+            if (this.addressBox.Text != this.@event.Address.ToStringNormal())
             {
                 try
                 {
                     //EXTENTION METHOD
-                    this.@event.Address = this.addressBox.Text.FormatAddressString();
-                    MapPoint location = this.@event.Address.LatLongFromString();
+                    this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                    MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
                 }
@@ -195,10 +199,9 @@ namespace localhostUI.UiEvent
                 }
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
+            Program.Client.EditEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             this.Close();
         }
@@ -213,8 +216,8 @@ namespace localhostUI.UiEvent
             }
             try {
                 //EXTENSION METHOD
-                this.@event.Address = this.addressBox.Text.FormatAddressString();
-                MapPoint location = this.@event.Address.LatLongFromString();
+                this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
             }
@@ -224,20 +227,18 @@ namespace localhostUI.UiEvent
                 return;
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
+            Program.Client.CreateEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             this.Close();
         }
 
         private void DeleteEvent(object sender, EventArgs e)
         {
-            Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
+            Program.Client.DeleteEvent(@event.Id);
+            //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             Close();
         }
@@ -248,21 +249,22 @@ namespace localhostUI.UiEvent
 
             if (!draft)
             {
-                Program.DataPool.eventsDraft.Add(EventFull.ToDataList(@event));
-                Program.DataPool.SaveDrafts();
-                Program.DataPool.LoadDrafts();
+                Program.DraftManager.AddEvent(@event);
+                Program.DraftManager.SaveDrafts();
+                Program.DraftManager.LoadDrafts();
             }
             else
             {
                 try
                 {
-                    for (int i = 0; i < Program.DataPool.eventsDraft.Count; i++)
+                    List<EventFull> drafts = Program.DraftManager.GetEvents();
+                    foreach (var draft in drafts)
                     {
-                        if ((int)Program.DataPool.eventsDraft[i].Get("id") == @event.Id)
+                        if (draft.Id == @event.Id)
                         {
-                            Program.DataPool.eventsDraft[i] = EventFull.ToDataList(@event);
-                            Program.DataPool.SaveDrafts();
-                            Program.DataPool.LoadDrafts();
+                            drafts[drafts.IndexOf(draft)] = @event;
+                            Program.DraftManager.SaveDrafts();
+                            Program.DraftManager.LoadDrafts();
                             break;
                         }
                     }

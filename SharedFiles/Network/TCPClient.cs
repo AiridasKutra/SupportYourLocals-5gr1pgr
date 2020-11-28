@@ -13,6 +13,7 @@ namespace Common.Network
         private Thread packetHandler;
 
         private Queue<Packet> incomingPackets;
+        private Queue<Packet> outgoingPackets;
 
         public const uint MaxPacketSize = 1024;
 
@@ -22,6 +23,7 @@ namespace Common.Network
         public TCPClient()
         {
             incomingPackets = new Queue<Packet>();
+            outgoingPackets = new Queue<Packet>();
 
             mPak = new Mutex();
         }
@@ -119,6 +121,41 @@ namespace Common.Network
                 if (Send(thisClient, buffer) == 0) return false;
             }
 
+            return true;
+        }
+
+        public void AddToSendQueue(Packet packet)
+        {
+            outgoingPackets.Enqueue(packet);
+        }
+
+        public bool SendQueue()
+        {
+            if (outgoingPackets.Count == 0) return false;
+
+            uint clientId = outgoingPackets.Peek().SenderId;
+            if (!Send(new Packet
+            {
+                PacketId = (uint)PacketType.MULTIPLE_PACKETS,
+                SenderId = clientId,
+                Data = BitConverter.GetBytes((uint)outgoingPackets.Count)
+            }))
+            {
+                outgoingPackets.Clear();
+                return false;
+            }
+
+            foreach (var packet in outgoingPackets)
+            {
+                packet.SenderId = clientId;
+                if (!Send(packet))
+                {
+                    outgoingPackets.Clear();
+                    return false;
+                }
+            }
+
+            outgoingPackets.Clear();
             return true;
         }
 

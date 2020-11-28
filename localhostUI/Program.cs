@@ -23,14 +23,14 @@ namespace localhostUI
             }
         }
 
-        private static readonly DataPool dataPool = new DataPool();
-        public static DataPool DataPool
-        {
-            get
-            {
-                return dataPool;
-            }
-        }
+        //private static readonly DataPool dataPool = new DataPool();
+        //public static DataPool DataPool
+        //{
+        //    get
+        //    {
+        //        return dataPool;
+        //    }
+        //}
 
         private static readonly DataManager dataManager = new DataManager();
         public static DataManager DataManager
@@ -38,6 +38,15 @@ namespace localhostUI
             get
             {
                 return dataManager;
+            }
+        }
+
+        public static readonly EventDraftManager draftManager = new EventDraftManager();
+        public static EventDraftManager DraftManager
+        {
+            get
+            {
+                return draftManager;
             }
         }
 
@@ -66,7 +75,7 @@ namespace localhostUI
             string ip = "193.219.91.103";
             //string ip = "doesntexist";
             //string ip = "127.0.0.1";
-            ushort port = 2776;
+            ushort port = 7099;
             //ushort port = 54000;
 
 
@@ -95,7 +104,7 @@ namespace localhostUI
             }
             
             Client.Disconnect();
-            DataPool.SaveDrafts();
+            DraftManager.SaveDrafts();
         }
 
         

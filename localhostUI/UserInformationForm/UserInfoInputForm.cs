@@ -45,7 +45,6 @@ namespace localhostUI.UserInformationForm
             DataList userData = UserData.ToDataList(user);
             //Program.SaveUserData();
             Program.UserDataManager.UserData = user;
-            Program.DataPool.userData = userData;
             Program.UserInfoNaturallyClosed = true;
 
             //If some bug occurs in saving related to this form try moving the following statement

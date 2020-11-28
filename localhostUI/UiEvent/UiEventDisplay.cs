@@ -33,16 +33,15 @@ namespace localhostUI.UiEvent
             InitializeComponent();
 
             // Get full event data from database
-            DataList eventData = new DataList();
-            Program.DataManager.Read(new DatabaseReader($"select from events_full id {eventId}"), out eventData);
-            @event = null;
+            List<EventFull> events = Program.Client.SelectEventsFull(eventId);
             try
             {
-                @event = new EventFull((DataList)eventData.items[0]);
+                @event = events[0];
             }
-            catch (InvalidCastException)
+            catch (IndexOutOfRangeException)
             {
-                @event = new EventFull();
+                Console.WriteLine($"ERROR: Event with id {eventId} not found");
+                throw;
             }
 
             // Title
@@ -71,11 +70,11 @@ namespace localhostUI.UiEvent
             }
 
             // Address
-            addressLabel.Text = @event.Address;
+            addressLabel.Text = @event.Address.ToStringNormal();
 
             // Distance
             UserData user = Program.UserDataManager.GetData();
-            double distance = LocationInformation.Distance(@event.Latitude, @event.Longitude, user.Latitude, user.Longitude);
+            double distance = MathSupplement.Distance(@event.Latitude, @event.Longitude, user.Latitude, user.Longitude);
             if (distance < 1000.0)
             {
                 distanceLabel.Text = $"{distance:0}m";
@@ -183,7 +182,7 @@ namespace localhostUI.UiEvent
 
         private void SendMessage(string message)
         {
-            chatManager.SendMessage($"{Program.UserDataManager.GetData().Username}: {message}");
+            chatManager.SendMessage(new Backend.Message { Content = message });
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

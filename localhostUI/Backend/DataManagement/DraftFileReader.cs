@@ -9,12 +9,9 @@ namespace localhostUI.Backend.DataManagement
 {
     class DraftFileReader : IDataReader
     {
-        private readonly string fileName;
         private string message;
-        public DraftFileReader(string fileName)
-        {
-            this.fileName = fileName;
-        }
+        private const string fileName = "FileDrafts.json";
+
 
         public void Read(out DataList data)
         {

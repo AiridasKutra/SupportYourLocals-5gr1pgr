@@ -65,7 +65,7 @@ namespace localhostUI
             bool isAddressAdded = !(user.Address == "" || user.Address == null || (user.Latitude == 0 && user.Longitude == 0));
             foreach (var evBrief in events)
             {
-                distances.Add(LocationInformation.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
+                distances.Add(MathSupplement.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
             }
 
             if (options.Keywords.Count > 0)
@@ -121,7 +121,11 @@ namespace localhostUI
 
                 eventPanel.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
 
                 // Thumbnail
@@ -130,7 +134,11 @@ namespace localhostUI
                 thumbnail.Location = new Point(0, 0);
                 thumbnail.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
                 try
                 {
