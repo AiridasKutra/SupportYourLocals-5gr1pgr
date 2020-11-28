@@ -4,14 +4,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SharedFiles.Validation
+namespace Common.Validation
 {
     public struct ValidationResults
     {
         public bool isValid;
         public string message;
     }
-
 
     class Hasher
     {
