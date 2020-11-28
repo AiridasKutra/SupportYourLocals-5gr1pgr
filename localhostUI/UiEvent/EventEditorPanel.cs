@@ -233,10 +233,9 @@ namespace localhostUI.UiEvent
 
         private void DeleteEvent(object sender, EventArgs e)
         {
-            Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
+            Program.Client.DeleteEvent(@event.Id);
+            //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
-            Program.DataProvider.InitialLoadDoneBrief = false;
-            Program.DataProvider.InitialLoadDoneFull = false;
             origin.LoadMyEvents();
             Close();
         }
