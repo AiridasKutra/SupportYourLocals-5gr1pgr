@@ -11,7 +11,7 @@ namespace localhostUI.Classes.LocationClasses
     {
         private static readonly string apiKey = ApiKeys.GoogleApiKey;
         private static GoogleLocationService locationService = new GoogleLocationService(apiKey);
-        public static MapPoint LatLongFromString(this string address, string country = "Lithuana")
+        public static MapPoint LatLongFromString(this string address, string country = "Lithuania")
         {
             AddressData addressObject = new AddressData
             {
@@ -60,6 +60,19 @@ namespace localhostUI.Classes.LocationClasses
         {
             var addressData = locationService.GetAddressesListFromAddress(address);
             return addressData[0];
+        }
+        public static AddressInfo FormatAddressInfo(this string address)
+        {
+            var point = locationService.GetLatLongFromAddress(address);
+            var addressData = locationService.GetAddressFromLatLang(point.Latitude, point.Longitude);
+            return new AddressInfo
+            {
+                Address = addressData.Address,
+                City = addressData.City,
+                State = addressData.State,
+                Zip = addressData.Zip,
+                Country = addressData.Country
+            };
         }
         public static void OpenAdressInBrowser(string address)
         {

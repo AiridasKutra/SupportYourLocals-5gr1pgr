@@ -121,7 +121,11 @@ namespace localhostUI
 
                 eventPanel.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
 
                 // Thumbnail
@@ -130,7 +134,11 @@ namespace localhostUI
                 thumbnail.Location = new Point(0, 0);
                 thumbnail.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
                 try
                 {

@@ -79,7 +79,7 @@ namespace localhostUI.UiEvent
 
             this.eventNameBox.Text = this.@event.Name;
             this.priceBox.Value = this.@event.Price;
-            this.addressBox.Text = this.@event.Address;
+            this.addressBox.Text = this.@event.Address.ToStringNormal();
             this.descriptionBox.Text = this.@event.Description;
             try
             {
@@ -183,13 +183,13 @@ namespace localhostUI.UiEvent
                 finishResultLabel.Text = "You cannot remove the name.";
                 return;
             }
-            if (this.addressBox.Text != this.@event.Address)
+            if (this.addressBox.Text != this.@event.Address.ToStringNormal())
             {
                 try
                 {
                     //EXTENTION METHOD
-                    this.@event.Address = this.addressBox.Text.FormatAddressString();
-                    MapPoint location = this.@event.Address.LatLongFromString();
+                    this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                    MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
                 }
@@ -200,7 +200,8 @@ namespace localhostUI.UiEvent
                 }
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
+            Program.Client.EditEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
             origin.LoadMyEvents();
             this.Close();
@@ -216,8 +217,8 @@ namespace localhostUI.UiEvent
             }
             try {
                 //EXTENSION METHOD
-                this.@event.Address = this.addressBox.Text.FormatAddressString();
-                MapPoint location = this.@event.Address.LatLongFromString();
+                this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
             }
@@ -227,7 +228,8 @@ namespace localhostUI.UiEvent
                 return;
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
+            Program.Client.CreateEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
             origin.LoadMyEvents();
             this.Close();
@@ -235,7 +237,8 @@ namespace localhostUI.UiEvent
 
         private void DeleteEvent(object sender, EventArgs e)
         {
-            Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
+            Program.Client.DeleteEvent(@event.Id);
+            //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
             origin.LoadMyEvents();
             Close();

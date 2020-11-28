@@ -9,6 +9,9 @@ using localhostUI.Classes.UserInformationClasses;
 using System.Drawing;
 using GoogleMaps.LocationServices;
 using System.Collections.Generic;
+using Common;
+using Common.Formatting;
+using System.IO;
 
 namespace localhostUI
 {

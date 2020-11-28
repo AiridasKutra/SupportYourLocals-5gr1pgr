@@ -87,11 +87,11 @@ namespace localhostUI
                 eventName.Click += (sender, e) =>
                 {
                     // Get full event data from database
-                    DataList eventData = new DataList();
-                    Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
+                    List<EventFull> eventData = Program.Client.SelectEventsFull(@event.Id);
+                    //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        new EventEditor(this, new EventFull((DataList)eventData.items[0])).Show();
+                        new EventEditor(this, eventData[0]).Show();
                     }
                     catch (InvalidCastException)
                     {
