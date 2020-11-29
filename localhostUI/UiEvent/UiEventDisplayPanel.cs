@@ -19,14 +19,14 @@ using System.Windows.Forms;
 
 namespace localhostUI.UiEvent
 {
-    public partial class UiEventDisplay : Form
+    public partial class UiEventDisplayPanel : Form
     {
         private Form caller;
         private EventFull @event;
 
         private ChatManager chatManager;
 
-        public UiEventDisplay(int eventId, Form caller)
+        public UiEventDisplayPanel(int eventId, Form caller)
         {
             this.caller = caller;
 

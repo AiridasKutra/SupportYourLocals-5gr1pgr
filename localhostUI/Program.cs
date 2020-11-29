@@ -62,6 +62,7 @@ namespace localhostUI
         }
 
         public static bool ContinueOffline { get; set; } = false;
+        public static bool ConnectionEstablished { get; set; } = false;
 
         public static bool UserInfoNaturallyClosed { get; set; }=false;
 
@@ -85,34 +86,23 @@ namespace localhostUI
             }
             else
             {
-                // Check if connection to database exists
-                if (!ConnectToDb(ip, port))
-                {
-                    Application.Run(new NoDatabaseMain());
-                    if (ContinueOffline)
-                    {
-                        
-                        Application.Run(new UiMain());
-                    }
-                }
-                else
-                {
-
-                    if (UserDataManager.UserData == null) 
-                    {
-                        Application.Run(new UserInfoInputForm());
-                        if (UserInfoNaturallyClosed)
-                        {
-                            Application.Run(new UiMain());
-                        }
-                    }
-                    else
-                    {
-                        Application.Run(new UiMain());
-                    }
-                }
+                ConnectionEstablished = true;
             }
 
+            if (!ConnectToDb(ip, port))
+            {
+                Application.Run(new NoDatabaseMain());
+            }
+            else
+            {
+                ContinueOffline = true;
+            }
+
+            if (ConnectionEstablished && ConnectionEstablished)
+            {
+                Application.Run(new UiMain());
+            }
+            
             Client.Disconnect();
             DraftManager.SaveDrafts();
         }

@@ -18,13 +18,13 @@ using System.Windows.Forms;
 
 namespace localhostUI.UiEvent
 {
-    public partial class EventEditor : Form
+    public partial class EventEditorPanel : Form
     {
         private EventFull @event = new EventFull();
         private UiMain origin;
         private bool draft;
 
-        public EventEditor(UiMain origin)
+        public EventEditorPanel(UiMain origin)
         {
             this.origin = origin;
             this.draft = false;
@@ -35,11 +35,11 @@ namespace localhostUI.UiEvent
             this.finishButton.Text = "Create";
             this.finishButton.Click += CreateEvent;
 
-            this.deleteordraftEventButton.Text = "Save as draft";
-            this.deleteordraftEventButton.Click += SaveDraft;
+            deleteEventButton.Visible = false;
+            saveDraftButton.Visible = true;
         }
 
-        public EventEditor(UiMain origin, EventFull @event, bool draft = false)
+        public EventEditorPanel(UiMain origin, EventFull @event, bool draft = false)
         {
             this.origin = origin;
             this.draft = draft;
@@ -57,19 +57,15 @@ namespace localhostUI.UiEvent
             {
                 finishButton.Text = "Create";
                 this.finishButton.Click += CreateEvent;
-                /*deleteEventButton.Visible = false;
-                saveDraftButton.Visible = true;*/
-                deleteordraftEventButton.Text = "Save as draft";
-                deleteordraftEventButton.Click += SaveDraft;
+                deleteEventButton.Visible = false;
+                saveDraftButton.Visible = true;
             }
             else
             {
                 finishButton.Text = "Save";
                 this.finishButton.Click += EditEvent;
-                /*deleteEventButton.Visible = true;
-                saveDraftButton.Visible = false;*/
-                deleteordraftEventButton.Text = "Delete";
-                deleteordraftEventButton.Click += DeleteEvent;
+                deleteEventButton.Visible = true;
+                saveDraftButton.Visible = false;
             }
         }
 
@@ -209,12 +205,13 @@ namespace localhostUI.UiEvent
         private void CreateEvent(object sender, EventArgs e)
         {
 
-            if(this.eventNameBox.Text == "")
+            if (this.eventNameBox.Text == "")
             {
                 finishResultLabel.Text = "A name is required to create an event.";
                 return;
             }
-            try {
+            try
+            {
                 //EXTENSION METHOD
                 this.@event.Address = this.addressBox.Text.FormatAddressInfo();
                 MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();

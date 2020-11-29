@@ -9,70 +9,42 @@ namespace localhostUI.Classes.EventClasses
 {
     public class EventBrief
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
-        private string name;
-        private int author;
-        private List<string> sports;
-        private List<Team> teams;
-        private double latitude;
-        private double longitude;
-        private DateTime startDate;
-        private DateTime endDate;
-        private decimal price;
-        private string thumbnail; // Links to images (first one always the thumbnail)
-        private bool visible;
-        private List<string> tags;
+        public int Author { get; set; }
 
-        public string Name { get { return name; } set { name = value; } }
-        public int Author { get { return author; } set { author = value; } }
-        public double Latitude { get { return latitude; } set { latitude = value; } }
-        public double Longitude { get { return longitude; } set { longitude = value; } }
-        public DateTime StartDate { get { return startDate; } set { startDate = value; } }
-        public DateTime EndDate { get { return endDate; } set { endDate = value; } }
-        public decimal Price { get { return price; } set { price = value; } }
-        public string Thumbnail { get { return thumbnail; } set { thumbnail = value; } }
-        public bool Visible { get { return visible; } set { visible = value; } }
-        public List<string> GetSports()
-        {
-            return sports;
-        }
-        public List<Team> GetTeams()
-        {
-            return teams;
-        }
-        public List<string> GetTags()
-        {
-            return tags;
-        }
-        public void AddSport(string sport)
-        {
-            sports.Add(sport);
-        }
-        public void AddTeam(Team team)
-        {
-            teams.Add(team);
-        }
-        public void AddTag(string tag)
-        {
-            tags.Add(tag);
-        }
+        public string Name { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public decimal Price { get; set; }
+
+        public string Tags { get; set; }
+
+        public List<string> Sports { get; set; }
+
+        public List<string> Images { get; set; }
+
+        public bool Visible { get; set; }
 
         private void Init()
         {
             Id = -1;
 
-            sports = new List<string>();
-            teams = new List<Team>();
-            tags = new List<string>();
+            Sports = new List<string>();
+            Images = new List<string>();
 
-            name = "";
-            latitude = 0.0;
-            longitude = 0.0;
-            startDate = new DateTime(0L);
-            endDate = new DateTime(0L);
-            price = 0;
-            thumbnail = "";
+            Name = "";
+            Latitude = 0.0;
+            Longitude = 0.0;
+            StartDate = new DateTime(0L);
+            Price = 0;
+            Tags = "";
+            Visible = true;
         }
 
         public EventBrief()
@@ -83,6 +55,8 @@ namespace localhostUI.Classes.EventClasses
         public EventBrief(DataList data)
         {
             Init();
+
+            if (data == null) return;
 
             try
             {
@@ -96,7 +70,7 @@ namespace localhostUI.Classes.EventClasses
                 object nameObj = data.Get("name");
                 if (nameObj != null)
                 {
-                    name = (string)nameObj;
+                    Name = (string)nameObj;
                 }
                 object authorObj = data.Get("author");
                 if (authorObj != null)
@@ -108,20 +82,15 @@ namespace localhostUI.Classes.EventClasses
                 {
                     object latitudeObj = ((DataList)coordinatesObj).Get(0);
                     object longitudeObj = ((DataList)coordinatesObj).Get(1);
-                    if (latitudeObj != null) latitude = (double)latitudeObj;
-                    if (longitudeObj != null) longitude = (double)longitudeObj;
+                    if (latitudeObj != null) Latitude = (double)latitudeObj;
+                    if (longitudeObj != null) Longitude = (double)longitudeObj;
                 }
                 try
                 {
                     object startDateObj = data.Get("start_date");
                     if (startDateObj != null)
                     {
-                        startDate = DateTime.ParseExact((string)startDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
-                    }
-                    object endDateObj = data.Get("end_date");
-                    if (endDateObj != null)
-                    {
-                        endDate = DateTime.ParseExact((string)endDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                        StartDate = DateTime.ParseExact((string)startDateObj, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
                     }
                 }
                 catch (FormatException)
@@ -131,7 +100,7 @@ namespace localhostUI.Classes.EventClasses
                 object priceObj = data.Get("price");
                 if (priceObj != null)
                 {
-                    price = (decimal)priceObj;
+                    Price = (decimal)priceObj;
                 }
                 object visibleObj = data.Get("visible");
                 if (visibleObj != null)
@@ -145,7 +114,7 @@ namespace localhostUI.Classes.EventClasses
                 {
                     foreach (ListItem sport in (DataList)sportsObj)
                     {
-                        sports.Add((string)sport.item);
+                        Sports.Add((string)sport.item);
                     }
                 }
                 object imagesObj = data.Get("images");
@@ -153,37 +122,13 @@ namespace localhostUI.Classes.EventClasses
                 {
                     foreach (ListItem image in (DataList)imagesObj)
                     {
-                        thumbnail = (string)image.item;
-                        break; // Select only the first image
-                    }
-                }
-                object teamsObj = data.Get("teams");
-                if (teamsObj != null)
-                {
-                    foreach (ListItem team in (DataList)teamsObj)
-                    {
-                        string name = team.name;
-                        List<Player> players = new List<Player>();
-
-                        object playersObj = team.item;
-                        if (playersObj != null)
-                        {
-                            foreach (ListItem player in (DataList)playersObj)
-                            {
-                                players.Add(new Player((string)player.item));
-                            }
-                        }
-
-                        teams.Add(new Team(name, players));
+                        Images.Add((string)image.item);
                     }
                 }
                 object tagsObj = data.Get("tags");
                 if (tagsObj != null)
                 {
-                    foreach (var tag in (DataList)tagsObj)
-                    {
-                        tags.Add((string)tag.item);
-                    }
+                    Tags = ((string)tagsObj);
                 }
             }
             catch (InvalidCastException)
@@ -192,49 +137,36 @@ namespace localhostUI.Classes.EventClasses
             }
         }
 
-        public static DataList ToDataList(EventBrief ev)
+        public DataList ToDataList()
         {
             DataList data = new DataList();
 
             // Simple
-            data.Add(ev.name, "name");
-            data.Add(ev.Author, "author");
-            data.Add(ev.startDate.ToString("O"), "start_date");
-            data.Add(ev.endDate.ToString("O"), "end_date");
-            data.Add(ev.price, "price");
-            data.Add(ev.visible, "visible");
+            data.Add(Id, "id");
+            data.Add(Author, "author");
+            data.Add(Name, "name");
+            data.Add(StartDate.ToString("O"), "start_date");
+            data.Add(Price, "price");
+            data.Add(Tags, "tags");
+            data.Add(Visible, "visible");
 
             // Complex
             DataList sportsDl = new DataList();
-            foreach (string sport in ev.sports)
+            foreach (string sport in Sports)
             {
                 sportsDl.Add(sport);
             }
             DataList imagesDl = new DataList();
-            imagesDl.Add(ev.thumbnail);
-            DataList teamsDl = new DataList();
-            foreach (Team team in ev.teams)
+            foreach (string image in Images)
             {
-                DataList playersDl = new DataList();
-                foreach (Player player in team.GetPlayers())
-                {
-                    playersDl.Add(player.Name);
-                }
-                teamsDl.Add(playersDl, team.Name);
-            }
-            DataList tagsDl = new DataList();
-            foreach (string tag in ev.tags)
-            {
-                tagsDl.Add(tag);
+                imagesDl.Add(image);
             }
             DataList coordinatesDl = new DataList();
-            coordinatesDl.Add(ev.latitude);
-            coordinatesDl.Add(ev.longitude);
+            coordinatesDl.Add(Latitude);
+            coordinatesDl.Add(Longitude);
 
             data.Add(sportsDl, "sports");
             data.Add(imagesDl, "images");
-            data.Add(teamsDl, "teams");
-            data.Add(tagsDl, "tags");
             data.Add(coordinatesDl, "coordinates");
 
             return data;

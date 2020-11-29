@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+
+//EXTENTION METHOD, OPTIONAL ARGUMENT USAGE
 namespace localhostUI.Classes.LocationClasses
 {
     static class LocationInformation
