@@ -74,7 +74,7 @@ namespace localhostUI
                 KeywordFinder kFinder = new KeywordFinder();
                 foreach (var evBrief in events)
                 {
-                    DataList @event = EventBrief.ToDataList(evBrief);
+                    DataList @event = evBrief.ToDataList();
                     scores.Add(kFinder.Find(options.Keywords.ToArray(), @event));
                 }
 
@@ -144,7 +144,7 @@ namespace localhostUI
                 {
                     using (WebClient client = new WebClient())
                     {
-                        Stream stream = client.OpenRead(eBrief.Thumbnail);
+                        Stream stream = client.OpenRead(eBrief.Images[0]);
                         Bitmap bitmap = new Bitmap(stream);
                         Bitmap bitmapScaled = new Bitmap(bitmap, new Size(240, 180));
                         thumbnail.Image = bitmapScaled;
@@ -172,7 +172,7 @@ namespace localhostUI
                 Label eventSports = new Label();
                 eventSports.Text = "";
                 eventSports.Font = new Font("Arial", 11);
-                foreach (var sport in eBrief.GetSports())
+                foreach (var sport in eBrief.Sports)
                 {
                     eventSports.Text += $"{sport}  ";
 

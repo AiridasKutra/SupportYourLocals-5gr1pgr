@@ -34,7 +34,7 @@ namespace localhostUI.Backend
             var events = Program.Client.SelectEventsBrief(-1);
             foreach (var @event in events)
             {
-                eventsBrief.Add(EventBrief.ToDataList(@event));
+                eventsBrief.Add(@event.ToDataList());
             }
             //eventsBrief = LoadEvents("select from events_brief");
             lastLoadTimeBrief = DateTime.UtcNow;
@@ -50,7 +50,7 @@ namespace localhostUI.Backend
             var events = Program.Client.SelectEventsFull(-1);
             foreach (var @event in events)
             {
-                eventsBrief.Add(EventFull.ToDataList(@event));
+                eventsBrief.Add(@event.ToDataList());
             }
             //eventsFull = LoadEvents("select from events_full");
             lastLoadTimeFull = DateTime.UtcNow;

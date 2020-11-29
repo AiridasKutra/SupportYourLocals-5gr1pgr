@@ -54,7 +54,7 @@ namespace localhostUI.Backend
             {
                 foreach (EventFull draft in events)
                 {
-                    dataList.Add(EventFull.ToDataList(draft));
+                    dataList.Add(draft.ToDataList());
                 }
                 Program.DataManager.Write(draftFileWriter, dataList);
             }

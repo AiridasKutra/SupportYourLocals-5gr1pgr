@@ -144,7 +144,7 @@ namespace Common.Network
         {
             SendVfid();
 
-            string jsonStr = Json.FromList(DataList.ToList(EventFull.ToDataList(@event)));
+            string jsonStr = Json.FromList(DataList.ToList(@event.ToDataList()));
 
             Packet pack = new Packet
             {
@@ -174,7 +174,7 @@ namespace Common.Network
         {
             SendVfid();
 
-            string jsonStr = Json.FromList(DataList.ToList(EventFull.ToDataList(@event)));
+            string jsonStr = Json.FromList(DataList.ToList(@event.ToDataList()));
 
             Packet pack1 = new Packet
             {

@@ -48,7 +48,7 @@ namespace localhostUI.UiEvent
             eventName.Text = @event.Name;
 
             // Sports
-            foreach (var sport in @event.GetSports())
+            foreach (var sport in @event.Sports)
             {
                 Label sportLabel = new Label();
                 sportLabel.AutoSize = true;
@@ -56,17 +56,6 @@ namespace localhostUI.UiEvent
                 sportLabel.BackColor = Color.FromArgb(230, 230, 230);
                 sportLabel.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
                 sportDisplayBar.Controls.Add(sportLabel);
-            }
-
-            // Teams
-            foreach (var team in @event.GetTeams())
-            {
-                Label teamLabel = new Label();
-                teamLabel.AutoSize = true;
-                teamLabel.Text = team.Name;
-                teamLabel.BackColor = Color.FromArgb(230, 230, 230);
-                teamLabel.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
-                teamDisplayBar.Controls.Add(teamLabel);
             }
 
             // Address
@@ -88,7 +77,7 @@ namespace localhostUI.UiEvent
             descriptionLabel.Text = @event.Description;
 
             // Links
-            List<string> links = @event.GetLinks();
+            List<string> links = @event.Links;
             for (int i = 0; i < links.Count; i++)
             {
                 string[] linkSplit = links[i].Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
@@ -106,7 +95,7 @@ namespace localhostUI.UiEvent
             }
 
             // Load images
-            List<string> imageLinks = @event.GetImages();
+            List<string> imageLinks = @event.Images;
             for (int i = 0; i < imageLinks.Count; i++)
             {
                 PictureBox picture = new PictureBox();

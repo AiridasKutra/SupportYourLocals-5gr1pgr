@@ -83,7 +83,7 @@ namespace localhostUI.UiEvent
             try
             {
                 this.dateBox.Value = this.@event.StartDate;
-                this.sportBox.Text = this.@event.GetSports()[0];
+                this.sportBox.Text = this.@event.Sports[0];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -105,7 +105,7 @@ namespace localhostUI.UiEvent
             photoPanel.Controls.Clear();
 
             int counter = 0;
-            foreach (var link in @event.GetImages())
+            foreach (var link in @event.Images)
             {
                 // Add picture
                 PictureBox picture = new PictureBox();
@@ -140,7 +140,7 @@ namespace localhostUI.UiEvent
                 removeButton.Padding = new Padding(0);
                 removeButton.Click += (sender, e) =>
                 {
-                    @event.GetImages().Remove(link);
+                    @event.Images.Remove(link);
                     FillInPhotos();
                 };
                 photoPanel.Controls.Add(removeButton);
@@ -166,10 +166,10 @@ namespace localhostUI.UiEvent
 
         private void FillInEvent()
         {
-            this.@event.GetSports().Clear();
+            this.@event.Sports.Clear();
             this.@event.Name = this.eventNameBox.Text;
             this.@event.StartDate = this.dateBox.Value;
-            this.@event.AddSport(this.sportBox.Text);
+            this.@event.Sports.Add(this.sportBox.Text);
             this.@event.Price = this.priceBox.Value;
             this.@event.Description = this.descriptionBox.Text;
         }
@@ -291,25 +291,25 @@ namespace localhostUI.UiEvent
 
         private void AddThumbnail(object sender, EventArgs e)
         {
-            if (@event.GetImages().Count == 0)
+            if (@event.Images.Count == 0)
             {
-                @event.AddImage("");
+                @event.Images.Add("");
             }
-            this.@event.GetImages()[0] = this.thumbnailLinkBox.Text;
+            this.@event.Images[0] = this.thumbnailLinkBox.Text;
             FillInPhotos();
             this.thumbnailLinkBox.Clear();
         }
 
         private void AddPhoto(object sender, EventArgs e)
         {
-            int index = @event.GetImages().IndexOf(imagineLinkBox.Text);
+            int index = @event.Images.IndexOf(imagineLinkBox.Text);
             if (index != -1)
             {
-                @event.GetImages()[index] = imagineLinkBox.Text;
+                @event.Images[index] = imagineLinkBox.Text;
             }
             else
             {
-                @event.AddImage(imagineLinkBox.Text);
+                @event.Images.Add(imagineLinkBox.Text);
             }
             FillInPhotos();
             imagineLinkBox.Clear();
