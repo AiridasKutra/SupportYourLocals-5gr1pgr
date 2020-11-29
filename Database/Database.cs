@@ -434,6 +434,7 @@ namespace Database
         {
             var ev = context.Events.FirstOrDefault(item => item.Id == id);
             @event.Id = ev.Id;
+            @event.Author = ev.Author;
             ev = @event;
         }
 
