@@ -419,6 +419,7 @@ namespace Database
 
         public void QCreateEvent(Event @event)
         {
+            @event.Id = 1;
             context.Events.Add(@event);
         }
 
@@ -451,6 +452,7 @@ namespace Database
 
         public void QCreateAccount(Account account)
         {
+            account.Id = 1;
             context.Accounts.Add(account);
         }
 
@@ -483,6 +485,7 @@ namespace Database
 
         public void QCreateReport(Report report)
         {
+            report.Id = 1;
             context.Reports.Add(report);
         }
 
@@ -515,6 +518,7 @@ namespace Database
 
         public void QCreateSport(Sport sport)
         {
+            sport.Id = 1;
             context.Sports.Add(sport);
         }
 

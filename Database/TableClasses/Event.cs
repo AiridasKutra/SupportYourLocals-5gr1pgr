@@ -49,18 +49,33 @@ namespace Database.TableClasses
         /// </summary>
         public bool Visible { get; set; }
 
-        public Event()
+        private void Init()
         {
+            Id = -1;
+
             Sports = new List<string>();
             Links = new List<string>();
             Images = new List<string>();
+
+            Name = "";
+            Latitude = 0.0;
+            Longitude = 0.0;
+            Address = new AddressInfo();
+            StartDate = new DateTime(0L);
+            Price = 0;
+            Description = "";
+            Tags = "";
+            Visible = true;
+        }
+
+        public Event()
+        {
+            Init();
         }
 
         public Event(DataList data, bool defaultId = false)
         {
-            Sports = new List<string>();
-            Links = new List<string>();
-            Images = new List<string>();
+            Init();
 
             if (data == null) return;
 
