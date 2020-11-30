@@ -91,7 +91,7 @@ namespace localhostUI
                     //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        new EventEditor(this, eventData[0]).Show();
+                        new EventEditor(this, eventData[0], true).Show();
                     }
                     catch (InvalidCastException)
                     {
