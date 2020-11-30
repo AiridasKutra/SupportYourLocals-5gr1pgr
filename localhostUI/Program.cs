@@ -100,6 +100,8 @@ namespace localhostUI
 
             if (ConnectionEstablished && ConnectionEstablished)
             {
+                //Application.Run(new MainEventListPanel());
+                //Application.Run(new MainEventManagerPanel());
                 Application.Run(new UiMain());
             }
             

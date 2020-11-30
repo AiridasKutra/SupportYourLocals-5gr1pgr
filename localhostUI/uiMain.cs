@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Formatting;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace localhostUI
 {
@@ -25,15 +26,57 @@ namespace localhostUI
             {
                 return sportTypes.SportList;
             }
-        } 
+        }
+
+        int BANNER_HEIGHT = 100;
 
         public UiMain()
         {
             InitializeComponent();
+
+            bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
+
+            // Create banner buttons
+            Button currentEventsButton = new Button();
+            currentEventsButton.Text = "SYL";
+            currentEventsButton.Font = new Font("Arial", 30.0f, FontStyle.Bold);
+            currentEventsButton.ForeColor = Color.LightGray;
+            currentEventsButton.TextAlign = ContentAlignment.MiddleCenter;
+            currentEventsButton.FlatStyle = FlatStyle.Flat;
+            currentEventsButton.FlatAppearance.BorderSize = 0;
+            currentEventsButton.Location = new Point(0, 0);
+            currentEventsButton.Size = new Size(150, BANNER_HEIGHT);
+            currentEventsButton.Click += (e, s) =>
+            {
+                ShowPanel(new MainEventListPanel(this));
+            };
+
+            Button eventManagerButton = new Button();
+            eventManagerButton.Text = "EVENT MANAGER";
+            eventManagerButton.Font = new Font("Arial", 20.0f, FontStyle.Bold);
+            eventManagerButton.ForeColor = Color.White;
+            eventManagerButton.TextAlign = ContentAlignment.MiddleCenter;
+            eventManagerButton.FlatStyle = FlatStyle.Flat;
+            eventManagerButton.FlatAppearance.BorderSize = 0;
+            eventManagerButton.Location = new Point(150, 0);
+            eventManagerButton.Size = new Size(200, BANNER_HEIGHT);
+            eventManagerButton.Click += (e, s) =>
+            {
+                ShowPanel(new MainEventManagerPanel());
+            };
+
+            bannerPanel.Controls.Add(currentEventsButton);
+            bannerPanel.Controls.Add(eventManagerButton);
         }
 
         private void MainLoad(object sender, EventArgs e)
         {
+            ShowPanel(new MainEventListPanel(this));
+
+            // Maximize
+            WindowState = FormWindowState.Maximized;
+
+            return;
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
@@ -195,6 +238,46 @@ namespace localhostUI
         private void FormattAdressButton(object sender, EventArgs e)
         {
             Console.WriteLine(LocationInformation.FormatAddress(userAdressBox.Text));
+        }
+
+
+
+
+        // NEW CODE
+        public void ShowPanel(IPanel panelForm)
+        {
+            panelForm.SetMainRef(this);
+            contentPanel.Controls.Clear();
+            Panel content = panelForm.GetPanel();
+            content.Location = new Point(0, 0);
+            content.Visible = true;
+            content.Size = new Size(content.Size.Width, Math.Max(content.Size.Height, ClientSize.Height - BANNER_HEIGHT));
+            contentPanel.Size = new Size(content.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+            contentPanel.Location = new Point((ClientSize.Width - content.Width) / 2, 100);
+            contentPanel.Controls.Add(content);
+
+            // Disable horizontal scroll
+            contentPanel.HorizontalScroll.Maximum = 0;
+            contentPanel.AutoScroll = false;
+            contentPanel.VerticalScroll.Visible = false;
+            contentPanel.AutoScroll = true;
+        }
+        
+        private void UiMain_Resize(object sender, EventArgs e)
+        {
+            try
+            {
+                int newX = (Size.Width - contentPanel.Controls[0].Width) / 2;
+                if (newX < 0)
+                {
+                    newX = 0;
+                }
+                contentPanel.Location = new Point(newX, 100);
+                contentPanel.Size = new Size(contentPanel.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+
+                bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
+            }
+            catch { }
         }
     }
 }
