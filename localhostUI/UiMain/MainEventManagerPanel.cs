@@ -110,6 +110,7 @@ namespace localhostUI
                     //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
+                        mainForm.ShowPanel(new EventEditorPanel(eventData[0], true));
                         //new EventEditorPanel(this, eventData[0], true).Show();
                     }
                     catch (InvalidCastException)
@@ -198,6 +199,7 @@ namespace localhostUI
 
                 eventName.Click += (sender, e) =>
                 {
+                    mainForm.ShowPanel(new EventEditorPanel(draft, true));
                     //new EventEditor(this, draft, true).Show();
                 };
 
@@ -213,21 +215,22 @@ namespace localhostUI
 
         private void createEventButton_Click(object sender, EventArgs e)
         {
+            mainForm.ShowPanel(new EventEditorPanel());
             //new EventEditor(this).Show();
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, e) =>
-            {
-                try
-                {
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        Invoke((Action)(() => { titleLabel.Location = new Point(titleLabel.Location.X, titleLabel.Location.Y + 1); }));
-                        Thread.Sleep(6);
-                    }
-                }
-                catch { return; }
-            };
-            worker.RunWorkerAsync();
+            //BackgroundWorker worker = new BackgroundWorker();
+            //worker.DoWork += (s, e) =>
+            //{
+            //    try
+            //    {
+            //        for (int i = 0; i < 1000; i++)
+            //        {
+            //            Invoke((Action)(() => { titleLabel.Location = new Point(titleLabel.Location.X, titleLabel.Location.Y + 1); }));
+            //            Thread.Sleep(6);
+            //        }
+            //    }
+            //    catch { return; }
+            //};
+            //worker.RunWorkerAsync();
         }
     }
 }

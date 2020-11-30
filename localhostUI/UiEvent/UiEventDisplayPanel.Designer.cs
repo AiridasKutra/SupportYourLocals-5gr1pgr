@@ -158,6 +158,7 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.mainPanel.Controls.Add(this.sendMessageButton);
             this.mainPanel.Controls.Add(this.returnButton);
             this.mainPanel.Controls.Add(this.chatPanel);
@@ -170,17 +171,18 @@
             this.mainPanel.Controls.Add(this.teamDisplayBar);
             this.mainPanel.Controls.Add(this.addressLabel);
             this.mainPanel.Controls.Add(this.showMapsButton);
+            this.mainPanel.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.mainPanel.Location = new System.Drawing.Point(10, 2);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(875, 600);
+            this.mainPanel.Size = new System.Drawing.Size(1000, 600);
             this.mainPanel.TabIndex = 13;
             // 
             // UiEventDisplayPanel
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(903, 602);
+            this.ClientSize = new System.Drawing.Size(1013, 602);
             this.Controls.Add(this.mainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

@@ -3,6 +3,7 @@ using localhostUI.Backend;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
 using localhostUI.Classes.UserInformationClasses;
+using localhostUI.UiEvent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -157,6 +158,7 @@ namespace localhostUI
                 {
                     try
                     {
+                        mainForm.ShowPanel(new UiEventDisplayPanel(eBrief.Id, this));
                         //new UiEventDisplay(eBrief.Id, this).Show();
                     }
                     catch { }
@@ -177,6 +179,7 @@ namespace localhostUI
                 {
                     try
                     {
+                        mainForm.ShowPanel(new UiEventDisplayPanel(eBrief.Id, this));
                         //new UiEventDisplay(eBrief.Id, this).Show();
                     }
                     catch { }
