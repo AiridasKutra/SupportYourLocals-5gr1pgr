@@ -18,15 +18,28 @@ using System.Windows.Forms;
 
 namespace localhostUI.UiEvent
 {
-    public partial class EventEditorPanel : Form
+    public partial class EventEditorPanel : Form, IPanel
     {
         private EventFull @event = new EventFull();
-        private UiMain origin;
         private bool draft;
 
-        public EventEditorPanel(UiMain origin)
+        private UiMain mainForm;
+        private IPanel caller;
+
+        public void Reload() { }
+
+        public Panel GetPanel()
         {
-            this.origin = origin;
+            return mainPanel;
+        }
+
+        public void SetMainRef(UiMain main)
+        {
+            mainForm = main;
+        }
+
+        public EventEditorPanel()
+        {
             this.draft = false;
 
             InitializeComponent();
@@ -39,9 +52,8 @@ namespace localhostUI.UiEvent
             saveDraftButton.Visible = true;
         }
 
-        public EventEditorPanel(UiMain origin, EventFull @event, bool draft = false)
+        public EventEditorPanel(EventFull @event, bool draft = false)
         {
-            this.origin = origin;
             this.draft = draft;
 
             InitializeComponent();
@@ -86,16 +98,18 @@ namespace localhostUI.UiEvent
                 return;
             }
         }
+
         private void FillInSports()
         {
-            this.sportBox.Items.Clear();
+            //this.sportBox.Items.Clear();
 
-            List<string> sports = origin.SportList;
-            foreach (string sport in sports)
-            {
-                this.sportBox.Items.Add(sport);
-            }
+            //List<string> sports = origin.SportList;
+            //foreach (string sport in sports)
+            //{
+            //    this.sportBox.Items.Add(sport);
+            //}
         }
+
         private void FillInPhotos()
         {
             photoPanel.Controls.Clear();
@@ -198,7 +212,8 @@ namespace localhostUI.UiEvent
             Program.Client.EditEvent(@event);
             //Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
-            origin.LoadMyEvents();
+            mainForm.ShowPanel(caller);
+            //origin.LoadMyEvents();
             this.Close();
         }
 
@@ -227,7 +242,8 @@ namespace localhostUI.UiEvent
             Program.Client.CreateEvent(@event);
             //Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
-            origin.LoadMyEvents();
+            mainForm.ShowPanel(caller);
+            //origin.LoadMyEvents();
             this.Close();
         }
 
@@ -236,7 +252,8 @@ namespace localhostUI.UiEvent
             Program.Client.DeleteEvent(@event.Id);
             //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
-            origin.LoadMyEvents();
+            mainForm.ShowPanel(caller);
+            //origin.LoadMyEvents();
             Close();
         }
 
@@ -272,7 +289,8 @@ namespace localhostUI.UiEvent
                 }
             }
 
-            origin.LoadDrafts();
+            mainForm.ShowPanel(caller);
+            //origin.LoadMyEvents();
             Close();
         }
 
