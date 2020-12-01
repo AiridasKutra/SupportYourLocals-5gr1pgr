@@ -352,6 +352,8 @@ namespace Common.Network
 
             client.AddToSendQueue(pack);
             client.SendQueue();
+
+            vfid = 0;
         }
 
         public int GetAccountId(ulong vfid)
