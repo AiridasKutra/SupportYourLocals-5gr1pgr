@@ -65,7 +65,7 @@ namespace localhostUI
             bool isAddressAdded = !(user.Address == "" || user.Address == null || (user.Latitude == 0 && user.Longitude == 0));
             foreach (var evBrief in events)
             {
-                distances.Add(LocationInformation.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
+                distances.Add(MathSupplement.Distance(user.Latitude, user.Longitude, evBrief.Latitude, evBrief.Longitude));
             }
 
             if (options.Keywords.Count > 0)
@@ -74,7 +74,7 @@ namespace localhostUI
                 KeywordFinder kFinder = new KeywordFinder();
                 foreach (var evBrief in events)
                 {
-                    DataList @event = EventBrief.ToDataList(evBrief);
+                    DataList @event = evBrief.ToDataList();
                     scores.Add(kFinder.Find(options.Keywords.ToArray(), @event));
                 }
 
@@ -121,7 +121,11 @@ namespace localhostUI
 
                 eventPanel.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
 
                 // Thumbnail
@@ -130,13 +134,17 @@ namespace localhostUI
                 thumbnail.Location = new Point(0, 0);
                 thumbnail.Click += (sender, e) =>
                 {
-                    new UiEventDisplay(eBrief.Id, this).Show();
+                    try
+                    {
+                        new UiEventDisplay(eBrief.Id, this).Show();
+                    }
+                    catch { }
                 };
                 try
                 {
                     using (WebClient client = new WebClient())
                     {
-                        Stream stream = client.OpenRead(eBrief.Thumbnail);
+                        Stream stream = client.OpenRead(eBrief.Images[0]);
                         Bitmap bitmap = new Bitmap(stream);
                         Bitmap bitmapScaled = new Bitmap(bitmap, new Size(240, 180));
                         thumbnail.Image = bitmapScaled;
@@ -164,7 +172,7 @@ namespace localhostUI
                 Label eventSports = new Label();
                 eventSports.Text = "";
                 eventSports.Font = new Font("Arial", 11);
-                foreach (var sport in eBrief.GetSports())
+                foreach (var sport in eBrief.Sports)
                 {
                     eventSports.Text += $"{sport}  ";
 

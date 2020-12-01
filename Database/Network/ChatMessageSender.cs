@@ -1,4 +1,7 @@
-﻿using Common.Network;
+﻿using Common;
+using Common.Formatting;
+using Common.Network;
+using Database.TableClasses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,8 +25,11 @@ namespace Database.Network
             clients.Add(client);
         }
 
-        public void EchoMessage(string message, string eventId)
+        public void EchoMessage(Message message, int eventId)
         {
+            string messageJsonStr = Json.FromList(DataList.ToList(message.ToDataList()));
+            string eventIdStr = eventId.ToString();
+
             // Create packets
             Packet packInfo = new Packet
             {
@@ -33,14 +39,14 @@ namespace Database.Network
 
             Packet pack1 = new Packet
             {
-                PacketId = (uint)PacketType.SEND_MESSAGE_TEXT,
-                Data = Encoding.ASCII.GetBytes(message)
+                PacketId = (uint)PacketType.SEND_MESSAGE_DATA,
+                Data = Encoding.ASCII.GetBytes(messageJsonStr)
             };
 
             Packet pack2 = new Packet
             {
                 PacketId = (uint)PacketType.SEND_MESSAGE_EVENT_ID,
-                Data = Encoding.ASCII.GetBytes(eventId)
+                Data = Encoding.ASCII.GetBytes(eventIdStr)
             };
 
             RemoveDisconnectedClients();

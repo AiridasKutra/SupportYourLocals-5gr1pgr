@@ -1,22 +1,26 @@
 ﻿using Common;
-using localhostUI.Classes.LocationClasses;
-using localhostUI.EventClasses;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
 
-namespace localhostUI.Classes.EventClasses
+namespace Database.TableClasses
 {
-    public class EventFull : EventBase
+    class Event
     {
+        [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Author account ID
+        /// </summary>
         public int Author { get; set; }
 
+        [StringLength(150)]
         public string Name { get; set; }
 
+        [StringLength(150)]
         public AddressInfo Address { get; set; }
 
         public double Latitude { get; set; }
@@ -27,8 +31,10 @@ namespace localhostUI.Classes.EventClasses
 
         public decimal Price { get; set; }
 
+        [StringLength(1000)]
         public string Description { get; set; }
 
+        [StringLength(50)]
         public string Tags { get; set; }
 
         public List<string> Sports { get; set; }
@@ -37,6 +43,10 @@ namespace localhostUI.Classes.EventClasses
 
         public List<string> Images { get; set; }
 
+        // Moderation
+        /// <summary>
+        /// Invisible events can only be seen by the author, moderators, and administrators.
+        /// </summary>
         public bool Visible { get; set; }
 
         private void Init()
@@ -58,12 +68,12 @@ namespace localhostUI.Classes.EventClasses
             Visible = true;
         }
 
-        public EventFull()
+        public Event()
         {
             Init();
         }
 
-        public EventFull(DataList data)
+        public Event(DataList data, bool defaultId = false)
         {
             Init();
 
@@ -72,7 +82,7 @@ namespace localhostUI.Classes.EventClasses
             try
             {
                 object idObj = data.Get("id");
-                if (idObj != null)
+                if (idObj != null && !defaultId)
                 {
                     Id = (int)idObj;
                 }
@@ -166,7 +176,7 @@ namespace localhostUI.Classes.EventClasses
             }
         }
 
-        public DataList ToDataList()
+        public DataList ToFullDataList()
         {
             DataList data = new DataList();
 
@@ -203,6 +213,42 @@ namespace localhostUI.Classes.EventClasses
 
             data.Add(sportsDl, "sports");
             data.Add(linksDl, "links");
+            data.Add(imagesDl, "images");
+            data.Add(coordinatesDl, "coordinates");
+
+            return data;
+        }
+
+        public DataList ToBriefDataList()
+        {
+            DataList data = new DataList();
+
+            // Simple
+            data.Add(Id, "id");
+            data.Add(Author, "author");
+            data.Add(Name, "name");
+            data.Add(StartDate.ToString("O"), "start_date");
+            data.Add(Price, "price");
+            data.Add(Tags, "tags");
+            data.Add(Visible, "visible");
+
+            // Complex
+            DataList sportsDl = new DataList();
+            foreach (string sport in Sports)
+            {
+                sportsDl.Add(sport);
+            }
+            DataList imagesDl = new DataList();
+            foreach (string image in Images)
+            {
+                imagesDl.Add(image);
+                break; // Add only 1
+            }
+            DataList coordinatesDl = new DataList();
+            coordinatesDl.Add(Latitude);
+            coordinatesDl.Add(Longitude);
+
+            data.Add(sportsDl, "sports");
             data.Add(imagesDl, "images");
             data.Add(coordinatesDl, "coordinates");
 

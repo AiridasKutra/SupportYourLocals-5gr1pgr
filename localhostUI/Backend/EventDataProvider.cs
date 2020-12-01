@@ -21,6 +21,8 @@ namespace localhostUI.Backend
         {
             initialLoadDone = false;
             lastLoadTimeBrief = DateTime.UtcNow;
+            eventsBrief = new List<DataList>();
+            eventsFull = new List<DataList>();
         }
 
         private void LoadEventsBrief()
@@ -28,17 +30,29 @@ namespace localhostUI.Backend
             // TODO: check if database had changes since last load
 
             // Read all brief events
-            eventsBrief = LoadEvents("select from events_brief");
+            eventsBrief.Clear();
+            var events = Program.Client.SelectEventsBrief(-1);
+            foreach (var @event in events)
+            {
+                eventsBrief.Add(@event.ToDataList());
+            }
+            //eventsBrief = LoadEvents("select from events_brief");
             lastLoadTimeBrief = DateTime.UtcNow;
             initialLoadDone = true;
         }
 
-        public void LoadEventsFull()
+        private void LoadEventsFull()
         {
             // TODO: check if database had changes since last load
 
             // Read all full events
-            eventsFull = LoadEvents("select from events_full");
+            eventsFull.Clear();
+            var events = Program.Client.SelectEventsFull(-1);
+            foreach (var @event in events)
+            {
+                eventsBrief.Add(@event.ToDataList());
+            }
+            //eventsFull = LoadEvents("select from events_full");
             lastLoadTimeFull = DateTime.UtcNow;
             initialLoadDone = true;
         }

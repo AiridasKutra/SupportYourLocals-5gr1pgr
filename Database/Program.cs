@@ -12,60 +12,73 @@ namespace Database
     {
         static private Database db;
         static private Mutex mData;
+        static private MainDbContext context;
 
         static void Main(string[] args)
         {
-            db = new Database("data.json");
-            //db.Print();
-            mData = new Mutex();
+            Console.Write("Server name:");
+            string serverName = Console.ReadLine();
+            Console.Write("Database name:");
+            string database = Console.ReadLine();
+            Console.Write("Username:");
+            string username = Console.ReadLine();
+            Console.Write("Password:");
+            string password = Console.ReadLine();
 
-            ushort port;
-            while (true)
+            using (context = new MainDbContext(serverName, database, username, password))
             {
-                Console.Write("Enter the port: ");
-                string portStr = Console.ReadLine();
-                try
-                {
-                    port = ushort.Parse(portStr);
-                }
-                catch
-                {
-                    Console.WriteLine("Invalid port");
-                    continue;
-                }
-                break;
-            }
+                db = new Database(context);
+                //db.Print();
+                mData = new Mutex();
 
-            TCPServer server = new TCPServer(port);
-            RequestHandler requestHandler = new RequestHandler(db, server);
-            requestHandler.Start();
-
-            //Thread serverThread = new Thread(new ThreadStart(RunServer));
-            //serverThread.Start();
-
-            Console.WriteLine("Server started.");
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (input == "quit" || input == "exit")
+                ushort port;
+                while (true)
                 {
-                    Environment.Exit(0);
-                }
-                else if (input == "clients")
-                {
-                    Console.WriteLine($"{server.ClientCount()} clients | {server.ThreadCount()} threads");
-                    continue;
+                    Console.Write("Enter the port: ");
+                    string portStr = Console.ReadLine();
+                    try
+                    {
+                        port = ushort.Parse(portStr);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid port");
+                        continue;
+                    }
+                    break;
                 }
 
-                object result;
-                lock (mData)
+                TCPServer server = new TCPServer(port);
+                RequestHandler requestHandler = new RequestHandler(db, server);
+                requestHandler.Start();
+
+                //Thread serverThread = new Thread(new ThreadStart(RunServer));
+                //serverThread.Start();
+
+                Console.WriteLine("Server started.");
+                while (true)
                 {
-                    result = db.Execute(input);
+                    string input = Console.ReadLine();
+                    if (input == "quit" || input == "exit")
+                    {
+                        Environment.Exit(0);
+                    }
+                    else if (input == "clients")
+                    {
+                        Console.WriteLine($"{server.ClientCount()} clients | {server.ThreadCount()} threads");
+                        continue;
+                    }
+
+                    object result;
+                    lock (mData)
+                    {
+                        result = db.Execute(input);
+                    }
+                    if (result != null)
+                        Console.WriteLine(result);
+                    else
+                        Console.WriteLine("Command returned null");
                 }
-                if (result != null)
-                    Console.WriteLine(result);
-                else
-                    Console.WriteLine("Command returned null");
             }
         }
 

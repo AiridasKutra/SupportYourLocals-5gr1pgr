@@ -12,7 +12,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -79,12 +78,12 @@ namespace localhostUI.UiEvent
 
             this.eventNameBox.Text = this.@event.Name;
             this.priceBox.Value = this.@event.Price;
-            this.addressBox.Text = this.@event.Address;
+            this.addressBox.Text = this.@event.Address.ToStringNormal();
             this.descriptionBox.Text = this.@event.Description;
             try
             {
                 this.dateBox.Value = this.@event.StartDate;
-                this.sportBox.Text = this.@event.GetSports()[0];
+                this.sportBox.Text = this.@event.Sports[0];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -106,7 +105,7 @@ namespace localhostUI.UiEvent
             photoPanel.Controls.Clear();
 
             int counter = 0;
-            foreach (var link in @event.GetImages())
+            foreach (var link in @event.Images)
             {
                 // Add picture
                 PictureBox picture = new PictureBox();
@@ -141,7 +140,7 @@ namespace localhostUI.UiEvent
                 removeButton.Padding = new Padding(0);
                 removeButton.Click += (sender, e) =>
                 {
-                    @event.GetImages().Remove(link);
+                    @event.Images.Remove(link);
                     FillInPhotos();
                 };
                 photoPanel.Controls.Add(removeButton);
@@ -167,10 +166,10 @@ namespace localhostUI.UiEvent
 
         private void FillInEvent()
         {
-            this.@event.GetSports().Clear();
+            this.@event.Sports.Clear();
             this.@event.Name = this.eventNameBox.Text;
             this.@event.StartDate = this.dateBox.Value;
-            this.@event.AddSport(this.sportBox.Text);
+            this.@event.Sports.Add(this.sportBox.Text);
             this.@event.Price = this.priceBox.Value;
             this.@event.Description = this.descriptionBox.Text;
         }
@@ -183,13 +182,13 @@ namespace localhostUI.UiEvent
                 finishResultLabel.Text = "You cannot remove the name.";
                 return;
             }
-            if (this.addressBox.Text != this.@event.Address)
+            if (this.addressBox.Text != this.@event.Address.ToStringNormal())
             {
                 try
                 {
                     //EXTENTION METHOD
-                    this.@event.Address = this.addressBox.Text.FormatAddressString();
-                    MapPoint location = this.@event.Address.LatLongFromString();
+                    this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                    MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                     this.@event.Latitude = location.Latitude;
                     this.@event.Longitude = location.Longitude;
                 }
@@ -200,7 +199,8 @@ namespace localhostUI.UiEvent
                 }
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
+            Program.Client.EditEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
             origin.LoadMyEvents();
             this.Close();
@@ -216,8 +216,8 @@ namespace localhostUI.UiEvent
             }
             try {
                 //EXTENSION METHOD
-                this.@event.Address = this.addressBox.Text.FormatAddressString();
-                MapPoint location = this.@event.Address.LatLongFromString();
+                this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
                 this.@event.Latitude = location.Latitude;
                 this.@event.Longitude = location.Longitude;
             }
@@ -227,7 +227,8 @@ namespace localhostUI.UiEvent
                 return;
             }
             FillInEvent();
-            Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
+            Program.Client.CreateEvent(@event);
+            //Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
             origin.LoadMyEvents();
             this.Close();
@@ -235,7 +236,8 @@ namespace localhostUI.UiEvent
 
         private void DeleteEvent(object sender, EventArgs e)
         {
-            Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
+            Program.Client.DeleteEvent(@event.Id);
+            //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
             origin.LoadMyEvents();
             Close();
@@ -289,25 +291,25 @@ namespace localhostUI.UiEvent
 
         private void AddThumbnail(object sender, EventArgs e)
         {
-            if (@event.GetImages().Count == 0)
+            if (@event.Images.Count == 0)
             {
-                @event.AddImage("");
+                @event.Images.Add("");
             }
-            this.@event.GetImages()[0] = this.thumbnailLinkBox.Text;
+            this.@event.Images[0] = this.thumbnailLinkBox.Text;
             FillInPhotos();
             this.thumbnailLinkBox.Clear();
         }
 
         private void AddPhoto(object sender, EventArgs e)
         {
-            int index = @event.GetImages().IndexOf(imagineLinkBox.Text);
+            int index = @event.Images.IndexOf(imagineLinkBox.Text);
             if (index != -1)
             {
-                @event.GetImages()[index] = imagineLinkBox.Text;
+                @event.Images[index] = imagineLinkBox.Text;
             }
             else
             {
-                @event.AddImage(imagineLinkBox.Text);
+                @event.Images.Add(imagineLinkBox.Text);
             }
             FillInPhotos();
             imagineLinkBox.Clear();
