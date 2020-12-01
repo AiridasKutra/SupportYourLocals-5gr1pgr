@@ -60,14 +60,14 @@
             // 
             // headerLabel
             // 
-            this.headerLabel.AutoSize = true;
-            this.headerLabel.Font = new System.Drawing.Font("Arial Narrow", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.headerLabel.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.headerLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.headerLabel.Location = new System.Drawing.Point(355, 8);
+            this.headerLabel.Location = new System.Drawing.Point(300, 10);
             this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(261, 31);
+            this.headerLabel.Size = new System.Drawing.Size(400, 40);
             this.headerLabel.TabIndex = 1;
             this.headerLabel.Text = "Input event information";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dateLabel
             // 
