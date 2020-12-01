@@ -121,4 +121,10 @@
   <data name="CloseButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\closebutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UserMenuIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\usericon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserMenuIconHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\usericonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
