@@ -19,14 +19,27 @@ using System.Windows.Forms;
 
 namespace localhostUI.UiEvent
 {
-    public partial class UiEventDisplayPanel : Form
+    public partial class UiEventDisplayPanel : Form, IPanel
     {
-        private Form caller;
         private EventFull @event;
-
         private ChatManager chatManager;
 
-        public UiEventDisplayPanel(int eventId, Form caller)
+        private UiMain mainForm;
+        private IPanel caller;
+
+        public void Reload() { }
+
+        public Panel GetPanel()
+        {
+            return mainPanel;
+        }
+
+        public void SetMainRef(UiMain main)
+        {
+            mainForm = main;
+        }
+
+        public UiEventDisplayPanel(int eventId, IPanel caller)
         {
             this.caller = caller;
 
@@ -139,7 +152,7 @@ namespace localhostUI.UiEvent
 
         private void ReturnButton_Click(object sender, EventArgs e)
         {
-            Close();
+            mainForm.ShowPanel(caller);
         }
 
         private void ShowAddressButton_Click(object sender, EventArgs e)

@@ -32,7 +32,7 @@ namespace Common.Validation
 
     class Validator
     {
-        public static ValidationResults ValidateUsername(String username)
+        public static ValidationResults ValidateUsername(string username)
         {
             string input = username;
             int minChar = 5;
@@ -48,7 +48,7 @@ namespace Common.Validation
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = "Nickname must contain only letters, numbers or _"
+                    message = "Nickname must contain only letters, numbers, or underscores"
                 };
             }
             if (!matchAmount.Success)
@@ -56,7 +56,7 @@ namespace Common.Validation
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = $"Nickname must contain between {minChar} and {maxChar} chars"
+                    message = $"Nickname must contain between {minChar} and {maxChar} characters"
                 };
             }
             return new ValidationResults
@@ -66,11 +66,11 @@ namespace Common.Validation
             };
         }
 
-        public static ValidationResults ValidatePassword(String username)
+        public static ValidationResults ValidatePassword(string username)
         {
             string input = username;
             int minChar = 8;
-            int maxChar = 21;
+            int maxChar = 32;
             string hasNumber = @"[0-9]+";
             string hasUpperChar = @"[A-Z]+";
             string hasGoodAmountOfChars = $".{{{minChar},{maxChar}}}";
@@ -79,38 +79,48 @@ namespace Common.Validation
             Match matchNumber = Regex.Match(input, hasNumber);
             Match matchAmount = Regex.Match(input, hasGoodAmountOfChars);
 
-            if (!matchUpper.Success)
+            if (!matchUpper.Success || !matchNumber.Success || !matchAmount.Success)
             {
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = "Password must contain uppercase letters"
+                    message = $"Password must contain uppercase letters, numbers, and {minChar}-{maxChar} characters"
                 };
             }
-            if (!matchNumber.Success)
-            {
-                return new ValidationResults
-                {
-                    isValid = false,
-                    message = "Password must contain number"
-                };
-            }
-            if (!matchAmount.Success)
-            {
-                return new ValidationResults
-                {
-                    isValid = false,
-                    message = $"Password must contain between {minChar} and {maxChar} chars"
-                };
-            }
+
             return new ValidationResults
             {
                 isValid = true,
                 message = "Password is great!"
             };
+
+            //if (!matchUpper.Success)
+            //{
+            //    return new ValidationResults
+            //    {
+            //        isValid = false,
+            //        message = "Password must contain uppercase letters"
+            //    };
+            //}
+            //if (!matchNumber.Success)
+            //{
+            //    return new ValidationResults
+            //    {
+            //        isValid = false,
+            //        message = "Password must contain numbers"
+            //    };
+            //}
+            //if (!matchAmount.Success)
+            //{
+            //    return new ValidationResults
+            //    {
+            //        isValid = false,
+            //        message = $"Password must contain between {minChar} and {maxChar} characters"
+            //    };
+            //}
         }
 
-        public static ValidationResults ValidateEmail(String email)
+        public static ValidationResults ValidateEmail(string email)
         {
             try
             {
@@ -126,7 +136,7 @@ namespace Common.Validation
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = "Invalid input"
+                    message = "Invalid email input"
                 };
             }
         }
