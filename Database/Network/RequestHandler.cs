@@ -374,7 +374,16 @@ namespace Database.Network
                     SenderId = packets[0].SenderId
                 });
             }
-            catch { }
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    Data = Encoding.ASCII.GetBytes(jsonStr),
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId
+                });
+            }
         }
 
         private void SelectEventsFull(Packet[] packets)
@@ -399,7 +408,16 @@ namespace Database.Network
                     SenderId = packets[0].SenderId
                 });
             }
-            catch { }
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    Data = Encoding.ASCII.GetBytes(jsonStr),
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId
+                });
+            }
         }
 
         private void CreateEvent(Packet[] packets)
