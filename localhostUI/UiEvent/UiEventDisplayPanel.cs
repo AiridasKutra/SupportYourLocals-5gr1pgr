@@ -152,7 +152,7 @@ namespace localhostUI.UiEvent
 
         private void ReturnButton_Click(object sender, EventArgs e)
         {
-            Close();
+            mainForm.ShowPanel(caller);
         }
 
         private void ShowAddressButton_Click(object sender, EventArgs e)

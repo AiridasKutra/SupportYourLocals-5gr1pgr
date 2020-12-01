@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -110,7 +112,7 @@ namespace localhostUI
                     //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        mainForm.ShowPanel(new EventEditorPanel(eventData[0], true));
+                        mainForm.ShowPanel(new EventEditorPanel(this, eventData[0], true));
                         //new EventEditorPanel(this, eventData[0], true).Show();
                     }
                     catch (InvalidCastException)
@@ -199,7 +201,7 @@ namespace localhostUI
 
                 eventName.Click += (sender, e) =>
                 {
-                    mainForm.ShowPanel(new EventEditorPanel(draft, true));
+                    mainForm.ShowPanel(new EventEditorPanel(this, draft, true));
                     //new EventEditor(this, draft, true).Show();
                 };
 
@@ -215,7 +217,7 @@ namespace localhostUI
 
         private void createEventButton_Click(object sender, EventArgs e)
         {
-            mainForm.ShowPanel(new EventEditorPanel());
+            mainForm.ShowPanel(new EventEditorPanel(this));
             //new EventEditor(this).Show();
             //BackgroundWorker worker = new BackgroundWorker();
             //worker.DoWork += (s, e) =>

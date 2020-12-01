@@ -73,6 +73,7 @@
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.bannerPanel = new System.Windows.Forms.Panel();
+            this.overlayPicturePanel = new System.Windows.Forms.Panel();
             this.profileTab.SuspendLayout();
             this.currentEventsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDistanceSlider)).BeginInit();
@@ -508,11 +509,20 @@
             this.bannerPanel.Size = new System.Drawing.Size(100, 100);
             this.bannerPanel.TabIndex = 2;
             // 
+            // overlayPicturePanel
+            // 
+            this.overlayPicturePanel.Location = new System.Drawing.Point(32, 126);
+            this.overlayPicturePanel.Name = "overlayPicturePanel";
+            this.overlayPicturePanel.Size = new System.Drawing.Size(112, 104);
+            this.overlayPicturePanel.TabIndex = 3;
+            this.overlayPicturePanel.Visible = false;
+            // 
             // UiMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.ClientSize = new System.Drawing.Size(1445, 772);
+            this.Controls.Add(this.overlayPicturePanel);
             this.Controls.Add(this.bannerPanel);
             this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.menuTabs);
@@ -585,5 +595,6 @@
         private System.Windows.Forms.Button emanagerCreateEventButton;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel bannerPanel;
+        private System.Windows.Forms.Panel overlayPicturePanel;
     }
 }

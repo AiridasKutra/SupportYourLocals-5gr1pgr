@@ -13,6 +13,7 @@ using Common;
 using Common.Formatting;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace localhostUI
 {
@@ -28,12 +29,27 @@ namespace localhostUI
             }
         }
 
+        public bool loggedIn = false;
+
         int BANNER_HEIGHT = 100;
 
         public UiMain()
         {
             InitializeComponent();
+            DrawBanner();
 
+            overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
+            overlayPicturePanel.Location = new Point(0, 0);
+
+            // Disable horizontal scroll in content panel
+            contentPanel.HorizontalScroll.Maximum = 0;
+            contentPanel.AutoScroll = false;
+            contentPanel.VerticalScroll.Visible = false;
+            contentPanel.AutoScroll = true;
+        }
+
+        public void DrawBanner()
+        {
             bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
 
             // Create banner buttons
@@ -65,8 +81,46 @@ namespace localhostUI
                 ShowPanel(new MainEventManagerPanel());
             };
 
+            bannerPanel.Controls.Clear();
             bannerPanel.Controls.Add(currentEventsButton);
             bannerPanel.Controls.Add(eventManagerButton);
+
+            if (!loggedIn)
+            {
+                Button loginButton = new Button();
+                loginButton.Text = "LOGIN";
+                loginButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+                loginButton.ForeColor = Color.White;
+                loginButton.TextAlign = ContentAlignment.MiddleCenter;
+                loginButton.FlatStyle = FlatStyle.Flat;
+                loginButton.FlatAppearance.BorderSize = 0;
+                loginButton.Location = new Point(ClientSize.Width - 150, 0);
+                loginButton.Size = new Size(150, BANNER_HEIGHT);
+                loginButton.Click += (e, s) =>
+                {
+                    ShowPanel(new LoginPanel());
+                };
+                bannerPanel.Controls.Add(loginButton);
+            }
+            else
+            {
+                Button logoutButton = new Button();
+                logoutButton.Text = "LOGOUT";
+                logoutButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+                logoutButton.ForeColor = Color.White;
+                logoutButton.TextAlign = ContentAlignment.MiddleCenter;
+                logoutButton.FlatStyle = FlatStyle.Flat;
+                logoutButton.FlatAppearance.BorderSize = 0;
+                logoutButton.Location = new Point(ClientSize.Width - 150, 0);
+                logoutButton.Size = new Size(150, BANNER_HEIGHT);
+                logoutButton.Click += (e, s) =>
+                {
+                    loggedIn = false;
+                    Program.Client.Logout();
+                    DrawBanner();
+                };
+                bannerPanel.Controls.Add(logoutButton);
+            }
         }
 
         private void MainLoad(object sender, EventArgs e)
@@ -240,8 +294,8 @@ namespace localhostUI
             Console.WriteLine(LocationInformation.FormatAddress(userAdressBox.Text));
         }
 
-
-
+        [DllImport("user32.dll")]
+        private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
 
         // NEW CODE
         public void ShowPanel(IPanel panelForm)
@@ -255,12 +309,37 @@ namespace localhostUI
             contentPanel.Size = new Size(content.Size.Width, ClientSize.Height - BANNER_HEIGHT);
             contentPanel.Location = new Point((ClientSize.Width - content.Width) / 2, 100);
             contentPanel.Controls.Add(content);
+        }
 
-            // Disable horizontal scroll
-            contentPanel.HorizontalScroll.Maximum = 0;
-            contentPanel.AutoScroll = false;
-            contentPanel.VerticalScroll.Visible = false;
-            contentPanel.AutoScroll = true;
+        public void ShowImage(Image image)
+        {
+            //overlayPicturePanel
+            Bitmap background = new Bitmap(ClientSize.Width, ClientSize.Height);
+            DrawToBitmap(background, new Rectangle(0, 0, background.Width, background.Height));
+
+            for (int y = 0; y < background.Height; y++)
+            {
+                for (int x = 0; x < background.Width; x++)
+                {
+                    var pixel = background.GetPixel(x, y);
+                    Color newPixel = Color.FromArgb((int)(pixel.R * 0.5f), (int)(pixel.G * 0.5f), (int)(pixel.B * 0.5f));
+                    background.SetPixel(x, y, newPixel);
+                }
+            }
+
+            using (Graphics g = Graphics.FromImage(background))
+            {
+                int posX = (background.Width - image.Width) / 2;
+                int posY = (background.Height - image.Height) / 2;
+                g.DrawImage(image, posX, posY);
+            }
+
+            PictureBox pic = new PictureBox();
+            pic.Image = background;
+
+            overlayPicturePanel.Controls.Clear();
+            overlayPicturePanel.Controls.Add(pic);
+            overlayPicturePanel.Visible = true;
         }
         
         private void UiMain_Resize(object sender, EventArgs e)
@@ -275,7 +354,9 @@ namespace localhostUI
                 contentPanel.Location = new Point(newX, 100);
                 contentPanel.Size = new Size(contentPanel.Size.Width, ClientSize.Height - BANNER_HEIGHT);
 
-                bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
+                DrawBanner();
+
+                overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
             }
             catch { }
         }

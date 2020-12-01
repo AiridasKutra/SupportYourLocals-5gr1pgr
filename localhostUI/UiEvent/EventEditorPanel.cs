@@ -38,44 +38,46 @@ namespace localhostUI.UiEvent
             mainForm = main;
         }
 
-        public EventEditorPanel()
+        public EventEditorPanel(IPanel caller)
         {
             this.draft = false;
+            this.caller = caller;
 
             InitializeComponent();
-            this.FillInSports();
-            this.Text = "Create event";
-            this.finishButton.Text = "Create";
-            this.finishButton.Click += CreateEvent;
+            FillInSports();
+            Text = "Create event";
+            finishButton.Text = "Create";
+            finishButton.Click += CreateEvent;
 
             deleteEventButton.Visible = false;
             saveDraftButton.Visible = true;
         }
 
-        public EventEditorPanel(EventFull @event, bool draft = false)
+        public EventEditorPanel(IPanel caller, EventFull @event, bool draft = false)
         {
             this.draft = draft;
+            this.caller = caller;
 
             InitializeComponent();
 
-            this.Text = "Edit event";
+            Text = "Edit event";
             this.@event = @event;
-            this.headerLabel.Text = "Edit event information.";
-            this.FillInSports();
-            this.FillInBoxes();
-            this.FillInPhotos();
+            headerLabel.Text = "Edit event information.";
+            FillInSports();
+            FillInBoxes();
+            FillInPhotos();
 
             if (draft)
             {
                 finishButton.Text = "Create";
-                this.finishButton.Click += CreateEvent;
+                finishButton.Click += CreateEvent;
                 deleteEventButton.Visible = false;
                 saveDraftButton.Visible = true;
             }
             else
             {
                 finishButton.Text = "Save";
-                this.finishButton.Click += EditEvent;
+                finishButton.Click += EditEvent;
                 deleteEventButton.Visible = true;
                 saveDraftButton.Visible = false;
             }

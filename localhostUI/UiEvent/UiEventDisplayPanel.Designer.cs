@@ -50,10 +50,10 @@
             this.eventName.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.eventName.Location = new System.Drawing.Point(82, 10);
             this.eventName.Name = "eventName";
-            this.eventName.Size = new System.Drawing.Size(556, 29);
+            this.eventName.Size = new System.Drawing.Size(526, 29);
             this.eventName.TabIndex = 0;
             this.eventName.Text = "event name";
-            this.eventName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.eventName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // sportDisplayBar
             // 

@@ -184,45 +184,45 @@ namespace localhostUI
                     }
                     catch { }
                 };
-                try
-                {
                     BackgroundWorker worker = new BackgroundWorker();
                     worker.DoWork += (s, e) =>
                     {
-                        using (WebClient client = new WebClient())
+                        try
                         {
-                            Stream stream = client.OpenRead(eBrief.Images[0]);
-                            Bitmap bitmap = new Bitmap(stream);
-
-                            float ratio;
-                            if (bitmap.Width / (float)bitmap.Height > 16.0f / 9.0f)
+                            using (WebClient client = new WebClient())
                             {
-                                ratio = IMAGE_HEIGHT / (float)bitmap.Height;
+                                Stream stream = client.OpenRead(eBrief.Images[0]);
+                                Bitmap bitmap = new Bitmap(stream);
+
+                                float ratio;
+                                if (bitmap.Width / (float)bitmap.Height > 16.0f / 9.0f)
+                                {
+                                    ratio = IMAGE_HEIGHT / (float)bitmap.Height;
+                                }
+                                else
+                                {
+                                    ratio = IMAGE_WIDTH / (float)bitmap.Width;
+                                }
+
+                                int newWidth = (int)(bitmap.Width * ratio);
+                                int newHeight = (int)(bitmap.Height * ratio);
+                                int posX = -Math.Abs(newWidth - IMAGE_WIDTH) / 2;
+                                int posY = -Math.Abs(newHeight - IMAGE_HEIGHT) / 2;
+
+                                Bitmap scaledBitmap = new Bitmap(newWidth, newHeight);
+                                Graphics g = Graphics.FromImage(scaledBitmap);
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.DrawImage(bitmap, posX, posY, newWidth, newHeight);
+                                g.Dispose();
+                                thumbnail.Image = scaledBitmap;
+
+                                stream.Flush();
+                                stream.Close();
                             }
-                            else
-                            {
-                                ratio = IMAGE_WIDTH / (float)bitmap.Width;
-                            }
-
-                            int newWidth = (int)(bitmap.Width * ratio);
-                            int newHeight = (int)(bitmap.Height * ratio);
-                            int posX = -Math.Abs(newWidth - IMAGE_WIDTH) / 2;
-                            int posY = -Math.Abs(newHeight - IMAGE_HEIGHT) / 2;
-
-                            Bitmap scaledBitmap = new Bitmap(newWidth, newHeight);
-                            Graphics g = Graphics.FromImage(scaledBitmap);
-                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            g.DrawImage(bitmap, posX, posY, newWidth, newHeight);
-                            g.Dispose();
-                            thumbnail.Image = scaledBitmap;
-
-                            stream.Flush();
-                            stream.Close();
                         }
+                        catch { }
                     };
                     worker.RunWorkerAsync();
-                }
-                catch { }
 
                 // Name label
                 Label eventName = new Label();

@@ -55,11 +55,9 @@
             this.deleteEventButton = new System.Windows.Forms.Button();
             this.photoPanel = new System.Windows.Forms.Panel();
             this.mainPanel = new System.Windows.Forms.Panel();
-            
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).BeginInit();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
-            
             // 
             // headerLabel
             // 
@@ -316,6 +314,7 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.mainPanel.Controls.Add(this.deleteEventButton);
             this.mainPanel.Controls.Add(this.thumbnailLabel);
             this.mainPanel.Controls.Add(this.addPhotosLabel);
@@ -339,19 +338,19 @@
             this.mainPanel.Controls.Add(this.sportBox);
             this.mainPanel.Controls.Add(this.priceBox);
             this.mainPanel.Controls.Add(this.addressBox);
+            this.mainPanel.Controls.Add(this.photoPanel);
+            this.mainPanel.Controls.Add(this.finishResultLabel);
             this.mainPanel.Location = new System.Drawing.Point(37, 1);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(875, 600);
+            this.mainPanel.Size = new System.Drawing.Size(1000, 600);
             this.mainPanel.TabIndex = 20;
             // 
             // EventEditorPanel
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(947, 602);
-            this.Controls.Add(this.photoPanel);
+            this.ClientSize = new System.Drawing.Size(1055, 602);
             this.Controls.Add(this.mainPanel);
-            this.Controls.Add(this.finishResultLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "EventEditorPanel";
             this.Load += new System.EventHandler(this.EventEditor_Load);
