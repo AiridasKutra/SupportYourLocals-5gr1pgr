@@ -112,14 +112,14 @@ namespace localhostUI
                     //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        mainForm.ShowPanel(new EventEditorPanel(this, eventData[0], true));
+                        mainForm.ShowPanel(new EventEditorPanel(this, eventData[0], false));
                         //new EventEditorPanel(this, eventData[0], true).Show();
                     }
                     catch (InvalidCastException)
                     {
                         Console.WriteLine($"ERROR: Event \"{@event.Name}\" can't be opened (invalid data)");
                     }
-                    catch (IndexOutOfRangeException)
+                    catch (ArgumentOutOfRangeException)
                     {
                         Console.WriteLine($"ERROR: No events with id '{@event.Id}' retrieved from database");
                     }
@@ -127,6 +127,7 @@ namespace localhostUI
                     {
                         Console.WriteLine($"ERROR: database reader returned null");
                     }
+
                 };
 
                 eventPanel.Controls.Add(eventName);
