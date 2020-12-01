@@ -14,6 +14,7 @@ using Common.Formatting;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.ComponentModel;
 
 namespace localhostUI
 {
@@ -33,19 +34,72 @@ namespace localhostUI
 
         int BANNER_HEIGHT = 100;
 
+        int USER_MENU_WIDTH = 250;
+
         public UiMain()
         {
             InitializeComponent();
             DrawBanner();
+            bannerPanel.BringToFront();
 
             overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
             overlayPicturePanel.Location = new Point(0, 0);
+
+            // Move user menu panel
+            userMenuPanel.Location = new Point(ClientSize.Width - USER_MENU_WIDTH, BANNER_HEIGHT);
+            userMenuPanel.Size = new Size(USER_MENU_WIDTH, 300);
 
             // Disable horizontal scroll in content panel
             contentPanel.HorizontalScroll.Maximum = 0;
             contentPanel.AutoScroll = false;
             contentPanel.VerticalScroll.Visible = false;
             contentPanel.AutoScroll = true;
+        }
+
+        public bool menuOpened = false;
+        private DateTime animationStart;
+
+        private void OpenMenu()
+        {
+            menuOpened = true;
+            userMenuPanel.Visible = true;
+            animationStart = DateTime.Now;
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += RunAnimation;
+            worker.RunWorkerAsync();
+        }
+
+        private void CloseMenu()
+        {
+            menuOpened = false;
+            animationStart = DateTime.Now;
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += RunAnimation;
+            worker.RunWorkerAsync();
+        }
+
+        private void RunAnimation(object sender, EventArgs args)
+        {
+            while ((DateTime.Now - animationStart).TotalMilliseconds < 250)
+            {
+                double progress = (DateTime.Now - animationStart).TotalMilliseconds / 250;
+                progress = Math.Sin(progress * Math.PI / 2);
+                int posX = ClientSize.Width - USER_MENU_WIDTH;
+                int posY;
+                if (menuOpened)
+                {
+                    posY = BANNER_HEIGHT - (int)(userMenuPanel.Height * (1 - progress));
+                }
+                else
+                {
+                    posY = BANNER_HEIGHT - (int)(userMenuPanel.Height * progress);
+                }
+                Invoke((Action)(() => userMenuPanel.Location = new Point(posX, posY)));
+            }
+            if (!menuOpened)
+            {
+                Invoke((Action)(() => userMenuPanel.Visible = false));
+            }
         }
 
         public void DrawBanner()
@@ -85,42 +139,74 @@ namespace localhostUI
             bannerPanel.Controls.Add(currentEventsButton);
             bannerPanel.Controls.Add(eventManagerButton);
 
-            if (!loggedIn)
+            // Create menu panel
+            userMenuPanel.Visible = false;
+
+            PictureBox menuButtonPicture = new PictureBox();
+            menuButtonPicture.Location = new Point(ClientSize.Width - BANNER_HEIGHT, 0);
+            menuButtonPicture.Size = new Size(BANNER_HEIGHT, BANNER_HEIGHT);
+            menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
+            menuButtonPicture.MouseEnter += (e, s) =>
             {
-                Button loginButton = new Button();
-                loginButton.Text = "LOGIN";
-                loginButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
-                loginButton.ForeColor = Color.White;
-                loginButton.TextAlign = ContentAlignment.MiddleCenter;
-                loginButton.FlatStyle = FlatStyle.Flat;
-                loginButton.FlatAppearance.BorderSize = 0;
-                loginButton.Location = new Point(ClientSize.Width - 150, 0);
-                loginButton.Size = new Size(150, BANNER_HEIGHT);
-                loginButton.Click += (e, s) =>
-                {
-                    ShowPanel(new LoginPanel());
-                };
-                bannerPanel.Controls.Add(loginButton);
-            }
-            else
+                menuButtonPicture.Image = Properties.Resources.UserMenuIconHover;
+            };
+            menuButtonPicture.MouseLeave += (e, s) =>
             {
-                Button logoutButton = new Button();
-                logoutButton.Text = "LOGOUT";
-                logoutButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
-                logoutButton.ForeColor = Color.White;
-                logoutButton.TextAlign = ContentAlignment.MiddleCenter;
-                logoutButton.FlatStyle = FlatStyle.Flat;
-                logoutButton.FlatAppearance.BorderSize = 0;
-                logoutButton.Location = new Point(ClientSize.Width - 150, 0);
-                logoutButton.Size = new Size(150, BANNER_HEIGHT);
-                logoutButton.Click += (e, s) =>
+                if (!menuOpened)
                 {
-                    loggedIn = false;
-                    Program.Client.Logout();
-                    DrawBanner();
-                };
-                bannerPanel.Controls.Add(logoutButton);
-            }
+                    menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
+                }
+            };
+            menuButtonPicture.Click += (e, s) =>
+            {
+                if (!menuOpened)
+                {
+                    OpenMenu();
+                }
+                else
+                {
+                    CloseMenu();
+                }
+            };
+
+            bannerPanel.Controls.Add(menuButtonPicture);
+
+            //if (!loggedIn)
+            //{
+            //    Button loginButton = new Button();
+            //    loginButton.Text = "LOGIN";
+            //    loginButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+            //    loginButton.ForeColor = Color.White;
+            //    loginButton.TextAlign = ContentAlignment.MiddleCenter;
+            //    loginButton.FlatStyle = FlatStyle.Flat;
+            //    loginButton.FlatAppearance.BorderSize = 0;
+            //    loginButton.Location = new Point(ClientSize.Width - 150, 0);
+            //    loginButton.Size = new Size(150, BANNER_HEIGHT);
+            //    loginButton.Click += (e, s) =>
+            //    {
+            //        ShowPanel(new LoginPanel());
+            //    };
+            //    bannerPanel.Controls.Add(loginButton);
+            //}
+            //else
+            //{
+            //    Button logoutButton = new Button();
+            //    logoutButton.Text = "LOGOUT";
+            //    logoutButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+            //    logoutButton.ForeColor = Color.White;
+            //    logoutButton.TextAlign = ContentAlignment.MiddleCenter;
+            //    logoutButton.FlatStyle = FlatStyle.Flat;
+            //    logoutButton.FlatAppearance.BorderSize = 0;
+            //    logoutButton.Location = new Point(ClientSize.Width - 150, 0);
+            //    logoutButton.Size = new Size(150, BANNER_HEIGHT);
+            //    logoutButton.Click += (e, s) =>
+            //    {
+            //        loggedIn = false;
+            //        Program.Client.Logout();
+            //        DrawBanner();
+            //    };
+            //    bannerPanel.Controls.Add(logoutButton);
+            //}
         }
 
         private void MainLoad(object sender, EventArgs e)

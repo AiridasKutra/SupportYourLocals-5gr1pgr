@@ -74,6 +74,7 @@
             this.contentPanel = new System.Windows.Forms.Panel();
             this.bannerPanel = new System.Windows.Forms.Panel();
             this.overlayPicturePanel = new System.Windows.Forms.Panel();
+            this.userMenuPanel = new System.Windows.Forms.Panel();
             this.profileTab.SuspendLayout();
             this.currentEventsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDistanceSlider)).BeginInit();
@@ -517,11 +518,21 @@
             this.overlayPicturePanel.TabIndex = 3;
             this.overlayPicturePanel.Visible = false;
             // 
+            // userMenuPanel
+            // 
+            this.userMenuPanel.AutoSize = true;
+            this.userMenuPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.userMenuPanel.Location = new System.Drawing.Point(946, 108);
+            this.userMenuPanel.Name = "userMenuPanel";
+            this.userMenuPanel.Size = new System.Drawing.Size(250, 12);
+            this.userMenuPanel.TabIndex = 4;
+            // 
             // UiMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.ClientSize = new System.Drawing.Size(1445, 772);
+            this.Controls.Add(this.userMenuPanel);
             this.Controls.Add(this.overlayPicturePanel);
             this.Controls.Add(this.bannerPanel);
             this.Controls.Add(this.contentPanel);
@@ -544,6 +555,7 @@
             this.eventManagerTabNew.ResumeLayout(false);
             this.eventManagerTabNew.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -596,5 +608,6 @@
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel bannerPanel;
         private System.Windows.Forms.Panel overlayPicturePanel;
+        private System.Windows.Forms.Panel userMenuPanel;
     }
 }
