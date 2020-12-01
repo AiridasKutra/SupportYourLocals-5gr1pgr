@@ -235,7 +235,7 @@ namespace localhostUI.Backend
                     try
                     {
                         UserData user = Program.UserDataManager.GetData();
-                        return MathSupplement.Distance(user.Latitude, user.Longitude, (double)lat, (double)lon) <= kilometers * 1000.0;
+                        return LocationInformation.Distance(user.Latitude, user.Longitude, (double)lat, (double)lon) <= kilometers * 1000.0;
                     }
                     catch (InvalidCastException)
                     {

@@ -31,50 +31,66 @@
             this.noDatabaseConnectionHeader = new System.Windows.Forms.Label();
             this.noDatabaseConnectionDescription = new System.Windows.Forms.Label();
             this.continueOffline = new System.Windows.Forms.Button();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // noDatabaseConnectionHeader
             // 
             this.noDatabaseConnectionHeader.AutoSize = true;
-            this.noDatabaseConnectionHeader.Font = new System.Drawing.Font("Comic Sans MS", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.noDatabaseConnectionHeader.Location = new System.Drawing.Point(-2, 254);
+            this.noDatabaseConnectionHeader.Font = new System.Drawing.Font("Comic Sans MS", 44F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.noDatabaseConnectionHeader.Location = new System.Drawing.Point(-4, 203);
             this.noDatabaseConnectionHeader.Name = "noDatabaseConnectionHeader";
-            this.noDatabaseConnectionHeader.Size = new System.Drawing.Size(513, 53);
+            this.noDatabaseConnectionHeader.Size = new System.Drawing.Size(1004, 103);
             this.noDatabaseConnectionHeader.TabIndex = 0;
             this.noDatabaseConnectionHeader.Text = "Can\'t connect to the server";
             // 
             // noDatabaseConnectionDescription
             // 
+            this.noDatabaseConnectionDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.noDatabaseConnectionDescription.AutoSize = true;
-            this.noDatabaseConnectionDescription.Location = new System.Drawing.Point(11, 321);
+            this.noDatabaseConnectionDescription.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.noDatabaseConnectionDescription.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.noDatabaseConnectionDescription.Location = new System.Drawing.Point(127, 328);
             this.noDatabaseConnectionDescription.Name = "noDatabaseConnectionDescription";
-            this.noDatabaseConnectionDescription.Size = new System.Drawing.Size(342, 30);
+            this.noDatabaseConnectionDescription.Size = new System.Drawing.Size(831, 50);
             this.noDatabaseConnectionDescription.TabIndex = 1;
-            this.noDatabaseConnectionDescription.Text = "A connection to the server cannot be established.\r\nYou can still use the offline " +
-    "mode by pressing the button below.";
+            this.noDatabaseConnectionDescription.Text = "A connection to the server cannot be established.\r\n";
+            this.noDatabaseConnectionDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // continueOffline
             // 
-            this.continueOffline.Location = new System.Drawing.Point(11, 372);
+            this.continueOffline.Location = new System.Drawing.Point(427, 400);
+            this.continueOffline.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.continueOffline.Name = "continueOffline";
-            this.continueOffline.Size = new System.Drawing.Size(75, 23);
+            this.continueOffline.Size = new System.Drawing.Size(129, 77);
             this.continueOffline.TabIndex = 2;
-            this.continueOffline.Text = "Continue";
+            this.continueOffline.Text = "Refresh";
             this.continueOffline.UseVisualStyleBackColor = true;
-            this.continueOffline.Click += new System.EventHandler(this.button1_Click);
+            this.continueOffline.Click += new System.EventHandler(this.Refresh);
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Controls.Add(this.noDatabaseConnectionHeader);
+            this.mainPanel.Controls.Add(this.continueOffline);
+            this.mainPanel.Controls.Add(this.noDatabaseConnectionDescription);
+            this.mainPanel.Location = new System.Drawing.Point(38, 2);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(1000, 800);
+            this.mainPanel.TabIndex = 3;
             // 
             // NoDatabaseMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 422);
-            this.Controls.Add(this.continueOffline);
-            this.Controls.Add(this.noDatabaseConnectionDescription);
-            this.Controls.Add(this.noDatabaseConnectionHeader);
+            this.ClientSize = new System.Drawing.Size(1082, 803);
+            this.Controls.Add(this.mainPanel);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "NoDatabaseMain";
             this.Text = "Form1";
+            this.mainPanel.ResumeLayout(false);
+            this.mainPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -83,5 +99,6 @@
         private System.Windows.Forms.Label noDatabaseConnectionHeader;
         private System.Windows.Forms.Label noDatabaseConnectionDescription;
         private System.Windows.Forms.Button continueOffline;
+        private System.Windows.Forms.Panel mainPanel;
     }
 }
