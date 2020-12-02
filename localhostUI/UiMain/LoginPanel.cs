@@ -41,9 +41,14 @@ namespace localhostUI
             {
                 Program.Client.SetVfid(vfid);
                 mainForm.loggedIn = true;
+                mainForm.ShowPanel(new MainEventListPanel(null));
+                mainForm.DrawBanner();
             }
-            mainForm.ShowPanel(new MainEventListPanel(null));
-            mainForm.DrawBanner();
+            else
+            {
+                resultsLabel.Text = "• Invalid credentials";
+                resultsLabel.Visible = true;
+            }
         }
     }
 }

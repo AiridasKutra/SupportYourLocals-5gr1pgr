@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.titleLabel = new System.Windows.Forms.Label();
+            this.contentPanel = new System.Windows.Forms.Panel();
             this.loginButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.emailTextBox = new System.Windows.Forms.TextBox();
-            this.contentPanel = new System.Windows.Forms.Panel();
-            this.titleLabel = new System.Windows.Forms.Label();
+            this.resultsLabel = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.SuspendLayout();
@@ -41,12 +42,35 @@
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.mainPanel.Controls.Add(this.resultsLabel);
             this.mainPanel.Controls.Add(this.titleLabel);
             this.mainPanel.Controls.Add(this.contentPanel);
             this.mainPanel.Location = new System.Drawing.Point(8, 9);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 474);
             this.mainPanel.TabIndex = 0;
+            // 
+            // titleLabel
+            // 
+            this.titleLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.titleLabel.ForeColor = System.Drawing.Color.Gray;
+            this.titleLabel.Location = new System.Drawing.Point(300, 40);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(400, 40);
+            this.titleLabel.TabIndex = 4;
+            this.titleLabel.Text = "Login";
+            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // contentPanel
+            // 
+            this.contentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.contentPanel.Controls.Add(this.loginButton);
+            this.contentPanel.Controls.Add(this.passwordTextBox);
+            this.contentPanel.Controls.Add(this.emailTextBox);
+            this.contentPanel.Location = new System.Drawing.Point(300, 120);
+            this.contentPanel.Name = "contentPanel";
+            this.contentPanel.Size = new System.Drawing.Size(400, 199);
+            this.contentPanel.TabIndex = 3;
             // 
             // loginButton
             // 
@@ -80,27 +104,16 @@
             this.emailTextBox.Size = new System.Drawing.Size(300, 26);
             this.emailTextBox.TabIndex = 0;
             // 
-            // contentPanel
+            // resultsLabel
             // 
-            this.contentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.contentPanel.Controls.Add(this.loginButton);
-            this.contentPanel.Controls.Add(this.passwordTextBox);
-            this.contentPanel.Controls.Add(this.emailTextBox);
-            this.contentPanel.Location = new System.Drawing.Point(300, 120);
-            this.contentPanel.Name = "contentPanel";
-            this.contentPanel.Size = new System.Drawing.Size(400, 199);
-            this.contentPanel.TabIndex = 3;
-            // 
-            // titleLabel
-            // 
-            this.titleLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.titleLabel.ForeColor = System.Drawing.Color.Gray;
-            this.titleLabel.Location = new System.Drawing.Point(300, 40);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(400, 40);
-            this.titleLabel.TabIndex = 4;
-            this.titleLabel.Text = "Login";
-            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.resultsLabel.ForeColor = System.Drawing.Color.Red;
+            this.resultsLabel.Location = new System.Drawing.Point(200, 331);
+            this.resultsLabel.Name = "resultsLabel";
+            this.resultsLabel.Size = new System.Drawing.Size(600, 54);
+            this.resultsLabel.TabIndex = 5;
+            this.resultsLabel.Text = "Result";
+            this.resultsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.resultsLabel.Visible = false;
             // 
             // LoginPanel
             // 
@@ -127,5 +140,6 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Label resultsLabel;
     }
 }

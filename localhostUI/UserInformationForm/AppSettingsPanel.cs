@@ -6,18 +6,36 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace localhostUI.UserInformationForm
+namespace localhostUI
 {
-    public partial class AppSettingsPanel : Form
+    public partial class AppSettingsPanel : Form, IPanel
     {
-        /*
-         * Dark mode
-         * Auto log-in
-         * 
-         */
+        private UiMain mainForm;
+        private IPanel caller;
+
+        public void Reload()
+        {
+
+        }
+
+        public Panel GetPanel()
+        {
+            return mainPanel;
+        }
+
+        public void SetMainRef(UiMain main)
+        {
+            mainForm = main;
+        }
+
         public AppSettingsPanel()
         {
             InitializeComponent();
+        }
+
+        private void darkModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

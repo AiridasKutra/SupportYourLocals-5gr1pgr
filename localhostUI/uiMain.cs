@@ -113,13 +113,13 @@ namespace localhostUI
             // Create banner buttons
             Button currentEventsButton = new Button();
             currentEventsButton.Text = "SYL";
-            currentEventsButton.Font = new Font("Arial", 30.0f, FontStyle.Bold);
+            currentEventsButton.Font = new Font("Arial", 50.0f, FontStyle.Bold);
             currentEventsButton.ForeColor = Color.LightGray;
             currentEventsButton.TextAlign = ContentAlignment.MiddleCenter;
             currentEventsButton.FlatStyle = FlatStyle.Flat;
             currentEventsButton.FlatAppearance.BorderSize = 0;
             currentEventsButton.Location = new Point(0, 0);
-            currentEventsButton.Size = new Size(150, BANNER_HEIGHT);
+            currentEventsButton.Size = new Size(200, BANNER_HEIGHT);
             currentEventsButton.Click += (e, s) =>
             {
                 ShowPanel(new MainEventListPanel(this));
@@ -132,7 +132,7 @@ namespace localhostUI
             eventManagerButton.TextAlign = ContentAlignment.MiddleCenter;
             eventManagerButton.FlatStyle = FlatStyle.Flat;
             eventManagerButton.FlatAppearance.BorderSize = 0;
-            eventManagerButton.Location = new Point(150, 0);
+            eventManagerButton.Location = new Point(200, 0);
             eventManagerButton.Size = new Size(200, BANNER_HEIGHT);
             eventManagerButton.Click += (e, s) =>
             {
@@ -240,15 +240,15 @@ namespace localhostUI
 
         private void accountButton_Click(object sender, EventArgs e)
         {
-
+            ShowPanel(new AccountSettingsPanel());
         }
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-
+            ShowPanel(new AppSettingsPanel());
         }
 
-        private void logoutButton_Click(object sender, EventArgs e)
+        public void logoutButton_Click(object sender, EventArgs e)
         {
             Program.Client.Logout();
             loggedIn = false;
@@ -480,17 +480,23 @@ namespace localhostUI
         {
             try
             {
+                // Move and resize content panel
                 int newX = (Size.Width - contentPanel.Controls[0].Width) / 2;
                 if (newX < 0)
                 {
                     newX = 0;
                 }
                 contentPanel.Location = new Point(newX, 100);
-                contentPanel.Size = new Size(contentPanel.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+                if (contentPanel.Size.Height != ClientSize.Height - BANNER_HEIGHT)
+                {
+                    contentPanel.Size = new Size(contentPanel.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+                    contentPanel.Invalidate();
+                }
 
+                // Redraw banner
                 DrawBanner();
 
-                overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
+                //overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
             }
             catch { }
         }

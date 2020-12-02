@@ -1,4 +1,4 @@
-﻿namespace localhostUI.UserInformationForm
+﻿namespace localhostUI
 {
     partial class AppSettingsPanel
     {
@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.autoLogInLabel = new System.Windows.Forms.Label();
-            this.darkmodeLabel = new System.Windows.Forms.Label();
-            this.darkModeCheckBox = new System.Windows.Forms.CheckBox();
-            this.autoLogInCheckBox = new System.Windows.Forms.CheckBox();
             this.headerLabel = new System.Windows.Forms.Label();
+            this.autoLogInCheckBox = new System.Windows.Forms.CheckBox();
+            this.darkModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.darkmodeLabel = new System.Windows.Forms.Label();
+            this.autoLogInLabel = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainPanel
             // 
+            this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.mainPanel.Controls.Add(this.headerLabel);
             this.mainPanel.Controls.Add(this.autoLogInCheckBox);
             this.mainPanel.Controls.Add(this.darkModeCheckBox);
@@ -49,65 +50,67 @@
             this.mainPanel.Size = new System.Drawing.Size(1000, 500);
             this.mainPanel.TabIndex = 0;
             // 
-            // autoLogInLabel
+            // headerLabel
             // 
-            this.autoLogInLabel.AutoSize = true;
-            this.autoLogInLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.autoLogInLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.autoLogInLabel.Location = new System.Drawing.Point(97, 78);
-            this.autoLogInLabel.Name = "autoLogInLabel";
-            this.autoLogInLabel.Size = new System.Drawing.Size(103, 23);
-            this.autoLogInLabel.TabIndex = 0;
-            this.autoLogInLabel.Text = "Auto log-in";
-            // 
-            // darkmodeLabel
-            // 
-            this.darkmodeLabel.AutoSize = true;
-            this.darkmodeLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.darkmodeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.darkmodeLabel.Location = new System.Drawing.Point(97, 131);
-            this.darkmodeLabel.Name = "darkmodeLabel";
-            this.darkmodeLabel.Size = new System.Drawing.Size(107, 23);
-            this.darkmodeLabel.TabIndex = 1;
-            this.darkmodeLabel.Text = "Dark mode";
-            // 
-            // darkModeCheckBox
-            // 
-            this.darkModeCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.darkModeCheckBox.Location = new System.Drawing.Point(256, 134);
-            this.darkModeCheckBox.Name = "darkModeCheckBox";
-            this.darkModeCheckBox.Size = new System.Drawing.Size(20, 24);
-            this.darkModeCheckBox.TabIndex = 2;
-            this.darkModeCheckBox.UseVisualStyleBackColor = true;
+            this.headerLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.headerLabel.ForeColor = System.Drawing.Color.Gray;
+            this.headerLabel.Location = new System.Drawing.Point(300, 40);
+            this.headerLabel.Name = "headerLabel";
+            this.headerLabel.Size = new System.Drawing.Size(400, 40);
+            this.headerLabel.TabIndex = 4;
+            this.headerLabel.Text = "Application settings";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // autoLogInCheckBox
             // 
             this.autoLogInCheckBox.AutoSize = true;
             this.autoLogInCheckBox.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.autoLogInCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.autoLogInCheckBox.Location = new System.Drawing.Point(256, 82);
+            this.autoLogInCheckBox.Location = new System.Drawing.Point(256, 126);
             this.autoLogInCheckBox.Name = "autoLogInCheckBox";
             this.autoLogInCheckBox.Size = new System.Drawing.Size(15, 14);
             this.autoLogInCheckBox.TabIndex = 3;
             this.autoLogInCheckBox.UseVisualStyleBackColor = true;
             // 
-            // headerLabel
+            // darkModeCheckBox
             // 
-            this.headerLabel.AutoSize = true;
-            this.headerLabel.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.headerLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.headerLabel.Location = new System.Drawing.Point(302, 16);
-            this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(301, 39);
-            this.headerLabel.TabIndex = 4;
-            this.headerLabel.Text = "Application settings";
+            this.darkModeCheckBox.AutoSize = true;
+            this.darkModeCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
+            this.darkModeCheckBox.Location = new System.Drawing.Point(256, 179);
+            this.darkModeCheckBox.Name = "darkModeCheckBox";
+            this.darkModeCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.darkModeCheckBox.TabIndex = 2;
+            this.darkModeCheckBox.UseVisualStyleBackColor = true;
+            this.darkModeCheckBox.CheckedChanged += new System.EventHandler(this.darkModeCheckBox_CheckedChanged);
+            // 
+            // darkmodeLabel
+            // 
+            this.darkmodeLabel.AutoSize = true;
+            this.darkmodeLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.darkmodeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
+            this.darkmodeLabel.Location = new System.Drawing.Point(97, 173);
+            this.darkmodeLabel.Name = "darkmodeLabel";
+            this.darkmodeLabel.Size = new System.Drawing.Size(107, 23);
+            this.darkmodeLabel.TabIndex = 1;
+            this.darkmodeLabel.Text = "Dark mode";
+            // 
+            // autoLogInLabel
+            // 
+            this.autoLogInLabel.AutoSize = true;
+            this.autoLogInLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.autoLogInLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
+            this.autoLogInLabel.Location = new System.Drawing.Point(97, 120);
+            this.autoLogInLabel.Name = "autoLogInLabel";
+            this.autoLogInLabel.Size = new System.Drawing.Size(103, 23);
+            this.autoLogInLabel.TabIndex = 0;
+            this.autoLogInLabel.Text = "Auto log-in";
             // 
             // AppSettingsPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1084, 811);
             this.Controls.Add(this.mainPanel);
+            this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "AppSettingsPanel";
             this.Text = "localhost";
             this.mainPanel.ResumeLayout(false);
