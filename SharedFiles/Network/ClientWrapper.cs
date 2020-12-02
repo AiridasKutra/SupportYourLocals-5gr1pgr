@@ -595,6 +595,24 @@ namespace Common.Network
             return Encoding.ASCII.GetString(packet.Data);
         }
 
+        public uint SelectAccountPermissions(int id)
+        {
+            SendVfid();
+
+            Packet pack = new Packet
+            {
+                PacketId = (uint)PacketType.SELECT_ACCOUNT_PERMISSIONS,
+                Data = BitConverter.GetBytes(id)
+            };
+
+            client.AddToSendQueue(pack);
+            client.SendQueue();
+            WaitForPacket();
+
+            Packet packet = client.GetPacket();
+            return BitConverter.ToUInt32(packet.Data);
+        }
+
 
 
 
