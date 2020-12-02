@@ -67,12 +67,9 @@ namespace localhostUI.UiEvent
                 sportLabel.AutoSize = true;
                 sportLabel.Text = sport;
                 sportLabel.BackColor = Color.FromArgb(230, 230, 230);
-                sportLabel.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
+                sportLabel.Font = new Font("Arial", 12, FontStyle.Bold);
                 sportDisplayBar.Controls.Add(sportLabel);
             }
-
-            // Address
-            addressLabel.Text = @event.Address.ToStringNormal();
 
             // Distance
             UserData user = Program.UserDataManager.GetData();
@@ -86,8 +83,69 @@ namespace localhostUI.UiEvent
                 distanceLabel.Text = $"{distance / 1000.0:0.0}km";
             }
 
+            // Distance and address separator
+            separator1.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width, separator1.Location.Y);
+
+            // Address
+            addressLabel.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width + 10, addressLabel.Location.Y);
+            addressLabel.Text = @event.Address.ToStringNormal();
+
+            // Show map button
+            showMapsButton.Location = new Point(addressLabel.Location.X + addressLabel.Size.Width + 5, showMapsButton.Location.Y);
+
+            // Load images
+            List<string> imageLinks = @event.Images;
+            for (int i = 0; i < imageLinks.Count; i++)
+            {
+                PictureBox picture = new PictureBox();
+                picture.Size = new Size(180, 180);
+                picture.Location = new Point(200 * i, 0);
+                picture.BorderStyle = BorderStyle.None;
+                try
+                {
+                    using (WebClient client = new WebClient())
+                    {
+                        Stream stream = client.OpenRead(imageLinks[i]);
+                        Bitmap bitmap = new Bitmap(stream);
+                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(180, 180));
+                        picture.Image = bitmapScaled;
+
+                        stream.Flush();
+                        stream.Close();
+                    }
+                }
+                catch { }
+                picturePanel.Controls.Add(picture);
+            }
+
+            picturePanel.VerticalScroll.Maximum = 0;
+            picturePanel.AutoScroll = false;
+            picturePanel.HorizontalScroll.Visible = false;
+            picturePanel.AutoScroll = true;
+
             // Description
             descriptionLabel.Text = @event.Description;
+
+            // Description and comment separator
+            separator4.Location = new Point(separator4.Location.X, descriptionLabel.Location.Y + descriptionLabel.Size.Height + 28);
+
+            // New comment
+            chatMessageTextBox.Location = new Point(chatMessageTextBox.Location.X, separator4.Location.Y + 20);
+
+            // Submit new comment
+            sendMessageButton.Location = new Point(sendMessageButton.Location.X, chatMessageTextBox.Location.Y + chatMessageTextBox.Size.Height + 10);
+
+            // Chat
+            chatMessageTextBox.KeyPress += new KeyPressEventHandler(Key_Press);
+
+            chatPanel.HorizontalScroll.Maximum = 0;
+            chatPanel.AutoScroll = false;
+            chatPanel.VerticalScroll.Visible = false;
+            chatPanel.AutoScroll = true;
+
+            // Start chat
+            chatManager = new ChatManager();
+            chatManager.Connect(@event.Id, chatPanel);
 
             // Links
             List<string> links = @event.Links;
@@ -106,48 +164,6 @@ namespace localhostUI.UiEvent
 
                 Controls.Add(linkText);
             }
-
-            // Load images
-            List<string> imageLinks = @event.Images;
-            for (int i = 0; i < imageLinks.Count; i++)
-            {
-                PictureBox picture = new PictureBox();
-                picture.Size = new Size(240, 180);
-                picture.Location = new Point(0, 200 * i);
-                picture.BorderStyle = BorderStyle.Fixed3D;
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        Stream stream = client.OpenRead(imageLinks[i]);
-                        Bitmap bitmap = new Bitmap(stream);
-                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(240, 180));
-                        picture.Image = bitmapScaled;
-
-                        stream.Flush();
-                        stream.Close();
-                    }
-                }
-                catch { }
-                picturePanel.Controls.Add(picture);
-            }
-
-            picturePanel.HorizontalScroll.Maximum = 0;
-            picturePanel.AutoScroll = false;
-            picturePanel.VerticalScroll.Visible = false;
-            picturePanel.AutoScroll = true;
-
-            // Chat
-            chatMessageTextBox.KeyPress += new KeyPressEventHandler(Key_Press);
-
-            chatPanel.HorizontalScroll.Maximum = 0;
-            chatPanel.AutoScroll = false;
-            chatPanel.VerticalScroll.Visible = false;
-            chatPanel.AutoScroll = true;
-
-            // Start chat
-            chatManager = new ChatManager();
-            chatManager.Connect(@event.Id, chatPanel);
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
@@ -193,6 +209,11 @@ namespace localhostUI.UiEvent
 
             // Properly disconnect and close chat manager
             chatManager.Disconnect();
+        }
+
+        private void chatMessageTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
