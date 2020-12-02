@@ -126,7 +126,7 @@ namespace localhostUI
             int IMAGE_WIDTH = 304;
             int IMAGE_HEIGHT = 171;
             int BANNER_HEIGHT = 60;
-            int START_HEIGHT = 250;
+            int START_HEIGHT = 350;
             int MARGINS = (1000 - IMAGE_WIDTH * COL_COUNT) / (COL_COUNT + 1);
 
             // Calculate size of event grid panel

@@ -39,15 +39,19 @@ namespace localhostUI
         public UiMain()
         {
             InitializeComponent();
+
+            // Maximize
+            WindowState = FormWindowState.Maximized;
+
             DrawBanner();
             bannerPanel.BringToFront();
 
-            overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
-            overlayPicturePanel.Location = new Point(0, 0);
+            //overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
+            //overlayPicturePanel.Location = new Point(0, 0);
 
             // Move user menu panel
-            userMenuPanel.Location = new Point(ClientSize.Width - USER_MENU_WIDTH, BANNER_HEIGHT);
-            userMenuPanel.Size = new Size(USER_MENU_WIDTH, 300);
+            //userMenuPanel.Location = new Point(ClientSize.Width - USER_MENU_WIDTH, BANNER_HEIGHT);
+            //userMenuPanel.Size = new Size(USER_MENU_WIDTH, 300);
 
             // Disable horizontal scroll in content panel
             contentPanel.HorizontalScroll.Maximum = 0;
@@ -80,9 +84,9 @@ namespace localhostUI
 
         private void RunAnimation(object sender, EventArgs args)
         {
-            while ((DateTime.Now - animationStart).TotalMilliseconds < 250)
+            while ((DateTime.Now - animationStart).TotalMilliseconds < 150)
             {
-                double progress = (DateTime.Now - animationStart).TotalMilliseconds / 250;
+                double progress = (DateTime.Now - animationStart).TotalMilliseconds / 150;
                 progress = Math.Sin(progress * Math.PI / 2);
                 int posX = ClientSize.Width - USER_MENU_WIDTH;
                 int posY;
@@ -139,105 +143,149 @@ namespace localhostUI
             bannerPanel.Controls.Add(currentEventsButton);
             bannerPanel.Controls.Add(eventManagerButton);
 
-            // Create menu panel
+            if (loggedIn)
+            {
+                userMenuPanel.Visible = false;
+
+                // Create menu panel open/close button
+                PictureBox menuButtonPicture = new PictureBox();
+                menuButtonPicture.Location = new Point(ClientSize.Width - BANNER_HEIGHT, 0);
+                menuButtonPicture.Size = new Size(BANNER_HEIGHT, BANNER_HEIGHT);
+                menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
+                menuButtonPicture.MouseEnter += (e, s) =>
+                {
+                    menuButtonPicture.Image = Properties.Resources.UserMenuIconHover;
+                };
+                menuButtonPicture.MouseLeave += (e, s) =>
+                {
+                    if (!menuOpened)
+                    {
+                        menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
+                    }
+                };
+                menuButtonPicture.Click += (e, s) =>
+                {
+                    if (!menuOpened)
+                    {
+                        OpenMenu();
+                    }
+                    else
+                    {
+                        CloseMenu();
+                    }
+                };
+
+                bannerPanel.Controls.Add(menuButtonPicture);
+
+                // Set separator images
+                menuSeparatorPicture1.Image = Properties.Resources.MenuSeparator;
+
+                // Add administrator menu options
+
+                //userMenuPanel.
+
+                // Set menu panel height
+                int height = 0;
+                foreach (var control in userMenuPanel.Controls)
+                {
+                    height += ((Control)control).Height;
+                }
+                userMenuPanel.Size = new Size(userMenuPanel.Width, height + 5);
+            }
+            else
+            {
+                // Create login/register buttons
+                Button loginButton = new Button();
+                loginButton.Text = "Login";
+                loginButton.Font = new Font("Arial", 12, FontStyle.Bold);
+                loginButton.ForeColor = Color.White;
+                loginButton.BackColor = Color.FromArgb(109, 168, 135);
+                loginButton.TextAlign = ContentAlignment.MiddleCenter;
+                loginButton.FlatStyle = FlatStyle.Flat;
+                loginButton.FlatAppearance.BorderSize = 1;
+                loginButton.FlatAppearance.BorderColor = Color.White;
+                loginButton.Location = new Point(ClientSize.Width - 250, 25);
+                loginButton.Size = new Size(100, 50);
+                loginButton.Click += (e, s) =>
+                {
+                    ShowPanel(new LoginPanel());
+                };
+
+                // Create login/register buttons
+                Button registerButton = new Button();
+                registerButton.Text = "Sign up";
+                registerButton.Font = new Font("Arial", 12, FontStyle.Bold);
+                registerButton.ForeColor = Color.FromArgb(109, 168, 135);
+                registerButton.BackColor = Color.White;
+                registerButton.TextAlign = ContentAlignment.MiddleCenter;
+                registerButton.FlatStyle = FlatStyle.Flat;
+                registerButton.FlatAppearance.BorderSize = 1;
+                registerButton.FlatAppearance.BorderColor = Color.White;
+                registerButton.Location = new Point(ClientSize.Width - 125, 25);
+                registerButton.Size = new Size(100, 50);
+                registerButton.Click += (e, s) =>
+                {
+                    ShowPanel(new RegistrationPanel());
+                };
+
+                bannerPanel.Controls.Add(loginButton);
+                bannerPanel.Controls.Add(registerButton);
+            }
+        }
+
+        private void eventManagerButton_Click(object sender, EventArgs e)
+        {
+            ShowPanel(new MainEventManagerPanel());
+        }
+
+        private void accountButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            Program.Client.Logout();
+            loggedIn = false;
             userMenuPanel.Visible = false;
-
-            PictureBox menuButtonPicture = new PictureBox();
-            menuButtonPicture.Location = new Point(ClientSize.Width - BANNER_HEIGHT, 0);
-            menuButtonPicture.Size = new Size(BANNER_HEIGHT, BANNER_HEIGHT);
-            menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
-            menuButtonPicture.MouseEnter += (e, s) =>
-            {
-                menuButtonPicture.Image = Properties.Resources.UserMenuIconHover;
-            };
-            menuButtonPicture.MouseLeave += (e, s) =>
-            {
-                if (!menuOpened)
-                {
-                    menuButtonPicture.Image = Properties.Resources.UserMenuIcon;
-                }
-            };
-            menuButtonPicture.Click += (e, s) =>
-            {
-                if (!menuOpened)
-                {
-                    OpenMenu();
-                }
-                else
-                {
-                    CloseMenu();
-                }
-            };
-
-            bannerPanel.Controls.Add(menuButtonPicture);
-
-            //if (!loggedIn)
-            //{
-            //    Button loginButton = new Button();
-            //    loginButton.Text = "LOGIN";
-            //    loginButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
-            //    loginButton.ForeColor = Color.White;
-            //    loginButton.TextAlign = ContentAlignment.MiddleCenter;
-            //    loginButton.FlatStyle = FlatStyle.Flat;
-            //    loginButton.FlatAppearance.BorderSize = 0;
-            //    loginButton.Location = new Point(ClientSize.Width - 150, 0);
-            //    loginButton.Size = new Size(150, BANNER_HEIGHT);
-            //    loginButton.Click += (e, s) =>
-            //    {
-            //        ShowPanel(new LoginPanel());
-            //    };
-            //    bannerPanel.Controls.Add(loginButton);
-            //}
-            //else
-            //{
-            //    Button logoutButton = new Button();
-            //    logoutButton.Text = "LOGOUT";
-            //    logoutButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
-            //    logoutButton.ForeColor = Color.White;
-            //    logoutButton.TextAlign = ContentAlignment.MiddleCenter;
-            //    logoutButton.FlatStyle = FlatStyle.Flat;
-            //    logoutButton.FlatAppearance.BorderSize = 0;
-            //    logoutButton.Location = new Point(ClientSize.Width - 150, 0);
-            //    logoutButton.Size = new Size(150, BANNER_HEIGHT);
-            //    logoutButton.Click += (e, s) =>
-            //    {
-            //        loggedIn = false;
-            //        Program.Client.Logout();
-            //        DrawBanner();
-            //    };
-            //    bannerPanel.Controls.Add(logoutButton);
-            //}
+            DrawBanner();
         }
 
         private void MainLoad(object sender, EventArgs e)
         {
             ShowPanel(new MainEventListPanel(this));
 
-            // Maximize
-            WindowState = FormWindowState.Maximized;
+            UiMain_Resize(null, null);
 
             return;
-            eventsInformation = new EventInformation();
-            sportTypes = new SportTypes();
-            //  [Placeholder]   . Added so some choices would appear in the drop down menu.
-            sportTypes.SportList.Add("Any");
-            sportTypes.SportList.Add("Football");
-            sportTypes.SportList.Add("Basketball");
-            sportTypes.SportList.Add("Volleyball");
-            sportTypes.SportList.Add("Tennis");
-            sportTypes.SportList.Add("Table Tennis");
-            sportTypes.SportList.Add("Golf");
-            sportTypes.SportList.Add("Rugby");
-
-            if (Program.UserDataManager.UserData != null && Program.UserDataManager.UserData.Address != null)
             {
-                userAdressBox.Text = Program.UserDataManager.UserData.Address;
-                usernameBox.Text = Program.UserDataManager.UserData.Username;
-            }
+                eventsInformation = new EventInformation();
+                sportTypes = new SportTypes();
+                //  [Placeholder]   . Added so some choices would appear in the drop down menu.
+                sportTypes.SportList.Add("Any");
+                sportTypes.SportList.Add("Football");
+                sportTypes.SportList.Add("Basketball");
+                sportTypes.SportList.Add("Volleyball");
+                sportTypes.SportList.Add("Tennis");
+                sportTypes.SportList.Add("Table Tennis");
+                sportTypes.SportList.Add("Golf");
+                sportTypes.SportList.Add("Rugby");
 
-            RefreshSportsTable();
-            SetUpCurrentEventsTab();
-            Program.DraftManager.LoadDrafts();
+                if (Program.UserDataManager.UserData != null && Program.UserDataManager.UserData.Address != null)
+                {
+                    userAdressBox.Text = Program.UserDataManager.UserData.Address;
+                    usernameBox.Text = Program.UserDataManager.UserData.Username;
+                }
+
+                RefreshSportsTable();
+                SetUpCurrentEventsTab();
+                Program.DraftManager.LoadDrafts();
+            }
         }
 
 

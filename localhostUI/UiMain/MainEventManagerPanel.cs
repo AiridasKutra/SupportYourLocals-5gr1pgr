@@ -104,6 +104,14 @@ namespace localhostUI
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
                 //eventName.BackColor = Color.FromArgb(109, 168, 135);
                 eventName.BackColor = Color.FromArgb(230, 230, 230);
+                eventName.MouseEnter += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(210, 210, 210);
+                };
+                eventName.MouseLeave += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(230, 230, 230);
+                };
 
                 eventName.Click += (sender, e) =>
                 {

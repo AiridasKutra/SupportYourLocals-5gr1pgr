@@ -45,10 +45,5 @@ namespace localhostUI
             mainForm.ShowPanel(new MainEventListPanel(null));
             mainForm.DrawBanner();
         }
-
-        private void registerButton_Click(object sender, EventArgs args)
-        {
-            mainForm.ShowPanel(new RegistrationPanel());
-        }
     }
 }
