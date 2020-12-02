@@ -44,9 +44,7 @@
             this.addressBox = new System.Windows.Forms.TextBox();
             this.checkAddressButton = new System.Windows.Forms.Button();
             this.priceBox = new System.Windows.Forms.NumericUpDown();
-            this.thumbnailLabel = new System.Windows.Forms.Label();
             this.thumbnailLinkBox = new System.Windows.Forms.TextBox();
-            this.addPhotosLabel = new System.Windows.Forms.Label();
             this.imagineLinkBox = new System.Windows.Forms.TextBox();
             this.addThumbnailButton = new System.Windows.Forms.Button();
             this.addPhotoButton = new System.Windows.Forms.Button();
@@ -62,14 +60,14 @@
             // 
             // headerLabel
             // 
-            this.headerLabel.AutoSize = true;
-            this.headerLabel.Font = new System.Drawing.Font("Arial Narrow", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.headerLabel.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.headerLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.headerLabel.Location = new System.Drawing.Point(355, 8);
+            this.headerLabel.Location = new System.Drawing.Point(300, 10);
             this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(261, 31);
+            this.headerLabel.Size = new System.Drawing.Size(400, 40);
             this.headerLabel.TabIndex = 1;
             this.headerLabel.Text = "Input event information";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dateLabel
             // 
@@ -109,7 +107,7 @@
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Font = new System.Drawing.Font("Arial Narrow", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.descriptionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.descriptionLabel.Location = new System.Drawing.Point(12, 490);
+            this.descriptionLabel.Location = new System.Drawing.Point(13, 560);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(103, 24);
             this.descriptionLabel.TabIndex = 6;
@@ -159,7 +157,7 @@
             // descriptionBox
             // 
             this.descriptionBox.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.descriptionBox.Location = new System.Drawing.Point(13, 516);
+            this.descriptionBox.Location = new System.Drawing.Point(13, 586);
             this.descriptionBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionBox.Multiline = true;
             this.descriptionBox.Name = "descriptionBox";
@@ -172,7 +170,7 @@
             // 
             this.finishButton.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.finishButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.finishButton.Location = new System.Drawing.Point(12, 673);
+            this.finishButton.Location = new System.Drawing.Point(12, 743);
             this.finishButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(120, 45);
@@ -230,72 +228,54 @@
             this.priceBox.Size = new System.Drawing.Size(517, 30);
             this.priceBox.TabIndex = 3;
             // 
-            // thumbnailLabel
-            // 
-            this.thumbnailLabel.AutoSize = true;
-            this.thumbnailLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.thumbnailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.thumbnailLabel.Location = new System.Drawing.Point(12, 751);
-            this.thumbnailLabel.Name = "thumbnailLabel";
-            this.thumbnailLabel.Size = new System.Drawing.Size(105, 20);
-            this.thumbnailLabel.TabIndex = 13;
-            this.thumbnailLabel.Text = "Thumbnail link:";
-            // 
             // thumbnailLinkBox
             // 
             this.thumbnailLinkBox.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.thumbnailLinkBox.Location = new System.Drawing.Point(123, 745);
+            this.thumbnailLinkBox.Location = new System.Drawing.Point(16, 516);
             this.thumbnailLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.thumbnailLinkBox.Name = "thumbnailLinkBox";
             this.thumbnailLinkBox.PlaceholderText = "https://address.com/image.png";
-            this.thumbnailLinkBox.Size = new System.Drawing.Size(433, 25);
+            this.thumbnailLinkBox.Size = new System.Drawing.Size(202, 25);
             this.thumbnailLinkBox.TabIndex = 5;
-            // 
-            // addPhotosLabel
-            // 
-            this.addPhotosLabel.AutoSize = true;
-            this.addPhotosLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.addPhotosLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.addPhotosLabel.Location = new System.Drawing.Point(13, 780);
-            this.addPhotosLabel.Name = "addPhotosLabel";
-            this.addPhotosLabel.Size = new System.Drawing.Size(84, 20);
-            this.addPhotosLabel.TabIndex = 13;
-            this.addPhotosLabel.Text = "Add photos:";
+            this.thumbnailLinkBox.Visible = false;
             // 
             // imagineLinkBox
             // 
             this.imagineLinkBox.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.imagineLinkBox.Location = new System.Drawing.Point(104, 778);
+            this.imagineLinkBox.Location = new System.Drawing.Point(732, 516);
             this.imagineLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imagineLinkBox.Name = "imagineLinkBox";
             this.imagineLinkBox.PlaceholderText = "https://address.com/image.png";
-            this.imagineLinkBox.Size = new System.Drawing.Size(433, 25);
+            this.imagineLinkBox.Size = new System.Drawing.Size(199, 25);
             this.imagineLinkBox.TabIndex = 6;
+            this.imagineLinkBox.Visible = false;
             // 
             // addThumbnailButton
             // 
             this.addThumbnailButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addThumbnailButton.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.addThumbnailButton.Location = new System.Drawing.Point(952, 747);
+            this.addThumbnailButton.Location = new System.Drawing.Point(224, 516);
             this.addThumbnailButton.Margin = new System.Windows.Forms.Padding(0);
             this.addThumbnailButton.Name = "addThumbnailButton";
-            this.addThumbnailButton.Size = new System.Drawing.Size(48, 25);
+            this.addThumbnailButton.Size = new System.Drawing.Size(48, 27);
             this.addThumbnailButton.TabIndex = 15;
             this.addThumbnailButton.Text = "Add";
             this.addThumbnailButton.UseVisualStyleBackColor = true;
+            this.addThumbnailButton.Visible = false;
             this.addThumbnailButton.Click += new System.EventHandler(this.AddThumbnail);
             // 
             // addPhotoButton
             // 
             this.addPhotoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addPhotoButton.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.addPhotoButton.Location = new System.Drawing.Point(952, 772);
+            this.addPhotoButton.Location = new System.Drawing.Point(934, 516);
             this.addPhotoButton.Margin = new System.Windows.Forms.Padding(0);
             this.addPhotoButton.Name = "addPhotoButton";
-            this.addPhotoButton.Size = new System.Drawing.Size(48, 25);
+            this.addPhotoButton.Size = new System.Drawing.Size(48, 26);
             this.addPhotoButton.TabIndex = 15;
             this.addPhotoButton.Text = "Add";
             this.addPhotoButton.UseVisualStyleBackColor = true;
+            this.addPhotoButton.Visible = false;
             this.addPhotoButton.Click += new System.EventHandler(this.AddPhoto);
             // 
             // finishResultLabel
@@ -311,7 +291,7 @@
             // 
             this.deleteEventButton.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.deleteEventButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.deleteEventButton.Location = new System.Drawing.Point(863, 673);
+            this.deleteEventButton.Location = new System.Drawing.Point(862, 743);
             this.deleteEventButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deleteEventButton.Name = "deleteEventButton";
             this.deleteEventButton.Size = new System.Drawing.Size(120, 45);
@@ -327,6 +307,7 @@
             this.photoPanel.Name = "photoPanel";
             this.photoPanel.Size = new System.Drawing.Size(752, 205);
             this.photoPanel.TabIndex = 19;
+            this.photoPanel.Click += new System.EventHandler(this.ShowPhotoBox);
             // 
             // mainPanel
             // 
@@ -334,8 +315,6 @@
             this.mainPanel.Controls.Add(this.splitterPanel);
             this.mainPanel.Controls.Add(this.thumbnailPanel);
             this.mainPanel.Controls.Add(this.deleteEventButton);
-            this.mainPanel.Controls.Add(this.thumbnailLabel);
-            this.mainPanel.Controls.Add(this.addPhotosLabel);
             this.mainPanel.Controls.Add(this.addressLabel);
             this.mainPanel.Controls.Add(this.descriptionBox);
             this.mainPanel.Controls.Add(this.priceLabel);
@@ -358,7 +337,7 @@
             this.mainPanel.Controls.Add(this.photoPanel);
             this.mainPanel.Controls.Add(this.finishResultLabel);
             this.mainPanel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.mainPanel.Location = new System.Drawing.Point(37, 1);
+            this.mainPanel.Location = new System.Drawing.Point(31, 11);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 800);
@@ -378,6 +357,7 @@
             this.thumbnailPanel.Name = "thumbnailPanel";
             this.thumbnailPanel.Size = new System.Drawing.Size(202, 180);
             this.thumbnailPanel.TabIndex = 20;
+            this.thumbnailPanel.Click += new System.EventHandler(this.ShowThumbnailBox);
             // 
             // EventEditorPanel
             // 
@@ -411,9 +391,7 @@
         private System.Windows.Forms.TextBox addressBox;
         private System.Windows.Forms.Button checkAddressButton;
         private System.Windows.Forms.NumericUpDown priceBox;
-        private System.Windows.Forms.Label thumbnailLabel;
         private System.Windows.Forms.TextBox thumbnailLinkBox;
-        private System.Windows.Forms.Label addPhotosLabel;
         private System.Windows.Forms.TextBox imagineLinkBox;
         private System.Windows.Forms.Button addThumbnailButton;
         private System.Windows.Forms.Button addPhotoButton;

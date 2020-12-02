@@ -126,6 +126,7 @@ namespace localhostUI.UiEvent
                 thumbnail = @event.Images.FirstOrDefault();
                 // Add picture
                 PictureBox picture = new PictureBox();
+                picture.Click += ShowThumbnailBox;
                 picture.Size = new Size(180, 180);
                 picture.Location = new Point(15, 0);
                 picture.BorderStyle = BorderStyle.FixedSingle;
@@ -169,6 +170,7 @@ namespace localhostUI.UiEvent
             {
                 // Add picture
                 PictureBox picture = new PictureBox();
+                picture.Click += ShowPhotoBox;
                 picture.Size = new Size(180, 180);
                 picture.Location = new Point(15 + 200 * counter,0);
                 picture.BorderStyle = BorderStyle.FixedSingle;
@@ -378,6 +380,18 @@ namespace localhostUI.UiEvent
             }
             FillInPhotos();
             imagineLinkBox.Clear();
+        }
+
+        private void ShowThumbnailBox(object sender, EventArgs e)
+        {
+            thumbnailLinkBox.Visible = true;
+            addThumbnailButton.Visible = true;
+        }
+
+        private void ShowPhotoBox(object sender, EventArgs e)
+        {
+            imagineLinkBox.Visible = true;
+            addPhotoButton.Visible = true;
         }
     }
 }
