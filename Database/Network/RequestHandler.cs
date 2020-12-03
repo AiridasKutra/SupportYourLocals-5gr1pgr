@@ -325,6 +325,13 @@ namespace Database.Network
                             SelectAccountEmail(packets);
                             break;
                         }
+                        case (uint)PacketType.SELECT_ACCOUNT_PERMISSIONS:
+                        {
+                            Packet[] packets = new Packet[1];
+                            packets[0] = packet;
+                            SelectAccountPermissions(packets);
+                            break;
+                        }
                         default:
                         {
                             break;
@@ -374,7 +381,16 @@ namespace Database.Network
                     SenderId = packets[0].SenderId
                 });
             }
-            catch { }
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    Data = Encoding.ASCII.GetBytes(jsonStr),
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId
+                });
+            }
         }
 
         private void SelectEventsFull(Packet[] packets)
@@ -399,7 +415,16 @@ namespace Database.Network
                     SenderId = packets[0].SenderId
                 });
             }
-            catch { }
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    Data = Encoding.ASCII.GetBytes(jsonStr),
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId
+                });
+            }
         }
 
         private void CreateEvent(Packet[] packets)
@@ -908,6 +933,21 @@ namespace Database.Network
             catch { return; }
 
             
+        }
+
+        private void SelectAccountPermissions(Packet[] packets)
+        {
+            int id = BitConverter.ToInt32(packets[0].Data);
+
+            List<Account> accounts = database.QSelectAccounts(id);
+            if (accounts.Count == 0) return;
+
+            server.Send(new Packet
+            {
+                PacketId = (uint)PacketType.DATA,
+                SenderId = packets[0].SenderId,
+                Data = BitConverter.GetBytes(accounts[0].Permissions)
+            });
         }
 
 

@@ -74,12 +74,20 @@
             this.contentPanel = new System.Windows.Forms.Panel();
             this.bannerPanel = new System.Windows.Forms.Panel();
             this.overlayPicturePanel = new System.Windows.Forms.Panel();
+            this.userMenuPanel = new System.Windows.Forms.Panel();
+            this.settingsButton = new System.Windows.Forms.Button();
+            this.logoutButton = new System.Windows.Forms.Button();
+            this.menuSeparatorPicture1 = new System.Windows.Forms.PictureBox();
+            this.accountButton = new System.Windows.Forms.Button();
+            this.eventManagerButton = new System.Windows.Forms.Button();
             this.profileTab.SuspendLayout();
             this.currentEventsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterDistanceSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.filterPriceSlider)).BeginInit();
             this.menuTabs.SuspendLayout();
             this.eventManagerTabNew.SuspendLayout();
+            this.userMenuPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.menuSeparatorPicture1)).BeginInit();
             this.SuspendLayout();
             // 
             // profileTab
@@ -506,7 +514,7 @@
             this.bannerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(168)))), ((int)(((byte)(135)))));
             this.bannerPanel.Location = new System.Drawing.Point(0, 0);
             this.bannerPanel.Name = "bannerPanel";
-            this.bannerPanel.Size = new System.Drawing.Size(100, 100);
+            this.bannerPanel.Size = new System.Drawing.Size(699, 100);
             this.bannerPanel.TabIndex = 2;
             // 
             // overlayPicturePanel
@@ -517,11 +525,94 @@
             this.overlayPicturePanel.TabIndex = 3;
             this.overlayPicturePanel.Visible = false;
             // 
+            // userMenuPanel
+            // 
+            this.userMenuPanel.BackColor = System.Drawing.Color.Snow;
+            this.userMenuPanel.Controls.Add(this.settingsButton);
+            this.userMenuPanel.Controls.Add(this.logoutButton);
+            this.userMenuPanel.Controls.Add(this.menuSeparatorPicture1);
+            this.userMenuPanel.Controls.Add(this.accountButton);
+            this.userMenuPanel.Controls.Add(this.eventManagerButton);
+            this.userMenuPanel.Location = new System.Drawing.Point(946, 249);
+            this.userMenuPanel.Name = "userMenuPanel";
+            this.userMenuPanel.Size = new System.Drawing.Size(250, 257);
+            this.userMenuPanel.TabIndex = 4;
+            this.userMenuPanel.Visible = false;
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.FlatAppearance.BorderSize = 0;
+            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingsButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.settingsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.settingsButton.Location = new System.Drawing.Point(0, 60);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(250, 30);
+            this.settingsButton.TabIndex = 4;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
+            // logoutButton
+            // 
+            this.logoutButton.FlatAppearance.BorderSize = 0;
+            this.logoutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.logoutButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.logoutButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.logoutButton.Location = new System.Drawing.Point(0, 105);
+            this.logoutButton.Name = "logoutButton";
+            this.logoutButton.Size = new System.Drawing.Size(250, 30);
+            this.logoutButton.TabIndex = 3;
+            this.logoutButton.Text = "Log out";
+            this.logoutButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
+            // 
+            // menuSeparatorPicture1
+            // 
+            this.menuSeparatorPicture1.Location = new System.Drawing.Point(0, 90);
+            this.menuSeparatorPicture1.Name = "menuSeparatorPicture1";
+            this.menuSeparatorPicture1.Size = new System.Drawing.Size(250, 15);
+            this.menuSeparatorPicture1.TabIndex = 2;
+            this.menuSeparatorPicture1.TabStop = false;
+            // 
+            // accountButton
+            // 
+            this.accountButton.FlatAppearance.BorderSize = 0;
+            this.accountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.accountButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.accountButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.accountButton.Location = new System.Drawing.Point(0, 30);
+            this.accountButton.Name = "accountButton";
+            this.accountButton.Size = new System.Drawing.Size(250, 30);
+            this.accountButton.TabIndex = 1;
+            this.accountButton.Text = "My account";
+            this.accountButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.accountButton.UseVisualStyleBackColor = true;
+            this.accountButton.Click += new System.EventHandler(this.accountButton_Click);
+            // 
+            // eventManagerButton
+            // 
+            this.eventManagerButton.FlatAppearance.BorderSize = 0;
+            this.eventManagerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.eventManagerButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.eventManagerButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.eventManagerButton.Location = new System.Drawing.Point(0, 0);
+            this.eventManagerButton.Name = "eventManagerButton";
+            this.eventManagerButton.Size = new System.Drawing.Size(250, 30);
+            this.eventManagerButton.TabIndex = 0;
+            this.eventManagerButton.Text = "Event manager";
+            this.eventManagerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.eventManagerButton.UseVisualStyleBackColor = true;
+            this.eventManagerButton.Click += new System.EventHandler(this.eventManagerButton_Click);
+            // 
             // UiMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.ClientSize = new System.Drawing.Size(1445, 772);
+            this.Controls.Add(this.userMenuPanel);
             this.Controls.Add(this.overlayPicturePanel);
             this.Controls.Add(this.bannerPanel);
             this.Controls.Add(this.contentPanel);
@@ -543,6 +634,8 @@
             this.menuTabs.ResumeLayout(false);
             this.eventManagerTabNew.ResumeLayout(false);
             this.eventManagerTabNew.PerformLayout();
+            this.userMenuPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.menuSeparatorPicture1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -596,5 +689,11 @@
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel bannerPanel;
         private System.Windows.Forms.Panel overlayPicturePanel;
+        private System.Windows.Forms.Panel userMenuPanel;
+        private System.Windows.Forms.Button eventManagerButton;
+        private System.Windows.Forms.Button accountButton;
+        private System.Windows.Forms.PictureBox menuSeparatorPicture1;
+        private System.Windows.Forms.Button logoutButton;
+        private System.Windows.Forms.Button settingsButton;
     }
 }

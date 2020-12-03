@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Database
+namespace localhostUI.Classes
 {
     enum Permissions : uint
     {
@@ -20,8 +20,6 @@ namespace Database
         BAN_ACCOUNTS            = 0x00000100,
         DELETE_ACCOUNTS         = 0x00000200,
         BANNED                  = 0x10000000
-            // CHANGE_PERMISSIONS
-            //
     }
 
     enum AccountType : uint
@@ -42,13 +40,15 @@ namespace Database
 
         ADMINISTRATOR = Permissions.MANAGE_SELF_EVENT |
                         Permissions.EDIT_OTHER_EVENTS |
+                        Permissions.DELETE_ACCOUNTS |
                         Permissions.SET_EVENT_VISIBILITY |
                         Permissions.SEND_CHAT_MESSAGES |
                         Permissions.CREATE_REPORTS |
                         Permissions.ACCESS_REPORTS |
                         Permissions.SILENCE_ACCOUNTS |
                         Permissions.BAN_ACCOUNTS |
-                        Permissions.DELETE_ACCOUNTS,
+                        Permissions.DELETE_ACCOUNTS |
+                        Permissions.SET_EVENT_VISIBILITY,
     }
 
     class UserAccount

@@ -48,7 +48,7 @@ namespace Common.Validation
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = "Nickname must contain only letters, numbers, or underscores"
+                    message = "Username must contain only letters, numbers, or underscores"
                 };
             }
             if (!matchAmount.Success)
@@ -56,7 +56,7 @@ namespace Common.Validation
                 return new ValidationResults
                 {
                     isValid = false,
-                    message = $"Nickname must contain between {minChar} and {maxChar} characters"
+                    message = $"Username must contain between {minChar} and {maxChar} characters"
                 };
             }
             return new ValidationResults

@@ -121,7 +121,43 @@
   <data name="BackButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\BackArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BackButtonGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\backbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackButtonGreenHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\backbuttonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CloseButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\closebutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MapsButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\mapsbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MapsButtonHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\mapsbuttonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuSeparator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\menuseparator2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlaceholderPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\placeholderphoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\plusbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlusButtonHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\plusbuttonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ReportButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\reportbutton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ReportButtonHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\reportbuttonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserMenuIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\usericon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserMenuIconHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\usericonhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

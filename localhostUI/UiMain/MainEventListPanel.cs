@@ -83,6 +83,12 @@ namespace localhostUI
             List<int> scores = new List<int>();
             List<double> distances = new List<double>();
 
+            // Filter invisible
+            if (!showInvisibleEventsCheckBox.Checked)
+            {
+                events = events.Where(item => item.Visible).ToList();
+            }
+
             // Calculate distances
             UserData user = Program.UserDataManager.GetData();
             bool isAddressAdded = !(user.Address == "" || user.Address == null || (user.Latitude == 0 && user.Longitude == 0));
@@ -126,7 +132,7 @@ namespace localhostUI
             int IMAGE_WIDTH = 304;
             int IMAGE_HEIGHT = 171;
             int BANNER_HEIGHT = 60;
-            int START_HEIGHT = 250;
+            int START_HEIGHT = 350;
             int MARGINS = (1000 - IMAGE_WIDTH * COL_COUNT) / (COL_COUNT + 1);
 
             // Calculate size of event grid panel
@@ -184,55 +190,184 @@ namespace localhostUI
                     }
                     catch { }
                 };
-                    BackgroundWorker worker = new BackgroundWorker();
-                    worker.DoWork += (s, e) =>
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += (s, e) =>
+                {
+                    try
                     {
-                        try
+                        using (WebClient client = new WebClient())
                         {
-                            using (WebClient client = new WebClient())
-                            {
-                                Stream stream = client.OpenRead(eBrief.Images[0]);
-                                Bitmap bitmap = new Bitmap(stream);
+                            Stream stream = client.OpenRead(eBrief.Images[0]);
+                            Bitmap bitmap = new Bitmap(stream);
 
-                                float ratio;
-                                if (bitmap.Width / (float)bitmap.Height > 16.0f / 9.0f)
-                                {
-                                    ratio = IMAGE_HEIGHT / (float)bitmap.Height;
-                                }
-                                else
-                                {
-                                    ratio = IMAGE_WIDTH / (float)bitmap.Width;
-                                }
+                            thumbnail.Image = Helper.ScaleBitmap(bitmap, IMAGE_WIDTH, IMAGE_HEIGHT, 16.0f / 9.0f);
 
-                                int newWidth = (int)(bitmap.Width * ratio);
-                                int newHeight = (int)(bitmap.Height * ratio);
-                                int posX = -Math.Abs(newWidth - IMAGE_WIDTH) / 2;
-                                int posY = -Math.Abs(newHeight - IMAGE_HEIGHT) / 2;
-
-                                Bitmap scaledBitmap = new Bitmap(newWidth, newHeight);
-                                Graphics g = Graphics.FromImage(scaledBitmap);
-                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                                g.DrawImage(bitmap, posX, posY, newWidth, newHeight);
-                                g.Dispose();
-                                thumbnail.Image = scaledBitmap;
-
-                                stream.Flush();
-                                stream.Close();
-                            }
+                            stream.Flush();
+                            stream.Close();
                         }
-                        catch { }
-                    };
-                    worker.RunWorkerAsync();
+                    }
+                    catch { }
+                };
+                worker.RunWorkerAsync();
+
+                // Info panel
+                Panel infoPanel = new Panel();
+                infoPanel.Location = new Point(0, IMAGE_HEIGHT);
+                infoPanel.Size = new Size(IMAGE_WIDTH, BANNER_HEIGHT);
+
+                if (!eBrief.Visible)
+                {
+                    infoPanel.BackColor = Color.FromArgb(255, 200, 200);
+                }
 
                 // Name label
                 Label eventName = new Label();
                 eventName.Text = eBrief.Name;
                 eventName.AutoSize = false;
-                eventName.Location = new Point(0, IMAGE_HEIGHT);
-                eventName.MinimumSize = new Size(IMAGE_WIDTH, BANNER_HEIGHT);
-                eventName.Font = new Font("Arial Rounded", 12, FontStyle.Bold);
-                eventName.BackColor = Color.White;
+                eventName.Location = new Point(10, 0);
+                eventName.Size = new Size(IMAGE_WIDTH - 20, 30);
+                //eventName.Font = new Font("Segoe UI Semibold", 12);
+                eventName.Font = new Font("Arial", 12);
+                eventName.ForeColor = Color.FromArgb(16, 16, 16);
+                //eventName.BackColor = Color.White;
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
+
+                int attempt = 0;
+                while (true)
+                {
+                    Size nameSize = Helper.CalculateLabelSize(eventName, 1000);
+                    if (nameSize.Width > eventName.Size.Width - 20)
+                    {
+                        eventName.Text = eventName.Text.Remove(eventName.Text.Length - 1);
+                        attempt++;
+                        continue;
+                    }
+                    else
+                    {
+                        if (attempt != 0)
+                        {
+                            eventName.Text += "...";
+
+                            // Create tooltip
+                            ToolTip fullEventName = new ToolTip();
+                            fullEventName.SetToolTip(eventName, eBrief.Name);
+                        }
+                        break;
+                    }
+                }
+
+                // Distance label
+                Label distanceLabel = new Label();
+                distanceLabel.Font = new Font("Arial", 9);
+                distanceLabel.ForeColor = Color.Gray;
+                distanceLabel.Location = new Point(10, 25);
+                distanceLabel.AutoSize = false;
+                distanceLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+                double distance = MathSupplement.Distance(eBrief.Latitude, eBrief.Longitude, user.Latitude, user.Longitude);
+                if (distance < 1000.0)
+                {
+                    distanceLabel.Text = $"{distance:0}m";
+                }
+                else
+                {
+                    distanceLabel.Text = $"{distance / 1000.0:0.0}km";
+                }
+
+                Size distanceLabelSize = Helper.CalculateLabelSize(distanceLabel, IMAGE_WIDTH);
+                distanceLabel.Size = new Size(distanceLabelSize.Width, 30);
+
+                // Separator panel
+                Panel separatorPanel1 = new Panel();
+                separatorPanel1.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width + 5, 33);
+                separatorPanel1.Size = new Size(1, 16);
+                separatorPanel1.BorderStyle = BorderStyle.FixedSingle;
+
+                // Sport label
+                Label sportLabel = new Label();
+                sportLabel.Font = new Font("Arial", 9);
+                sportLabel.ForeColor = Color.Gray;
+                sportLabel.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width + 12, 25);
+                sportLabel.AutoSize = false;
+                sportLabel.TextAlign = ContentAlignment.MiddleCenter;
+                try { sportLabel.Text = eBrief.Sports[0]; } catch { sportLabel.Text = ""; }
+
+                Size sportLabelSize = Helper.CalculateLabelSize(sportLabel, IMAGE_WIDTH);
+                sportLabel.Size = new Size(sportLabelSize.Width, 30);
+
+                // Separator panel
+                Panel separatorPanel2 = new Panel();
+                separatorPanel2.Location = new Point(sportLabel.Location.X + sportLabel.Size.Width + 5, 33);
+                separatorPanel2.Size = new Size(1, 16);
+                separatorPanel2.BorderStyle = BorderStyle.FixedSingle;
+
+                // Date label
+                Label dateLabel = new Label();
+                dateLabel.Font = new Font("Arial", 9);
+                dateLabel.ForeColor = Color.Gray;
+                dateLabel.Location = new Point(sportLabel.Location.X + sportLabel.Size.Width + 12, 25);
+                dateLabel.AutoSize = false;
+                dateLabel.TextAlign = ContentAlignment.MiddleCenter;
+                { // Create date/time label
+                    int year = eBrief.StartDate.Year;
+                    int month = eBrief.StartDate.Month;
+                    int day = eBrief.StartDate.Day;
+                    int hour = eBrief.StartDate.Hour;
+                    int minute = eBrief.StartDate.Minute;
+                    string finalString = "";
+
+                    if ((DateTime.Now - eBrief.StartDate).Ticks > 0)
+                    {
+                        int daysAgo = (DateTime.Now - eBrief.StartDate).Days;
+                        finalString += $"Happened ";
+                        if (daysAgo == 0)
+                        {
+                            finalString += "today";
+                        }
+                        else if (daysAgo == 1)
+                        {
+                            finalString += $"{daysAgo} day ago";
+                        }
+                        else
+                        {
+                            finalString += $"{daysAgo} days ago";
+                        }
+                    }
+                    else
+                    {
+                        if (year != DateTime.Now.Year)
+                        {
+                            finalString += $"{year}-{month}-{day}, {hour}:{minute}";
+                        }
+                        else
+                        {
+                            if ((eBrief.StartDate - DateTime.Now).TotalDays == 1)
+                            {
+                                finalString += $"Tomorrow, {hour}:{minute}";
+                            }
+                            else if ((eBrief.StartDate - DateTime.Now).TotalDays < 1)
+                            {
+                                finalString += $"Today, {hour}:{minute}";
+                            }
+                            else
+                            {
+                                finalString += $"{eBrief.StartDate:MMMM} {day}, {hour}:{minute}";
+                            }
+                        }
+                    }
+                    dateLabel.Text = finalString;
+                }
+
+                Size dateLabelSize = Helper.CalculateLabelSize(dateLabel, IMAGE_WIDTH);
+                dateLabel.Size = new Size(dateLabelSize.Width, 30);
+
+
+                infoPanel.Controls.Add(eventName);
+                infoPanel.Controls.Add(distanceLabel);
+                infoPanel.Controls.Add(separatorPanel1);
+                infoPanel.Controls.Add(sportLabel);
+                infoPanel.Controls.Add(separatorPanel2);
+                infoPanel.Controls.Add(dateLabel);
 
                 //// Sport label
                 //Label eventSports = new Label();
@@ -266,7 +401,7 @@ namespace localhostUI
 
                 // Add everything
                 eventPanel.Controls.Add(thumbnail);
-                eventPanel.Controls.Add(eventName);
+                eventPanel.Controls.Add(infoPanel);
                 //eventPanel.Controls.Add(eventSports);
                 //eventPanel.Controls.Add(eventDistance);
 
@@ -274,6 +409,11 @@ namespace localhostUI
 
                 col = (++col) % COL_COUNT;
                 count++;
+
+                if (mainForm != null)
+                {
+                    mainForm.FitCurrentPanel();
+                }
 
                 // Redraw
                 Invalidate();

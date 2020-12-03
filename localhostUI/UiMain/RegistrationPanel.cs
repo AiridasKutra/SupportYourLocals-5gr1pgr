@@ -55,28 +55,28 @@ namespace localhostUI
             // Valid username
             if (!resUsername.isValid)
             {
-                resultLabel.Text += resUsername.message + "\n";
+                resultLabel.Text += $"• {resUsername.message}\n";
                 usernameTextBox.BackColor = Color.FromArgb(255, 200, 200);
             }
 
             // Valid email
             if (!resEmail.isValid)
             {
-                resultLabel.Text += resEmail.message + "\n";
+                resultLabel.Text += $"• {resEmail.message}\n";
                 emailTextBox.BackColor = Color.FromArgb(255, 200, 200);
             }
 
             // Valid password
             if (!resPassword.isValid)
             {
-                resultLabel.Text += resPassword.message + "\n";
+                resultLabel.Text += $"• {resPassword.message}\n";
                 passwordTextBox.BackColor = Color.FromArgb(255, 200, 200);
             }
 
             // Passwords match
             if (passwordTextBox.Text != passwordRepeatTextBox.Text)
             {
-                resultLabel.Text += "Passwords don't match\n";
+                resultLabel.Text += $"• Passwords don't match\n";
                 passwordRepeatTextBox.BackColor = Color.FromArgb(255, 200, 200);
             }
 
