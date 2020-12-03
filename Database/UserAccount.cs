@@ -20,6 +20,8 @@ namespace Database
         BAN_ACCOUNTS            = 0x00000100,
         DELETE_ACCOUNTS         = 0x00000200,
         BANNED                  = 0x10000000
+            // CHANGE_PERMISSIONS
+            //
     }
 
     enum AccountType : uint
