@@ -419,7 +419,7 @@ namespace Database
 
         public void QCreateEvent(Event @event)
         {
-            @event.Id = 1;
+            @event.Id = default;
             context.Events.Add(@event);
         }
 
@@ -453,7 +453,7 @@ namespace Database
 
         public void QCreateAccount(Account account)
         {
-            account.Id = 1;
+            account.Id = default;
             context.Accounts.Add(account);
         }
 
@@ -486,7 +486,7 @@ namespace Database
 
         public void QCreateReport(Report report)
         {
-            report.Id = 1;
+            report.Id = default;
             context.Reports.Add(report);
         }
 
@@ -519,7 +519,7 @@ namespace Database
 
         public void QCreateSport(Sport sport)
         {
-            sport.Id = 1;
+            sport.Id = default;
             context.Sports.Add(sport);
         }
 

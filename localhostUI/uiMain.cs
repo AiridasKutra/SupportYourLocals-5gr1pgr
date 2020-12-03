@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Common;
 using Common.Formatting;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace localhostUI
 {
@@ -25,15 +27,110 @@ namespace localhostUI
             {
                 return sportTypes.SportList;
             }
-        } 
+        }
+
+        public bool loggedIn = false;
+
+        int BANNER_HEIGHT = 100;
 
         public UiMain()
         {
             InitializeComponent();
+            DrawBanner();
+
+            overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
+            overlayPicturePanel.Location = new Point(0, 0);
+
+            // Disable horizontal scroll in content panel
+            contentPanel.HorizontalScroll.Maximum = 0;
+            contentPanel.AutoScroll = false;
+            contentPanel.VerticalScroll.Visible = false;
+            contentPanel.AutoScroll = true;
+        }
+
+        public void DrawBanner()
+        {
+            bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
+
+            // Create banner buttons
+            Button currentEventsButton = new Button();
+            currentEventsButton.Text = "SYL";
+            currentEventsButton.Font = new Font("Arial", 30.0f, FontStyle.Bold);
+            currentEventsButton.ForeColor = Color.LightGray;
+            currentEventsButton.TextAlign = ContentAlignment.MiddleCenter;
+            currentEventsButton.FlatStyle = FlatStyle.Flat;
+            currentEventsButton.FlatAppearance.BorderSize = 0;
+            currentEventsButton.Location = new Point(0, 0);
+            currentEventsButton.Size = new Size(150, BANNER_HEIGHT);
+            currentEventsButton.Click += (e, s) =>
+            {
+                ShowPanel(new MainEventListPanel(this));
+            };
+
+            Button eventManagerButton = new Button();
+            eventManagerButton.Text = "EVENT MANAGER";
+            eventManagerButton.Font = new Font("Arial", 20.0f, FontStyle.Bold);
+            eventManagerButton.ForeColor = Color.White;
+            eventManagerButton.TextAlign = ContentAlignment.MiddleCenter;
+            eventManagerButton.FlatStyle = FlatStyle.Flat;
+            eventManagerButton.FlatAppearance.BorderSize = 0;
+            eventManagerButton.Location = new Point(150, 0);
+            eventManagerButton.Size = new Size(200, BANNER_HEIGHT);
+            eventManagerButton.Click += (e, s) =>
+            {
+                ShowPanel(new MainEventManagerPanel());
+            };
+
+            bannerPanel.Controls.Clear();
+            bannerPanel.Controls.Add(currentEventsButton);
+            bannerPanel.Controls.Add(eventManagerButton);
+
+            if (!loggedIn)
+            {
+                Button loginButton = new Button();
+                loginButton.Text = "LOGIN";
+                loginButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+                loginButton.ForeColor = Color.White;
+                loginButton.TextAlign = ContentAlignment.MiddleCenter;
+                loginButton.FlatStyle = FlatStyle.Flat;
+                loginButton.FlatAppearance.BorderSize = 0;
+                loginButton.Location = new Point(ClientSize.Width - 150, 0);
+                loginButton.Size = new Size(150, BANNER_HEIGHT);
+                loginButton.Click += (e, s) =>
+                {
+                    ShowPanel(new LoginPanel());
+                };
+                bannerPanel.Controls.Add(loginButton);
+            }
+            else
+            {
+                Button logoutButton = new Button();
+                logoutButton.Text = "LOGOUT";
+                logoutButton.Font = new Font("Arial", 15.0f, FontStyle.Bold);
+                logoutButton.ForeColor = Color.White;
+                logoutButton.TextAlign = ContentAlignment.MiddleCenter;
+                logoutButton.FlatStyle = FlatStyle.Flat;
+                logoutButton.FlatAppearance.BorderSize = 0;
+                logoutButton.Location = new Point(ClientSize.Width - 150, 0);
+                logoutButton.Size = new Size(150, BANNER_HEIGHT);
+                logoutButton.Click += (e, s) =>
+                {
+                    loggedIn = false;
+                    Program.Client.Logout();
+                    DrawBanner();
+                };
+                bannerPanel.Controls.Add(logoutButton);
+            }
         }
 
         private void MainLoad(object sender, EventArgs e)
         {
+            ShowPanel(new MainEventListPanel(this));
+
+            // Maximize
+            WindowState = FormWindowState.Maximized;
+
+            return;
             eventsInformation = new EventInformation();
             sportTypes = new SportTypes();
             //  [Placeholder]   . Added so some choices would appear in the drop down menu.
@@ -195,6 +292,73 @@ namespace localhostUI
         private void FormattAdressButton(object sender, EventArgs e)
         {
             Console.WriteLine(LocationInformation.FormatAddress(userAdressBox.Text));
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
+
+        // NEW CODE
+        public void ShowPanel(IPanel panelForm)
+        {
+            panelForm.SetMainRef(this);
+            contentPanel.Controls.Clear();
+            Panel content = panelForm.GetPanel();
+            content.Location = new Point(0, 0);
+            content.Visible = true;
+            content.Size = new Size(content.Size.Width, Math.Max(content.Size.Height, ClientSize.Height - BANNER_HEIGHT));
+            contentPanel.Size = new Size(content.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+            contentPanel.Location = new Point((ClientSize.Width - content.Width) / 2, 100);
+            contentPanel.Controls.Add(content);
+        }
+
+        public void ShowImage(Image image)
+        {
+            //overlayPicturePanel
+            Bitmap background = new Bitmap(ClientSize.Width, ClientSize.Height);
+            DrawToBitmap(background, new Rectangle(0, 0, background.Width, background.Height));
+
+            for (int y = 0; y < background.Height; y++)
+            {
+                for (int x = 0; x < background.Width; x++)
+                {
+                    var pixel = background.GetPixel(x, y);
+                    Color newPixel = Color.FromArgb((int)(pixel.R * 0.5f), (int)(pixel.G * 0.5f), (int)(pixel.B * 0.5f));
+                    background.SetPixel(x, y, newPixel);
+                }
+            }
+
+            using (Graphics g = Graphics.FromImage(background))
+            {
+                int posX = (background.Width - image.Width) / 2;
+                int posY = (background.Height - image.Height) / 2;
+                g.DrawImage(image, posX, posY);
+            }
+
+            PictureBox pic = new PictureBox();
+            pic.Image = background;
+
+            overlayPicturePanel.Controls.Clear();
+            overlayPicturePanel.Controls.Add(pic);
+            overlayPicturePanel.Visible = true;
+        }
+        
+        private void UiMain_Resize(object sender, EventArgs e)
+        {
+            try
+            {
+                int newX = (Size.Width - contentPanel.Controls[0].Width) / 2;
+                if (newX < 0)
+                {
+                    newX = 0;
+                }
+                contentPanel.Location = new Point(newX, 100);
+                contentPanel.Size = new Size(contentPanel.Size.Width, ClientSize.Height - BANNER_HEIGHT);
+
+                DrawBanner();
+
+                overlayPicturePanel.Size = new Size(ClientSize.Width, ClientSize.Height);
+            }
+            catch { }
         }
     }
 }
