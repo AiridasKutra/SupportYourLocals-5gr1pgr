@@ -65,7 +65,7 @@
             this.mainPanel.Controls.Add(this.passwordLabel);
             this.mainPanel.Controls.Add(this.addressLabel);
             this.mainPanel.Controls.Add(this.headerLabel);
-            this.mainPanel.Location = new System.Drawing.Point(45, 23);
+            this.mainPanel.Location = new System.Drawing.Point(10, 10);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 500);
             this.mainPanel.TabIndex = 0;

@@ -46,12 +46,16 @@ namespace localhostUI.UiEvent
 
             InitializeComponent();
             FillInSports();
-            Text = "Create event";
+            FillInPhotos();
+            headerLabel.Text = "Create event";
             finishButton.Text = "Create";
             finishButton.Click += CreateEvent;
 
             deleteEventButton.Text = "Save as draft";
             deleteEventButton.Click += SaveDraft;
+
+            // Set maps button image
+            checkAddressButton.BackgroundImage = Properties.Resources.MapsButton;
         }
 
         public EventEditorPanel(IPanel caller, EventFull @event, bool draft = false)
@@ -63,7 +67,7 @@ namespace localhostUI.UiEvent
 
             Text = "Edit event";
             this.@event = @event;
-            headerLabel.Text = "Edit event information.";
+            headerLabel.Text = "Edit event information";
 
             FillInSports();
             FillInBoxes();
@@ -84,6 +88,9 @@ namespace localhostUI.UiEvent
                 deleteEventButton.Text = "Delete event";
                 deleteEventButton.Click += DeleteEvent;
             }
+
+            // Set maps button image
+            checkAddressButton.BackgroundImage = Properties.Resources.MapsButton;
         }
 
         private void FillInBoxes()
@@ -117,95 +124,161 @@ namespace localhostUI.UiEvent
 
         private void FillInPhotos()
         {
+            if (@event.Images.Count == 0)
+            {
+                @event.Images.Add("<none>");
+                @event.Images.Add("<none>");
+            }
+            else if (@event.Images.Count == 1)
+            {
+                @event.Images.Add("<none>");
+            }
+
             photoPanel.Controls.Clear();
             thumbnailPanel.Controls.Clear();
-            var photos = new List<string>(@event.Images.Skip(1));
-            string thumbnail ="";
+
+            List<string> photos = new List<string>(@event.Images.Skip(1));
+            string thumbnail = "";
+
+            int IMAGE_WIDTH = 180;
+            int IMAGE_HEIGHT = 180;
+            int MARGINS = 20;
+
             if (@event.Images.Count > 0) 
             { 
                 thumbnail = @event.Images.FirstOrDefault();
+
                 // Add picture
                 PictureBox picture = new PictureBox();
                 picture.Click += ShowThumbnailBox;
-                picture.Size = new Size(180, 180);
-                picture.Location = new Point(15, 0);
+                picture.Size = new Size(IMAGE_WIDTH, IMAGE_HEIGHT);
+                picture.Location = new Point(0, 0);
                 picture.BorderStyle = BorderStyle.FixedSingle;
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        Stream stream = client.OpenRead(thumbnail);
-                        Bitmap bitmap = new Bitmap(stream);
-                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(180, 180));
-                        picture.Image = bitmapScaled;
 
-                        stream.Flush();
-                        stream.Close();
+                picture.MouseDoubleClick += (s, e) =>
+                {
+                    try
+                    {
+                        @event.Images[0] = "<none>";
+                        FillInPhotos();
                     }
-                }
-                catch { }
+                    catch { }
+                };
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += (s, e) =>
+                {
+                    try
+                    {
+                        if (thumbnail == "<none>")
+                        {
+                            picture.Image = Properties.Resources.PlaceholderPhoto;
+                        }
+                        else
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                Stream stream = client.OpenRead(thumbnail);
+                                Bitmap bitmap = new Bitmap(stream);
+
+                                picture.Image = Helper.ScaleBitmap(bitmap, IMAGE_WIDTH, IMAGE_HEIGHT, 1.0f);
+
+                                stream.Flush();
+                                stream.Close();
+                            }
+                        }
+                    }
+                    catch { }
+                };
+                worker.RunWorkerAsync();
+
                 thumbnailPanel.Controls.Add(picture);
 
                 // Add remove button
-                Button removeButton = new Button();
-                removeButton.BackgroundImage = Properties.Resources.CloseButton;
-                removeButton.FlatStyle = FlatStyle.Flat;
-                removeButton.FlatAppearance.BorderSize = 0;
-                removeButton.BackColor = Color.Transparent;
-                removeButton.Location = new Point(0, 1);
-                removeButton.Size = new Size(13, 13);
-                removeButton.Margin = new Padding(0);
-                removeButton.Padding = new Padding(0);
-                removeButton.Click += (sender, e) =>
-                {
-                    @event.Images.Remove(thumbnail);
-                    FillInPhotos();
-                };
-                thumbnailPanel.Controls.Add(removeButton);
+                //Button removeButton = new Button();
+                //removeButton.BackgroundImage = Properties.Resources.CloseButton;
+                //removeButton.FlatStyle = FlatStyle.Flat;
+                //removeButton.FlatAppearance.BorderSize = 0;
+                //removeButton.BackColor = Color.Transparent;
+                //removeButton.Location = new Point(0, 1);
+                //removeButton.Size = new Size(13, 13);
+                //removeButton.Margin = new Padding(0);
+                //removeButton.Padding = new Padding(0);
+                //removeButton.Click += (sender, e) =>
+                //{
+                //    @event.Images.Remove(thumbnail);
+                //    FillInPhotos();
+                //};
+                //thumbnailPanel.Controls.Add(removeButton);
 
             }
 
             int counter = 0;
-            foreach (var link in photos)
+            foreach (var image in photos)
             {
                 // Add picture
                 PictureBox picture = new PictureBox();
                 picture.Click += ShowPhotoBox;
-                picture.Size = new Size(180, 180);
-                picture.Location = new Point(15 + 200 * counter,0);
+                picture.Size = new Size(IMAGE_WIDTH, IMAGE_HEIGHT);
+                picture.Location = new Point((IMAGE_WIDTH + MARGINS) * counter, 0);
                 picture.BorderStyle = BorderStyle.FixedSingle;
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        Stream stream = client.OpenRead(link);
-                        Bitmap bitmap = new Bitmap(stream);
-                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(180, 180));
-                        picture.Image = bitmapScaled;
 
-                        stream.Flush();
-                        stream.Close();
+                picture.MouseDoubleClick += (s, e) =>
+                {
+                    @event.Images.Remove(image);
+                    if (@event.Images.Count == 1)
+                    {
+                        @event.Images.Add("<none>");
                     }
-                }
-                catch { }
+                    FillInPhotos();
+                };
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += (s, e) =>
+                {
+                    try
+                    {
+
+                        if (image == "<none>")
+                        {
+                            picture.Image = Properties.Resources.PlaceholderPhoto;
+                        }
+                        else
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                Stream stream = client.OpenRead(image);
+                                Bitmap bitmap = new Bitmap(stream);
+
+                                picture.Image = Helper.ScaleBitmap(bitmap, IMAGE_WIDTH, IMAGE_HEIGHT, 1.0f);
+
+                                stream.Flush();
+                                stream.Close();
+                            }
+                        }
+                    }
+                    catch { }
+                };
+                worker.RunWorkerAsync();
+
                 photoPanel.Controls.Add(picture);
 
                 // Add remove button
-                Button removeButton = new Button();
-                removeButton.BackgroundImage = Properties.Resources.CloseButton;
-                removeButton.FlatStyle = FlatStyle.Flat;
-                removeButton.FlatAppearance.BorderSize = 0;
-                removeButton.BackColor = Color.Transparent;
-                removeButton.Location = new Point( 1 + 200 * counter,1);
-                removeButton.Size = new Size(13, 13);
-                removeButton.Margin = new Padding(0);
-                removeButton.Padding = new Padding(0);
-                removeButton.Click += (sender, e) =>
-                {
-                    @event.Images.Remove(link);
-                    FillInPhotos();
-                };
-                photoPanel.Controls.Add(removeButton);
+                //Button removeButton = new Button();
+                //removeButton.BackgroundImage = Properties.Resources.CloseButton;
+                //removeButton.FlatStyle = FlatStyle.Flat;
+                //removeButton.FlatAppearance.BorderSize = 0;
+                //removeButton.BackColor = Color.Transparent;
+                //removeButton.Location = new Point(1 + 200 * counter, 1);
+                //removeButton.Size = new Size(13, 13);
+                //removeButton.Margin = new Padding(0);
+                //removeButton.Padding = new Padding(0);
+                //removeButton.Click += (sender, e) =>
+                //{
+                //    @event.Images.Remove(image);
+                //    FillInPhotos();
+                //};
+                //photoPanel.Controls.Add(removeButton);
 
                 // Add thumbnail tag
                 if (counter == 0)
@@ -369,17 +442,13 @@ namespace localhostUI.UiEvent
 
         private void AddPhoto(object sender, EventArgs e)
         {
-            int index = @event.Images.IndexOf(imagineLinkBox.Text);
-            if (index != -1)
+            int index = @event.Images.IndexOf(imageLinkBox.Text);
+            if (index == -1)
             {
-                @event.Images[index] = imagineLinkBox.Text;
-            }
-            else
-            {
-                @event.Images.Add(imagineLinkBox.Text);
+                @event.Images.Add(imageLinkBox.Text);
             }
             FillInPhotos();
-            imagineLinkBox.Clear();
+            imageLinkBox.Clear();
         }
 
         private void ShowThumbnailBox(object sender, EventArgs e)
@@ -390,8 +459,48 @@ namespace localhostUI.UiEvent
 
         private void ShowPhotoBox(object sender, EventArgs e)
         {
-            imagineLinkBox.Visible = true;
+            imageLinkBox.Visible = true;
             addPhotoButton.Visible = true;
+        }
+
+        private void returnButton_MouseEnter(object sender, EventArgs e)
+        {
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreenHover;
+        }
+
+        private void returnButton_MouseLeave(object sender, EventArgs e)
+        {
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
+        }
+
+        private void checkAddressButton_MouseEnter(object sender, EventArgs e)
+        {
+            checkAddressButton.BackgroundImage = Properties.Resources.MapsButtonHover;
+        }
+
+        private void checkAddressButton_MouseLeave(object sender, EventArgs e)
+        {
+            checkAddressButton.BackgroundImage = Properties.Resources.MapsButton;
+        }
+
+        private void addThumbnailButton_MouseEnter(object sender, EventArgs e)
+        {
+            addThumbnailButton.BackgroundImage = Properties.Resources.PlusButtonHover;
+        }
+
+        private void addThumbnailButton_MouseLeave(object sender, EventArgs e)
+        {
+            addThumbnailButton.BackgroundImage = Properties.Resources.PlusButton;
+        }
+
+        private void addPhotoButton_MouseEnter(object sender, EventArgs e)
+        {
+            addPhotoButton.BackgroundImage = Properties.Resources.PlusButtonHover;
+        }
+
+        private void addPhotoButton_MouseLeave(object sender, EventArgs e)
+        {
+            addPhotoButton.BackgroundImage = Properties.Resources.PlusButton;
         }
     }
 }

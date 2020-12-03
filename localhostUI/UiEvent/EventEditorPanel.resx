@@ -1087,4 +1087,26 @@
         2Q==
 </value>
   </data>
+  <data name="addThumbnailButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAIAAAAmKNuZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAEJJREFUSEtjyF3RTkU0ahz5iCjj/oMBmiBWNGocOhquxkF0Eg/QtFPNuJzlbUA0
+        oqMCKxo1Disiyjji0ahx5KIV7QAuZJLjuvwF0wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="addPhotoButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAIAAAAmKNuZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAEJJREFUSEtjyF3RTkU0ahz5iCjj/oMBmiBWNGocOhquxkF0Eg/QtFPNuJzlbUA0
+        oqMCKxo1Disiyjji0ahx5KIV7QAuZJLjuvwF0wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="returnButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAADBQTFRFbaiH
+        ////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAia2iogAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAADpJREFUOMtjoDUQwCLGKIhFUFBQAItCQUEsCjGVghQKDmuFWAWxah/OShmwKMWS
+        wrAmMKxJkTqAgQEAha8IPSq8k5AAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

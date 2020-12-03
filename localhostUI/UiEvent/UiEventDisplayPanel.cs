@@ -45,6 +45,9 @@ namespace localhostUI.UiEvent
 
             InitializeComponent();
 
+            // Set return button image
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
+
             // Get full event data from database
             List<EventFull> events = Program.Client.SelectEventsFull(eventId);
             try
@@ -68,7 +71,7 @@ namespace localhostUI.UiEvent
                 sportLabel.Text = sport;
                 sportLabel.BackColor = Color.FromArgb(230, 230, 230);
                 sportLabel.Font = new Font("Arial", 12, FontStyle.Bold);
-                sportDisplayBar.Controls.Add(sportLabel);
+                //sportDisplayBar.Controls.Add(sportLabel);
             }
 
             // Distance
@@ -84,38 +87,54 @@ namespace localhostUI.UiEvent
             }
 
             // Distance and address separator
-            separator1.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width, separator1.Location.Y);
+            Size distanceLabelSize = Helper.CalculateLabelSize(distanceLabel, 100);
+            separatorPanel1.Location = new Point(distanceLabel.Location.X + distanceLabelSize.Width, separatorPanel1.Location.Y);
 
             // Address
-            addressLabel.Location = new Point(distanceLabel.Location.X + distanceLabel.Size.Width + 10, addressLabel.Location.Y);
+            addressLabel.Location = new Point(distanceLabel.Location.X + distanceLabelSize.Width + 10, addressLabel.Location.Y);
             addressLabel.Text = @event.Address.ToStringNormal();
 
             // Show map button
-            showMapsButton.Location = new Point(addressLabel.Location.X + addressLabel.Size.Width + 5, showMapsButton.Location.Y);
+            Size addressLabelSize = Helper.CalculateLabelSize(addressLabel, 500);
+            showMapsButton.Location = new Point(addressLabel.Location.X + addressLabelSize.Width + 5, showMapsButton.Location.Y);
+            showMapsButton.BackgroundImage = Properties.Resources.MapsButton;
 
             // Load images
             List<string> imageLinks = @event.Images;
-            for (int i = 0; i < imageLinks.Count; i++)
+            int counter = 0;
+            foreach (var image in @event.Images)
             {
-                PictureBox picture = new PictureBox();
-                picture.Size = new Size(180, 180);
-                picture.Location = new Point(200 * i, 0);
-                picture.BorderStyle = BorderStyle.None;
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        Stream stream = client.OpenRead(imageLinks[i]);
-                        Bitmap bitmap = new Bitmap(stream);
-                        Bitmap bitmapScaled = new Bitmap(bitmap, new Size(180, 180));
-                        picture.Image = bitmapScaled;
+                int IMAGE_WIDTH = 180;
+                int IMAGE_HEIGHT = 180;
+                int MARGINS = 10;
 
-                        stream.Flush();
-                        stream.Close();
+                PictureBox picture = new PictureBox();
+                picture.Size = new Size(IMAGE_WIDTH, IMAGE_HEIGHT);
+                picture.Location = new Point((IMAGE_WIDTH + MARGINS) * counter, 0);
+                picture.BorderStyle = BorderStyle.None;
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += (s, e) =>
+                {
+                    try
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            Stream stream = client.OpenRead(image);
+                            Bitmap bitmap = new Bitmap(stream);
+
+                            picture.Image = Helper.ScaleBitmap(bitmap, IMAGE_WIDTH, IMAGE_HEIGHT, 1.0f);
+
+                            stream.Flush();
+                            stream.Close();
+                        }
                     }
-                }
-                catch { }
+                    catch { }
+                };
+                worker.RunWorkerAsync();
+
                 picturePanel.Controls.Add(picture);
+                counter++;
             }
 
             picturePanel.VerticalScroll.Maximum = 0;
@@ -125,15 +144,27 @@ namespace localhostUI.UiEvent
 
             // Description
             descriptionLabel.Text = @event.Description;
+            Size descriptionLabelSize = Helper.CalculateLabelSize(descriptionLabel, descriptionLabel.MaximumSize.Width);
 
             // Description and comment separator
-            separator4.Location = new Point(separator4.Location.X, descriptionLabel.Location.Y + descriptionLabel.Size.Height + 28);
+            separatorPanel4.Location = new Point(separatorPanel4.Location.X, descriptionLabel.Location.Y + descriptionLabelSize.Height + 28);
 
             // New comment
-            chatMessageTextBox.Location = new Point(chatMessageTextBox.Location.X, separator4.Location.Y + 20);
+            chatMessageTextBox.Location = new Point(0, 0);
 
             // Submit new comment
-            sendMessageButton.Location = new Point(sendMessageButton.Location.X, chatMessageTextBox.Location.Y + chatMessageTextBox.Size.Height + 10);
+            sendMessageButton.Location = new Point(sendMessageButton.Location.X, chatMessageTextBox.Location.Y + chatMessageTextBox.Size.Height + 6);
+
+            // Chat panel
+            chatPanel.Location = new Point(chatPanel.Location.X, sendMessageButton.Location.Y + sendMessageButton.Size.Height + 6);
+
+            // Load comments
+
+
+            // Comments panel
+            commentsPanel.Size = new Size(commentsPanel.Size.Width, chatPanel.Location.Y + chatPanel.Size.Height);
+
+            mainPanel.Size = new Size(1000, chatPanel.Location.Y + chatPanel.Size.Height + 20);
 
             // Chat
             chatMessageTextBox.KeyPress += new KeyPressEventHandler(Key_Press);
@@ -144,26 +175,26 @@ namespace localhostUI.UiEvent
             chatPanel.AutoScroll = true;
 
             // Start chat
-            chatManager = new ChatManager();
-            chatManager.Connect(@event.Id, chatPanel);
+            //chatManager = new ChatManager();
+            //chatManager.Connect(@event.Id, chatPanel);
 
             // Links
-            List<string> links = @event.Links;
-            for (int i = 0; i < links.Count; i++)
-            {
-                string[] linkSplit = links[i].Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
-                if (linkSplit.Length != 2) continue;
+            //List<string> links = @event.Links;
+            //for (int i = 0; i < links.Count; i++)
+            //{
+            //    string[] linkSplit = links[i].Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
+            //    if (linkSplit.Length != 2) continue;
 
-                LinkLabel linkText = new LinkLabel();
-                linkText.Text = linkSplit[1];
-                linkText.LinkClicked += (sender, e) =>
-                {
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {linkSplit[0]}"));
-                };
-                linkText.Location = new Point(426, 370 + (i * 20));
+            //    LinkLabel linkText = new LinkLabel();
+            //    linkText.Text = linkSplit[1];
+            //    linkText.LinkClicked += (sender, e) =>
+            //    {
+            //        Process.Start(new ProcessStartInfo("cmd", $"/c start {linkSplit[0]}"));
+            //    };
+            //    linkText.Location = new Point(426, 370 + (i * 20));
 
-                Controls.Add(linkText);
-            }
+            //    Controls.Add(linkText);
+            //}
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
@@ -214,6 +245,26 @@ namespace localhostUI.UiEvent
         private void chatMessageTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void returnButton_MouseEnter(object sender, EventArgs e)
+        {
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreenHover;
+        }
+
+        private void returnButton_MouseLeave(object sender, EventArgs e)
+        {
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
+        }
+
+        private void showMapsButton_MouseEnter(object sender, EventArgs e)
+        {
+            showMapsButton.BackgroundImage = Properties.Resources.MapsButtonHover;
+        }
+
+        private void showMapsButton_MouseLeave(object sender, EventArgs e)
+        {
+            showMapsButton.BackgroundImage = Properties.Resources.MapsButton;
         }
     }
 }

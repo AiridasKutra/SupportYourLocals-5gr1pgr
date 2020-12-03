@@ -73,6 +73,26 @@ namespace localhostUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BackButtonGreen {
+            get {
+                object obj = ResourceManager.GetObject("BackButtonGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackButtonGreenHover {
+            get {
+                object obj = ResourceManager.GetObject("BackButtonGreenHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CloseButton {
             get {
                 object obj = ResourceManager.GetObject("CloseButton", resourceCulture);
@@ -83,9 +103,59 @@ namespace localhostUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MapsButton {
+            get {
+                object obj = ResourceManager.GetObject("MapsButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MapsButtonHover {
+            get {
+                object obj = ResourceManager.GetObject("MapsButtonHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap MenuSeparator {
             get {
                 object obj = ResourceManager.GetObject("MenuSeparator", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlaceholderPhoto {
+            get {
+                object obj = ResourceManager.GetObject("PlaceholderPhoto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlusButton {
+            get {
+                object obj = ResourceManager.GetObject("PlusButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlusButtonHover {
+            get {
+                object obj = ResourceManager.GetObject("PlusButtonHover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

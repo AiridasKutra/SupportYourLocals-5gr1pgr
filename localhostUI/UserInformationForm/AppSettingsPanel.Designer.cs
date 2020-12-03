@@ -45,7 +45,7 @@
             this.mainPanel.Controls.Add(this.darkModeCheckBox);
             this.mainPanel.Controls.Add(this.darkmodeLabel);
             this.mainPanel.Controls.Add(this.autoLogInLabel);
-            this.mainPanel.Location = new System.Drawing.Point(42, 12);
+            this.mainPanel.Location = new System.Drawing.Point(10, 10);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 500);
             this.mainPanel.TabIndex = 0;
@@ -66,7 +66,7 @@
             this.autoLogInCheckBox.AutoSize = true;
             this.autoLogInCheckBox.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.autoLogInCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.autoLogInCheckBox.Location = new System.Drawing.Point(256, 126);
+            this.autoLogInCheckBox.Location = new System.Drawing.Point(250, 125);
             this.autoLogInCheckBox.Name = "autoLogInCheckBox";
             this.autoLogInCheckBox.Size = new System.Drawing.Size(15, 14);
             this.autoLogInCheckBox.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             this.darkModeCheckBox.AutoSize = true;
             this.darkModeCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.darkModeCheckBox.Location = new System.Drawing.Point(256, 179);
+            this.darkModeCheckBox.Location = new System.Drawing.Point(250, 179);
             this.darkModeCheckBox.Name = "darkModeCheckBox";
             this.darkModeCheckBox.Size = new System.Drawing.Size(15, 14);
             this.darkModeCheckBox.TabIndex = 2;
@@ -88,7 +88,7 @@
             this.darkmodeLabel.AutoSize = true;
             this.darkmodeLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.darkmodeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.darkmodeLabel.Location = new System.Drawing.Point(97, 173);
+            this.darkmodeLabel.Location = new System.Drawing.Point(50, 172);
             this.darkmodeLabel.Name = "darkmodeLabel";
             this.darkmodeLabel.Size = new System.Drawing.Size(107, 23);
             this.darkmodeLabel.TabIndex = 1;
@@ -99,7 +99,7 @@
             this.autoLogInLabel.AutoSize = true;
             this.autoLogInLabel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.autoLogInLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.autoLogInLabel.Location = new System.Drawing.Point(97, 120);
+            this.autoLogInLabel.Location = new System.Drawing.Point(50, 119);
             this.autoLogInLabel.Name = "autoLogInLabel";
             this.autoLogInLabel.Size = new System.Drawing.Size(103, 23);
             this.autoLogInLabel.TabIndex = 0;

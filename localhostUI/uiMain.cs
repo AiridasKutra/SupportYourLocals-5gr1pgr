@@ -181,8 +181,28 @@ namespace localhostUI
                 menuSeparatorPicture1.Image = Properties.Resources.MenuSeparator;
 
                 // Add administrator menu options
+                PictureBox menuSeparatorPicture2 = new PictureBox();
+                menuSeparatorPicture2.Image = Properties.Resources.MenuSeparator;
+                menuSeparatorPicture2.Location = new Point(0, 90);
+                menuSeparatorPicture2.Size = new Size(250, 15);
 
-                //userMenuPanel.
+                Button accountManagerButton = new Button();
+                accountManagerButton.FlatStyle = FlatStyle.Flat;
+                accountManagerButton.FlatAppearance.BorderSize = 0;
+                accountManagerButton.BackColor = Color.Snow;
+                accountManagerButton.Text = "Account manager";
+                accountManagerButton.Font = new Font("Arial Rounded MT Bold", 12);
+                accountManagerButton.ForeColor = Color.FromArgb(64, 64, 64);
+                accountManagerButton.TextAlign = ContentAlignment.MiddleLeft;
+                accountManagerButton.Click += accountManagerButton_Click;
+                accountManagerButton.Location = new Point(0, 105);
+                accountManagerButton.Size = new Size(250, 30);
+
+                menuSeparatorPicture1.Location = new Point(0, 135);
+                logoutButton.Location = new Point(0, 150);
+
+                userMenuPanel.Controls.Add(menuSeparatorPicture2);
+                userMenuPanel.Controls.Add(accountManagerButton);
 
                 // Set menu panel height
                 int height = 0;
@@ -246,6 +266,11 @@ namespace localhostUI
         private void settingsButton_Click(object sender, EventArgs e)
         {
             ShowPanel(new AppSettingsPanel());
+        }
+
+        private void accountManagerButton_Click(object sender, EventArgs e)
+        {
+            ShowPanel(new AccountsPanel());
         }
 
         public void logoutButton_Click(object sender, EventArgs e)
