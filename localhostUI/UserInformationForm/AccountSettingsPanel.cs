@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace localhostUI
 {
-    public partial class LoginPanel : Form, IPanel
+    public partial class AccountSettingsPanel : Form, IPanel
     {
         private UiMain mainForm;
         private IPanel caller;
 
         public void Reload()
         {
-            
+
         }
 
         public Panel GetPanel()
@@ -28,26 +28,28 @@ namespace localhostUI
             mainForm = main;
         }
 
-        public LoginPanel()
+        public AccountSettingsPanel()
         {
-            //this.caller = caller;
             InitializeComponent();
         }
 
-        private void loginButton_Click(object sender, EventArgs args)
+        private void deleteButton_Click(object sender, EventArgs e)
         {
-            ulong vfid = Program.Client.Login(emailTextBox.Text, passwordTextBox.Text);
-            if (vfid != 0)
+            if (!deleteConfirmTextBox.Visible)
             {
-                Program.Client.SetVfid(vfid);
-                mainForm.loggedIn = true;
-                mainForm.ShowPanel(new MainEventListPanel(null));
-                mainForm.DrawBanner();
+                deleteConfirmTextBox.Visible = true;
             }
             else
             {
-                resultsLabel.Text = "• Invalid credentials";
-                resultsLabel.Visible = true;
+                if (deleteConfirmTextBox.Text == "delete")
+                {
+                    mainForm.logoutButton_Click(null, null);
+                    mainForm.ShowPanel(new MainEventListPanel(null));
+                }
+                else
+                {
+                    deleteConfirmFailedLabel.Visible = true;
+                }
             }
         }
     }

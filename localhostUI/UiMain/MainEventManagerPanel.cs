@@ -18,7 +18,7 @@ namespace localhostUI
     {
         private int ITEM_WIDTH = 400;
         private int ITEM_HEIGHT = 50;
-        private int START_HEIGHT = 125;
+        private int START_HEIGHT = 180;
         private int MARGINS = 10;
 
         private UiMain mainForm;
@@ -72,12 +72,13 @@ namespace localhostUI
 
             // Add create event button
             Button createEventButton = new Button();
-            createEventButton.BackColor = Color.WhiteSmoke;
+            createEventButton.BackColor = Color.FromArgb(109, 168, 135);
             createEventButton.FlatStyle = FlatStyle.Flat;
             createEventButton.FlatAppearance.BorderSize = 0;
             createEventButton.Location = new Point(0, 0);
             createEventButton.Size = new Size(ITEM_WIDTH, ITEM_HEIGHT);
             createEventButton.Font = new Font("Arial Rounded", 15.0f, FontStyle.Bold);
+            createEventButton.ForeColor = Color.White;
             createEventButton.Text = "+ Create new event";
             createEventButton.TextAlign = ContentAlignment.MiddleCenter;
             createEventButton.Click += createEventButton_Click;
@@ -104,6 +105,14 @@ namespace localhostUI
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
                 //eventName.BackColor = Color.FromArgb(109, 168, 135);
                 eventName.BackColor = Color.FromArgb(230, 230, 230);
+                eventName.MouseEnter += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(210, 210, 210);
+                };
+                eventName.MouseLeave += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(230, 230, 230);
+                };
 
                 eventName.Click += (sender, e) =>
                 {
@@ -112,14 +121,14 @@ namespace localhostUI
                     //Program.DataManager.Read(new DatabaseReader($"select from events_full id {@event.Id}"), out eventData);
                     try
                     {
-                        mainForm.ShowPanel(new EventEditorPanel(this, eventData[0], true));
+                        mainForm.ShowPanel(new EventEditorPanel(this, eventData[0], false));
                         //new EventEditorPanel(this, eventData[0], true).Show();
                     }
                     catch (InvalidCastException)
                     {
                         Console.WriteLine($"ERROR: Event \"{@event.Name}\" can't be opened (invalid data)");
                     }
-                    catch (IndexOutOfRangeException)
+                    catch (ArgumentOutOfRangeException)
                     {
                         Console.WriteLine($"ERROR: No events with id '{@event.Id}' retrieved from database");
                     }
@@ -127,6 +136,7 @@ namespace localhostUI
                     {
                         Console.WriteLine($"ERROR: database reader returned null");
                     }
+
                 };
 
                 eventPanel.Controls.Add(eventName);

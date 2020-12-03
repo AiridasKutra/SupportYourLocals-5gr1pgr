@@ -65,8 +65,15 @@ namespace Common.Network
 
         private int Send(Socket sock, byte[] buffer, int id = -1)
         {
-            int prefixSent = sock.Send(BitConverter.GetBytes(buffer.Length));
-            int messageSent = sock.Send(buffer);
+            int prefixSent = -1;
+            int messageSent = -1;
+
+            try
+            {
+                prefixSent = sock.Send(BitConverter.GetBytes(buffer.Length));
+                messageSent = sock.Send(buffer);
+            }
+            catch { }
 
             // Change color to red if something is wrong
             if (prefixSent != 4)
@@ -95,7 +102,7 @@ namespace Common.Network
                 byte[] packCountBuffer = BitConverter.GetBytes(packetCount);
                 Buffer.BlockCopy(packTypeBuffer, 0, buffer, 0, 4);
                 Buffer.BlockCopy(packCountBuffer, 0, buffer, 4, 4);
-                if (Send(thisClient, buffer) == 0) return false;
+                if (Send(thisClient, buffer) < 1) return false;
             }
 
             byte[] packetId = BitConverter.GetBytes(packet.PacketId);
@@ -118,7 +125,7 @@ namespace Common.Network
                     Buffer.BlockCopy(packet.Data, packet.Data.Length - bytesLeft, buffer, 4, bytesLeft);
                     bytesLeft = 0;
                 }
-                if (Send(thisClient, buffer) == 0) return false;
+                if (Send(thisClient, buffer) < 1) return false;
             }
 
             return true;
