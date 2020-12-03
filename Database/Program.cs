@@ -16,14 +16,31 @@ namespace Database
 
         static void Main(string[] args)
         {
-            Console.Write("Server name:");
-            string serverName = Console.ReadLine();
-            Console.Write("Database name:");
-            string database = Console.ReadLine();
-            Console.Write("Username:");
-            string username = Console.ReadLine();
-            Console.Write("Password:");
-            string password = Console.ReadLine();
+            string serverName = "";
+            string database = "";
+            string username = "";
+            string password = "";
+
+            Console.Write("Preset: ");
+            string preset = Console.ReadLine();
+            if (preset == "vuvm")
+            {
+                serverName = "localhost,54001";
+                database = "lh";
+                username = "SA";
+                password = "Supportyourlocals123";
+            }
+            else
+            {
+                Console.Write("Server name:");
+                serverName = Console.ReadLine();
+                Console.Write("Database name:");
+                database = Console.ReadLine();
+                Console.Write("Username:");
+                username = Console.ReadLine();
+                Console.Write("Password:");
+                password = Console.ReadLine();
+            }
 
             using (context = new MainDbContext(serverName, database, username, password))
             {
@@ -62,6 +79,12 @@ namespace Database
                     if (input == "quit" || input == "exit")
                     {
                         Environment.Exit(0);
+                    }
+                    else if (input == "restart" || input == "rs")
+                    {
+                        context.Dispose();
+                        context = new MainDbContext(serverName, database, username, password);
+                        db = new Database(context);
                     }
                     else if (input == "clients")
                     {
