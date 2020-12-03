@@ -30,6 +30,7 @@
         {
             this.mainPanel = new System.Windows.Forms.Panel();
             this.filterPanel = new System.Windows.Forms.Panel();
+            this.showInvisibleEventsCheckBox = new System.Windows.Forms.CheckBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.filterSearchTextBox = new System.Windows.Forms.TextBox();
             this.filterMaxDistanceValueLabel = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.filterSportSelector = new System.Windows.Forms.ComboBox();
             this.eventGridPanel = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.showInvisibleEventsCheckBox = new System.Windows.Forms.CheckBox();
             this.mainPanel.SuspendLayout();
             this.filterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filterMaxDistanceSlider)).BeginInit();
@@ -83,9 +83,20 @@
             this.filterPanel.Size = new System.Drawing.Size(700, 194);
             this.filterPanel.TabIndex = 14;
             // 
+            // showInvisibleEventsCheckBox
+            // 
+            this.showInvisibleEventsCheckBox.ForeColor = System.Drawing.Color.DimGray;
+            this.showInvisibleEventsCheckBox.Location = new System.Drawing.Point(50, 99);
+            this.showInvisibleEventsCheckBox.Name = "showInvisibleEventsCheckBox";
+            this.showInvisibleEventsCheckBox.Size = new System.Drawing.Size(144, 26);
+            this.showInvisibleEventsCheckBox.TabIndex = 13;
+            this.showInvisibleEventsCheckBox.Text = "Show invisible";
+            this.showInvisibleEventsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // searchButton
             // 
             this.searchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(168)))), ((int)(((byte)(135)))));
+            this.searchButton.FlatAppearance.BorderSize = 0;
             this.searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.searchButton.ForeColor = System.Drawing.Color.White;
@@ -234,16 +245,6 @@
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Current events";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // showInvisibleEventsCheckBox
-            // 
-            this.showInvisibleEventsCheckBox.ForeColor = System.Drawing.Color.DimGray;
-            this.showInvisibleEventsCheckBox.Location = new System.Drawing.Point(50, 99);
-            this.showInvisibleEventsCheckBox.Name = "showInvisibleEventsCheckBox";
-            this.showInvisibleEventsCheckBox.Size = new System.Drawing.Size(144, 26);
-            this.showInvisibleEventsCheckBox.TabIndex = 13;
-            this.showInvisibleEventsCheckBox.Text = "Show invisible";
-            this.showInvisibleEventsCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainEventListPanel
             // 

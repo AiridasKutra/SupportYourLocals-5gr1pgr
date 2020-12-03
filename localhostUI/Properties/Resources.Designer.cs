@@ -163,6 +163,26 @@ namespace localhostUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReportButton {
+            get {
+                object obj = ResourceManager.GetObject("ReportButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReportButtonHover {
+            get {
+                object obj = ResourceManager.GetObject("ReportButtonHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UserMenuIcon {
             get {
                 object obj = ResourceManager.GetObject("UserMenuIcon", resourceCulture);

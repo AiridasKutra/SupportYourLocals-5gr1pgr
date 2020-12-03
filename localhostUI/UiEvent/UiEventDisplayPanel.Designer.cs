@@ -40,6 +40,10 @@
             this.picturePanel = new System.Windows.Forms.Panel();
             this.distanceLabel = new System.Windows.Forms.Label();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.reportButton = new System.Windows.Forms.Button();
+            this.setVisibilityButton = new System.Windows.Forms.Button();
+            this.reportsPanel = new System.Windows.Forms.Panel();
+            this.commentsPanel = new System.Windows.Forms.Panel();
             this.separatorPanel4 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.separatorPanel3 = new System.Windows.Forms.Panel();
@@ -47,12 +51,11 @@
             this.separatorPanel2 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.separatorPanel1 = new System.Windows.Forms.Panel();
-            this.commentsPanel = new System.Windows.Forms.Panel();
             this.mainPanel.SuspendLayout();
+            this.commentsPanel.SuspendLayout();
             this.separatorPanel4.SuspendLayout();
             this.separatorPanel3.SuspendLayout();
             this.separatorPanel2.SuspendLayout();
-            this.commentsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // eventName
@@ -65,7 +68,7 @@
             this.eventName.Name = "eventName";
             this.eventName.Size = new System.Drawing.Size(800, 120);
             this.eventName.TabIndex = 0;
-            this.eventName.Text = "event name";
+            this.eventName.Text = "<event name>";
             this.eventName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // returnButton
@@ -146,7 +149,7 @@
             this.sendMessageButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sendMessageButton.FlatAppearance.BorderSize = 0;
             this.sendMessageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendMessageButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.sendMessageButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.sendMessageButton.ForeColor = System.Drawing.Color.White;
             this.sendMessageButton.Location = new System.Drawing.Point(860, 86);
             this.sendMessageButton.Name = "sendMessageButton";
@@ -161,7 +164,7 @@
             this.chatPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.chatPanel.Location = new System.Drawing.Point(0, 127);
             this.chatPanel.Name = "chatPanel";
-            this.chatPanel.Size = new System.Drawing.Size(960, 139);
+            this.chatPanel.Size = new System.Drawing.Size(960, 10);
             this.chatPanel.TabIndex = 10;
             // 
             // picturePanel
@@ -189,6 +192,9 @@
             // mainPanel
             // 
             this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.mainPanel.Controls.Add(this.reportButton);
+            this.mainPanel.Controls.Add(this.setVisibilityButton);
+            this.mainPanel.Controls.Add(this.reportsPanel);
             this.mainPanel.Controls.Add(this.commentsPanel);
             this.mainPanel.Controls.Add(this.separatorPanel4);
             this.mainPanel.Controls.Add(this.separatorPanel3);
@@ -208,6 +214,53 @@
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(1000, 961);
             this.mainPanel.TabIndex = 13;
+            // 
+            // reportButton
+            // 
+            this.reportButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("reportButton.BackgroundImage")));
+            this.reportButton.FlatAppearance.BorderSize = 0;
+            this.reportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reportButton.Location = new System.Drawing.Point(920, 40);
+            this.reportButton.Name = "reportButton";
+            this.reportButton.Size = new System.Drawing.Size(40, 40);
+            this.reportButton.TabIndex = 21;
+            this.reportButton.UseVisualStyleBackColor = true;
+            this.reportButton.Click += new System.EventHandler(this.reportButton_Click);
+            this.reportButton.MouseEnter += new System.EventHandler(this.reportButton_MouseEnter);
+            this.reportButton.MouseLeave += new System.EventHandler(this.reportButton_MouseLeave);
+            // 
+            // setVisibilityButton
+            // 
+            this.setVisibilityButton.BackColor = System.Drawing.Color.Tomato;
+            this.setVisibilityButton.FlatAppearance.BorderSize = 0;
+            this.setVisibilityButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.setVisibilityButton.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.setVisibilityButton.ForeColor = System.Drawing.Color.White;
+            this.setVisibilityButton.Location = new System.Drawing.Point(830, 188);
+            this.setVisibilityButton.Name = "setVisibilityButton";
+            this.setVisibilityButton.Size = new System.Drawing.Size(150, 35);
+            this.setVisibilityButton.TabIndex = 20;
+            this.setVisibilityButton.Text = "Make invisible";
+            this.setVisibilityButton.UseVisualStyleBackColor = false;
+            this.setVisibilityButton.Visible = false;
+            // 
+            // reportsPanel
+            // 
+            this.reportsPanel.Location = new System.Drawing.Point(20, 522);
+            this.reportsPanel.Name = "reportsPanel";
+            this.reportsPanel.Size = new System.Drawing.Size(960, 2);
+            this.reportsPanel.TabIndex = 19;
+            this.reportsPanel.Visible = false;
+            // 
+            // commentsPanel
+            // 
+            this.commentsPanel.Controls.Add(this.sendMessageButton);
+            this.commentsPanel.Controls.Add(this.chatPanel);
+            this.commentsPanel.Controls.Add(this.chatMessageTextBox);
+            this.commentsPanel.Location = new System.Drawing.Point(20, 527);
+            this.commentsPanel.Name = "commentsPanel";
+            this.commentsPanel.Size = new System.Drawing.Size(960, 146);
+            this.commentsPanel.TabIndex = 18;
             // 
             // separatorPanel4
             // 
@@ -275,16 +328,6 @@
             this.separatorPanel1.Size = new System.Drawing.Size(1, 22);
             this.separatorPanel1.TabIndex = 13;
             // 
-            // commentsPanel
-            // 
-            this.commentsPanel.Controls.Add(this.sendMessageButton);
-            this.commentsPanel.Controls.Add(this.chatPanel);
-            this.commentsPanel.Controls.Add(this.chatMessageTextBox);
-            this.commentsPanel.Location = new System.Drawing.Point(20, 527);
-            this.commentsPanel.Name = "commentsPanel";
-            this.commentsPanel.Size = new System.Drawing.Size(960, 285);
-            this.commentsPanel.TabIndex = 18;
-            // 
             // UiEventDisplayPanel
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -297,11 +340,11 @@
             this.Text = "UiEventDisplay";
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
+            this.commentsPanel.ResumeLayout(false);
+            this.commentsPanel.PerformLayout();
             this.separatorPanel4.ResumeLayout(false);
             this.separatorPanel3.ResumeLayout(false);
             this.separatorPanel2.ResumeLayout(false);
-            this.commentsPanel.ResumeLayout(false);
-            this.commentsPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -328,5 +371,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel separatorPanel4;
         private System.Windows.Forms.Panel commentsPanel;
+        private System.Windows.Forms.Panel reportsPanel;
+        private System.Windows.Forms.Button setVisibilityButton;
+        private System.Windows.Forms.Button reportButton;
     }
 }
