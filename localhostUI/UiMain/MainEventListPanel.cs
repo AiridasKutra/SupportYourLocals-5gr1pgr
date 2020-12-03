@@ -410,6 +410,11 @@ namespace localhostUI
                 col = (++col) % COL_COUNT;
                 count++;
 
+                if (mainForm != null)
+                {
+                    mainForm.FitCurrentPanel();
+                }
+
                 // Redraw
                 Invalidate();
             }

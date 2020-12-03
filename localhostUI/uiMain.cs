@@ -457,17 +457,24 @@ namespace localhostUI
         private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
 
         // NEW CODE
+        Panel content = null;
+
         public void ShowPanel(IPanel panelForm)
         {
             panelForm.SetMainRef(this);
             contentPanel.Controls.Clear();
-            Panel content = panelForm.GetPanel();
+            content = panelForm.GetPanel();
             content.Location = new Point(0, 0);
             content.Visible = true;
             content.Size = new Size(content.Size.Width, Math.Max(content.Size.Height, ClientSize.Height - BANNER_HEIGHT));
             contentPanel.Size = new Size(content.Size.Width, ClientSize.Height - BANNER_HEIGHT);
             contentPanel.Location = new Point((ClientSize.Width - content.Width) / 2, 100);
             contentPanel.Controls.Add(content);
+        }
+
+        public void FitCurrentPanel()
+        {
+            content.Size = new Size(content.Size.Width, Math.Max(content.Size.Height, ClientSize.Height - BANNER_HEIGHT));
         }
 
         public void ShowImage(Image image)
