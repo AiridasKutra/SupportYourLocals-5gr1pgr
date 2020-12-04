@@ -54,6 +54,12 @@ namespace localhostUI.UiEvent
             deleteEventButton.Text = "Save as draft";
             deleteEventButton.Click += SaveDraft;
 
+            UserAccount acc = Program.UserDataManager.UserAccount;
+            if (!acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
+            {
+                finishButton.Visible = false;
+            }
+
             // Set maps button image
             checkAddressButton.BackgroundImage = Properties.Resources.MapsButton;
         }
@@ -73,6 +79,7 @@ namespace localhostUI.UiEvent
             FillInBoxes();
             FillInPhotos();
 
+            UserAccount acc = Program.UserDataManager.UserAccount;
             if (draft)
             {
                 finishButton.Text = "Create";
@@ -80,6 +87,10 @@ namespace localhostUI.UiEvent
                 deleteEventButton.Text = "Save as draft";
                 deleteEventButton.Click += SaveDraft;
 
+                if (!acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
+                {
+                    finishButton.Visible = false;
+                }
             }
             else
             {
@@ -87,6 +98,26 @@ namespace localhostUI.UiEvent
                 finishButton.Click += EditEvent;
                 deleteEventButton.Text = "Delete event";
                 deleteEventButton.Click += DeleteEvent;
+                deleteEventButton.BackColor = Color.Tomato;
+
+                if (@event.Author == acc.Id)
+                {
+                    if (!acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
+                    {
+                        finishButton.Visible = false;
+                    }
+                }
+                else
+                {
+                    if (!acc.Can((uint)Permissions.EDIT_OTHER_EVENTS))
+                    {
+                        finishButton.Visible = false;
+                    }
+                    if (!acc.Can((uint)Permissions.DELETE_OTHER_EVENTS))
+                    {
+                        deleteEventButton.Visible = false;
+                    }
+                }
             }
 
             // Set maps button image
@@ -95,14 +126,15 @@ namespace localhostUI.UiEvent
 
         private void FillInBoxes()
         {
-
             this.eventNameBox.Text = this.@event.Name;
             this.priceBox.Value = this.@event.Price;
             this.addressBox.Text = this.@event.Address.ToStringNormal();
             this.descriptionBox.Text = this.@event.Description;
+            this.timeTextBox.Text = this.@event.StartDate.ToString("HH:mm");
+            this.dateBox.Value = this.@event.StartDate;// -= new TimeSpan(@event.StartDate.Hour, @event.StartDate.Minute, 0);
+            this.tagsTextBox.Text = this.@event.Tags;
             try
             {
-                this.dateBox.Value = this.@event.StartDate;
                 this.sportBox.Text = this.@event.Sports[0];
             }
             catch (ArgumentOutOfRangeException)
@@ -113,13 +145,12 @@ namespace localhostUI.UiEvent
 
         private void FillInSports()
         {
-            //this.sportBox.Items.Clear();
-
-            //List<string> sports = origin.SportList;
-            //foreach (string sport in sports)
-            //{
-            //    this.sportBox.Items.Add(sport);
-            //}
+            sportBox.Items.Clear();
+            List<string> sports = Program.Client.SelectSports();
+            foreach (string sport in sports)
+            {
+                sportBox.Items.Add(sport);
+            }
         }
 
         private void FillInPhotos()
@@ -299,14 +330,54 @@ namespace localhostUI.UiEvent
             photoPanel.AutoScroll = true;
         }
 
+        private bool FillInTime()
+        {
+            string[] timeParts = this.timeTextBox.Text.Split(':', 2, StringSplitOptions.RemoveEmptyEntries);
+            if (timeParts.Length != 2)
+            {
+                return false;
+            }
+
+            int hour;
+            int minute;
+
+            if (!int.TryParse(timeParts[0], out hour))
+            {
+                return false;
+            }
+            if (!int.TryParse(timeParts[1], out minute))
+            {
+                return false;
+            }
+            if (hour > 23 || hour < 0)
+            {
+                return false;
+            }
+            if (minute > 59 || minute < 0)
+            {
+                return false;
+            }
+            @event.StartDate = new DateTime
+            (
+                @event.StartDate.Year,
+                @event.StartDate.Month,
+                @event.StartDate.Day,
+                hour,
+                minute,
+                0
+            );
+            return true;
+        }
+
         private void FillInEvent()
         {
             this.@event.Sports.Clear();
             this.@event.Name = this.eventNameBox.Text;
-            this.@event.StartDate = this.dateBox.Value;
             this.@event.Sports.Add(this.sportBox.Text);
+            this.@event.StartDate = this.dateBox.Value;
             this.@event.Price = this.priceBox.Value;
             this.@event.Description = this.descriptionBox.Text;
+            this.@event.Tags = this.tagsTextBox.Text;
         }
 
         private void EditEvent(object sender, EventArgs e)
@@ -333,11 +404,20 @@ namespace localhostUI.UiEvent
                     return;
                 }
             }
+
             FillInEvent();
+            if (!FillInTime())
+            {
+                finishResultLabel.Text = "Invalid time.";
+                return;
+            }
+            @event.Images.RemoveAll(item => item == "<none>");
+
             Program.Client.EditEvent(@event);
             //Program.DataManager.Write(new DatabaseEntryEditor("events_full", @event.Id), EventFull.ToDataList(@event));
 
             mainForm.ShowPanel(caller);
+            caller.Reload();
             //origin.LoadMyEvents();
             this.Close();
         }
@@ -363,11 +443,20 @@ namespace localhostUI.UiEvent
                 finishResultLabel.Text = "Invalid address.";
                 return;
             }
+
             FillInEvent();
+            if (!FillInTime())
+            {
+                finishResultLabel.Text = "Invalid time.";
+                return;
+            }
+            @event.Images.RemoveAll(item => item == "<none>");
+
             Program.Client.CreateEvent(@event);
             //Program.DataManager.Write(new DatabaseEntryAdder("events_full"), EventFull.ToDataList(@event));
 
             mainForm.ShowPanel(caller);
+            caller.Reload();
             //origin.LoadMyEvents();
             this.Close();
         }
@@ -378,13 +467,25 @@ namespace localhostUI.UiEvent
             //Program.DataManager.Write(new DatabaseEntryRemover("events_full", @event.Id), null);
 
             mainForm.ShowPanel(caller);
+            caller.Reload();
             //origin.LoadMyEvents();
             Close();
         }
 
         private void SaveDraft(object sender, EventArgs e)
         {
+            try
+            {
+                //EXTENTION METHOD
+                this.@event.Address = this.addressBox.Text.FormatAddressInfo();
+                MapPoint location = this.@event.Address.ToStringNormal().LatLongFromString();
+                this.@event.Latitude = location.Latitude;
+                this.@event.Longitude = location.Longitude;
+            }
+            catch { }
             FillInEvent();
+            FillInTime();
+            @event.Images.RemoveAll(item => item == "<none>");
 
             if (!draft)
             {
@@ -415,6 +516,7 @@ namespace localhostUI.UiEvent
             }
 
             mainForm.ShowPanel(caller);
+            caller.Reload();
             //origin.LoadMyEvents();
             Close();
         }
@@ -445,7 +547,21 @@ namespace localhostUI.UiEvent
             int index = @event.Images.IndexOf(imageLinkBox.Text);
             if (index == -1)
             {
-                @event.Images.Add(imageLinkBox.Text);
+                if (@event.Images.Count == 2)
+                {
+                    if (@event.Images[1] == "<none>")
+                    {
+                        @event.Images[1] = imageLinkBox.Text;
+                    }
+                    else
+                    {
+                        @event.Images.Add(imageLinkBox.Text);
+                    }
+                }
+                else
+                {
+                    @event.Images.Add(imageLinkBox.Text);
+                }
             }
             FillInPhotos();
             imageLinkBox.Clear();
@@ -471,6 +587,11 @@ namespace localhostUI.UiEvent
         private void returnButton_MouseLeave(object sender, EventArgs e)
         {
             returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
+        }
+
+        private void returnButton_Click(object sender, EventArgs e)
+        {
+            mainForm.ShowPanel(caller);
         }
 
         private void checkAddressButton_MouseEnter(object sender, EventArgs e)

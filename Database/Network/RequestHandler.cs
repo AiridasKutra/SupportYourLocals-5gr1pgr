@@ -130,6 +130,13 @@ namespace Database.Network
                             OpenChat(packets);
                             break;
                         }
+                        case (uint)PacketType.SELECT_EVENT_COMMENTS:
+                        {
+                            Packet[] packets = new Packet[1];
+                            packets[0] = packet;
+                            SelectEventComments(packets);
+                            break;
+                        }
                         case (uint)PacketType.SELECT_EVENTS_BRIEF:
                         {
                             Packet[] packets = new Packet[1];
@@ -142,6 +149,13 @@ namespace Database.Network
                             Packet[] packets = new Packet[1];
                             packets[0] = packet;
                             SelectEventsFull(packets);
+                            break;
+                        }
+                        case (uint)PacketType.SELECT_SPORTS:
+                        {
+                            Packet[] packets = new Packet[1];
+                            packets[0] = packet;
+                            SelectSports(packets);
                             break;
                         }
                         case (uint)PacketType.CREATE_EVENT:
@@ -332,6 +346,13 @@ namespace Database.Network
                             SelectAccountPermissions(packets);
                             break;
                         }
+                        case (uint)PacketType.SELECT_ACCOUNTS:
+                        {
+                            Packet[] packets = new Packet[1];
+                            packets[0] = packet;
+                            SelectAccounts(packets);
+                            break;
+                        }
                         default:
                         {
                             break;
@@ -427,6 +448,34 @@ namespace Database.Network
             }
         }
 
+        private void SelectSports(Packet[] packets)
+        {
+            try
+            {
+                DataList data = new DataList();
+                foreach (var sport in database.context.Sports)
+                {
+                    data.Add(sport.Name);
+                }
+
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes(Json.FromList(DataList.ToList(data)))
+                });
+            }
+            catch
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes(Json.FromList(DataList.ToList(new DataList())))
+                });
+            }
+        }
+
         private void CreateEvent(Packet[] packets)
         {
             if (vfid == 0) return;
@@ -434,12 +483,19 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
                 {
                     string jsonStr = Encoding.ASCII.GetString(packets[0].Data);
                     DataList data = DataList.FromList(Json.ToList(jsonStr));
 
-                    database.QCreateEvent(new Event(data, true) { Author = acc.Id});
+                    Event newEvent = new Event(data, true) { Author = acc.Id };
+                    database.QCreateEvent(newEvent);
+                    database.SaveChanges();
+                    
+                    chatManager.CreateRoom(newEvent.Id);
+                    chatManager.Save();
                 }
             }
             catch { }
@@ -448,13 +504,13 @@ namespace Database.Network
 
         private void DeleteEvent(Packet[] packets)
         {
-
-
             if (vfid == 0) return;
 
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 int id = BitConverter.ToInt32(packets[0].Data);
 
                 Event @event = database.context.Events.Where(item => item.Id == id).Single();
@@ -488,6 +544,8 @@ namespace Database.Network
                 string jsonStr = Encoding.ASCII.GetString(packets[1].Data);
                 DataList data = DataList.FromList(Json.ToList(jsonStr));
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 Event @event = database.context.Events.Where(item => item.Id == id).Single();
                 if (@event.Author == acc.Id)
                 {
@@ -518,6 +576,8 @@ namespace Database.Network
             {
                 int id = BitConverter.ToInt32(packets[0].Data);
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+                
                 if (acc.Can((uint)Permissions.SET_EVENT_VISIBILITY))
                 {
                     List<Event> events = database.QSelectEvents(id);
@@ -539,6 +599,8 @@ namespace Database.Network
             {
                 int id = BitConverter.ToInt32(packets[0].Data);
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Can((uint)Permissions.SET_EVENT_VISIBILITY))
                 {
                     List<Event> events = database.QSelectEvents(id);
@@ -559,6 +621,8 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 string jsonStr = Encoding.ASCII.GetString(packets[0].Data);
 
                 if (acc.Can((uint)Permissions.CREATE_REPORTS))
@@ -572,12 +636,14 @@ namespace Database.Network
 
         private void SelectReports(Packet[] packets)
         {
-            if (vfid == 0) return;
-
             try
             {
+                if (vfid == 0) throw new Exception();
+
                 Account acc = GetAccountFromId(packets[0].SenderId);
-                if(acc.Can((uint)Permissions.ACCESS_REPORTS))
+                if (acc == null) throw new Exception();
+
+                if (acc.Can((uint)Permissions.ACCESS_REPORTS))
                 {
                     int eventId = BitConverter.ToInt32(packets[0].Data);
 
@@ -600,9 +666,21 @@ namespace Database.Network
                         Data = Encoding.ASCII.GetBytes(jsonStr)
                     });
                 }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            catch { return; }
-            
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes(jsonStr)
+                });
+            }
         }
 
         private void DeleteReports(Packet[] packets)
@@ -661,7 +739,16 @@ namespace Database.Network
 
         private void GetAccountId(Packet[] packets)
         {
-            if (this.vfid == 0) return;
+            if (this.vfid == 0)
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = BitConverter.GetBytes(-1)
+                });
+            }
+
             ulong vfid = BitConverter.ToUInt64(packets[0].Data);
 
             List<TCPServer.Client> clients = server.GetClients();
@@ -693,10 +780,19 @@ namespace Database.Network
                     return;
                 }
             }
+
+            Packet packFail = new Packet
+            {
+                PacketId = (uint)PacketType.DATA,
+                SenderId = packets[0].SenderId,
+                Data = BitConverter.GetBytes(-1)
+            };
+            server.Send(packFail);
         }
 
         private void SetAccountUsername(Packet[] packets)
         {
+            return;
             if (vfid == 0) return;
             int id = BitConverter.ToInt32(packets[0].Data);
             string username = Encoding.ASCII.GetString(packets[1].Data);
@@ -712,19 +808,35 @@ namespace Database.Network
         private void SetAccountPassword(Packet[] packets)
         {
             if (vfid == 0) return;
+
             int id = BitConverter.ToInt32(packets[0].Data);
             string password = Encoding.ASCII.GetString(packets[1].Data);
 
-            List<Account> accounts = database.QSelectAccounts(id);
-            if (accounts.Count > 0)
+            List<TCPServer.Client> clients = server.GetClients();
+            foreach (var client in clients)
             {
-                accounts[0].PasswordHash = password;
-                database.QEditAccount(id, accounts[0]);
+                if (client.vfid == vfid)
+                {
+                    List<Account> accs = database.context.Accounts.Where(item => item.Id == client.accountId).ToList();
+                    if (accs.Count == 1)
+                    {
+                        accs[0].PasswordHash = password;
+                    }
+                    return;
+                }
             }
+
+            //List<Account> accounts = database.QSelectAccounts(id);
+            //if (accounts.Count > 0)
+            //{
+            //    accounts[0].PasswordHash = password;
+            //    database.QEditAccount(id, accounts[0]);
+            //}
         }
 
         private void MakeAccountAdministrator(Packet[] packets)
         {
+            return;
             if (vfid == 0) return;
             Account acc = GetAccountFromId(packets[0].SenderId);
             if (acc.Permissions != (uint)AccountType.ADMINISTRATOR) return;
@@ -740,6 +852,7 @@ namespace Database.Network
 
         private void MakeAccountModerator(Packet[] packets)
         {
+            return;
             if (vfid == 0) return;
             Account acc = GetAccountFromId(packets[0].SenderId);
             if (acc.Permissions != (uint)AccountType.ADMINISTRATOR) return;
@@ -755,6 +868,7 @@ namespace Database.Network
 
         private void MakeAccountUser(Packet[] packets)
         {
+            return;
             if (vfid == 0) return;
             Account acc = GetAccountFromId(packets[0].SenderId);
             if (acc.Permissions != (uint)AccountType.ADMINISTRATOR) return;
@@ -775,7 +889,9 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
-                if(acc.Can((uint)Permissions.BAN_ACCOUNTS))
+                if (acc == null) throw new Exception();
+
+                if (acc.Can((uint)Permissions.BAN_ACCOUNTS))
                 {
                     int id = BitConverter.ToInt32(packets[0].Data);
 
@@ -797,6 +913,8 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Can((uint)Permissions.BAN_ACCOUNTS))
                 {
                     int id = BitConverter.ToInt32(packets[0].Data);
@@ -819,6 +937,8 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Can((uint)Permissions.SILENCE_ACCOUNTS))
                 {
                     int id = BitConverter.ToInt32(packets[0].Data);
@@ -842,6 +962,8 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Can((uint)Permissions.SILENCE_ACCOUNTS))
                 {
                     int id = BitConverter.ToInt32(packets[0].Data);
@@ -860,11 +982,30 @@ namespace Database.Network
 
         private void CreateAccount(Packet[] packets)
         {
-            if (vfid == 0) return;
-
             string username = Encoding.ASCII.GetString(packets[0].Data);
             string email = Encoding.ASCII.GetString(packets[1].Data);
             string password = Encoding.ASCII.GetString(packets[2].Data);
+
+            if (database.context.Accounts.Where(item => item.Email == email).Count() > 0)
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes("This email is already in use.")
+                });
+                return;
+            }
+            if (database.context.Accounts.Where(item => item.Username == username).Count() > 0)
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes("This username is already in use.")
+                });
+                return;
+            }
 
             Account account = new Account()
             {
@@ -875,6 +1016,13 @@ namespace Database.Network
             };
 
             database.QCreateAccount(account);
+            
+            server.Send(new Packet
+            {
+                PacketId = (uint)PacketType.DATA,
+                SenderId = packets[0].SenderId,
+                Data = Encoding.ASCII.GetBytes("OK")
+            });
         }
 
         private void DeleteAccount(Packet[] packets)
@@ -884,14 +1032,61 @@ namespace Database.Network
             try
             {
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
+                int id = BitConverter.ToInt32(packets[0].Data);
+
                 if (acc.Can((uint)Permissions.DELETE_ACCOUNTS))
                 {
-                    int id = BitConverter.ToInt32(packets[0].Data);
-
+                    database.QDeleteAccount(id);
+                }
+                else if (acc.Id == id)
+                {
                     database.QDeleteAccount(id);
                 }
             }
             catch { return; }
+        }
+
+        private void SelectAccounts(Packet[] packets)
+        {
+            try
+            {
+                if (vfid == 0) throw new Exception();
+
+                Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
+                if (acc.Can((uint)Permissions.VIEW_ACCOUNTS))
+                {
+                    DataList data = new DataList();
+                    foreach (var account in database.context.Accounts)
+                    {
+                        DataList accData = new DataList();
+                        accData.Add(account.Id, "id");
+                        accData.Add(account.Username, "username");
+                        accData.Add(account.Email, "email");
+                        accData.Add(account.Permissions, "permissions");
+                        data.Add(accData);
+                    }
+
+                    server.Send(new Packet
+                    {
+                        PacketId = (uint)PacketType.DATA,
+                        SenderId = packets[0].SenderId,
+                        Data = Encoding.ASCII.GetBytes(Json.FromList(DataList.ToList(data)))
+                    });
+                    return;
+                }
+            }
+            catch { }
+
+            server.Send(new Packet
+            {
+                PacketId = (uint)PacketType.DATA,
+                SenderId = packets[0].SenderId,
+                Data = Encoding.ASCII.GetBytes("[]")
+            });
         }
 
         private void SelectAccountUsername(Packet[] packets)
@@ -899,7 +1094,16 @@ namespace Database.Network
             int id = BitConverter.ToInt32(packets[0].Data);
 
             List<Account> accounts = database.QSelectAccounts(id);
-            if (accounts.Count == 0) return;
+            if (accounts.Count == 0)
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.TEXT,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes("<unknown>")
+                });
+                return;
+            };
 
             server.Send(new Packet
             {
@@ -911,16 +1115,18 @@ namespace Database.Network
 
         private void SelectAccountEmail(Packet[] packets)
         {
-            if (vfid == 0) return;
-            
             try
             {
+                if (vfid == 0) throw new Exception();
+
                 int id = BitConverter.ToInt32(packets[0].Data);
                 Account acc = GetAccountFromId(packets[0].SenderId);
+                if (acc == null) throw new Exception();
+
                 if (acc.Id == id)
                 {
                     List<Account> accounts = database.QSelectAccounts(id);
-                    if (accounts.Count == 0) return;
+                    if (accounts.Count == 0) throw new Exception();
 
                     server.Send(new Packet
                     {
@@ -930,24 +1136,83 @@ namespace Database.Network
                     });
                 }
             }
-            catch { return; }
-
-            
+            catch
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.TEXT,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes("Invalid id")
+                });
+            }
         }
 
         private void SelectAccountPermissions(Packet[] packets)
         {
-            int id = BitConverter.ToInt32(packets[0].Data);
-
-            List<Account> accounts = database.QSelectAccounts(id);
-            if (accounts.Count == 0) return;
-
-            server.Send(new Packet
+            try
             {
-                PacketId = (uint)PacketType.DATA,
-                SenderId = packets[0].SenderId,
-                Data = BitConverter.GetBytes(accounts[0].Permissions)
-            });
+                if (vfid == 0) throw new Exception();
+
+                int id = BitConverter.ToInt32(packets[0].Data);
+
+                List<Account> accounts = database.QSelectAccounts(id);
+                if (accounts.Count == 0) throw new Exception();
+
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = BitConverter.GetBytes(accounts[0].Permissions)
+                });
+            }
+            catch
+            {
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.TEXT,
+                    SenderId = packets[0].SenderId,
+                    Data = BitConverter.GetBytes(0u)
+                });
+            }
+        }
+
+        private void SelectEventComments(Packet[] packets)
+        {
+            try
+            {
+                int id = BitConverter.ToInt32(packets[0].Data);
+
+                // Get messages
+                List<Message> messages = chatManager.GetMessages(id);
+                if (messages == null)
+                {
+                    throw new Exception();
+                }
+
+                // Send messages
+                DataList data = new DataList();
+                foreach (var msg in messages)
+                {
+                    data.Add(msg.ToDataList());
+                }
+
+                server.Send(new Packet
+                {
+                    PacketId = (uint)PacketType.SEND_MESSAGE_DATA,
+                    SenderId = packets[0].SenderId,
+                    Data = Encoding.ASCII.GetBytes(Json.FromList(DataList.ToList(data)))
+                });
+            }
+            catch
+            {
+                string jsonStr = Json.FromList(DataList.ToList(new DataList()));
+                server.Send(new Packet
+                {
+                    Data = Encoding.ASCII.GetBytes(jsonStr),
+                    PacketId = (uint)PacketType.SEND_MESSAGE_DATA,
+                    SenderId = packets[0].SenderId
+                });
+            }
         }
 
 
@@ -1023,22 +1288,17 @@ namespace Database.Network
                 if (acc.Can((uint)Permissions.SEND_CHAT_MESSAGES))
                 {
                     Message message = new Message(DataList.FromList(Json.ToList(Encoding.ASCII.GetString(data[0].Data))));
-                    if (!int.TryParse(Encoding.ASCII.GetString(data[1].Data), out int eventId))
-                    {
-                        return;
-                    }
+                    int eventId = BitConverter.ToInt32(data[1].Data);
 
                     if (message.Content.Length == 0) return;
 
                     message.SendTime = DateTime.Now;
+                    message.Sender = acc.Id;
 
                     // Add message to memory
                     List<Message> messages = chatManager.GetMessages(eventId);
                     if (messages == null) return;
                     messages.Add(message);
-
-                    // Echo incoming message to all connected users
-                    chatMessageSender.EchoMessage(message, eventId);
 
                     // Save chat
                     chatManager.Save(true);

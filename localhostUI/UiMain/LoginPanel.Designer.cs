@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.resultsLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rememberCheckBox = new System.Windows.Forms.CheckBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.emailTextBox = new System.Windows.Forms.TextBox();
-            this.resultsLabel = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +51,17 @@
             this.mainPanel.Size = new System.Drawing.Size(1000, 474);
             this.mainPanel.TabIndex = 0;
             // 
+            // resultsLabel
+            // 
+            this.resultsLabel.ForeColor = System.Drawing.Color.Red;
+            this.resultsLabel.Location = new System.Drawing.Point(200, 331);
+            this.resultsLabel.Name = "resultsLabel";
+            this.resultsLabel.Size = new System.Drawing.Size(600, 54);
+            this.resultsLabel.TabIndex = 5;
+            this.resultsLabel.Text = "Result";
+            this.resultsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.resultsLabel.Visible = false;
+            // 
             // titleLabel
             // 
             this.titleLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -64,6 +76,7 @@
             // contentPanel
             // 
             this.contentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.contentPanel.Controls.Add(this.rememberCheckBox);
             this.contentPanel.Controls.Add(this.loginButton);
             this.contentPanel.Controls.Add(this.passwordTextBox);
             this.contentPanel.Controls.Add(this.emailTextBox);
@@ -71,6 +84,16 @@
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Size = new System.Drawing.Size(400, 199);
             this.contentPanel.TabIndex = 3;
+            // 
+            // rememberCheckBox
+            // 
+            this.rememberCheckBox.AutoSize = true;
+            this.rememberCheckBox.Location = new System.Drawing.Point(137, 162);
+            this.rememberCheckBox.Name = "rememberCheckBox";
+            this.rememberCheckBox.Size = new System.Drawing.Size(126, 22);
+            this.rememberCheckBox.TabIndex = 3;
+            this.rememberCheckBox.Text = "Stay logged in";
+            this.rememberCheckBox.UseVisualStyleBackColor = true;
             // 
             // loginButton
             // 
@@ -104,17 +127,6 @@
             this.emailTextBox.Size = new System.Drawing.Size(300, 26);
             this.emailTextBox.TabIndex = 0;
             // 
-            // resultsLabel
-            // 
-            this.resultsLabel.ForeColor = System.Drawing.Color.Red;
-            this.resultsLabel.Location = new System.Drawing.Point(200, 331);
-            this.resultsLabel.Name = "resultsLabel";
-            this.resultsLabel.Size = new System.Drawing.Size(600, 54);
-            this.resultsLabel.TabIndex = 5;
-            this.resultsLabel.Text = "Result";
-            this.resultsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.resultsLabel.Visible = false;
-            // 
             // LoginPanel
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -141,5 +153,6 @@
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label resultsLabel;
+        private System.Windows.Forms.CheckBox rememberCheckBox;
     }
 }

@@ -31,14 +31,57 @@ namespace localhostUI
         }
 
         public bool loggedIn = false;
+        PictureBox menuSeparatorPicture2;
+        Button accountManagerButton;
 
         int BANNER_HEIGHT = 100;
-
         int USER_MENU_WIDTH = 250;
 
         public UiMain()
         {
+            // Auto log in
+            string email = Program.UserDataManager.UserData.SavedEmail;
+            string password = Program.UserDataManager.UserData.SavedPassword;
+
+            if (email != "" && password != "")
+            {
+                ulong vfid = Program.Client.Login(email, password);
+                if (vfid != 0)
+                {
+                    Program.Client.SetVfid(vfid);
+                    loggedIn = true;
+                }
+                else
+                {
+                    Program.UserDataManager.UserData.SavedEmail = "";
+                    Program.UserDataManager.UserData.SavedPassword = "";
+                    Program.UserDataManager.Save();
+                }
+            }
+
+            Program.Client.OnTimeout += (s, e) =>
+            {
+                ShowPanel(new TimeoutPanel());
+            };
+
             InitializeComponent();
+
+            menuSeparatorPicture2 = new PictureBox();
+            menuSeparatorPicture2.Image = Properties.Resources.MenuSeparator;
+            menuSeparatorPicture2.Location = new Point(0, 90);
+            menuSeparatorPicture2.Size = new Size(250, 15);
+
+            accountManagerButton = new Button();
+            accountManagerButton.FlatStyle = FlatStyle.Flat;
+            accountManagerButton.FlatAppearance.BorderSize = 0;
+            accountManagerButton.BackColor = Color.Snow;
+            accountManagerButton.Text = "Account manager";
+            accountManagerButton.Font = new Font("Arial Rounded MT Bold", 12);
+            accountManagerButton.ForeColor = Color.FromArgb(64, 64, 64);
+            accountManagerButton.TextAlign = ContentAlignment.MiddleLeft;
+            accountManagerButton.Click += accountManagerButton_Click;
+            accountManagerButton.Location = new Point(0, 105);
+            accountManagerButton.Size = new Size(250, 30);
 
             // Maximize
             WindowState = FormWindowState.Maximized;
@@ -108,6 +151,8 @@ namespace localhostUI
 
         public void DrawBanner()
         {
+            UserAccount acc = Program.UserDataManager.UserAccount;
+
             bannerPanel.Size = new Size(ClientSize.Width, BANNER_HEIGHT);
 
             // Create banner buttons
@@ -141,11 +186,21 @@ namespace localhostUI
 
             bannerPanel.Controls.Clear();
             bannerPanel.Controls.Add(currentEventsButton);
-            bannerPanel.Controls.Add(eventManagerButton);
+            //bannerPanel.Controls.Add(eventManagerButton);
 
             if (loggedIn)
             {
                 userMenuPanel.Visible = false;
+
+                // Create login info label
+                Label loginInfoLabel = new Label();
+                loginInfoLabel.Font = new Font("Arial", 11, FontStyle.Italic);
+                loginInfoLabel.ForeColor = Color.FromArgb(64, 64, 64);
+                loginInfoLabel.AutoSize = false;
+                loginInfoLabel.Size = new Size(200, 30);
+                loginInfoLabel.Location = new Point(ClientSize.Width - BANNER_HEIGHT - 215, (BANNER_HEIGHT - loginInfoLabel.Size.Height) / 2);
+                loginInfoLabel.Text = $"Logged in as {Program.UserDataManager.UserAccount.Username}";
+                loginInfoLabel.TextAlign = ContentAlignment.MiddleRight;
 
                 // Create menu panel open/close button
                 PictureBox menuButtonPicture = new PictureBox();
@@ -175,34 +230,32 @@ namespace localhostUI
                     }
                 };
 
+                bannerPanel.Controls.Add(loginInfoLabel);
                 bannerPanel.Controls.Add(menuButtonPicture);
 
                 // Set separator images
                 menuSeparatorPicture1.Image = Properties.Resources.MenuSeparator;
 
                 // Add administrator menu options
-                PictureBox menuSeparatorPicture2 = new PictureBox();
-                menuSeparatorPicture2.Image = Properties.Resources.MenuSeparator;
-                menuSeparatorPicture2.Location = new Point(0, 90);
-                menuSeparatorPicture2.Size = new Size(250, 15);
+                if (acc.Can((uint)Permissions.VIEW_ACCOUNTS) ||
+                    acc.Can((uint)Permissions.DELETE_ACCOUNTS) ||
+                    acc.Can((uint)Permissions.SILENCE_ACCOUNTS) ||
+                    acc.Can((uint)Permissions.BAN_ACCOUNTS))
+                {
+                    menuSeparatorPicture1.Location = new Point(0, 135);
+                    logoutButton.Location = new Point(0, 150);
 
-                Button accountManagerButton = new Button();
-                accountManagerButton.FlatStyle = FlatStyle.Flat;
-                accountManagerButton.FlatAppearance.BorderSize = 0;
-                accountManagerButton.BackColor = Color.Snow;
-                accountManagerButton.Text = "Account manager";
-                accountManagerButton.Font = new Font("Arial Rounded MT Bold", 12);
-                accountManagerButton.ForeColor = Color.FromArgb(64, 64, 64);
-                accountManagerButton.TextAlign = ContentAlignment.MiddleLeft;
-                accountManagerButton.Click += accountManagerButton_Click;
-                accountManagerButton.Location = new Point(0, 105);
-                accountManagerButton.Size = new Size(250, 30);
+                    userMenuPanel.Controls.Add(menuSeparatorPicture2);
+                    userMenuPanel.Controls.Add(accountManagerButton);
+                }
+                else
+                {
+                    menuSeparatorPicture1.Location = new Point(0, 90);
+                    logoutButton.Location = new Point(0, 105);
 
-                menuSeparatorPicture1.Location = new Point(0, 135);
-                logoutButton.Location = new Point(0, 150);
-
-                userMenuPanel.Controls.Add(menuSeparatorPicture2);
-                userMenuPanel.Controls.Add(accountManagerButton);
+                    userMenuPanel.Controls.Remove(menuSeparatorPicture2);
+                    userMenuPanel.Controls.Remove(accountManagerButton);
+                }
 
                 // Set menu panel height
                 int height = 0;
@@ -275,9 +328,13 @@ namespace localhostUI
 
         public void logoutButton_Click(object sender, EventArgs e)
         {
+            Program.UserDataManager.UserData.SavedEmail = "";
+            Program.UserDataManager.UserData.SavedPassword = "";
+            Program.UserDataManager.Save();
             Program.Client.Logout();
             loggedIn = false;
             userMenuPanel.Visible = false;
+            ShowPanel(new MainEventListPanel(null));
             DrawBanner();
         }
 

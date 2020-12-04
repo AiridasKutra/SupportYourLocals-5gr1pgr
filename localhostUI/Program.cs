@@ -8,6 +8,8 @@ using localhostUI.UserInformationForm;
 using System;
 using System.Net;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace localhostUI
 {
@@ -72,12 +74,14 @@ namespace localhostUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string ip = "193.219.91.103";
+            //string ip = "193.219.91.103";
             //string ip = "doesntexist";
             //string ip = "127.0.0.1";
-            ushort port = 7099;
+            //ushort port = 7099;
             //ushort port = 54000;
 
+            string ip = ConfigurationManager.AppSettings.Get("IpAddress");
+            ushort port = ushort.Parse(ConfigurationManager.AppSettings.Get("Port"));
 
             // Check if internet is available
             if (!CheckForInternetConnection())

@@ -1,4 +1,5 @@
 ﻿using localhostUI.Backend;
+using localhostUI.Classes;
 using localhostUI.Classes.EventClasses;
 using localhostUI.UiEvent;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -23,7 +25,11 @@ namespace localhostUI
 
         private UiMain mainForm;
 
-        public void Reload() { }
+        public void Reload()
+        {
+            SetUpEventManagerTab();
+            mainForm.FitCurrentPanel();
+        }
 
         public Panel GetPanel()
         {
@@ -68,6 +74,8 @@ namespace localhostUI
 
         public void LoadMyEvents()
         {
+            UserAccount acc = Program.UserDataManager.UserAccount;
+
             eventsPanel.Controls.Clear();
 
             // Add create event button
@@ -84,8 +92,22 @@ namespace localhostUI
             createEventButton.Click += createEventButton_Click;
             eventsPanel.Controls.Add(createEventButton);
 
+            if (!acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
+            {
+                createEventButton.Enabled = false;
+                createEventButton.Text = "Event creation disabled";
+            }
+
             // Get all events
             List<EventBrief> events = Program.DataProvider.GetEventsBrief(new EventOptions());
+            if (!acc.Can((uint)Permissions.EDIT_OTHER_EVENTS))
+            {
+                events = events.Where(item => item.Author == acc.Id).ToList();
+            }
+            else if (!acc.Can((uint)Permissions.MANAGE_SELF_EVENT))
+            {
+                events = new List<EventBrief>();
+            }
 
             // Add events to display
             int counter = 1;
@@ -173,6 +195,14 @@ namespace localhostUI
                 eventName.TextAlign = ContentAlignment.MiddleLeft;
                 //eventName.BackColor = Color.FromArgb(109, 168, 135);
                 eventName.BackColor = Color.FromArgb(230, 230, 230);
+                eventName.MouseEnter += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(210, 210, 210);
+                };
+                eventName.MouseLeave += (s, e) =>
+                {
+                    eventName.BackColor = Color.FromArgb(230, 230, 230);
+                };
 
                 Button removeButton = new Button();
                 removeButton.BackgroundImage = Properties.Resources.CloseButton;

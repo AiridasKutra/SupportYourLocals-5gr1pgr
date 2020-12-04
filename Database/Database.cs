@@ -433,9 +433,16 @@ namespace Database
         public void QEditEvent(int id, Event @event)
         {
             var ev = context.Events.FirstOrDefault(item => item.Id == id);
-            @event.Id = ev.Id;
-            @event.Author = ev.Author;
-            ev = @event;
+            ev.Name = @event.Name;
+            ev.Price = @event.Price;
+            ev.Sports = @event.Sports;
+            ev.StartDate = @event.StartDate;
+            ev.Tags = @event.Tags;
+            ev.Address = @event.Address;
+            ev.Latitude = @event.Latitude;
+            ev.Longitude = @event.Longitude;
+            ev.Images = @event.Images;
+            ev.Description = @event.Description;
         }
 
         // Account CRUD
@@ -447,7 +454,15 @@ namespace Database
             }
             else
             {
-                return new List<Account>() { context.Accounts.FirstOrDefault(item => item.Id == id) };
+                try
+                {
+                    Account acc = context.Accounts.Single(item => item.Id == id);
+                    return new List<Account> { acc };
+                }
+                catch
+                {
+                    return new List<Account>();
+                }
             }
         }
 

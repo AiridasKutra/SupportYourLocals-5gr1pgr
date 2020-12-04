@@ -1,7 +1,9 @@
 ﻿using Common;
 using Common.Formatting;
 using Common.Network;
+using localhostUI;
 using localhostUI.Backend;
+using localhostUI.Classes;
 using localhostUI.Classes.EventClasses;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,32 @@ using System.Threading;
 
 namespace Common.Network
 {
+    public delegate void TimeoutHandler(object source, TimeoutEventArgs e);
+
+    public class TimeoutEventArgs : EventArgs
+    {
+        private string message;
+
+        public TimeoutEventArgs(string message)
+        {
+            this.message = message;
+        }
+
+        public string GetMessage()
+        {
+            return message;
+        }
+    }
+
     class ClientWrapper
     {
         private TCPClient client;
         private bool connected;
         private ulong vfid;
+
+        public event TimeoutHandler OnTimeout;
+
+        public int TIME_OUT_MS { get; set; } = 5000;
         
         public ClientWrapper()
         {
@@ -65,9 +88,15 @@ namespace Common.Network
         {
             if (Connected())
             {
+                DateTime startWait = DateTime.Now;
                 while (client.PacketCount() == 0)
                 {
                     Thread.Sleep(waitTimer);
+                    if ((DateTime.Now - startWait).TotalMilliseconds > TIME_OUT_MS)
+                    {
+                        OnTimeout(this, new TimeoutEventArgs("timeout"));
+                        return;
+                    }
                 }
             }
         }
@@ -79,6 +108,12 @@ namespace Common.Network
 
         public void SendVfid()
         {
+            if (!client.Connected())
+            {
+                OnTimeout(this, new TimeoutEventArgs("disconnected"));
+                return;
+            }
+
             client.AddToSendQueue(new Packet
             {
                 PacketId = (uint)PacketType.VFID,
@@ -138,6 +173,39 @@ namespace Common.Network
                 eventList.Add(new EventFull((DataList)@event.item));
             }
             return eventList;
+        }
+
+        public List<string> SelectSports()
+        {
+            SendVfid();
+
+            Packet pack = new Packet
+            {
+                PacketId = (uint)PacketType.SELECT_SPORTS,
+                Data = new byte[1] { 0 }
+            };
+
+            client.AddToSendQueue(pack);
+            client.SendQueue();
+            WaitForPacket(1);
+
+            Packet packet = client.GetPacket();
+            try
+            {
+                List<string> sports = new List<string>();
+
+                DataList data = DataList.FromList(Json.ToList(Encoding.ASCII.GetString(packet.Data)));
+                foreach (var sport in data)
+                {
+                    sports.Add((string)sport.item);
+                }
+
+                return sports;
+            }
+            catch
+            {
+                return new List<string>();
+            }
         }
 
         public void CreateEvent(EventFull @event)
@@ -313,11 +381,15 @@ namespace Common.Network
             client.SendQueue();
         }
 
-        public ulong Login(string email, string password)
+        public ulong Login(string email, string password, bool hashed = false)
         {
             SendVfid();
 
-            string passwordHash = Validation.Hasher.Hash(password);
+            string passwordHash = password;
+            if (!hashed)
+            {
+                passwordHash = Validation.Hasher.Hash(password);
+            }
 
             Packet pack1 = new Packet
             {
@@ -327,7 +399,7 @@ namespace Common.Network
 
             Packet pack2 = new Packet
             {
-                PacketId = (uint)PacketType.LOGIN_EMAIL,
+                PacketId = (uint)PacketType.LOGIN_PASSWORD,
                 Data = Encoding.ASCII.GetBytes(passwordHash)
             };
 
@@ -337,7 +409,23 @@ namespace Common.Network
             WaitForPacket();
 
             Packet packet = client.GetPacket();
-            return BitConverter.ToUInt64(packet.Data);
+            ulong vfid = BitConverter.ToUInt64(packet.Data);
+
+            if (vfid == 0) return vfid;
+            SetVfid(vfid);
+
+            int id = GetAccountId(vfid);
+
+            UserAccount acc = new UserAccount
+            (
+                id,
+                SelectAccountUsername(id),
+                email,
+                SelectAccountPermissions(id)
+            );
+            Program.UserDataManager.UserAccount = acc;
+
+            return vfid;
         }
 
         public void Logout()
@@ -352,6 +440,8 @@ namespace Common.Network
 
             client.AddToSendQueue(pack);
             client.SendQueue();
+
+            Program.UserDataManager.UserAccount = new UserAccount(-1, "", "", 0);
 
             vfid = 0;
         }
@@ -403,13 +493,13 @@ namespace Common.Network
 
             Packet pack1 = new Packet
             {
-                PacketId = (uint)PacketType.SET_ACCOUNT_USERNAME,
+                PacketId = (uint)PacketType.SET_ACCOUNT_PASSWORD,
                 Data = BitConverter.GetBytes(id)
             };
 
             Packet pack2 = new Packet
             {
-                PacketId = (uint)PacketType.SET_ACCOUNT_USERNAME,
+                PacketId = (uint)PacketType.SET_ACCOUNT_PASSWORD,
                 Data = Encoding.ASCII.GetBytes(passwordHash)
             };
 
@@ -515,7 +605,7 @@ namespace Common.Network
             client.AddToSendQueue(pack);
         }
 
-        public void CreateAccount(string username, string email, string password)
+        public string CreateAccount(string username, string email, string password)
         {
             SendVfid();
 
@@ -543,6 +633,10 @@ namespace Common.Network
             client.AddToSendQueue(pack2);
             client.AddToSendQueue(pack3);
             client.SendQueue();
+            WaitForPacket(1);
+
+            Packet result = client.GetPacket();
+            return Encoding.ASCII.GetString(result.Data);
         }
 
         public void DeleteAccount(int id)
@@ -613,7 +707,100 @@ namespace Common.Network
             return BitConverter.ToUInt32(packet.Data);
         }
 
+        public List<UserAccount> SelectAccounts()
+        {
+            SendVfid();
 
+            Packet pack = new Packet
+            {
+                PacketId = (uint)PacketType.SELECT_ACCOUNTS,
+                Data = new byte[1]
+            };
+
+            client.AddToSendQueue(pack);
+            client.SendQueue();
+            WaitForPacket(1);
+
+            List<UserAccount> accounts = new List<UserAccount>();
+
+            try
+            {
+                Packet packet = client.GetPacket();
+                DataList data = DataList.FromList(Json.ToList(Encoding.ASCII.GetString(packet.Data)));
+                foreach (var acc in data)
+                {
+                    DataList props = (DataList)acc.item;
+                    accounts.Add(new UserAccount
+                    (
+                        (int)props.Get("id"),
+                        (string)props.Get("username"),
+                        (string)props.Get("email"),
+                        (uint)props.Get("permissions")
+                    ));
+                }
+                return accounts;
+            }
+            catch
+            {
+                return new List<UserAccount>();
+            }
+        }
+
+        public List<Message> SelectEventComments(int id)
+        {
+            SendVfid();
+
+            Packet pack = new Packet
+            {
+                PacketId = (uint)PacketType.SELECT_EVENT_COMMENTS,
+                Data = BitConverter.GetBytes(id)
+            };
+
+            client.AddToSendQueue(pack);
+            client.SendQueue();
+            WaitForPacket(1);
+
+            List<Message> comments = new List<Message>();
+
+            try
+            {
+                Packet packet = client.GetPacket();
+                DataList data = DataList.FromList(Json.ToList(Encoding.ASCII.GetString(packet.Data)));
+
+                foreach (var item in data)
+                {
+                    Message comment = new Message((DataList)item.item);
+                    comments.Add(comment);
+                }
+
+                return comments;
+            }
+            catch
+            {
+                return new List<Message>();
+            }
+        }
+
+        public void SendComment(Message message, int eventId)
+        {
+            SendVfid();
+
+            Packet pack1 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_DATA,
+                Data = Encoding.ASCII.GetBytes(Json.FromList(DataList.ToList(message.ToDataList())))
+            };
+
+            Packet pack2 = new Packet
+            {
+                PacketId = (uint)PacketType.SEND_MESSAGE_EVENT_ID,
+                Data = BitConverter.GetBytes(eventId)
+            };
+
+            client.AddToSendQueue(pack1);
+            client.AddToSendQueue(pack2);
+            client.SendQueue();
+        }
 
 
 

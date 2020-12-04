@@ -82,8 +82,14 @@ namespace localhostUI
 
             if (resultLabel.Text == "")
             {
-                Program.Client.CreateAccount(username, email, password);
-                mainForm.ShowPanel(new MainEventListPanel(null));
+                string result = Program.Client.CreateAccount(username, email, password);
+                if (result == "OK")
+                {
+                    mainForm.ShowPanel(new MainEventListPanel(null));
+                    return;
+                }
+
+                resultLabel.Text += $"• {result}";
             }
         }
     }

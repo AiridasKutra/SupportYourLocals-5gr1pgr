@@ -1,5 +1,6 @@
 ﻿using Common;
 using localhostUI.Backend;
+using localhostUI.Classes;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
 using localhostUI.Classes.UserInformationClasses;
@@ -66,9 +67,21 @@ namespace localhostUI
             filterLowerDateSelector.Value = DateTime.Now.AddDays(-7);
             filterUpperDateSelector.Value = DateTime.Now.AddMonths(1);
 
-            // Set sport to "Any"
+            // Check permission to see invisible events
+            if (Program.UserDataManager.UserAccount.Can((uint)Permissions.SET_EVENT_VISIBILITY))
+            {
+                showInvisibleEventsCheckBox.Visible = true;
+            }
+
+            // Load sports
+            filterSportSelector.Items.Clear();
             filterSportSelector.Items.Add("Any");
             filterSportSelector.SelectedIndex = 0;
+            List<string> sports = Program.Client.SelectSports();
+            foreach (string sport in sports)
+            {
+                filterSportSelector.Items.Add(sport);
+            }
 
             // Load events
             searchButton_Click(null, null);
@@ -167,7 +180,10 @@ namespace localhostUI
                         mainForm.ShowPanel(new UiEventDisplayPanel(eBrief.Id, this));
                         //new UiEventDisplay(eBrief.Id, this).Show();
                     }
-                    catch { }
+                    catch
+                    {
+                        mainForm.ShowPanel(this);
+                    }
                 };
 
                 // Calculate position of event panel
@@ -309,11 +325,6 @@ namespace localhostUI
                 dateLabel.AutoSize = false;
                 dateLabel.TextAlign = ContentAlignment.MiddleCenter;
                 { // Create date/time label
-                    int year = eBrief.StartDate.Year;
-                    int month = eBrief.StartDate.Month;
-                    int day = eBrief.StartDate.Day;
-                    int hour = eBrief.StartDate.Hour;
-                    int minute = eBrief.StartDate.Minute;
                     string finalString = "";
 
                     if ((DateTime.Now - eBrief.StartDate).Ticks > 0)
@@ -335,23 +346,23 @@ namespace localhostUI
                     }
                     else
                     {
-                        if (year != DateTime.Now.Year)
+                        if (eBrief.StartDate.Year != DateTime.Now.Year)
                         {
-                            finalString += $"{year}-{month}-{day}, {hour}:{minute}";
+                            finalString += $"{eBrief.StartDate:yyyy-MM-dd HH:mm}";
                         }
                         else
                         {
                             if ((eBrief.StartDate - DateTime.Now).TotalDays == 1)
                             {
-                                finalString += $"Tomorrow, {hour}:{minute}";
+                                finalString += $"Tomorrow, {eBrief.StartDate:HH:mm}";
                             }
                             else if ((eBrief.StartDate - DateTime.Now).TotalDays < 1)
                             {
-                                finalString += $"Today, {hour}:{minute}";
+                                finalString += $"Today, {eBrief.StartDate:HH:mm}";
                             }
                             else
                             {
-                                finalString += $"{eBrief.StartDate:MMMM} {day}, {hour}:{minute}";
+                                finalString += $"{eBrief.StartDate:MMMM dd, HH:mm}";
                             }
                         }
                     }

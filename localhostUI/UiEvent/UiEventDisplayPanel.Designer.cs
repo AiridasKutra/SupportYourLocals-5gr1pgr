@@ -82,7 +82,7 @@
             this.returnButton.Size = new System.Drawing.Size(40, 40);
             this.returnButton.TabIndex = 3;
             this.returnButton.UseVisualStyleBackColor = false;
-            this.returnButton.Click += new System.EventHandler(this.ReturnButton_Click);
+            this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
             this.returnButton.MouseEnter += new System.EventHandler(this.returnButton_MouseEnter);
             this.returnButton.MouseLeave += new System.EventHandler(this.returnButton_MouseLeave);
             // 
@@ -243,6 +243,7 @@
             this.setVisibilityButton.Text = "Make invisible";
             this.setVisibilityButton.UseVisualStyleBackColor = false;
             this.setVisibilityButton.Visible = false;
+            this.setVisibilityButton.Click += new System.EventHandler(this.setVisibilityButton_Click);
             // 
             // reportsPanel
             // 

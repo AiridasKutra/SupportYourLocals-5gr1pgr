@@ -124,6 +124,7 @@
             this.changePasswordButton.TabIndex = 10;
             this.changePasswordButton.Text = "Change";
             this.changePasswordButton.UseVisualStyleBackColor = false;
+            this.changePasswordButton.Click += new System.EventHandler(this.changePasswordButton_Click);
             // 
             // changeAddressButton
             // 
@@ -138,6 +139,7 @@
             this.changeAddressButton.TabIndex = 9;
             this.changeAddressButton.Text = "Change";
             this.changeAddressButton.UseVisualStyleBackColor = false;
+            this.changeAddressButton.Click += new System.EventHandler(this.changeAddressButton_Click);
             // 
             // deleteConfirmFailedLabel
             // 

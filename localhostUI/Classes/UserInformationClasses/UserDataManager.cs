@@ -9,6 +9,8 @@ namespace localhostUI.Classes.UserInformationClasses
     class UserDataManager
     {
         public UserData UserData { get; set; }
+        public UserAccount UserAccount { get; set; }
+
         public static readonly string writeDirectory = @$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\localhostPSI";
         public static readonly string fileName = "userInfo.json";
        
@@ -38,7 +40,8 @@ namespace localhostUI.Classes.UserInformationClasses
         {
             DataList userDataList;
             Program.DataManager.Read(new UserDataReader(), out userDataList);
-            this.UserData = new UserData(userDataList); 
+            this.UserData = new UserData(userDataList);
+            this.UserAccount = new UserAccount(-1, "", "", 0u);
         }
         public void Save()
         {

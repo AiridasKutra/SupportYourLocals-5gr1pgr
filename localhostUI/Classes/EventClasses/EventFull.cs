@@ -174,7 +174,7 @@ namespace localhostUI.Classes.EventClasses
             data.Add(Id, "id");
             data.Add(Author, "author");
             data.Add(Name, "name");
-            data.Add(Address, "address");
+            data.Add(Address.ToString(), "address");
             data.Add(StartDate.ToString("O"), "start_date");
             data.Add(Price, "price");
             data.Add(Description, "description");
