@@ -127,6 +127,7 @@
             this.eventNameBox.Location = new System.Drawing.Point(150, 121);
             this.eventNameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.eventNameBox.MaximumSize = new System.Drawing.Size(1000, 1000);
+            this.eventNameBox.MaxLength = 150;
             this.eventNameBox.Name = "eventNameBox";
             this.eventNameBox.PlaceholderText = "Pabradės \"Pabradai\" vs. \"MIF\'o \"Blaivininkai\"";
             this.eventNameBox.Size = new System.Drawing.Size(517, 26);
@@ -206,6 +207,7 @@
             this.addressBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.addressBox.Location = new System.Drawing.Point(150, 281);
             this.addressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.addressBox.MaxLength = 256;
             this.addressBox.Name = "addressBox";
             this.addressBox.PlaceholderText = "Baltojo tilto aikštynas, Vilnius";
             this.addressBox.Size = new System.Drawing.Size(484, 26);
@@ -249,6 +251,7 @@
             this.thumbnailLinkBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.thumbnailLinkBox.Location = new System.Drawing.Point(20, 612);
             this.thumbnailLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.thumbnailLinkBox.MaxLength = 256;
             this.thumbnailLinkBox.Name = "thumbnailLinkBox";
             this.thumbnailLinkBox.PlaceholderText = "Thumbnail link";
             this.thumbnailLinkBox.Size = new System.Drawing.Size(150, 26);
@@ -259,6 +262,7 @@
             this.imageLinkBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.imageLinkBox.Location = new System.Drawing.Point(801, 612);
             this.imageLinkBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.imageLinkBox.MaxLength = 256;
             this.imageLinkBox.Name = "imageLinkBox";
             this.imageLinkBox.PlaceholderText = "Image link";
             this.imageLinkBox.Size = new System.Drawing.Size(150, 26);
@@ -300,11 +304,10 @@
             // 
             // finishResultLabel
             // 
-            this.finishResultLabel.AutoSize = true;
-            this.finishResultLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.finishResultLabel.Location = new System.Drawing.Point(159, 505);
+            this.finishResultLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.finishResultLabel.Location = new System.Drawing.Point(176, 853);
             this.finishResultLabel.Name = "finishResultLabel";
-            this.finishResultLabel.Size = new System.Drawing.Size(0, 20);
+            this.finishResultLabel.Size = new System.Drawing.Size(200, 20);
             this.finishResultLabel.TabIndex = 17;
             // 
             // deleteEventButton
@@ -380,7 +383,7 @@
             this.timeTextBox.Location = new System.Drawing.Point(604, 161);
             this.timeTextBox.Name = "timeTextBox";
             this.timeTextBox.PlaceholderText = "14:51";
-            this.timeTextBox.Size = new System.Drawing.Size(61, 26);
+            this.timeTextBox.Size = new System.Drawing.Size(63, 26);
             this.timeTextBox.TabIndex = 2;
             this.timeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -416,6 +419,7 @@
             this.returnButton.Size = new System.Drawing.Size(40, 40);
             this.returnButton.TabIndex = 25;
             this.returnButton.UseVisualStyleBackColor = true;
+            this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
             this.returnButton.MouseEnter += new System.EventHandler(this.returnButton_MouseEnter);
             this.returnButton.MouseLeave += new System.EventHandler(this.returnButton_MouseLeave);
             // 

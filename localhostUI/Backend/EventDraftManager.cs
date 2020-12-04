@@ -9,16 +9,22 @@ namespace localhostUI.Backend
 {
     class EventDraftManager
     {
-        private readonly List<EventFull> events;
+        private List<EventFull> events;
 
         public EventDraftManager()
         {
             events = new List<EventFull>();
         }
 
-        public List<EventFull> GetEvents() { return events; }
+        public List<EventFull> GetEvents()
+        {
+            return events;
+        }
 
-        public void AddEvent(EventFull eventFull) { events.Add(eventFull); }
+        public void AddEvent(EventFull eventFull)
+        {
+            events.Add(eventFull);
+        }
 
         public void LoadDrafts()
         {

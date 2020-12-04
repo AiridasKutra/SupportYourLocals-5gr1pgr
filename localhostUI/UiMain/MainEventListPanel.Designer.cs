@@ -92,6 +92,7 @@
             this.showInvisibleEventsCheckBox.TabIndex = 13;
             this.showInvisibleEventsCheckBox.Text = "Show invisible";
             this.showInvisibleEventsCheckBox.UseVisualStyleBackColor = true;
+            this.showInvisibleEventsCheckBox.Visible = false;
             // 
             // searchButton
             // 

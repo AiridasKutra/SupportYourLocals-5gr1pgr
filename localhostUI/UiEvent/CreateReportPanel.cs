@@ -1,4 +1,5 @@
 ﻿using localhostUI.Classes.EventClasses;
+using localhostUI.UiEvent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +30,7 @@ namespace localhostUI
 
         public CreateReportPanel(int eventId, IPanel caller)
         {
+            this.eventId = eventId;
             this.caller = caller;
             InitializeComponent();
         }
@@ -63,7 +65,7 @@ namespace localhostUI
                 Comment = commentTextBox.Text
             };
             Program.Client.CreateReport(report);
-
+            
             mainForm.ShowPanel(caller);
         }
     }

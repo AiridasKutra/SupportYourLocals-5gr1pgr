@@ -301,7 +301,8 @@ namespace Common.Network
                 return clients.Select(item => new Client()
                 {
                     id = item.id,
-                    vfid = item.vfid
+                    vfid = item.vfid,
+                    accountId = item.accountId
                 }).ToList();
             }
         }

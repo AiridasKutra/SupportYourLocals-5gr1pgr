@@ -2,6 +2,7 @@
 using GoogleMaps.LocationServices;
 using localhostUI.Backend;
 using localhostUI.Backend.DataManagement;
+using localhostUI.Classes;
 using localhostUI.Classes.EventClasses;
 using localhostUI.Classes.LocationClasses;
 using localhostUI.Classes.UserInformationClasses;
@@ -15,6 +16,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace localhostUI.UiEvent
@@ -41,13 +43,6 @@ namespace localhostUI.UiEvent
 
         public UiEventDisplayPanel(int eventId, IPanel caller)
         {
-            this.caller = caller;
-
-            InitializeComponent();
-
-            // Set return button image
-            returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
-
             // Get full event data from database
             List<EventFull> events = Program.Client.SelectEventsFull(eventId);
             try
@@ -58,6 +53,48 @@ namespace localhostUI.UiEvent
             {
                 Console.WriteLine($"ERROR: Event with id {eventId} not found");
                 throw;
+            }
+
+            UserAccount acc = Program.UserDataManager.UserAccount;
+
+            this.caller = caller;
+
+            InitializeComponent();
+
+            // Set return button image
+            returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
+
+            // Enforce permissions
+            if (!acc.Can((uint)Permissions.CREATE_REPORTS))
+            {
+                reportButton.Visible = false;
+            }
+            if (acc.Can((uint)Permissions.SET_EVENT_VISIBILITY))
+            {
+                setVisibilityButton.Visible = true;
+                if (!@event.Visible)
+                {
+                    setVisibilityButton.BackColor = Color.FromArgb(109, 168, 135);
+                    setVisibilityButton.Text = "Make visible";
+                }
+                else
+                {
+                    setVisibilityButton.BackColor = Color.Tomato;
+                    setVisibilityButton.Text = "Make invisible";
+                }
+            }
+            if (!acc.Can((uint)Permissions.SEND_CHAT_MESSAGES))
+            {
+                if (acc.Id == -1)
+                {
+                    chatMessageTextBox.PlaceholderText = "Log in to comment";
+                    chatMessageTextBox.Enabled = false;
+                }
+                else
+                {
+                    chatMessageTextBox.PlaceholderText = "You don't have the permission to comment";
+                    chatMessageTextBox.Enabled = false;
+                }
             }
 
             // Title
@@ -92,7 +129,7 @@ namespace localhostUI.UiEvent
 
             // Address
             addressLabel.Location = new Point(distanceLabel.Location.X + distanceLabelSize.Width + 10, addressLabel.Location.Y);
-            addressLabel.Text = "vvvihivbriuvuavourovuagbourougaovgaoulvano";//@event.Address.ToStringNormal();
+            addressLabel.Text = @event.Address.ToStringNormal();
 
             // Show map button
             Size addressLabelSize = Helper.CalculateLabelSize(addressLabel, 500);
@@ -219,7 +256,9 @@ namespace localhostUI.UiEvent
             chatPanel.Location = new Point(chatPanel.Location.X, sendMessageButton.Location.Y + sendMessageButton.Size.Height + 6);
 
             // Load comments
-            List<Backend.Message> messages = new List<Backend.Message>();
+            List<Backend.Message> messages = Program.Client.SelectEventComments(@event.Id);
+            messages.Reverse();
+            /*
             messages.Add(new Backend.Message()
             {
                 Sender = 0,
@@ -265,6 +304,7 @@ namespace localhostUI.UiEvent
                 Content = "Gražulis blet sake kad ne gejus tai kuo ,man dabar tiket nx pasaulis ritasi",
                 SendTime = DateTime.Now
             });
+            */
 
             height = 0;
             if (messages.Count > 0)
@@ -275,16 +315,10 @@ namespace localhostUI.UiEvent
 
                 foreach (var msg in messages)
                 {
-                    string username = "test";// Program.Client.SelectAccountUsername(msg.Sender);
-
-                    int year = msg.SendTime.Year;
-                    int month = msg.SendTime.Month;
-                    int day = msg.SendTime.Day;
-                    int hour = msg.SendTime.Hour;
-                    int minute = msg.SendTime.Minute;
+                    string username = Program.Client.SelectAccountUsername(msg.Sender);
 
                     Label senderInfoLabel = new Label();
-                    senderInfoLabel.Text = $"By {username} at {year}-{month}-{day} {hour}:{minute}";
+                    senderInfoLabel.Text = $"By {username} at {msg.SendTime:yyyy-MM-dd HH:mm}";
                     senderInfoLabel.Font = new Font("Arial", 10, FontStyle.Italic);
                     senderInfoLabel.ForeColor = Color.Gray;
                     senderInfoLabel.Location = new Point(0, 0);
@@ -347,11 +381,6 @@ namespace localhostUI.UiEvent
             //}
         }
 
-        private void ReturnButton_Click(object sender, EventArgs e)
-        {
-            mainForm.ShowPanel(caller);
-        }
-
         private void ShowAddressButton_Click(object sender, EventArgs e)
         {
             AddressData data = LocationInformation.AddressFromLatLong(@event.Latitude, @event.Longitude);
@@ -381,7 +410,10 @@ namespace localhostUI.UiEvent
 
         private void SendMessage(string message)
         {
-            chatManager.SendMessage(new Backend.Message { Content = message });
+            //chatManager.SendMessage(new Backend.Message { Content = message });
+            Program.Client.SendComment(new Backend.Message { Content = message }, @event.Id);
+            Thread.Sleep(500);
+            mainForm.ShowPanel(new UiEventDisplayPanel(@event.Id, caller));
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -407,6 +439,11 @@ namespace localhostUI.UiEvent
             returnButton.BackgroundImage = Properties.Resources.BackButtonGreen;
         }
 
+        private void returnButton_Click(object sender, EventArgs e)
+        {
+            mainForm.ShowPanel(caller);
+        }
+
         private void reportButton_MouseEnter(object sender, EventArgs e)
         {
             reportButton.BackgroundImage = Properties.Resources.ReportButtonHover;
@@ -430,6 +467,23 @@ namespace localhostUI.UiEvent
         private void showMapsButton_MouseLeave(object sender, EventArgs e)
         {
             showMapsButton.BackgroundImage = Properties.Resources.MapsButton;
+        }
+
+        private void setVisibilityButton_Click(object sender, EventArgs e)
+        {
+            if (!@event.Visible)
+            {
+                setVisibilityButton.BackColor = Color.FromArgb(109, 168, 135);
+                setVisibilityButton.Text = "Make visible";
+                Program.Client.SetEventVisible(@event.Id);
+            }
+            else
+            {
+                setVisibilityButton.BackColor = Color.Tomato;
+                setVisibilityButton.Text = "Make invisible";
+                Program.Client.SetEventInvisible(@event.Id);
+            }
+            mainForm.ShowPanel(new UiEventDisplayPanel(@event.Id, caller));
         }
     }
 }

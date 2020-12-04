@@ -18,7 +18,9 @@ namespace localhostUI.Classes
         ACCESS_REPORTS          = 0x00000040,
         SILENCE_ACCOUNTS        = 0x00000080,
         BAN_ACCOUNTS            = 0x00000100,
-        DELETE_ACCOUNTS         = 0x00000200,
+        VIEW_ACCOUNTS           = 0x00000200,
+        DELETE_ACCOUNTS         = 0x00000400,
+        DELETE_COMMENTS         = 0x00000800,
         BANNED                  = 0x10000000
     }
 

@@ -30,6 +30,13 @@ namespace Database
                 username = "SA";
                 password = "Supportyourlocals123";
             }
+            else if (preset == "local")
+            {
+                serverName = "193.219.91.103,14119";
+                database = "lh";
+                username = "SA";
+                password = "Supportyourlocals123";
+            }
             else
             {
                 Console.Write("Server name:");

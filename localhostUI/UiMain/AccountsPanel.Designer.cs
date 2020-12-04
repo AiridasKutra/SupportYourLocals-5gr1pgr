@@ -46,6 +46,7 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.mainPanel.Controls.Add(this.confirmDeleteTextBox);
             this.mainPanel.Controls.Add(this.accountInfoPanel);
             this.mainPanel.Controls.Add(this.normalCheckBox);
@@ -66,6 +67,7 @@
             this.confirmDeleteTextBox.PlaceholderText = "Enter the word \"delete\" and click again to confirm";
             this.confirmDeleteTextBox.Size = new System.Drawing.Size(350, 26);
             this.confirmDeleteTextBox.TabIndex = 7;
+            this.confirmDeleteTextBox.Visible = false;
             // 
             // accountInfoPanel
             // 
@@ -93,6 +95,7 @@
             this.deleteButton.TabIndex = 8;
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = false;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // banButton
             // 
@@ -107,6 +110,7 @@
             this.banButton.TabIndex = 7;
             this.banButton.Text = "Ban";
             this.banButton.UseVisualStyleBackColor = false;
+            this.banButton.Click += new System.EventHandler(this.banButton_Click);
             // 
             // silenceButton
             // 
@@ -121,6 +125,7 @@
             this.silenceButton.TabIndex = 6;
             this.silenceButton.Text = "Silence";
             this.silenceButton.UseVisualStyleBackColor = false;
+            this.silenceButton.Click += new System.EventHandler(this.silenceButton_Click);
             // 
             // usernameLabel
             // 
@@ -135,36 +140,47 @@
             // 
             // normalCheckBox
             // 
+            this.normalCheckBox.Checked = true;
+            this.normalCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.normalCheckBox.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.normalCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.normalCheckBox.Location = new System.Drawing.Point(396, 192);
+            this.normalCheckBox.Location = new System.Drawing.Point(404, 120);
             this.normalCheckBox.Name = "normalCheckBox";
             this.normalCheckBox.Size = new System.Drawing.Size(200, 30);
             this.normalCheckBox.TabIndex = 4;
             this.normalCheckBox.Text = "Show normal";
             this.normalCheckBox.UseVisualStyleBackColor = true;
+            this.normalCheckBox.Click += new System.EventHandler(this.normalCheckBox_Click);
             // 
             // bannedCheckBox
             // 
+            this.bannedCheckBox.Checked = true;
+            this.bannedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.bannedCheckBox.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.bannedCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.bannedCheckBox.Location = new System.Drawing.Point(396, 156);
+            this.bannedCheckBox.Location = new System.Drawing.Point(404, 273);
             this.bannedCheckBox.Name = "bannedCheckBox";
             this.bannedCheckBox.Size = new System.Drawing.Size(200, 30);
             this.bannedCheckBox.TabIndex = 3;
             this.bannedCheckBox.Text = "Show banned";
             this.bannedCheckBox.UseVisualStyleBackColor = true;
+            this.bannedCheckBox.Visible = false;
+            this.bannedCheckBox.Click += new System.EventHandler(this.bannedCheckBox_Click);
             // 
             // silencedCheckBox
             // 
+            this.silencedCheckBox.Checked = true;
+            this.silencedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.silencedCheckBox.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.silencedCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(74)))), ((int)(((byte)(74)))));
-            this.silencedCheckBox.Location = new System.Drawing.Point(396, 120);
+            this.silencedCheckBox.Location = new System.Drawing.Point(404, 237);
             this.silencedCheckBox.Name = "silencedCheckBox";
             this.silencedCheckBox.Size = new System.Drawing.Size(200, 30);
             this.silencedCheckBox.TabIndex = 2;
             this.silencedCheckBox.Text = "Show silenced";
             this.silencedCheckBox.UseVisualStyleBackColor = true;
+            this.silencedCheckBox.Visible = false;
+            this.silencedCheckBox.Click += new System.EventHandler(this.silencedCheckBox_Click);
             // 
             // accountListPanel
             // 
