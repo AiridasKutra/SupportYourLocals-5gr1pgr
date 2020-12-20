@@ -8,7 +8,7 @@ using System;
 #else
     [Application(Debuggable = false)]
 #endif
-    [MetaData("com.google.android.maps.v2.API_KEY", Value = "")]
+    [MetaData("com.google.android.maps.v2.API_KEY", Value = "AIzaSyBkcZCvFxRuEb3NwruMiAiR3sZAJPfoxZM")]
 public class MainApplication : Application
 {
     public MainApplication(IntPtr handle, JniHandleOwnership transer) : base(handle, transer)
