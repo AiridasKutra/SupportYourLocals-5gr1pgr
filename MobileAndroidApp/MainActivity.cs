@@ -22,7 +22,7 @@ namespace MobileAndroidApp
         private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
 
-        private bool isLoggedIn = false;
+        public static bool IsLoggedIn { get; set; } = false;
         private bool isAdmin = false;
         
         protected override void OnCreate(Bundle savedInstanceState)
@@ -54,11 +54,14 @@ namespace MobileAndroidApp
         }
         private void LogIn()
         {
-            isLoggedIn = !isLoggedIn;
             CloseFabMenu();
-            String text;
-            if (isLoggedIn) text = "in"; else text = "out";
-            Toast.MakeText(this,$"Logged {text}", ToastLength.Short).Show();
+            if(!IsLoggedIn) GoToActivity(typeof(LoginActivity));
+            else LogOut();
+        }
+        private void LogOut()
+        {
+            Toast.MakeText(this, "Logged out", ToastLength.Short).Show();
+            IsLoggedIn = false;
         }
         private void GoToActivity(Type a)
         {
@@ -119,7 +122,7 @@ namespace MobileAndroidApp
         private void ShowFabMenu()
         {
             isFabOpen = true;
-            if (isLoggedIn)
+            if (IsLoggedIn)
             {
                 fabEvents.Visibility = ViewStates.Visible;
                 fabSettings.Visibility = ViewStates.Visible;

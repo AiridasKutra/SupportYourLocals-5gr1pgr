@@ -61,6 +61,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControllers\LoginActivity.cs" />
     <Compile Include="ActivityControllers\AdminPanelActivity.cs" />
     <Compile Include="ActivityControllers\SettingsActivity.cs" />
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
@@ -113,6 +114,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Browser">
       <Version>1.3.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.ConstraintLayout">
+      <Version>2.0.4.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.UI">
       <Version>1.0.0.7</Version>
@@ -169,6 +173,30 @@
     <AndroidResource Include="Resources\layout\event_editor.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_dashboard_black_24dp.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_home_black_24dp.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_notifications_black_24dp.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\navigation.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\event_tabs.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\file.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\calendar_edit.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\login.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
