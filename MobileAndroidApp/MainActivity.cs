@@ -9,6 +9,8 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using localhost;
+using localhost.ActivityControllers;
 
 namespace MobileAndroidApp
 {
@@ -17,14 +19,12 @@ namespace MobileAndroidApp
     {
         private GoogleMap map;
         private static bool isFabOpen = false;
-        private FloatingActionButton fabMain;
-        private FloatingActionButton fabEvents;
-        private FloatingActionButton fabAccount;
-        private FloatingActionButton fabSettings;
-        private FloatingActionButton fabLogin;
+        private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
 
-
+        private bool isLoggedIn = false;
+        private bool isAdmin = false;
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -46,8 +46,24 @@ namespace MobileAndroidApp
              };
 
             bgFabMenu.Click += (o, e) => CloseFabMenu();
-        }
 
+            fabEvents.Click += (o,e) => GoToActivity(typeof(EventManagerActivity));
+            fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
+            fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
+            fabLogin.Click += (o, e) => LogIn();
+        }
+        private void LogIn()
+        {
+            isLoggedIn = !isLoggedIn;
+            CloseFabMenu();
+            String text;
+            if (isLoggedIn) text = "in"; else text = "out";
+            Toast.MakeText(this,$"Logged {text}", ToastLength.Short).Show();
+        }
+        private void GoToActivity(Type a)
+        {
+            StartActivity(a);
+        }
         private void CloseFabMenu()
         {
             isFabOpen = false;
@@ -103,19 +119,26 @@ namespace MobileAndroidApp
         private void ShowFabMenu()
         {
             isFabOpen = true;
-            fabEvents.Visibility = ViewStates.Visible;
-            fabAccount.Visibility = ViewStates.Visible;
-            fabSettings.Visibility = ViewStates.Visible;
+            if (isLoggedIn)
+            {
+                fabEvents.Visibility = ViewStates.Visible;
+                fabSettings.Visibility = ViewStates.Visible;
+                if (isAdmin)
+                {
+                    fabAccount.Visibility = ViewStates.Visible;
+                }
+            }
             fabLogin.Visibility = ViewStates.Visible;
             bgFabMenu.Visibility = ViewStates.Visible;
 
             fabMain.Animate().Rotation(-90f);
             bgFabMenu.Animate().Alpha(1f);
 
-            fabEvents.Animate()
+
+            fabAccount.Animate()
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_170))
                 .Rotation(0f);
-            fabAccount.Animate()
+            fabEvents.Animate()
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_130))
                 .Rotation(0f);
             fabSettings.Animate()
@@ -125,7 +148,6 @@ namespace MobileAndroidApp
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_50))
                 .Rotation(0f);
         }
-
         private void SetUpMap()
         {
             if(map == null)
@@ -133,7 +155,6 @@ namespace MobileAndroidApp
                 FragmentManager.FindFragmentById<MapFragment>(Resource.Id.map).GetMapAsync(this);
             }
         }
-
         public void OnMapReady(GoogleMap googleMap)
         {
             map = googleMap;

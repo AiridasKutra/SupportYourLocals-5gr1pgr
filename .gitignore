@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 
 /localhostUI/Classes/LocationClasses/ApiKeys.cs
+/MobileAndroidApp/Properties/AndroidManifest.xml
