@@ -52,6 +52,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/loginButton"
             android:textColor="#747474" android:backgroundTint="#6DA887"
-            android:layout_marginTop="39dp" map:layout_constraintTop_toBottomOf="@+id/passwordTextBox"
+            android:layout_marginTop="36dp" map:layout_constraintTop_toBottomOf="@+id/passwordTextBox"
+            map:layout_constraintStart_toStartOf="parent" map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintHorizontal_bias="0.795"/>
+    <CheckBox
+            android:text="Stay logged in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/stayLoggedInCheckBox"
+            map:layout_constraintEnd_toStartOf="@+id/loginButton" map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="@+id/loginButton"
+            map:layout_constraintBottom_toBottomOf="@+id/loginButton" map:layout_constraintHorizontal_bias="0.897"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/signUpHeader"
+            android:text="Dont' have an account? Create one."
+            android:layout_marginTop="98dp" map:layout_constraintTop_toBottomOf="@+id/stayLoggedInCheckBox"
             map:layout_constraintStart_toStartOf="parent" map:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+            android:text="Sign up"
+            android:layout_width="88dp"
+            android:layout_height="42dp" android:id="@+id/signUpButton"
+            android:backgroundTint="#6DA887" android:textColor="#747474"
+            map:layout_constraintBottom_toBottomOf="parent" map:layout_constraintTop_toBottomOf="@+id/signUpHeader"
+            map:layout_constraintVertical_bias="0.121" map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent" map:layout_constraintHorizontal_bias="0.498"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
