@@ -6,7 +6,7 @@ using System;
 
 namespace localhost.ActivityControllers
 {
-    [Activity(Label = "Activity1")]
+    [Activity(Label = "localhost")]
     public class LoginActivity : Activity
     {
         Button loginButton;

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace localhost.ActivityControllers
 {
-    [Activity(Label = "AdminPanelActivity")]
+    [Activity(Label = "localhost")]
     public class AdminPanelActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

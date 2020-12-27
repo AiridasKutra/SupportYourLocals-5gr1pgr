@@ -11,7 +11,7 @@ using System.Text;
 
 namespace localhost.ActivityControllers
 {
-    [Activity(Label = "Activity1")]
+    [Activity(Label = "localhost")]
     public class SettingsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

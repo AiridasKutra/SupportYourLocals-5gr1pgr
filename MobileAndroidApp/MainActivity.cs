@@ -51,6 +51,7 @@ namespace MobileAndroidApp
             fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
+           
         }
         private void LogIn()
         {

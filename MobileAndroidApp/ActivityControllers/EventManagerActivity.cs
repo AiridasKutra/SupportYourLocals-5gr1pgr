@@ -11,7 +11,7 @@ using MobileAndroidApp;
 
 namespace localhost.ActivityControllers
 {
-    [Activity(Label = "Event manager", Theme = "@style/AppTheme")]
+    [Activity(Label = "localhost", Theme = "@style/AppTheme")]
     public class EventManagerActivity : Activity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
         private Button addEventButton;
