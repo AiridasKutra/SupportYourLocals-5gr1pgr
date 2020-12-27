@@ -5,7 +5,16 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    android:id="@+id/map"
+                                                   tools:context=".MapsActivity"
 >
+    <View
+            android:layout_width="379dp"
+            android:layout_height="291dp" android:id="@+id/platformView"
+            map:layout_constraintTop_toBottomOf="@+id/header" android:layout_marginTop="32dp"
+            map:layout_constraintEnd_toEndOf="parent" map:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="50dp" android:layout_marginStart="50dp"
+            map:layout_constraintBottom_toBottomOf="parent" map:layout_constraintVertical_bias="0.003"
+            android:outlineProvider="bounds" android:elevation="4dp"/>
     <TextView
             android:layout_width="103dp"
             android:layout_height="wrap_content" android:id="@+id/header" android:text="Log in"
@@ -16,54 +25,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="name@email.com"
+            android:text="username@email.com"
             android:ems="10"
             android:id="@+id/emailTextBox"
-            map:layout_constraintTop_toBottomOf="@+id/header"
-            android:layout_marginTop="68dp" map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintEnd_toEndOf="parent" map:layout_constraintHorizontal_bias="0.666"/>
+            map:layout_constraintTop_toTopOf="@+id/platformView" android:layout_marginTop="44dp"
+            map:layout_constraintEnd_toEndOf="@+id/platformView" android:layout_marginEnd="28dp"
+    />
     <TextView
             android:text="Email:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/emailLabel"
             android:textAlignment="textEnd" android:textSize="18sp"
             map:layout_constraintEnd_toStartOf="@+id/emailTextBox"
-            map:layout_constraintStart_toStartOf="parent" map:layout_constraintTop_toBottomOf="@+id/header"
-            android:layout_marginTop="76dp" map:layout_constraintHorizontal_bias="0.738"/>
+            map:layout_constraintTop_toBottomOf="@+id/header"
+            android:layout_marginTop="88dp" map:layout_constraintStart_toStartOf="@+id/platformView"
+            map:layout_constraintHorizontal_bias="0.777"/>
     <TextView
             android:text="Password:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/emailLabel2"
             android:textAlignment="textEnd" android:textSize="18sp"
             map:layout_constraintEnd_toStartOf="@+id/emailTextBox"
-            map:layout_constraintStart_toStartOf="parent" map:layout_constraintTop_toBottomOf="@+id/emailLabel"
-            map:layout_constraintHorizontal_bias="0.551" android:layout_marginTop="64dp"/>
+            map:layout_constraintTop_toBottomOf="@+id/emailLabel"
+            android:layout_marginTop="64dp" map:layout_constraintStart_toStartOf="@+id/platformView"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordTextBox"
-            map:layout_constraintTop_toBottomOf="@+id/emailTextBox" map:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp" map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintHorizontal_bias="0.666" android:hint="password"/>
+            map:layout_constraintTop_toBottomOf="@+id/emailTextBox"
+            android:layout_marginTop="52dp"
+            android:hint="password" map:layout_constraintEnd_toEndOf="@+id/platformView"
+            android:layout_marginEnd="28dp"/>
     <Button
             android:text="Log in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/loginButton"
             android:textColor="#747474" android:backgroundTint="#6DA887"
-            android:layout_marginTop="36dp" map:layout_constraintTop_toBottomOf="@+id/passwordTextBox"
-            map:layout_constraintStart_toStartOf="parent" map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintHorizontal_bias="0.795"/>
+            android:layout_marginTop="28dp" map:layout_constraintTop_toBottomOf="@+id/passwordTextBox"
+            android:layout_marginEnd="112dp" map:layout_constraintEnd_toEndOf="@+id/platformView"
+            map:layout_constraintStart_toStartOf="@+id/platformView" android:layout_marginStart="179dp"
+            map:layout_constraintHorizontal_bias="1.0"/>
     <CheckBox
             android:text="Stay logged in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/stayLoggedInCheckBox"
-            map:layout_constraintEnd_toStartOf="@+id/loginButton" map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintEnd_toStartOf="@+id/loginButton"
             map:layout_constraintTop_toTopOf="@+id/loginButton"
-            map:layout_constraintBottom_toBottomOf="@+id/loginButton" map:layout_constraintHorizontal_bias="0.897"
-    />
-
+            map:layout_constraintBottom_toBottomOf="@+id/loginButton"
+            map:layout_constraintStart_toStartOf="@+id/platformView" android:layout_marginStart="120dp"
+            map:layout_constraintHorizontal_bias="1.0"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/signUpHeader"
@@ -78,5 +90,4 @@
             map:layout_constraintBottom_toBottomOf="parent" map:layout_constraintTop_toBottomOf="@+id/signUpHeader"
             map:layout_constraintVertical_bias="0.121" map:layout_constraintEnd_toEndOf="parent"
             map:layout_constraintStart_toStartOf="parent" map:layout_constraintHorizontal_bias="0.498"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

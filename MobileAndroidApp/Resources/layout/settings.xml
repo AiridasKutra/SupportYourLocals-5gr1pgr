@@ -4,13 +4,20 @@
                                                    android:layout_height="match_parent">
 
     <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp" android:id="@+id/line"
+            android:layout_width="394dp"
+            android:layout_height="121dp" android:id="@+id/platformViewDelete"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="20dp" android:layout_marginEnd="20dp" android:backgroundTint="#747474"
-            android:background="#747474" app:layout_constraintTop_toBottomOf="@+id/changePasswordButton"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword3"/>
-
+            android:layout_marginEnd="50dp" android:layout_marginStart="50dp"
+            android:outlineProvider="bounds" android:elevation="4dp" app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintTop_toBottomOf="@+id/platformView" android:layout_marginTop="50dp"/>
+    <View
+            android:layout_width="394dp"
+            android:layout_height="258dp" android:id="@+id/platformView"
+            app:layout_constraintTop_toBottomOf="@+id/header" android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="50dp" android:layout_marginStart="50dp"
+            android:outlineProvider="bounds" android:elevation="4dp"
+    />
     <TextView
             android:text="User settings"
             android:layout_width="wrap_content"
@@ -21,79 +28,77 @@
             app:layout_constraintHorizontal_bias="0.497"/>
     <TextView
             android:text="Change location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/locationLabel"
-            app:layout_constraintTop_toBottomOf="@+id/header" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="68dp" android:layout_marginStart="32dp" android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/button" app:layout_constraintHorizontal_bias="0.0"/>
+            android:layout_width="128dp"
+            android:layout_height="24dp" android:id="@+id/locationLabel"
+            app:layout_constraintStart_toStartOf="@+id/platformView"
+            android:layout_marginTop="20dp" android:layout_marginStart="15dp" android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/button" app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintTop_toTopOf="@+id/platformView"/>
     <TextView
             android:text="Change password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/passwordLabel"
-            android:textSize="18sp" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationLabel" android:layout_marginTop="56dp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="18sp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@+id/platformView" android:layout_marginStart="12dp"
+            app:layout_constraintTop_toTopOf="@+id/passwordTextBox"/>
     <TextView
             android:text="Delete account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/deleteLabel"
             android:textSize="18sp" app:layout_constraintEnd_toStartOf="@+id/editTextTextPassword3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/changePasswordButton" android:layout_marginTop="52dp"
-            app:layout_constraintHorizontal_bias="0.551"/>
+            app:layout_constraintStart_toStartOf="@+id/platformViewDelete"
+            app:layout_constraintHorizontal_bias="0.384"
+            android:layout_marginStart="23dp" app:layout_constraintTop_toTopOf="@+id/editTextTextPassword3"
+            android:layout_marginTop="10dp"/>
     <Button
             android:text="Get location"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/button"
             android:textColor="#747474" android:background="#6DA887"
-            app:layout_constraintTop_toBottomOf="@+id/header" android:layout_marginTop="60dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
-    <Button
-            android:text="Change"
-            android:layout_width="108dp"
-            android:layout_height="43dp" android:id="@+id/changePasswordButton"
-            android:textColor="#747474" android:background="#6DA887"
-            app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/platformView" android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toTopOf="@+id/platformView" android:layout_marginTop="15dp"/>
     <Button
             android:text="Change"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/changePasswordButton2"
             android:textColor="#747474" android:background="#6DA887"
             app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/repeatPasswordTextBox"/>
     <Button
             android:text="Delete"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/changePasswordButton3"
             android:textColor="#747474" android:background="#F85A5A"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword3"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:layout_marginTop="12dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword3" android:layout_marginTop="8dp"/>
     <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="213dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordTextBox"
-            app:layout_constraintStart_toEndOf="@+id/passwordLabel" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" android:layout_marginTop="32dp"
-            app:layout_constraintHorizontal_bias="0.512" android:hint="new password"/>
+            app:layout_constraintStart_toEndOf="@+id/passwordLabel" app:layout_constraintEnd_toEndOf="@+id/platformView"
+            app:layout_constraintTop_toBottomOf="@+id/button" android:layout_marginTop="24dp"
+            app:layout_constraintHorizontal_bias="0.769" android:hint="new password" android:layout_marginEnd="15dp"/>
     <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="213dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/repeatPasswordTextBox"
-            app:layout_constraintStart_toEndOf="@+id/passwordLabel" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/passwordLabel" app:layout_constraintEnd_toEndOf="@+id/platformView"
             app:layout_constraintTop_toBottomOf="@+id/passwordTextBox" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.512" android:hint="repeat new password"/>
+            app:layout_constraintHorizontal_bias="0.512" android:hint="repeat new password"
+            android:layout_marginEnd="15dp" app:layout_constraintStart_toStartOf="@+id/platformView"
+            android:layout_marginStart="160dp"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/editTextTextPassword3"
-            app:layout_constraintTop_toBottomOf="@+id/changePasswordButton"
-            android:layout_marginTop="44dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
-            android:hint="password"/>
+            app:layout_constraintEnd_toEndOf="@+id/platformViewDelete" android:layout_marginEnd="15dp"
+            android:hint="password" app:layout_constraintTop_toTopOf="@+id/platformViewDelete"
+            android:layout_marginTop="11dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

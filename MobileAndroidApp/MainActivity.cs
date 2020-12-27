@@ -23,7 +23,7 @@ namespace MobileAndroidApp
         private View bgFabMenu;
 
         public static bool IsLoggedIn { get; set; } = false;
-        private bool isAdmin = false;
+        private bool isAdmin = true;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
