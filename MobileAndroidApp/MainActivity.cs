@@ -47,7 +47,7 @@ namespace MobileAndroidApp
             sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
 
-            SetUpBottomSheet();
+            SetUpBottomSheet(210);
             SetUpMap();
 
             fabMain.Click += (o, e) =>
@@ -65,11 +65,11 @@ namespace MobileAndroidApp
            
         }
 
-        private void SetUpBottomSheet()
+        private void SetUpBottomSheet(int height)
         {
             // Set up bottom sheet
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
-            bottomSheetBehavior.PeekHeight = 250;
+            bottomSheetBehavior.PeekHeight = height;
             //bottomSheetBehavior.Hideable = true;
 
             // Fill sports list
@@ -103,10 +103,11 @@ namespace MobileAndroidApp
         }
         private void CloseFabMenu()
         {
+            sheet.Animate().TranslationY(0);
+            
             isFabOpen = false;
             fabMain.Animate().Rotation(0f);
             bgFabMenu.Animate().Alpha(0f);
-
             fabEvents.Animate()
                 .TranslationY(0)
                 .Rotation(90f);
@@ -153,8 +154,9 @@ namespace MobileAndroidApp
 
             }
         }
-        private void ShowFabMenu()
-        {
+        private void ShowFabMenu() { 
+
+            sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.standart_170));
             isFabOpen = true;
             if (IsLoggedIn)
             {
@@ -170,7 +172,7 @@ namespace MobileAndroidApp
 
             fabMain.Animate().Rotation(-90f);
             bgFabMenu.Animate().Alpha(1f);
-
+            
 
             fabAccount.Animate()
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_170))

@@ -31,7 +31,7 @@
     
     <LinearLayout
         android:id="@+id/bottom_sheet"
-        android:background="@drawable/rounded_theme"
+        android:background="@drawable/back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/standart_23"
-                        android:text="Event list"
+                        android:text="Current events"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                         android:textColor="#747474" />
@@ -132,7 +132,7 @@
                         android:id="@+id/enterKeyword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enter keyword"/>
+                        android:text="Search..."/>
                     <Button
                         android:id="@+id/searchButton"
                         android:layout_width="wrap_content"

@@ -47,16 +47,20 @@ namespace localhost.ActivityControllers.Recycler_adapters
             viewHolder.Activity.Text = dataList[position].Activity;
             viewHolder.Date.Text = dataList[position].DateTime.Date.ToString("D");
             viewHolder.Time.Text = dataList[position].DateTime.ToString("t");
+            viewHolder.ItemView.SetY(10);
+            viewHolder.ItemView.Click += (o,e) => {
+                Toast.MakeText(viewHolder.ItemView.Context, "Clicked " + position , ToastLength.Short).Show();
+            };
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater inflater = LayoutInflater.From(parent.Context);
             View itemView = inflater.Inflate(Resource.Layout.event_card, parent, false);
-            itemView.Click += (o, e) =>
+            /*itemView.Click += (o, e) =>
             {
                 Toast.MakeText(parent.Context, "Clicked", ToastLength.Short).Show();
-            };
+            };*/
             return new RecyclerViewHolder(itemView);
 
         }
