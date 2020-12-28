@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+    android:id="@+id/container"
+    >
+
+    <TextView
+            android:text="Create a report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/header"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="55dp" android:layout_marginEnd="178dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="175dp"
+            android:textColor="#747474" android:textSize="30sp"/>
+    <EditText
+            android:layout_width="213dp"
+            android:layout_height="37dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/reportTypeTextBox"
+            app:layout_constraintTop_toBottomOf="@+id/header" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="72dp" android:hint="Report type"
+            android:background="@drawable/back"/>
+    <EditText
+            android:layout_width="299dp"
+            android:layout_height="210dp"
+            android:inputType="textMultiLine"
+            android:gravity="start|top"
+            android:ems="10"
+            android:id="@+id/reportInformation"
+            app:layout_constraintTop_toBottomOf="@+id/reportTypeTextBox" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="24dp"
+            app:layout_constraintHorizontal_bias="0.495" android:hint="Report information"
+            android:outlineProvider="bounds" android:background="@drawable/back"/>
+    <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button1"
+            app:layout_constraintTop_toBottomOf="@+id/reportInformation" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0.498" android:background="#6DA887" android:textColor="#747474"
+/>
+</androidx.constraintlayout.widget.ConstraintLayout>

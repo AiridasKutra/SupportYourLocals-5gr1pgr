@@ -25,8 +25,8 @@ namespace MobileAndroidApp
         private LinearLayout sheet, EventLayout;
         private Spinner sportSpinner;
 
-        private bool isLoggedIn = false;
-        private bool isAdmin = false;
+        public static bool IsLoggedIn { get; set; } = false;
+        private bool isAdmin = true;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -62,6 +62,7 @@ namespace MobileAndroidApp
             fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
+           
         }
 
         private void SetUpBottomSheet()
@@ -87,11 +88,14 @@ namespace MobileAndroidApp
 
         private void LogIn()
         {
-            isLoggedIn = !isLoggedIn;
             CloseFabMenu();
-            String text;
-            if (isLoggedIn) text = "in"; else text = "out";
-            Toast.MakeText(this,$"Logged {text}", ToastLength.Short).Show();
+            if(!IsLoggedIn) GoToActivity(typeof(LoginActivity));
+            else LogOut();
+        }
+        private void LogOut()
+        {
+            Toast.MakeText(this, "Logged out", ToastLength.Short).Show();
+            IsLoggedIn = false;
         }
         private void GoToActivity(Type a)
         {
@@ -152,7 +156,7 @@ namespace MobileAndroidApp
         private void ShowFabMenu()
         {
             isFabOpen = true;
-            if (isLoggedIn)
+            if (IsLoggedIn)
             {
                 fabEvents.Visibility = ViewStates.Visible;
                 fabSettings.Visibility = ViewStates.Visible;

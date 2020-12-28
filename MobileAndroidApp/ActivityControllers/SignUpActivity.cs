@@ -12,12 +12,12 @@ using System.Text;
 namespace localhost.ActivityControllers
 {
     [Activity(Label = "localhost")]
-    public class SettingsActivity : Activity
+    public class SignUpActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.settings);
+            SetContentView(Resource.Layout.signup);
             // Create your application here
         }
     }

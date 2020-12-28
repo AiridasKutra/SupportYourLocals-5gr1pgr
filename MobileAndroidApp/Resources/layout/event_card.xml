@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="60dp">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="60dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="0dp"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:background="@drawable/back_narrow">
+
+            <TextView
+                    android:text="Event name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/eventNameLabel" android:textColor="#747474"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="5dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/activeLabel" android:layout_marginBottom="1dp"/>
+            <TextView
+                    android:text="2021-12-29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/dateLabel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="5dp" android:layout_marginEnd="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="2dp" app:layout_constraintBottom_toTopOf="@+id/timeLabel"
+                    app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                    android:text="23:59"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/timeLabel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="5dp" android:layout_marginEnd="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="2dp" app:layout_constraintTop_toBottomOf="@+id/dateLabel"/>
+            <TextView
+                    android:text="Active/Expired/Invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/activeLabel"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="2dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="5dp"
+                    app:layout_constraintTop_toBottomOf="@+id/eventNameLabel" android:layout_marginTop="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
