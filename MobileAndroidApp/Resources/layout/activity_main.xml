@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          class="com.google.android.gms.maps.MapFragment" />
+    <!-- Map fragment -->
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment"
+        tools:ignore="MissingAndroidNamespace" />
+    
 
+
+    <!-- Dimming view -->
     <View
         android:id="@+id/bg_fab_menu"
         android:layout_width="match_parent"
@@ -20,6 +25,137 @@
         android:visibility="gone"
         />
 
+
+
+    <!-- Event bar -->
+    
+    <LinearLayout
+        android:id="@+id/bottom_sheet"
+        android:background="@drawable/rounded_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="@dimen/standart_12"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+        
+        <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/EventLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/eventList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/standart_23"
+                        android:text="Event list"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="#747474" />
+                    <TextView
+                        android:id="@+id/lblSport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:text="Sport"/>
+                    <Spinner
+                        android:id="@+id/sportSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/lblDateStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:text="Date from"/>
+                    <EditText
+                        android:id="@+id/startDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2020-12-27"/>
+                    <TextView
+                        android:id="@+id/lblDateEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:text="Date to"/>
+                    <EditText
+                        android:id="@+id/endDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2021-01-27"/>
+                    <TextView
+                        android:id="@+id/lblMaxPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:layout_marginBottom="@dimen/standart_12"
+                        android:text="Max price"/>
+                    <SeekBar
+                        android:id="@+id/maxPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lblSelectedPrice"
+                        android:text="0.00€"/>
+                    <TextView
+                        android:id="@+id/lblMaxDist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:layout_marginBottom="@dimen/standart_12"
+                        android:text="Max distance"/>
+                    <SeekBar
+                        android:id="@+id/maxDist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="100"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lblSelectedDist"
+                        android:text="0.00km"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:layout_marginBottom="@dimen/standart_12"
+                        android:text="Show invisible"/>
+                    <EditText
+                        android:id="@+id/enterKeyword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Enter keyword"/>
+                    <Button
+                        android:id="@+id/searchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/standart_23"
+                        android:layout_marginBottom="@dimen/standart_23"
+                        android:background="@drawable/rounded_theme"
+                        android:textColor="#747474"
+                        android:text="Search"/>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/standart_23"
+                        android:background="@drawable/separator"/>
+                </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+
+
+    <!-- Floating button -->
     <android.support.design.widget.FloatingActionButton
        android:id="@+id/fab_events"
        android:layout_height="wrap_content"
@@ -77,4 +213,9 @@
        app:fabSize="normal"
        app:srcCompat="@drawable/alpha_l_circle"
         />
+
+
+
+    
+
 </android.support.design.widget.CoordinatorLayout>

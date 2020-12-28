@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Animation;
 using Android.App;
 using Android.Gms.Maps;
@@ -21,6 +22,8 @@ namespace MobileAndroidApp
         private static bool isFabOpen = false;
         private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
+        private LinearLayout sheet, EventLayout;
+        private Spinner sportSpinner;
 
         private bool isLoggedIn = false;
         private bool isAdmin = false;
@@ -31,12 +34,20 @@ namespace MobileAndroidApp
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             
             SetContentView(Resource.Layout.activity_main);
+
             fabMain = FindViewById<FloatingActionButton>(Resource.Id.fab_main);
             fabEvents = FindViewById<FloatingActionButton>(Resource.Id.fab_events);
             fabAccount = FindViewById<FloatingActionButton>(Resource.Id.fab_account_manager);
             fabSettings = FindViewById<FloatingActionButton>(Resource.Id.fab_settings);
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
+
+            EventLayout = FindViewById<LinearLayout>(Resource.Id.EventLayout);
+            
+            sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
+            sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
+
+            SetUpBottomSheet();
             SetUpMap();
 
             fabMain.Click += (o, e) =>
@@ -52,6 +63,28 @@ namespace MobileAndroidApp
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
         }
+
+        private void SetUpBottomSheet()
+        {
+            // Set up bottom sheet
+            BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
+            bottomSheetBehavior.PeekHeight = 250;
+            //bottomSheetBehavior.Hideable = true;
+
+            // Fill sports list
+            List<string> sportList = new List<string>();
+            sportList.Add("Basketball");
+            sportList.Add("Football");
+            sportList.Add("Volleyball");
+
+            // Sport spinner
+            var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
+            sportSpinner.Adapter = adapter;
+
+            // Load events
+            
+        }
+
         private void LogIn()
         {
             isLoggedIn = !isLoggedIn;

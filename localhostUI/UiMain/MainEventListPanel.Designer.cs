@@ -255,7 +255,7 @@
             this.Controls.Add(this.mainPanel);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "MainEventListPanel";
-            this.Text = "MainEventListPanel";
+            this.Text = " ";
             this.mainPanel.ResumeLayout(false);
             this.filterPanel.ResumeLayout(false);
             this.filterPanel.PerformLayout();
