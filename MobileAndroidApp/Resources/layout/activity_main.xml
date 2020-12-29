@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mainPanel">
 
     <!-- Map fragment -->
     <fragment
@@ -140,7 +141,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/standart_23"
                         android:layout_marginBottom="@dimen/standart_23"
-                        android:background="@drawable/rounded_theme"
+                        android:background="@drawable/back"
                         android:textColor="#747474"
                         android:text="Search"/>
                     <View

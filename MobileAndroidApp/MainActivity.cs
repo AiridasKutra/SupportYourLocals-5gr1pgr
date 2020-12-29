@@ -24,16 +24,19 @@ namespace MobileAndroidApp
         private View bgFabMenu;
         private LinearLayout sheet, EventLayout;
         private Spinner sportSpinner;
+        private CoordinatorLayout mainPanel;
 
         public static bool IsLoggedIn { get; set; } = false;
         private bool isAdmin = true;
-        
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            
+
             SetContentView(Resource.Layout.activity_main);
+
+            mainPanel = FindViewById<CoordinatorLayout>(Resource.Id.mainPanel);
 
             fabMain = FindViewById<FloatingActionButton>(Resource.Id.fab_main);
             fabEvents = FindViewById<FloatingActionButton>(Resource.Id.fab_events);
@@ -43,7 +46,7 @@ namespace MobileAndroidApp
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
 
             EventLayout = FindViewById<LinearLayout>(Resource.Id.EventLayout);
-            
+
             sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
 
@@ -58,14 +61,16 @@ namespace MobileAndroidApp
 
             bgFabMenu.Click += (o, e) => CloseFabMenu();
 
-            fabEvents.Click += (o,e) => GoToActivity(typeof(EventManagerActivity));
+            fabEvents.Click += (o, e) => GoToActivity(typeof(EventManagerActivity));
             fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
-           
+            var visibility = ViewStates.Visible;
+            Console.WriteLine(visibility == ViewStates.Visible);
         }
 
         private void SetUpBottomSheet(int height)
+
         {
             // Set up bottom sheet
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
@@ -85,7 +90,6 @@ namespace MobileAndroidApp
             // Load events
             
         }
-
         private void LogIn()
         {
             CloseFabMenu();
@@ -154,9 +158,10 @@ namespace MobileAndroidApp
 
             }
         }
+
         private void ShowFabMenu() { 
 
-            sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.standart_170));
+            sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
             isFabOpen = true;
             if (IsLoggedIn)
             {
