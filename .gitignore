@@ -351,3 +351,4 @@ MigrationBackup/
 
 /localhostUI/Classes/LocationClasses/ApiKeys.cs
 /MobileAndroidApp/Resources/values/apiKey.xml
+/MobileAndroidApp/Resources/Resource.designer - Copy.cs

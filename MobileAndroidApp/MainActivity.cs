@@ -28,7 +28,7 @@ namespace MobileAndroidApp
         private static bool isFabOpen = false;
         private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
-        private LinearLayout sheet;
+        private LinearLayout bottomSheet, sheet;
         private Spinner sportSpinner;
         private EditText searchDates;
         private Button searchButton;
@@ -59,7 +59,7 @@ namespace MobileAndroidApp
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
 
-            EventLayout = FindViewById<LinearLayout>(Resource.Id.EventLayout);
+            bottomSheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
 
             sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
@@ -102,7 +102,8 @@ namespace MobileAndroidApp
             // Set up bottom sheet
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
             bottomSheetBehavior.PeekHeight = height;
-            //bottomSheetBehavior.Hideable = true;
+            bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
+            
 
             // Fill sports list
             List<string> sportList = new List<string>();
@@ -218,7 +219,6 @@ namespace MobileAndroidApp
 
             }
         }
-
         private void ShowFabMenu() { 
 
             sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
@@ -295,6 +295,28 @@ namespace MobileAndroidApp
         private void OnEndDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
             searchDates.Text += " - " + e.Date.ToShortDateString();
+        }
+
+
+
+        public class BSCallBack : BottomSheetBehavior.BottomSheetCallback
+        {
+            View backgroundTint;
+            public BSCallBack(View bg)
+            {
+                this.backgroundTint = bg;
+            }
+
+            public override void OnSlide(View bottomSheet, float slideOffset)
+            {
+                backgroundTint.Visibility = ViewStates.Visible;
+                if(slideOffset >= 0) backgroundTint.Alpha = slideOffset;
+            }
+
+            public override void OnStateChanged(View bottomSheet, int newState)
+            {
+                // on state changed
+            }
         }
     }
 }
