@@ -7,18 +7,14 @@ namespace Database.TableClasses
 {
     public class Account
     {
-        [Key]
         public int Id { get; set; }
 
         public uint Permissions { get; set; }
 
-        [StringLength(20)]
         public string Username { get; set; }
 
-        [StringLength(50)]
         public string Email { get; set; }
 
-        [StringLength(64)]
         public string PasswordHash { get; set; }
 
         public bool Can(uint permissions)

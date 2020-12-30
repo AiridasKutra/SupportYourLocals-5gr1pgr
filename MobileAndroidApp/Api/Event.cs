@@ -8,7 +8,6 @@ namespace Database.TableClasses
 {
     public class Event
     {
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -16,10 +15,8 @@ namespace Database.TableClasses
         /// </summary>
         public int Author { get; set; }
 
-        [StringLength(150)]
         public string Name { get; set; }
 
-        [StringLength(150)]
         public AddressInfo Address { get; set; }
 
         public double Latitude { get; set; }
@@ -30,10 +27,8 @@ namespace Database.TableClasses
 
         public decimal Price { get; set; }
 
-        [StringLength(1000)]
         public string Description { get; set; }
 
-        [StringLength(50)]
         public string Tags { get; set; }
 
         public List<string> Sports { get; set; }
