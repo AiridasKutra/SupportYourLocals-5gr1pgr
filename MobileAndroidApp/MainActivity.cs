@@ -297,8 +297,6 @@ namespace MobileAndroidApp
             searchDates.Text += " - " + e.Date.ToShortDateString();
         }
 
-
-
         public class BSCallBack : BottomSheetBehavior.BottomSheetCallback
         {
             View backgroundTint;
