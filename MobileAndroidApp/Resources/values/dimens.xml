@@ -11,4 +11,5 @@
 	<dimen name="standart_90">110dp</dimen>
 	<dimen name="standart_130">160dp</dimen>
 	<dimen name="standart_170">210dp</dimen>
+	<dimen name="hideSheet">2000dp</dimen>
 </resources>

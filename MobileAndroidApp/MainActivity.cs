@@ -32,6 +32,7 @@ namespace MobileAndroidApp
         private Spinner sportSpinner;
         private EditText searchDates;
         private Button searchButton;
+        private CoordinatorLayout mainPanel;
 
         private RecyclerView eventList;
         private RecyclerView.Adapter eventListAdapter;
@@ -41,13 +42,15 @@ namespace MobileAndroidApp
 
         public static bool IsLoggedIn { get; set; } = false;
         private bool isAdmin = true;
-        
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            
+
             SetContentView(Resource.Layout.activity_main);
+
+            mainPanel = FindViewById<CoordinatorLayout>(Resource.Id.mainPanel);
 
             fabMain = FindViewById<FloatingActionButton>(Resource.Id.fab_main);
             fabEvents = FindViewById<FloatingActionButton>(Resource.Id.fab_events);
@@ -55,7 +58,9 @@ namespace MobileAndroidApp
             fabSettings = FindViewById<FloatingActionButton>(Resource.Id.fab_settings);
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
-            
+
+            EventLayout = FindViewById<LinearLayout>(Resource.Id.EventLayout);
+
             sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
             searchDates = FindViewById<EditText>(Resource.Id.searchDate);
@@ -63,7 +68,7 @@ namespace MobileAndroidApp
 
             eventList = FindViewById<RecyclerView>(Resource.Id.PulloutEventView);
 
-            SetUpBottomSheet();
+            SetUpBottomSheet(210);
             SetUpMap();
 
             fabMain.Click += (o, e) =>
@@ -74,7 +79,7 @@ namespace MobileAndroidApp
 
             bgFabMenu.Click += (o, e) => CloseFabMenu();
 
-            fabEvents.Click += (o,e) => GoToActivity(typeof(EventManagerActivity));
+            fabEvents.Click += (o, e) => GoToActivity(typeof(EventManagerActivity));
             fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
@@ -87,13 +92,17 @@ namespace MobileAndroidApp
                 dialog.Show();
             };
 
+            var visibility = ViewStates.Visible;
+            Console.WriteLine(visibility == ViewStates.Visible);
         }
 
-        private void SetUpBottomSheet()
+        private void SetUpBottomSheet(int height)
+
         {
             // Set up bottom sheet
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
-            bottomSheetBehavior.PeekHeight = 250;
+            bottomSheetBehavior.PeekHeight = height;
+            //bottomSheetBehavior.Hideable = true;
 
             // Fill sports list
             List<string> sportList = new List<string>();
@@ -141,7 +150,6 @@ namespace MobileAndroidApp
             eventListAdapter = new PulloutEventAdapter(events);
             eventList.SetAdapter(eventListAdapter);
         }
-
         private void LogIn()
         {
             CloseFabMenu();
@@ -159,10 +167,11 @@ namespace MobileAndroidApp
         }
         private void CloseFabMenu()
         {
+            sheet.Animate().TranslationY(0);
+            
             isFabOpen = false;
             fabMain.Animate().Rotation(0f);
             bgFabMenu.Animate().Alpha(0f);
-
             fabEvents.Animate()
                 .TranslationY(0)
                 .Rotation(90f);
@@ -209,8 +218,10 @@ namespace MobileAndroidApp
 
             }
         }
-        private void ShowFabMenu()
-        {
+
+        private void ShowFabMenu() { 
+
+            sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
             isFabOpen = true;
             if (IsLoggedIn)
             {
@@ -226,7 +237,7 @@ namespace MobileAndroidApp
 
             fabMain.Animate().Rotation(-90f);
             bgFabMenu.Animate().Alpha(1f);
-
+            
 
             fabAccount.Animate()
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_170))

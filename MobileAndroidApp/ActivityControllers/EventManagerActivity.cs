@@ -23,6 +23,8 @@ namespace localhost.ActivityControllers
         private RecyclerView.LayoutManager eventListLayout;
 
         private RecyclerView draftList;
+
+        private List<EventData> list = new List<EventData>();
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -102,6 +104,6 @@ namespace localhost.ActivityControllers
             return false;
         }
 
-        private List<EventData> list = new List<EventData>();
+        
     }
 }

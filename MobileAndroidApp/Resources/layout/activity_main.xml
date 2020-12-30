@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mainPanel">
 
     <!-- Map fragment -->
     <fragment
@@ -23,67 +24,6 @@
         android:background="#48000000"
         android:alpha="0"
         android:visibility="gone"
-        />
-
-
-
-    <!-- Floating button -->
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_events"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/calendar"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_account_manager"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/account_group"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_settings"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/cog"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_login"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/login"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_main"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/fab_margin"
-       app:fabSize="normal"
-       app:srcCompat="@drawable/alpha_l_circle"
         />
 
 
@@ -115,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/standart_23"
-                        android:text="Events"
+                        android:text="Current events"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                         android:textColor="#747474" />
@@ -140,6 +80,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="2020-12-31 - 2021-02-11"/>
+                    <TextView
+                        android:id="@+id/lblDateEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
+                        android:text="Date to"/>
+                    <EditText
+                        android:id="@+id/endDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2021-01-27"/>
                     <TextView
                         android:id="@+id/lblMaxPrice"
                         android:layout_width="wrap_content"
@@ -210,5 +161,70 @@
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
+
+
+
+    <!-- Floating button -->
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_events"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/calendar"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_account_manager"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/account_group"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_settings"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/cog"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_login"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/login"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_main"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/fab_margin"
+       app:fabSize="normal"
+       app:srcCompat="@drawable/alpha_l_circle"
+        />
+
+
+
+    
 
 </android.support.design.widget.CoordinatorLayout>
