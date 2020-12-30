@@ -27,6 +27,67 @@
 
 
 
+    <!-- Floating button -->
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_events"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/calendar"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_account_manager"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/account_group"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_settings"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/cog"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_login"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/standart_23"
+       android:visibility="gone"
+       android:rotation="90"
+       app:fabSize="mini"
+       app:srcCompat="@drawable/login"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+       android:id="@+id/fab_main"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       android:layout_gravity="top|end"
+       android:layout_margin="@dimen/fab_margin"
+       app:fabSize="normal"
+       app:srcCompat="@drawable/alpha_l_circle"
+        />
+
+
+
     <!-- Event bar -->
     
     <LinearLayout
@@ -35,7 +96,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingTop=16dp"
+        android:paddingLeft="@dimen/standart_12"
+        android:paddingRight="@dimen/standart_12"
         android:layout_margin="@dimen/standart_12"
         app:layout_behavior="@string/bottom_sheet_behavior">
         
@@ -52,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/standart_23"
-                        android:text="Event list"
+                        android:text="Events"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                         android:textColor="#747474" />
@@ -147,70 +210,5 @@
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
-
-
-
-    <!-- Floating button -->
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_events"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/calendar"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_account_manager"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/account_group"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_settings"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/cog"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_login"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/standart_23"
-       android:visibility="gone"
-       android:rotation="90"
-       app:fabSize="mini"
-       app:srcCompat="@drawable/login"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-       android:id="@+id/fab_main"
-       android:layout_height="wrap_content"
-       android:layout_width="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="@dimen/fab_margin"
-       app:fabSize="normal"
-       app:srcCompat="@drawable/alpha_l_circle"
-        />
-
-
-
-    
 
 </android.support.design.widget.CoordinatorLayout>

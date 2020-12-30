@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
+    <Compile Include="ActivityControllers\Recycler adapters\PulloutEventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventData.cs" />
+    <Compile Include="ActivityControllers\Recycler helpers\EventDataImage.cs" />
     <Compile Include="ActivityControllers\ReportActivity.cs" />
     <Compile Include="ActivityControllers\SignUpActivity.cs" />
     <Compile Include="ActivityControllers\LoginActivity.cs" />
@@ -225,14 +227,23 @@
     <Folder Include="Resources\layout\Cards\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\rounded_theme.xml">
+    <AndroidResource Include="Resources\drawable\separator.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\separator.xml">
+    <AndroidResource Include="Resources\drawable\event1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\pullout_event_card.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\event2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\event3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
