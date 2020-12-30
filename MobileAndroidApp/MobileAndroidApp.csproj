@@ -75,6 +75,15 @@
     <Compile Include="ActivityControllers\AdminPanelActivity.cs" />
     <Compile Include="ActivityControllers\SettingsActivity.cs" />
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
+    <Compile Include="Api\Account.cs" />
+    <Compile Include="Api\AddressInfo.cs" />
+    <Compile Include="Api\Event.cs" />
+    <Compile Include="Api\Message.cs" />
+    <Compile Include="Api\Report.cs" />
+    <Compile Include="Api\RequestSender.cs" />
+    <Compile Include="Api\Sport.cs" />
+    <Compile Include="Api\UserAccount.cs" />
+    <Compile Include="Api\Validation.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
