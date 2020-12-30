@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mainPanel">
 
     <!-- Map fragment -->
     <fragment
@@ -31,11 +32,13 @@
     
     <LinearLayout
         android:id="@+id/bottom_sheet"
-        android:background="@drawable/back"
+        android:background="@drawable/back_narrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingTop=16dp"
+        android:paddingLeft="@dimen/standart_12"
+        android:paddingRight="@dimen/standart_12"
         android:layout_margin="@dimen/standart_12"
         app:layout_behavior="@string/bottom_sheet_behavior">
         
@@ -67,16 +70,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:id="@+id/lblDateStart"
+                        android:id="@+id/lblDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/standart_12"
-                        android:text="Date from"/>
+                        android:text="Dates"/>
                     <EditText
-                        android:id="@+id/startDate"
+                        android:id="@+id/searchDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="2020-12-27"/>
+                        android:text="2020-12-31 - 2021-02-11"/>
                     <TextView
                         android:id="@+id/lblDateEnd"
                         android:layout_width="wrap_content"
@@ -132,7 +135,9 @@
                         android:id="@+id/enterKeyword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Search..."/>
+                        android:hint="enter keyword"
+                        android:inputType="text"
+                        android:imeOptions="actionSearch"/>
                     <Button
                         android:id="@+id/searchButton"
                         android:layout_width="wrap_content"
@@ -140,7 +145,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/standart_23"
                         android:layout_marginBottom="@dimen/standart_23"
-                        android:background="@drawable/rounded_theme"
+                        android:background="@drawable/back_narrow"
                         android:textColor="#747474"
                         android:text="Search"/>
                     <View
@@ -148,6 +153,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/standart_23"
                         android:background="@drawable/separator"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/PulloutEventView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
