@@ -100,10 +100,14 @@ namespace MobileAndroidApp
 
         {
             // Set up bottom sheet
+
+            /*var p = sheet.LayoutParameters;
+            p.Height = p.Height + p.Height/9;
+            sheet.LayoutParameters = p;*/
+
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
             bottomSheetBehavior.PeekHeight = height;
             bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
-            
 
             // Fill sports list
             List<string> sportList = new List<string>();
