@@ -16,15 +16,24 @@ namespace localhost.ActivityControllers
     [Activity(Label = "EventViewActivity")]
     public class EventViewActivity : Activity
     {
-        int eventNo;
+        TextView eventName;
+
+        private int eventID;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+            eventName = FindViewById<TextView>(Resource.Id.txtEventName);
+
             SetContentView(Resource.Layout.event_view);
 
-            var @event = RequestSender.GetFullEvent(eventNo);
+            //eventID = Intent.GetIntExtra("eventID", 0);
+
+            //var @event = RequestSender.GetFullEvent(eventID);
+
+            //Toast.MakeText(this, eventID, ToastLength.Long).Show();
+            //eventName.Text = @event.Name;
         }
     }
 }
