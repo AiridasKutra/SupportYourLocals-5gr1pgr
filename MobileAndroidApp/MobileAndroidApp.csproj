@@ -270,6 +270,12 @@
     <AndroidResource Include="Resources\drawable\event3.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pullout_menu_theme.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\top_fade.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable\BasePin.png" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ namespace MobileAndroidApp
         private static bool isFabOpen = false;
         private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
-        private LinearLayout bottomSheet, sheet;
+        private RelativeLayout bottomSheet;
         private Spinner sportSpinner;
         private EditText searchDates;
         private Button searchButton;
@@ -63,9 +63,8 @@ namespace MobileAndroidApp
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
 
-            bottomSheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
+            bottomSheet = FindViewById<RelativeLayout>(Resource.Id.bottom_sheet);
 
-            sheet = FindViewById<LinearLayout>(Resource.Id.bottom_sheet);
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
             searchDates = FindViewById<EditText>(Resource.Id.searchDate);
             searchButton = FindViewById<Button>(Resource.Id.searchButton);
@@ -106,7 +105,7 @@ namespace MobileAndroidApp
 
         {
             // Set up bottom sheet
-            BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
+            BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(bottomSheet);
             bottomSheetBehavior.PeekHeight = height;
             bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
 
@@ -231,7 +230,7 @@ namespace MobileAndroidApp
         }
         private void ShowFabMenu() { 
 
-            sheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
+            bottomSheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
             isFabOpen = true;
             if (IsLoggedIn)
             {
@@ -325,7 +324,6 @@ namespace MobileAndroidApp
         {
             searchDates.Text += " - " + e.Date.ToShortDateString();
         }
-
         public class BSCallBack : BottomSheetBehavior.BottomSheetCallback
         {
             View backgroundTint;
