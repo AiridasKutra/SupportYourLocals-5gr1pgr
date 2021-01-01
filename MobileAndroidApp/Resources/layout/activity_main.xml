@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,8 +14,6 @@
         android:layout_height="match_parent"
         class="com.google.android.gms.maps.MapFragment"
         tools:ignore="MissingAndroidNamespace" />
-    
-
 
     <!-- Dimming view -->
     <View
@@ -23,20 +22,16 @@
         android:layout_height="match_parent"
         android:background="#48000000"
         android:alpha="0"
-        android:visibility="gone"
-        />
-
-
+        android:visibility="gone"/>
 
     <!-- Event bar -->
-    
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bottom_sheet"
-        android:background="@drawable/back"
+        android:background="@drawable/pullout_menu_theme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/standart_12"
+        android:paddingTop="5dp"
         android:paddingLeft="@dimen/standart_12"
         android:paddingRight="@dimen/standart_12"
         android:layout_margin="@dimen/standart_12"
@@ -54,6 +49,7 @@
                         android:id="@+id/eventList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standart_12"
                         android:layout_marginBottom="@dimen/standart_23"
                         android:text="Current events"
                         android:layout_gravity="center"
@@ -80,17 +76,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="2020-12-31 - 2021-02-11"/>
-                    <TextView
-                        android:id="@+id/lblDateEnd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/standart_12"
-                        android:text="Date to"/>
-                    <EditText
-                        android:id="@+id/endDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="2021-01-27"/>
                     <TextView
                         android:id="@+id/lblMaxPrice"
                         android:layout_width="wrap_content"
@@ -151,7 +136,7 @@
                     <View
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/standart_23"
+                        android:layout_marginBottom="@dimen/standart_12"
                         android:background="@drawable/separator"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/PulloutEventView"
@@ -159,10 +144,12 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-    </LinearLayout>
-
-
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/standart_23"
+            android:background="@drawable/top_fade"/>
+    </RelativeLayout>
 
     <!-- Floating button -->
     <android.support.design.widget.FloatingActionButton
@@ -222,9 +209,5 @@
        app:fabSize="normal"
        app:srcCompat="@drawable/alpha_l_circle"
         />
-
-
-
-    
 
 </android.support.design.widget.CoordinatorLayout>
