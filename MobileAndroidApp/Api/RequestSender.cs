@@ -12,13 +12,13 @@ namespace WebApi
     static class RequestSender
     {
         private static ulong _vfid = 0;
-        private static HttpClientHandler _handler = new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true
-        };
 
         private static HttpClient ConnectHttpClient()
         {
+            HttpClientHandler _handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true
+            };
 
             HttpClient client = new HttpClient(_handler);
             //client.BaseAddress = new Uri("https://localhost:44357");
@@ -338,8 +338,15 @@ namespace WebApi
             }
         }
 
-        public static string CreateAccount(string username, string email, string password, bool hashed = true)
+        public static string CreateAccount(string email, string username, string password, bool hashed = true)
         {
+            var emailRes = Validator.ValidateEmail(email);
+            var usernameRes = Validator.ValidateUsername(username);
+            var passwordRes = Validator.ValidatePassword(password);
+            if (!emailRes.isValid) return emailRes.message;
+            if (!usernameRes.isValid) return usernameRes.message;
+            if (!passwordRes.isValid) return passwordRes.message;
+
             if (!hashed)
             {
                 password = Hasher.Hash(password);

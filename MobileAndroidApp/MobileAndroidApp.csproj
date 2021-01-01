@@ -85,6 +85,10 @@
     <Compile Include="Api\Sport.cs" />
     <Compile Include="Api\UserAccount.cs" />
     <Compile Include="Api\Validation.cs" />
+    <Compile Include="Backend\Location\ApiKeys.cs" />
+    <Compile Include="Backend\Location\LocationInformation.cs" />
+    <Compile Include="Backend\Location\MathSupplement.cs" />
+    <Compile Include="Backend\VFIDHolder.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,6 +134,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="GoogleMaps.LocationServices">
+      <Version>1.2.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client">
       <Version>5.2.7</Version>
     </PackageReference>
@@ -269,6 +276,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\top_fade.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\BasePin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\BasePin2.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\event_view.xml">

@@ -122,16 +122,10 @@ namespace WebApi
 
         public static ValidationResults ValidateEmail(string email)
         {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return new ValidationResults
-                {
-                    isValid = addr.Address == email,
-                    message = (addr.Address == email) ? "Email is great!" : "Email does not exist"
-                };
-            }
-            catch
+            string emailPattern = @"^[a-zA-Z0-9\.]+@[a-zA-Z0-9\.]+";
+            Match match = Regex.Match(email, emailPattern);
+
+            if (!match.Success)
             {
                 return new ValidationResults
                 {
@@ -139,6 +133,30 @@ namespace WebApi
                     message = "Invalid email input"
                 };
             }
+
+            return new ValidationResults
+            {
+                isValid = true,
+                message = ""
+            };
+
+            //try
+            //{
+            //    var addr = new System.Net.Mail.MailAddress(email);
+            //    return new ValidationResults
+            //    {
+            //        isValid = addr.Address == email,
+            //        message = (addr.Address == email) ? "Email is great!" : "Email does not exist"
+            //    };
+            //}
+            //catch
+            //{
+            //    return new ValidationResults
+            //    {
+            //        isValid = false,
+            //        message = "Invalid email input"
+            //    };
+            //}
         }
     }
 }
