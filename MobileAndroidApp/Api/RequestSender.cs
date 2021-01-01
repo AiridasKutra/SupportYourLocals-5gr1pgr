@@ -30,6 +30,23 @@ namespace WebApi
             return client;
         }
 
+        public static Account ThisAccount()
+        {
+            int id = GetLoggedInAccountId();
+            if (id == -1)
+            {
+                return new Account();
+            }
+            else {
+                return new Account
+                {
+                    Id = id,
+                    Permissions = GetAccountPermissions(id),
+                    Username = GetAccountUsername(id)
+                };
+            }
+        }
+
         public static List<Event> GetBriefEvents()
         {
             using (var client = ConnectHttpClient())
@@ -236,7 +253,7 @@ namespace WebApi
             }
         }
 
-        public static void SetLoggedInAccountPassword(string password, bool hashed = true)
+        public static bool SetLoggedInAccountPassword(string password, bool hashed = true)
         {
             using (var client = ConnectHttpClient())
             {
@@ -248,11 +265,12 @@ namespace WebApi
                 var response = client.PutAsJsonAsync("/accounts/password", password).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    return true;
                 }
                 else
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                    return false;
                 }
             }
         }

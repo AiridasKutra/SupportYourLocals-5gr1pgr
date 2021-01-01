@@ -5,6 +5,7 @@ using localhost.Backend;
 using MobileAndroidApp;
 using System;
 using WebApi;
+using WebApi.Classes;
 
 namespace localhost.ActivityControllers
 {
@@ -43,6 +44,12 @@ namespace localhost.ActivityControllers
 
             if (VFIDHolder.Value > 0)
             {
+                int id = RequestSender.GetLoggedInAccountId();
+                Account acc = new Account { Permissions = RequestSender.GetAccountPermissions(id) };
+                if (acc.Can((uint)Permissions.VIEW_ACCOUNTS))
+                {
+                    MainActivity.CanViewAccounts = true;
+                }
                 MainActivity.IsLoggedIn = true;
                 Toast.MakeText(this, "Logged in", ToastLength.Short).Show();
                 Finish();
