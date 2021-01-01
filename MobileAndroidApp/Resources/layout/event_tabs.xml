@@ -20,7 +20,7 @@
             android:layout_height="wrap_content" 
             android:id="@+id/addEventButton"
             android:background="#6DA887" 
-            android:textColor="#747474" 
+            android:textColor="@color/buttonFont" 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" 
             app:layout_constraintTop_toTopOf="parent"

@@ -73,7 +73,7 @@
             android:layout_marginStart="107dp" android:layout_marginEnd="108dp"
             app:layout_constraintEnd_toEndOf="@+id/platformView"
             app:layout_constraintTop_toBottomOf="@+id/signupPasswordRepeatTextBox" app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="1.0" android:background="#6DA887" android:textColor="#747474"/>
+            app:layout_constraintVertical_bias="1.0" android:background="#6DA887" android:textColor="@color/buttonFont"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/resultLabel"

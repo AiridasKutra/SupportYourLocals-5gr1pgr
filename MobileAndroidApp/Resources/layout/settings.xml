@@ -55,21 +55,21 @@
             android:text="Get location"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/button"
-            android:textColor="#747474" android:background="#6DA887"
+            android:textColor="@color/buttonFont" android:background="#6DA887"
             app:layout_constraintEnd_toEndOf="@+id/platformView" android:layout_marginEnd="15dp"
             app:layout_constraintTop_toTopOf="@+id/platformView" android:layout_marginTop="15dp"/>
     <Button
             android:text="Change"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/changePasswordButton2"
-            android:textColor="#747474" android:background="#6DA887"
+            android:textColor="@color/buttonFont" android:background="#6DA887"
             app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextBox" android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="@+id/repeatPasswordTextBox"/>
     <Button
             android:text="Delete"
             android:layout_width="108dp"
             android:layout_height="43dp" android:id="@+id/changePasswordButton3"
-            android:textColor="#747474" android:background="#F85A5A"
+            android:textColor="@color/buttonFont" android:background="#F85A5A"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword3"
             app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword3" android:layout_marginTop="8dp"/>
     <EditText

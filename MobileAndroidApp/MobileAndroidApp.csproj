@@ -65,6 +65,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControllers\Recycler adapters\AccountListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\PulloutEventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventData.cs" />
@@ -99,6 +100,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\font\roboto.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.xml">

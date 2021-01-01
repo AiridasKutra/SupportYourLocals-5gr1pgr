@@ -415,7 +415,7 @@ namespace WebApi
             }
         }
 
-        public static ulong GetAccountPermissions(int accountId)
+        public static uint GetAccountPermissions(int accountId)
         {
             using (var client = ConnectHttpClient())
             {
