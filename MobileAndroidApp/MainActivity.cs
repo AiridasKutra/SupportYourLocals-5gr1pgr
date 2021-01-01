@@ -18,6 +18,7 @@ using localhost;
 using localhost.ActivityControllers;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
+using Web_service_client_testing;
 
 namespace MobileAndroidApp
 {
@@ -103,13 +104,14 @@ namespace MobileAndroidApp
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(sheet);
             bottomSheetBehavior.PeekHeight = height;
             bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
-            
+
 
             // Fill sports list
             List<string> sportList = new List<string>();
-            sportList.Add("Basketball");
-            sportList.Add("Football");
-            sportList.Add("Volleyball");
+            foreach (var sport in RequestSender.GetSports())
+            {
+                sportList.Add(sport.Name);
+            }
 
             // Sport spinner
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
