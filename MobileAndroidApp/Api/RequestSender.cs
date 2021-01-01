@@ -5,20 +5,24 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using System.Text;
-using Common.Validation;
-using Database.TableClasses;
+using WebApi.Classes;
 
-namespace Web_service_client_testing
+namespace WebApi
 {
     static class RequestSender
     {
         private static ulong _vfid = 0;
+        private static HttpClientHandler _handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true
+        };
 
         private static HttpClient ConnectHttpClient()
         {
-            HttpClient client = new HttpClient();
+
+            HttpClient client = new HttpClient(_handler);
             //client.BaseAddress = new Uri("https://localhost:44357");
-            client.BaseAddress = new Uri("https://localhost:5001/");
+            client.BaseAddress = new Uri("http://193.219.91.103:7099/");
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("VFIDAuth", _vfid.ToString());

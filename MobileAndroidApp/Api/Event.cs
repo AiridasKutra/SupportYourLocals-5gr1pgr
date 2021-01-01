@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
 
-namespace Database.TableClasses
+namespace WebApi.Classes
 {
     public class Event
     {
