@@ -55,7 +55,6 @@ namespace localhost.ActivityControllers.Recycler_adapters
                 }
             }
 
-            //viewHolder.thumbnail.SetImageBitmap(dataList[position].Images[0]);
             viewHolder.eventName.Text = dataList[position].Name;
             viewHolder.eventDateAndTime.Text = dataList[position].StartDate.ToString();
             viewHolder.eventDescription.Text = dataList[position].Description;
@@ -63,7 +62,7 @@ namespace localhost.ActivityControllers.Recycler_adapters
             viewHolder.ItemView.Click += (o, e) =>
             {
                 Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
-                intent.PutExtra("eventNo", position);
+                intent.PutExtra("eventID", dataList[position].Id);
                 viewHolder.ItemView.Context.StartActivity(intent);
             };
         }
