@@ -350,5 +350,6 @@ MigrationBackup/
 .ionide/
 
 /localhostUI/Classes/LocationClasses/ApiKeys.cs
+/MobileAndroidApp/Backend/Location/ApiKeys.cs
 /MobileAndroidApp/Resources/values/apiKey.xml
 /WebApi/Chatrooms

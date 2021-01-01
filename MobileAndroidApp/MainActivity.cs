@@ -39,6 +39,9 @@ namespace MobileAndroidApp
         private RecyclerView.Adapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
 
+        private Bitmap eventPin;
+        private List<Marker> eventMarkers = new List<Marker>();
+
         private List<EventDataImage> events = new List<EventDataImage>();
 
         public static bool IsLoggedIn { get; set; } = false;
@@ -66,6 +69,8 @@ namespace MobileAndroidApp
             sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
             searchDates = FindViewById<EditText>(Resource.Id.searchDate);
             searchButton = FindViewById<Button>(Resource.Id.searchButton);
+
+            eventPin = Bitmap.CreateScaledBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.BasePin), 84, 124, true);
 
             eventList = FindViewById<RecyclerView>(Resource.Id.PulloutEventView);
 
@@ -112,6 +117,7 @@ namespace MobileAndroidApp
             {
                 sportList.Add(sport.Name);
             }
+            RequestSender.GetSports();
 
             // Sport spinner
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
@@ -170,6 +176,8 @@ namespace MobileAndroidApp
         }
         private void CloseFabMenu()
         {
+            ReloadMapEventMarkers();
+
             sheet.Animate().TranslationY(0);
             
             isFabOpen = false;
@@ -256,7 +264,7 @@ namespace MobileAndroidApp
         }
         private void SetUpMap()
         {
-            if(map == null)
+            if (map == null)
             {
                 FragmentManager.FindFragmentById<MapFragment>(Resource.Id.map).GetMapAsync(this);
             }
@@ -280,11 +288,30 @@ namespace MobileAndroidApp
             map.MoveCamera(cameraUpdate);
 
             // Set a marker
-            MarkerOptions marker = new MarkerOptions();
-            marker.SetPosition(new LatLng(54.729729, 25.263571));
-            marker.SetTitle("MIF'as");
+            ReloadMapEventMarkers();
+        }
+        public void ReloadMapEventMarkers()
+        {
+            // Clear markers
+            foreach (var marker in eventMarkers)
+            {
+                marker.Remove();
+            }
+            eventMarkers.Clear();
 
-            map.AddMarker(marker);
+            // Get events from API
+            var events = RequestSender.GetBriefEvents();
+
+            // Create markers
+            foreach (var @event in events)
+            {
+                MarkerOptions marker = new MarkerOptions();
+                marker.SetPosition(new LatLng(@event.Latitude, @event.Longitude));
+                marker.SetTitle(@event.Name);
+                marker.SetIcon(BitmapDescriptorFactory.FromBitmap(eventPin));
+                var mark = map.AddMarker(marker);
+                eventMarkers.Add(mark);
+            }
         }
         private void OnStartDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
