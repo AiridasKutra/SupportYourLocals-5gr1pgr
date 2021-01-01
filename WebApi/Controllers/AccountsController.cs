@@ -51,10 +51,10 @@ namespace WebApiDatabase.Controllers
         }
 
         [HttpPut("password")]
-        public void SetAccountPassword(string passwordHash)
+        public void SetAccountPassword([FromBody]string passwordHash)
         {
             Account acc = GetAccountFromHeader();
-            if (acc != null)
+            if (acc != null && passwordHash != null)
             {
                 acc.PasswordHash = passwordHash;
                 Program.Database.SaveChanges();
