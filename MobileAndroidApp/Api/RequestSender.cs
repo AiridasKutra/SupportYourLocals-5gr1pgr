@@ -5,10 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using System.Text;
-using Common.Validation;
-using Database.TableClasses;
+using WebApi.Classes;
 
-namespace Web_service_client_testing
+namespace WebApi
 {
     static class RequestSender
     {

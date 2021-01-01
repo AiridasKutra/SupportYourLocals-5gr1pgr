@@ -18,7 +18,7 @@ using localhost;
 using localhost.ActivityControllers;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
-using Web_service_client_testing;
+using WebApi;
 
 namespace MobileAndroidApp
 {
