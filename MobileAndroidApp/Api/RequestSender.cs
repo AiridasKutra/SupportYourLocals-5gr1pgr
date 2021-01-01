@@ -338,8 +338,15 @@ namespace WebApi
             }
         }
 
-        public static string CreateAccount(string username, string email, string password, bool hashed = true)
+        public static string CreateAccount(string email, string username, string password, bool hashed = true)
         {
+            var emailRes = Validator.ValidateEmail(email);
+            var usernameRes = Validator.ValidateUsername(username);
+            var passwordRes = Validator.ValidatePassword(password);
+            if (!emailRes.isValid) return emailRes.message;
+            if (!usernameRes.isValid) return usernameRes.message;
+            if (!passwordRes.isValid) return passwordRes.message;
+
             if (!hashed)
             {
                 password = Hasher.Hash(password);

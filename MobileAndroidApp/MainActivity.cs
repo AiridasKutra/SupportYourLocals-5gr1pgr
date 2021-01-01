@@ -166,6 +166,7 @@ namespace MobileAndroidApp
         }
         private void LogOut()
         {
+            RequestSender.Logout();
             Toast.MakeText(this, "Logged out", ToastLength.Short).Show();
             IsLoggedIn = false;
         }
@@ -177,7 +178,7 @@ namespace MobileAndroidApp
         {
             ReloadMapEventMarkers();
 
-            sheet.Animate().TranslationY(0);
+            bottomSheet.Animate().TranslationY(0);
             
             isFabOpen = false;
             fabMain.Animate().Rotation(0f);

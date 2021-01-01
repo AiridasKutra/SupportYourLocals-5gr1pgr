@@ -7,7 +7,7 @@ using WebApi.Classes;
 
 
 //EXTENTION METHOD, OPTIONAL ARGUMENT USAGE
-namespace localhostUI.Classes.LocationClasses
+namespace localhost.Backend.Location
 {
     static class LocationInformation
     {

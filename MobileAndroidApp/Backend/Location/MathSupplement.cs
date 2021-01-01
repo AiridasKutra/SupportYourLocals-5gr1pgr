@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace localhostUI.Classes.LocationClasses
+namespace localhost.Backend.Location
 {
     class MathSupplement
     {

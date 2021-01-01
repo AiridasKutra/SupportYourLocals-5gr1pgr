@@ -87,6 +87,7 @@
     <Compile Include="Backend\Location\ApiKeys.cs" />
     <Compile Include="Backend\Location\LocationInformation.cs" />
     <Compile Include="Backend\Location\MathSupplement.cs" />
+    <Compile Include="Backend\VFIDHolder.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
