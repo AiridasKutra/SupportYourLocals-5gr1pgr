@@ -1,5 +1,4 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
@@ -12,6 +11,8 @@ using System.Text;
 using MobileAndroidApp;
 using localhost.ActivityControllers.Recycler_helpers;
 using Android.Graphics;
+using Android.Content;
+using System.Net;
 
 namespace localhost.ActivityControllers.Recycler_adapters
 {
@@ -32,9 +33,9 @@ namespace localhost.ActivityControllers.Recycler_adapters
     }
     class PulloutEventAdapter : RecyclerView.Adapter
     {
-        private List<EventDataImage> dataList = new List<EventDataImage>();
+        private List<WebApi.Classes.Event> dataList = new List<WebApi.Classes.Event>();
 
-        public PulloutEventAdapter(List<EventDataImage> list)
+        public PulloutEventAdapter(List<WebApi.Classes.Event> list)
         {
             this.dataList = list;
         }
@@ -44,10 +45,27 @@ namespace localhost.ActivityControllers.Recycler_adapters
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             PulloutEventAdapterViewHolder viewHolder = holder as PulloutEventAdapterViewHolder;
-            viewHolder.thumbnail.SetImageBitmap(dataList[position].thumbnail);
-            viewHolder.eventName.Text = dataList[position].name;
-            viewHolder.eventDateAndTime.Text = dataList[position].dateTime.ToString();
-            viewHolder.eventDescription.Text = dataList[position].description;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(dataList[position].Images[0]);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    viewHolder.thumbnail.SetImageBitmap(BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length));
+                }
+            }
+
+            //viewHolder.thumbnail.SetImageBitmap(dataList[position].Images[0]);
+            viewHolder.eventName.Text = dataList[position].Name;
+            viewHolder.eventDateAndTime.Text = dataList[position].StartDate.ToString();
+            viewHolder.eventDescription.Text = dataList[position].Description;
+
+            viewHolder.ItemView.Click += (o, e) =>
+            {
+                Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
+                intent.PutExtra("eventNo", position);
+                viewHolder.ItemView.Context.StartActivity(intent);
+            };
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
