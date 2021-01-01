@@ -236,7 +236,7 @@ namespace WebApi
             }
         }
 
-        public static void SetLoggedInAccountPassword(string password, bool hashed = true)
+        public static bool SetLoggedInAccountPassword(string password, bool hashed = true)
         {
             using (var client = ConnectHttpClient())
             {
@@ -248,11 +248,12 @@ namespace WebApi
                 var response = client.PutAsJsonAsync("/accounts/password", password).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return;
+                    return true;
                 }
                 else
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                    return false;
                 }
             }
         }
@@ -415,7 +416,7 @@ namespace WebApi
             }
         }
 
-        public static ulong GetAccountPermissions(int accountId)
+        public static uint GetAccountPermissions(int accountId)
         {
             using (var client = ConnectHttpClient())
             {

@@ -45,7 +45,7 @@ namespace MobileAndroidApp
         private List<EventDataImage> events = new List<EventDataImage>();
 
         public static bool IsLoggedIn { get; set; } = false;
-        private bool isAdmin = true;
+        public static bool CanViewAccounts { get; set; } = true;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -239,7 +239,7 @@ namespace MobileAndroidApp
             {
                 fabEvents.Visibility = ViewStates.Visible;
                 fabSettings.Visibility = ViewStates.Visible;
-                if (isAdmin)
+                if (CanViewAccounts)
                 {
                     fabAccount.Visibility = ViewStates.Visible;
                 }
