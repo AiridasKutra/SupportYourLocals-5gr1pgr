@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="username@email.com"
+            android:hint="username@email.com"
             android:ems="10"
             android:id="@+id/emailTextBox"
             map:layout_constraintTop_toTopOf="@+id/platformView" android:layout_marginTop="44dp"

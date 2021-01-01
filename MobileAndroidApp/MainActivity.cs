@@ -109,7 +109,6 @@ namespace MobileAndroidApp
             bottomSheetBehavior.PeekHeight = height;
             bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
 
-
             // Fill sports list
             List<string> sportList = new List<string>();
             foreach (var sport in RequestSender.GetSports())
