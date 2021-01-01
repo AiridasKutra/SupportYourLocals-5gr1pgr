@@ -64,46 +64,7 @@ namespace WebApiDatabase
                 //mData = new Mutex();
 
                 CreateHostBuilder(args).Build().Run();
-
-                ushort port;
-                while (true)
-                {
-                    Console.Write("Enter the port: ");
-                    string portStr = Console.ReadLine();
-                    try
-                    {
-                        port = ushort.Parse(portStr);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Invalid port");
-                        continue;
-                    }
-                    break;
-                }
-
-                //Thread serverThread = new Thread(new ThreadStart(RunServer));
-                //serverThread.Start();
-
-                Console.WriteLine("Server started.");
-                while (true)
-                {
-                    string input = Console.ReadLine();
-                    if (input == "quit" || input == "exit")
-                    {
-                        Environment.Exit(0);
-                    }
-                    else if (input == "restart" || input == "rs")
-                    {
-                        context.Dispose();
-                        context = new MainDbContext(serverName, database, username, password);
-                        Database = new DatabaseInterface(context);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Unrecognized command");
-                    }
-                }
+                Console.WriteLine("App closing...");
             }
         }
 
@@ -111,7 +72,7 @@ namespace WebApiDatabase
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>().UseUrls("http://*:54000");
                 });
     }
 }

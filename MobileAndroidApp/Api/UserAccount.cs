@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Database
+namespace WebApi.Classes
 {
     public enum Permissions : uint
     {
