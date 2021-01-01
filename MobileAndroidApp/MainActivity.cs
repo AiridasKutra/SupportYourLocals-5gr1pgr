@@ -89,14 +89,6 @@ namespace MobileAndroidApp
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
 
-            searchDates.Focusable = false;
-            searchDates.Click += (sender, e) => {
-                DateTime today = DateTime.Today;
-                DatePickerDialog dialog = new DatePickerDialog(this, OnStartDateSet, today.Year, today.Month, today.Day);
-                dialog.DatePicker.MinDate = today.Millisecond;
-                dialog.Show();
-            };
-
             var visibility = ViewStates.Visible;
             Console.WriteLine(visibility == ViewStates.Visible);
         }
@@ -121,8 +113,17 @@ namespace MobileAndroidApp
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
             sportSpinner.Adapter = adapter;
 
-            // Load up events
-            events.Add(
+            // Date picker
+            searchDates.Focusable = false;
+            searchDates.Click += (sender, e) => {
+                DateTime today = DateTime.Today;
+                DatePickerDialog dialog = new DatePickerDialog(this, OnStartDateSet, today.Year, today.Month, today.Day);
+                dialog.DatePicker.MinDate = today.Millisecond;
+                dialog.Show();
+            };
+
+            // Create events
+            /**events.Add(
                 new EventDataImage
                 {
                     thumbnail = BitmapFactory.DecodeResource(Resources, Resource.Drawable.event1),
@@ -148,9 +149,11 @@ namespace MobileAndroidApp
                     description = "Yuh, ooh, brr, brr Gucci gang, ooh (That's it right there, Gnealz) Yuh, Lil Pump, yuh Gucci gang, ooh (Ooh, Bi - Bighead on the beat) Yuh, br",
                     dateTime = (DateTime.Now).AddDays(11).AddHours(1)
                 }
-            );
+            );*/
+
 
             // Load events
+            List<WebApi.Classes.Event> events = RequestSender.GetBriefEvents();
             eventList.HasFixedSize = true;
             eventListLayout = new LinearLayoutManager(this);
             eventList.SetLayoutManager(eventListLayout);

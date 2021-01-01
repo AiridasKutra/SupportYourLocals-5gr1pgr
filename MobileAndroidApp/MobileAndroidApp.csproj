@@ -65,6 +65,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControllers\EventViewActivity.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\PulloutEventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventData.cs" />
@@ -281,6 +282,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\BasePin2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\event_view.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
