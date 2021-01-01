@@ -12,13 +12,13 @@ namespace WebApi
     static class RequestSender
     {
         private static ulong _vfid = 0;
-        private static HttpClientHandler _handler = new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true
-        };
 
         private static HttpClient ConnectHttpClient()
         {
+            HttpClientHandler _handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true
+            };
 
             HttpClient client = new HttpClient(_handler);
             //client.BaseAddress = new Uri("https://localhost:44357");
