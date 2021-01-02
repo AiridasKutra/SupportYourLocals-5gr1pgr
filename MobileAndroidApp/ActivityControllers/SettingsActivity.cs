@@ -35,12 +35,28 @@ namespace localhost.ActivityControllers
 
         public void ChangePassword(object o, EventArgs e)
         {
+
             StartActivity(typeof(ChangePasswordActivity));
+
         }
 
         public void DeleteAccount(object o, EventArgs e)
         {
-            //StartActivity(typeof(DeleteAccountActivity));
+            
+            Intent intent = new Intent(this, typeof(DeleteAccountActivity));
+            StartActivityForResult(intent, 1);
         }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if(resultCode == Result.Ok || resultCode.Equals(Result.Ok))
+            {
+                Intent intent = new Intent();
+                intent.PutExtra("DELETED", "data");
+                SetResult(Result.Ok, intent);
+                this.Finish();
+            }
+        }
+
     }
 }

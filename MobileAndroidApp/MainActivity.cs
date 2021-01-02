@@ -20,6 +20,7 @@ using localhost.ActivityControllers;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
 using WebApi;
+using Android.Content;
 using localhost.Backend;
 using WebApi.Classes;
 
@@ -28,11 +29,11 @@ namespace MobileAndroidApp
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, IOnMapReadyCallback
     {
-        private GoogleMap map;
+        private static GoogleMap map;
         private static bool isFabOpen = false;
         private static FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
-        private View bgFabMenu;
-        private RelativeLayout bottomSheet;
+        private  View bgFabMenu;
+        private  RelativeLayout bottomSheet;
         private Spinner sportSpinner;
         private EditText searchDates;
         private Button searchButton;
@@ -42,8 +43,8 @@ namespace MobileAndroidApp
         private RecyclerView.Adapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
 
-        private Bitmap eventPin;
-        private List<Marker> eventMarkers = new List<Marker>();
+        private static Bitmap eventPin;
+        private static List<Marker> eventMarkers = new List<Marker>();
 
         private List<EventDataImage> events = new List<EventDataImage>();
 
@@ -88,7 +89,11 @@ namespace MobileAndroidApp
             bgFabMenu.Click += (o, e) => CloseFabMenu();
 
             fabEvents.Click += (o, e) => GoToActivity(typeof(EventManagerActivity));
-            fabSettings.Click += (o, e) => GoToActivity(typeof(SettingsActivity));
+            fabSettings.Click += (o, e) =>
+            {
+                Intent intent = new Intent(this, typeof(SettingsActivity));
+                StartActivityForResult(intent, 1);
+            };
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
 
@@ -306,7 +311,7 @@ namespace MobileAndroidApp
             // Set a marker
             ReloadMapEventMarkers();
         }
-        public void ReloadMapEventMarkers()
+        public static void ReloadMapEventMarkers()
         {
             // Clear markers
             foreach (var marker in eventMarkers)
@@ -375,6 +380,13 @@ namespace MobileAndroidApp
         private async System.Threading.Tasks.Task AskForLocationAsync()
         {
             await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
+        }
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (resultCode == Result.Ok || resultCode.Equals(Result.Ok))
+            {
+                CloseFabMenu();
+            }
         }
     }
 }
