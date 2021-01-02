@@ -95,7 +95,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtDescription" android:layout_marginTop="16dp"
             android:hint="Enter comment"
             app:layout_constraintEnd_toStartOf="@+id/btnSubmitComment" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp" android:maxLength="500"/>
     <ImageButton
             android:layout_width="46dp"
             android:layout_height="46dp" android:id="@+id/btnSubmitComment"

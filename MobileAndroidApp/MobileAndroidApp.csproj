@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="ActivityControllers\DeleteAccountActivity.cs" />
     <Compile Include="ActivityControllers\ChangePasswordActivity.cs" />
+    <Compile Include="ActivityControllers\EventEditorActivity.cs" />
     <Compile Include="ActivityControllers\EventViewActivity.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\AccountListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
@@ -313,6 +314,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\back_warning.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\event_editor.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
