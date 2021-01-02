@@ -63,6 +63,8 @@
     <Reference Include="Mono.Android" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
+    <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.2.0" />
+    <PackageReference Include="Xamarin.AndroidX.Palette" Version="1.0.0.5" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityControllers\BitmapImagePopupActivity.cs" />
@@ -83,7 +85,6 @@
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
     <Compile Include="Api\Account.cs" />
     <Compile Include="Api\AddressInfo.cs" />
-    <Compile Include="Api\ApiKeys.cs" />
     <Compile Include="Api\Event.cs" />
     <Compile Include="Api\Message.cs" />
     <Compile Include="Api\Report.cs" />
@@ -142,6 +143,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ExpandableView">
+      <Version>1.0.10</Version>
+    </PackageReference>
     <PackageReference Include="GoogleMaps.LocationServices">
       <Version>1.2.0.5</Version>
     </PackageReference>
@@ -158,6 +162,12 @@
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.v4">
+      <Version>28.0.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
+      <Version>28.0.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.Palette">
       <Version>28.0.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Browser">
@@ -300,9 +310,6 @@
     <AndroidResource Include="Resources\drawable\separator_narrow_below.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\chevron_right.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\change_password_popup.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -318,9 +325,6 @@
     <AndroidResource Include="Resources\drawable\back_warning.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\chevron_right.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\event_editor.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -330,7 +334,15 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\chevron_right.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadGenericExceptionInfoBarMobileAndroidAppHideInfoBar="True" TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
     Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
