@@ -55,7 +55,8 @@
             android:layout_height="wrap_content" android:id="@id/txtDescription"
             android:textSize="18sp" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@+id/scrIEventImages" android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent" 
+            android:textIsSelectable="true"
             app:layout_constraintHorizontal_bias="0.0" android:justificationMode="inter_word"/>
     <EditText
             android:layout_width="0dp"
