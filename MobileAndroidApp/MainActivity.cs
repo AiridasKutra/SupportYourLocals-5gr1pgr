@@ -130,6 +130,8 @@ namespace MobileAndroidApp
                 Xamarin.Essentials.Preferences.Set("saved_email", "");
                 Xamarin.Essentials.Preferences.Set("saved_password", "");
             }
+
+            AskForLocationAsync();
         }
 
         private void SetUpBottomSheet(int height)
@@ -350,31 +352,29 @@ namespace MobileAndroidApp
             public override void OnSlide(View bottomSheet, float slideOffset)
             {
                 backgroundTint.Visibility = ViewStates.Visible;
-                if (slideOffset >= 0) backgroundTint.Alpha = slideOffset;
+                if (slideOffset >= 0)
+                {
+                    fabMain.Visibility = ViewStates.Visible;
+                    backgroundTint.Alpha = slideOffset;
+                    fabMain.Alpha = 1 - slideOffset;
+                    return;
+                }
 
-                if (slideOffset >= 0.85) FabMainHide();
-                else FabMainShow();
+                if (slideOffset == 1)
+                {
+                    fabMain.Visibility = ViewStates.Gone;
+                    return;
+                }
             }
 
             public override void OnStateChanged(View bottomSheet, int newState)
             {
-                if (newState == BottomSheetBehavior.StateCollapsed)
-                    FabMainShow();
-                else if (newState == BottomSheetBehavior.StateExpanded)
-                    FabMainHide();
+                //on state change
             }
         }
-        public static void FabMainHide()
+        private async System.Threading.Tasks.Task AskForLocationAsync()
         {
-            if(fabMain.Visibility == ViewStates.Visible)
-            {
-                fabMain.Animate().Alpha(0f).WithEndAction(new Java.Lang.Runnable(() => { fabMain.SetVisibility(ViewStates.Gone); }));
-            }
-        }
-        public static void FabMainShow()
-        {
-             fabMain.Animate().Alpha(1f);
-             fabMain.SetVisibility(ViewStates.Visible);
+            await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
         }
     }
 }

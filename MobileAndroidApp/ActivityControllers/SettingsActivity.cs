@@ -16,12 +16,9 @@ namespace localhost.ActivityControllers
     [Activity(Label = "localhost")]
     public class SettingsActivity : Activity
     {
-        Button changePasswordButton;
-        Button deleteAccountButton;
+        View changePasswordButton;
+        View deleteAccountButton;
 
-        EditText changePasswordText;
-        EditText changePasswordRepeatText;
-        EditText deleteAccountText;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,62 +26,21 @@ namespace localhost.ActivityControllers
             SetContentView(Resource.Layout.settings);
             // Create your application here
 
-            changePasswordButton = FindViewById<Button>(Resource.Id.settingsChangePasswordButton);
+            changePasswordButton = FindViewById<View>(Resource.Id.changePasswordPlatform);
             changePasswordButton.Click += ChangePassword;
-            deleteAccountButton = FindViewById<Button>(Resource.Id.settingsDeleteAccountButton);
+            deleteAccountButton = FindViewById<View>(Resource.Id.deleteAccountPlatform);
             deleteAccountButton.Click += DeleteAccount;
 
-            changePasswordText = FindViewById<EditText>(Resource.Id.settingsPasswordTextBox);
-            changePasswordRepeatText = FindViewById<EditText>(Resource.Id.settingsRepeatPasswordTextBox);
-            deleteAccountText = FindViewById<EditText>(Resource.Id.settingsDeleteAccountTextBox);
         }
 
         public void ChangePassword(object o, EventArgs e)
         {
-            string newPassword = changePasswordText.Text;
-            string newPasswordRepeat = changePasswordRepeatText.Text;
-
-            var result = Validator.ValidatePassword(newPassword);
-            if (!result.isValid)
-            {
-                Toast.MakeText(this, result.message, ToastLength.Long).Show();
-                return;
-            }
-
-            if (newPassword != newPasswordRepeat)
-            {
-                Toast.MakeText(this, "Passwords don't match", ToastLength.Short).Show();
-            }
-            else
-            {
-                if (RequestSender.SetLoggedInAccountPassword(newPassword, false))
-                {
-                    Toast.MakeText(this, "Password changed successfully!", ToastLength.Short).Show();
-                    changePasswordText.Text = "";
-                    changePasswordRepeatText.Text = "";
-                }
-                else
-                {
-                    Toast.MakeText(this, "Password change failed", ToastLength.Short).Show();
-                }
-            }
+            StartActivity(typeof(ChangePasswordActivity));
         }
 
         public void DeleteAccount(object o, EventArgs e)
         {
-            string confirmationText = deleteAccountText.Text;
-
-            if (confirmationText == "delete")
-            {
-                int id = RequestSender.GetLoggedInAccountId();
-                RequestSender.DeleteAccount(id);
-                Toast.MakeText(this, "Account deleted successfully!", ToastLength.Short).Show();
-                MainActivity.IsLoggedIn = false;
-            }
-            else
-            {
-                Toast.MakeText(this, "\"delete\" was entered incorrectly", ToastLength.Short).Show();
-            }
+            //StartActivity(typeof(DeleteAccountActivity));
         }
     }
 }
