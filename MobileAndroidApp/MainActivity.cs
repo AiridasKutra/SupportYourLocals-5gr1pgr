@@ -28,7 +28,7 @@ namespace MobileAndroidApp
     {
         private GoogleMap map;
         private static bool isFabOpen = false;
-        private FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
+        private static FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private View bgFabMenu;
         private RelativeLayout bottomSheet;
         private Spinner sportSpinner;
@@ -131,7 +131,7 @@ namespace MobileAndroidApp
         private void LogIn()
         {
             CloseFabMenu();
-            if(!IsLoggedIn) GoToActivity(typeof(LoginActivity));
+            if (!IsLoggedIn) GoToActivity(typeof(LoginActivity));
             else LogOut();
         }
         private void LogOut()
@@ -146,25 +146,29 @@ namespace MobileAndroidApp
         }
         private void CloseFabMenu()
         {
-            ReloadMapEventMarkers();
+            if (BottomSheetBehavior.From(bottomSheet).State != BottomSheetBehavior.StateExpanded)
+            {
+                ReloadMapEventMarkers();
 
-            bottomSheet.Animate().TranslationY(0);
-            
-            isFabOpen = false;
-            fabMain.Animate().Rotation(0f);
-            bgFabMenu.Animate().Alpha(0f);
-            fabEvents.Animate()
-                .TranslationY(0)
-                .Rotation(90f);
-            fabAccount.Animate()
-                .TranslationY(0)
-                .Rotation(90f);
-            fabSettings.Animate()
-                .TranslationY(0)
-                .Rotation(90f);
-            fabLogin.Animate()
-                .TranslationY(0)
-                .Rotation(90f).SetListener(new FabAnimatorListener(bgFabMenu,fabEvents,fabAccount,fabSettings,fabLogin));
+                bottomSheet.Animate().TranslationY(0);
+
+                isFabOpen = false;
+                fabMain.Animate().Rotation(0f);
+                bgFabMenu.Animate().Alpha(0f);
+                fabEvents.Animate()
+                    .TranslationY(0)
+                    .Rotation(90f);
+                fabAccount.Animate()
+                    .TranslationY(0)
+                    .Rotation(90f);
+                fabSettings.Animate()
+                    .TranslationY(0)
+                    .Rotation(90f);
+                fabLogin.Animate()
+                    .TranslationY(0)
+                    .Rotation(90f).SetListener(new FabAnimatorListener(bgFabMenu, fabEvents, fabAccount, fabSettings, fabLogin));
+            }
+
         }
         private class FabAnimatorListener : Java.Lang.Object, Animator.IAnimatorListener
         {
@@ -182,7 +186,7 @@ namespace MobileAndroidApp
             {
                 if (!isFabOpen)
                 {
-                    foreach(var view in viewsToHide)
+                    foreach (var view in viewsToHide)
                     {
                         view.Visibility = ViewStates.Gone;
                     }
@@ -199,7 +203,7 @@ namespace MobileAndroidApp
 
             }
         }
-        private void ShowFabMenu() { 
+        private void ShowFabMenu() {
 
             bottomSheet.Animate().TranslationY(Resources.GetDimension(Resource.Dimension.hideSheet));
             isFabOpen = true;
@@ -217,7 +221,7 @@ namespace MobileAndroidApp
 
             fabMain.Animate().Rotation(-90f);
             bgFabMenu.Animate().Alpha(1f);
-            
+
 
             fabAccount.Animate()
                 .TranslationY(Resources.GetDimension(Resource.Dimension.standart_170))
@@ -306,13 +310,31 @@ namespace MobileAndroidApp
             public override void OnSlide(View bottomSheet, float slideOffset)
             {
                 backgroundTint.Visibility = ViewStates.Visible;
-                if(slideOffset >= 0) backgroundTint.Alpha = slideOffset;
+                if (slideOffset >= 0) backgroundTint.Alpha = slideOffset;
+
+                if (slideOffset >= 0.85) FabMainHide();
+                else FabMainShow();
             }
 
             public override void OnStateChanged(View bottomSheet, int newState)
             {
-                // on state changed
+                if (newState == BottomSheetBehavior.StateCollapsed)
+                    FabMainShow();
+                else if (newState == BottomSheetBehavior.StateExpanded)
+                    FabMainHide();
             }
+        }
+        public static void FabMainHide()
+        {
+            if(fabMain.Visibility == ViewStates.Visible)
+            {
+                fabMain.Animate().Alpha(0f).WithEndAction(new Java.Lang.Runnable(() => { fabMain.SetVisibility(ViewStates.Gone); }));
+            }
+        }
+        public static void FabMainShow()
+        {
+             fabMain.Animate().Alpha(1f);
+             fabMain.SetVisibility(ViewStates.Visible);
         }
     }
 }

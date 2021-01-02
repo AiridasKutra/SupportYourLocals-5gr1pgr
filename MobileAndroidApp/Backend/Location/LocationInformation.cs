@@ -1,5 +1,4 @@
 ﻿using GoogleMaps.LocationServices;
-using localhostUI.Classes.LocationClasses;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -12,6 +11,7 @@ namespace localhost.Backend.Location
 {
     static class LocationInformation
     {
+  
         private static readonly string apiKey = ApiKeys.GoogleApiKey;
         private static GoogleLocationService locationService = new GoogleLocationService(apiKey);
         public static MapPoint LatLongFromString(this string address, string country = "Lithuania")

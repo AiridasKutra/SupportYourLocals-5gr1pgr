@@ -17,6 +17,15 @@ namespace WebApi.Classes
 
         public string PasswordHash { get; set; }
 
+        public Account()
+        {
+            Id = -1;
+            Permissions = 0u;
+            Username = "";
+            Email = "";
+            PasswordHash = "";
+        }
+
         public bool Can(uint permissions)
         {
             return (permissions & ~Permissions) == 0;

@@ -30,6 +30,23 @@ namespace WebApi
             return client;
         }
 
+        public static Account ThisAccount()
+        {
+            int id = GetLoggedInAccountId();
+            if (id == -1)
+            {
+                return new Account();
+            }
+            else {
+                return new Account
+                {
+                    Id = id,
+                    Permissions = GetAccountPermissions(id),
+                    Username = GetAccountUsername(id)
+                };
+            }
+        }
+
         public static List<Event> GetBriefEvents()
         {
             using (var client = ConnectHttpClient())
