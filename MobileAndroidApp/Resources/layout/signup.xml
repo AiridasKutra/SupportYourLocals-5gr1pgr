@@ -14,11 +14,11 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="116dp"/>
     <View
-            android:layout_width="313dp"
-            android:layout_height="297dp" android:id="@+id/platformView"
+            android:layout_width="300dp"
+            android:layout_height="300dp" android:id="@+id/platformView"
             app:layout_constraintTop_toBottomOf="@+id/header" android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="50dp" android:layout_marginStart="50dp"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.114"
             android:outlineProvider="bounds" android:elevation="4dp"/>
     <EditText
@@ -27,9 +27,9 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/signupEmailTextBox"
-            android:hint="Email" app:layout_constraintEnd_toEndOf="@+id/platformView" android:layout_marginEnd="50dp"
-            app:layout_constraintStart_toStartOf="@+id/platformView" android:layout_marginStart="50dp"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toTopOf="@+id/platformView"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="@+id/platformView" app:layout_constraintStart_toStartOf="@+id/platformView"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintTop_toTopOf="@+id/platformView"
             android:layout_marginTop="16dp"/>
     <EditText
             android:layout_width="wrap_content"
@@ -38,10 +38,9 @@
             android:ems="10"
             android:id="@+id/signupUsernameTextBox"
             android:hint="Username"
-            app:layout_constraintTop_toBottomOf="@+id/signupEmailTextBox" app:layout_constraintStart_toStartOf="@+id/platformView"
-            android:layout_marginStart="50dp" android:layout_marginEnd="50dp"
-            app:layout_constraintEnd_toEndOf="@+id/platformView" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/signupEmailTextBox"
+            app:layout_constraintEnd_toEndOf="@+id/platformView" app:layout_constraintStart_toStartOf="@+id/platformView"
+            app:layout_constraintHorizontal_bias="0.5"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,10 +48,9 @@
             android:ems="10"
             android:id="@+id/signupPasswordTextBox"
             android:hint="Password"
-            app:layout_constraintTop_toBottomOf="@+id/signupUsernameTextBox" app:layout_constraintEnd_toEndOf="@+id/platformView"
-            android:layout_marginEnd="50dp" app:layout_constraintStart_toStartOf="@+id/platformView"
-            android:layout_marginStart="50dp" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/signupUsernameTextBox"
+            app:layout_constraintEnd_toEndOf="@+id/platformView" app:layout_constraintStart_toStartOf="@+id/platformView"
+            app:layout_constraintHorizontal_bias="0.5"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,20 +58,17 @@
             android:ems="10"
             android:id="@+id/signupPasswordRepeatTextBox"
             android:hint="Repeat password"
-            app:layout_constraintTop_toBottomOf="@+id/signupPasswordTextBox" android:layout_marginEnd="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/signupPasswordTextBox"
             app:layout_constraintEnd_toEndOf="@+id/platformView" app:layout_constraintStart_toStartOf="@+id/platformView"
-            android:layout_marginStart="50dp" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintHorizontal_bias="0.5"/>/>
     <Button
             android:text="Sign up"
-            android:layout_width="103dp"
-            android:layout_height="33dp" android:id="@+id/signUpButton"
-            app:layout_constraintBottom_toBottomOf="@+id/platformView"
-            android:layout_marginBottom="12dp" app:layout_constraintStart_toStartOf="@+id/platformView"
-            android:layout_marginStart="107dp" android:layout_marginEnd="108dp"
-            app:layout_constraintEnd_toEndOf="@+id/platformView"
-            app:layout_constraintTop_toBottomOf="@+id/signupPasswordRepeatTextBox" app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="1.0" android:background="#6DA887" android:textColor="@color/buttonFont"/>
+            android:layout_width="100dp"
+            android:layout_height="35dp" android:id="@+id/signUpButton"
+            android:background="#6DA887" android:textColor="@color/buttonFont"
+            app:layout_constraintTop_toBottomOf="@+id/signupPasswordRepeatTextBox" android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@+id/platformView" app:layout_constraintEnd_toEndOf="@+id/platformView"
+            app:layout_constraintVertical_bias="0.5"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/resultLabel"
