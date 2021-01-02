@@ -86,6 +86,7 @@
     <Compile Include="Api\Sport.cs" />
     <Compile Include="Api\UserAccount.cs" />
     <Compile Include="Api\Validation.cs" />
+    <Compile Include="Backend\Helper.cs" />
     <Compile Include="Backend\Location\ApiKeys.cs" />
     <Compile Include="Backend\Location\LocationInformation.cs" />
     <Compile Include="Backend\Location\MathSupplement.cs" />

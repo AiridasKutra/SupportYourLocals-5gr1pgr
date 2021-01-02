@@ -20,6 +20,8 @@ using localhost.ActivityControllers;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
 using WebApi;
+using localhost.Backend;
+using WebApi.Classes;
 
 namespace MobileAndroidApp
 {
@@ -46,7 +48,7 @@ namespace MobileAndroidApp
         private List<EventDataImage> events = new List<EventDataImage>();
 
         public static bool IsLoggedIn { get; set; } = false;
-        public static bool CanViewAccounts { get; set; } = true;
+        public static bool CanViewAccounts { get; set; } = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -78,10 +80,10 @@ namespace MobileAndroidApp
             SetUpMap();
 
             fabMain.Click += (o, e) =>
-             {
-                 if (!isFabOpen) ShowFabMenu();
-                 else CloseFabMenu();
-             };
+            {
+                if (!isFabOpen) ShowFabMenu();
+                else CloseFabMenu();
+            };
 
             bgFabMenu.Click += (o, e) => CloseFabMenu();
 
@@ -92,6 +94,42 @@ namespace MobileAndroidApp
 
             var visibility = ViewStates.Visible;
             Console.WriteLine(visibility == ViewStates.Visible);
+
+            // Try auto login
+            string email = Xamarin.Essentials.Preferences.Get("saved_email", "");
+            string passwordHash = Xamarin.Essentials.Preferences.Get("saved_password", "");
+            if (email != "" || passwordHash != "")
+            {
+                if (email != "" && passwordHash != "")
+                {
+                    VFIDHolder.Value = RequestSender.Login(email, passwordHash);
+                    if (VFIDHolder.Value > 0)
+                    {
+                        int id = RequestSender.GetLoggedInAccountId();
+                        Account acc = new Account { Permissions = RequestSender.GetAccountPermissions(id) };
+                        if (acc.Can((uint)Permissions.VIEW_ACCOUNTS))
+                        {
+                            CanViewAccounts = true;
+                        }
+                        IsLoggedIn = true;
+
+                        Toast.MakeText(this, "Logged in", ToastLength.Long).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Auto sign in failed", ToastLength.Long).Show();
+                    }
+                }
+                else
+                {
+                    Toast.MakeText(this, "Auto sign in failed", ToastLength.Long).Show();
+                }
+            }
+            else
+            {
+                Xamarin.Essentials.Preferences.Set("saved_email", "");
+                Xamarin.Essentials.Preferences.Set("saved_password", "");
+            }
         }
 
         private void SetUpBottomSheet(int height)
@@ -137,6 +175,8 @@ namespace MobileAndroidApp
         private void LogOut()
         {
             RequestSender.Logout();
+            Xamarin.Essentials.Preferences.Set("saved_email", "");
+            Xamarin.Essentials.Preferences.Set("saved_password", "");
             Toast.MakeText(this, "Logged out", ToastLength.Short).Show();
             IsLoggedIn = false;
         }
