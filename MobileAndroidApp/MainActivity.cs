@@ -97,6 +97,8 @@ namespace MobileAndroidApp
 
             var visibility = ViewStates.Visible;
             Console.WriteLine(visibility == ViewStates.Visible);
+
+            AskForLocationAsync();
         }
 
         private void SetUpBottomSheet(int height)
@@ -332,23 +334,12 @@ namespace MobileAndroidApp
 
             public override void OnStateChanged(View bottomSheet, int newState)
             {
-                if (newState == BottomSheetBehavior.StateCollapsed)
-                    FabMainShow();
-                else if (newState == BottomSheetBehavior.StateExpanded)
-                    FabMainHide();
+                //on state change
             }
         }
-        public static void FabMainHide()
+        private async System.Threading.Tasks.Task AskForLocationAsync()
         {
-            if(fabMain.Visibility == ViewStates.Visible)
-            {
-                fabMain.Animate().Alpha(0f).WithEndAction(new Java.Lang.Runnable(() => { fabMain.SetVisibility(ViewStates.Gone); }));
-            }
-        }
-        public static void FabMainShow()
-        {
-             fabMain.Animate().Alpha(1f);
-             fabMain.SetVisibility(ViewStates.Visible);
+            await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
