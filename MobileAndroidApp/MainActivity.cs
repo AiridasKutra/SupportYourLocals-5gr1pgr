@@ -154,11 +154,13 @@ namespace MobileAndroidApp
             {
                 filterView.Animate().Alpha(0f);
                 filterView.Visibility = ViewStates.Gone;
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter);
             }
             else
             {
                 filterView.Visibility = ViewStates.Visible;
                 filterView.Animate().Alpha(1f);
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter_off);
             }
         }
 
