@@ -117,6 +117,13 @@ namespace localhost.ActivityControllers
             // Event description
             eventDescription.Text = @event.Description;
 
+            // Load comments
+            commentListView.HasFixedSize = true;
+            commentListLayout = new LinearLayoutManager(this);
+            commentListView.SetLayoutManager(commentListLayout);
+            commentListAdapter = new CommentListAdapter(eventID);
+            commentListView.SetAdapter(commentListAdapter);
+
             // Check if eligible to comment
             if (!RequestSender.ThisAccount().Can((uint)WebApi.Classes.Permissions.SEND_CHAT_MESSAGES))
             {
@@ -129,48 +136,21 @@ namespace localhost.ActivityControllers
                 eventSubmitComment.Enabled = true;
             }
 
-            // Print comment amount
-            Toast.MakeText(this, RequestSender.GetComments(eventID).Count.ToString(), ToastLength.Short).Show();
-
             // Send comment button
             eventSubmitComment.Click += (o, e) =>
             {
                 RequestSender.CreateComment(eventID, eventNewComment.Text);
+                
                 eventNewComment.Text = "";
+
+                commentListView.HasFixedSize = true;
+                commentListLayout = new LinearLayoutManager(this);
+                commentListView.SetLayoutManager(commentListLayout);
+                commentListAdapter = new CommentListAdapter(eventID);
+                commentListView.SetAdapter(commentListAdapter);
+
                 Toast.MakeText(this, "Comment submited!", ToastLength.Short).Show();
             };
-
-            // Load comments
-            List<WebApi.Classes.Message> comments = RequestSender.GetComments(eventID);
-            var tempMsg = new WebApi.Classes.Message()
-            {
-                Content = "baaaaaadd ddddddddd ddddddddd ddddddddd ddddddddddaaaa ababooe",
-                Sender = 1,
-                SendTime = DateTime.Now,
-                Id = 1
-            };
-            comments.Add(tempMsg);
-            tempMsg = new WebApi.Classes.Message()
-            {
-                Content = "KRINDŽAS 🤣🤣🤣🤣",
-                Sender = 2,
-                SendTime = DateTime.Now,
-                Id = 2
-            };
-            comments.Add(tempMsg);
-            tempMsg = new WebApi.Classes.Message()
-            {
-                Content = "baaaaaadd",
-                Sender = 3,
-                SendTime = DateTime.Now,
-                Id = 3
-            };
-            comments.Add(tempMsg);
-            commentListView.HasFixedSize = true;
-            commentListLayout = new LinearLayoutManager(this);
-            commentListView.SetLayoutManager(commentListLayout);
-            commentListAdapter = new CommentListAdapter(comments);
-            commentListView.SetAdapter(commentListAdapter);
         }
     }
 }
