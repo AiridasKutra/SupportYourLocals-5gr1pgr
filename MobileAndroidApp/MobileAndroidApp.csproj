@@ -65,6 +65,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControllers\BitmapImagePopupActivity.cs" />
     <Compile Include="ActivityControllers\DeleteAccountActivity.cs" />
     <Compile Include="ActivityControllers\ChangePasswordActivity.cs" />
     <Compile Include="ActivityControllers\EventEditorActivity.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
     <Compile Include="Api\Account.cs" />
     <Compile Include="Api\AddressInfo.cs" />
+    <Compile Include="Api\ApiKeys.cs" />
     <Compile Include="Api\Event.cs" />
     <Compile Include="Api\Message.cs" />
     <Compile Include="Api\Report.cs" />
@@ -309,6 +311,9 @@
     <AndroidResource Include="Resources\drawable\back_warning.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\chevron_right.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\layout\event_editor.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -330,6 +335,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\comment_theme.xml">
       <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\image_popup.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

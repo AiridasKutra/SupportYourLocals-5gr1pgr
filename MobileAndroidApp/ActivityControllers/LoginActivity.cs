@@ -51,7 +51,7 @@ namespace localhost.ActivityControllers
                     MainActivity.CanViewAccounts = true;
                 }
                 MainActivity.IsLoggedIn = true;
-
+                
                 // Save credentials
                 if (stayLoggedIn)
                 {
@@ -63,7 +63,7 @@ namespace localhost.ActivityControllers
                     Xamarin.Essentials.Preferences.Set("saved_email", "");
                     Xamarin.Essentials.Preferences.Set("saved_password", "");
                 }
-
+                MainActivity.CanViewAccounts = RequestSender.ThisAccount().Can((uint)Permissions.VIEW_ACCOUNTS);
                 Toast.MakeText(this, "Logged in", ToastLength.Short).Show();
                 Finish();
                 return;
