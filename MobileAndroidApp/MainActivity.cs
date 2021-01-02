@@ -327,23 +327,8 @@ namespace MobileAndroidApp
 
             public override void OnStateChanged(View bottomSheet, int newState)
             {
-                if (newState == BottomSheetBehavior.StateCollapsed)
-                    FabMainShow();
-                else if (newState == BottomSheetBehavior.StateExpanded)
-                    FabMainHide();
+                //on state change
             }
-        }
-        public static void FabMainHide()
-        {
-            if(fabMain.Visibility == ViewStates.Visible)
-            {
-                fabMain.Animate().Alpha(0f).WithEndAction(new Java.Lang.Runnable(() => { fabMain.SetVisibility(ViewStates.Gone); }));
-            }
-        }
-        public static void FabMainShow()
-        {
-             fabMain.Animate().Alpha(1f);
-             fabMain.SetVisibility(ViewStates.Visible);
         }
     }
 }
