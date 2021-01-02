@@ -15,7 +15,6 @@ using WebApi.Classes;
 
 namespace localhost.ActivityControllers.Recycler_adapters
 {
-
     class RecyclerViewHolder : RecyclerView.ViewHolder
     {
         public TextView EventName { get; set; }
@@ -58,10 +57,6 @@ namespace localhost.ActivityControllers.Recycler_adapters
         {
             LayoutInflater inflater = LayoutInflater.From(parent.Context);
             View itemView = inflater.Inflate(Resource.Layout.event_card, parent, false);
-            /*itemView.Click += (o, e) =>
-            {
-                Toast.MakeText(parent.Context, "Clicked", ToastLength.Short).Show();
-            };*/
             return new RecyclerViewHolder(itemView);
 
         }

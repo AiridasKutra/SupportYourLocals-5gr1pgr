@@ -19,6 +19,8 @@ using localhost.Backend.Location;
 using System.Threading.Tasks;
 using localhost.Backend;
 using System.Threading;
+using Android.Support.V7.Widget;
+using localhost.ActivityControllers.Recycler_adapters;
 
 namespace localhost.ActivityControllers
 {
@@ -31,6 +33,10 @@ namespace localhost.ActivityControllers
         LinearLayout eventImages;
         EditText eventNewComment;
         ImageButton eventSubmitComment;
+
+        private RecyclerView commentListView;
+        private RecyclerView.Adapter commentListAdapter;
+        private RecyclerView.LayoutManager commentListLayout;
 
         int eventID;
         double eventLatitude, eventLongitude;
@@ -50,12 +56,15 @@ namespace localhost.ActivityControllers
             eventNewComment = FindViewById<EditText>(Resource.Id.edtNewComment);
             eventSubmitComment = FindViewById<ImageButton>(Resource.Id.btnSubmitComment);
 
+            commentListView = FindViewById<RecyclerView>(Resource.Id.commentRecyclerView);
+
+            // Get event info
             eventID = Intent.GetIntExtra("eventID", 0);
             var @event = RequestSender.GetFullEvent(eventID);
 
+            // Setting the distance
             eventLatitude = @event.Latitude;
             eventLongitude = @event.Longitude;
-
             var userLocation = Geolocation.GetLastKnownLocationAsync();
             double distance = MathSupplement.Distance(eventLatitude, eventLongitude, userLocation.Result.Latitude, userLocation.Result.Longitude);
             if (userLocation != null)
@@ -64,10 +73,11 @@ namespace localhost.ActivityControllers
                 else eventDistance.Text = $"{distance / 1000.0:0.0}km";
             }
 
+            // Event name and address
             eventName.Text = @event.Name;
             eventAddress.Text = @event.Address.Address;
 
-            //double screenWidth = DeviceDisplay.MainDisplayInfo.Width;
+            // Images
             int imageWidth = 700;
             int imageHeight = 450;
             float aspect;
@@ -104,12 +114,63 @@ namespace localhost.ActivityControllers
                 imageLoader.Start();
             }
 
+            // Event description
             eventDescription.Text = @event.Description;
 
+            // Check if eligible to comment
+            if (!RequestSender.ThisAccount().Can((uint)WebApi.Classes.Permissions.SEND_CHAT_MESSAGES))
+            {
+                eventNewComment.Enabled = false;
+                eventSubmitComment.Enabled = false;
+            }
+            else
+            {
+                eventNewComment.Enabled = true;
+                eventSubmitComment.Enabled = true;
+            }
+
+            // Print comment amount
+            Toast.MakeText(this, RequestSender.GetComments(eventID).Count.ToString(), ToastLength.Short).Show();
+
+            // Send comment button
             eventSubmitComment.Click += (o, e) =>
             {
-                Toast.MakeText(this, "Not yet implemented", ToastLength.Short).Show();
+                RequestSender.CreateComment(eventID, eventNewComment.Text);
+                eventNewComment.Text = "";
+                Toast.MakeText(this, "Comment submited!", ToastLength.Short).Show();
             };
+
+            // Load comments
+            List<WebApi.Classes.Message> comments = RequestSender.GetComments(eventID);
+            var tempMsg = new WebApi.Classes.Message()
+            {
+                Content = "baaaaaadd ddddddddd ddddddddd ddddddddd ddddddddddaaaa ababooe",
+                Sender = 1,
+                SendTime = DateTime.Now,
+                Id = 1
+            };
+            comments.Add(tempMsg);
+            tempMsg = new WebApi.Classes.Message()
+            {
+                Content = "KRINDŽAS 🤣🤣🤣🤣",
+                Sender = 2,
+                SendTime = DateTime.Now,
+                Id = 2
+            };
+            comments.Add(tempMsg);
+            tempMsg = new WebApi.Classes.Message()
+            {
+                Content = "baaaaaadd",
+                Sender = 3,
+                SendTime = DateTime.Now,
+                Id = 3
+            };
+            comments.Add(tempMsg);
+            commentListView.HasFixedSize = true;
+            commentListLayout = new LinearLayoutManager(this);
+            commentListView.SetLayoutManager(commentListLayout);
+            commentListAdapter = new CommentListAdapter(comments);
+            commentListView.SetAdapter(commentListAdapter);
         }
     }
 }
