@@ -310,10 +310,19 @@ namespace MobileAndroidApp
             public override void OnSlide(View bottomSheet, float slideOffset)
             {
                 backgroundTint.Visibility = ViewStates.Visible;
-                if (slideOffset >= 0) backgroundTint.Alpha = slideOffset;
+                if (slideOffset >= 0)
+                {
+                    fabMain.Visibility = ViewStates.Visible;
+                    backgroundTint.Alpha = slideOffset;
+                    fabMain.Alpha = 1 - slideOffset;
+                    return;
+                }
 
-                if (slideOffset >= 0.85) FabMainHide();
-                else FabMainShow();
+                if (slideOffset == 1)
+                {
+                    fabMain.Visibility = ViewStates.Gone;
+                    return;
+                }
             }
 
             public override void OnStateChanged(View bottomSheet, int newState)
