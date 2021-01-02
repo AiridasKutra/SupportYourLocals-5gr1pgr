@@ -82,6 +82,7 @@
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
     <Compile Include="Api\Account.cs" />
     <Compile Include="Api\AddressInfo.cs" />
+    <Compile Include="Api\ApiKeys.cs" />
     <Compile Include="Api\Event.cs" />
     <Compile Include="Api\Message.cs" />
     <Compile Include="Api\Report.cs" />

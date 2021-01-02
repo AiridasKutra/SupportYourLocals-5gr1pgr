@@ -36,7 +36,7 @@ namespace localhost.ActivityControllers
             changePasswordButton = FindViewById<View>(Resource.Id.changePasswordButton);
             changePasswordButton.Click += ChangePassword; 
 
-            Window.SetLayout((int)(width * 0.8), (int)(height*0.5));
+            Window.SetLayout((int)(width * 0.8), (int)(height*0.45));
         }
         public void ChangePassword(object o, EventArgs e)
         {
