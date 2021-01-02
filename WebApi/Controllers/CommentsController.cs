@@ -52,6 +52,7 @@ namespace WebApiDatabase.Controllers
             if (acc != null)
             {
                 if (message.Content.Length == 0) return;
+                if (message.Content.Length > 500) return;
 
                 message.SendTime = DateTime.Now;
                 message.Sender = acc.Id;
