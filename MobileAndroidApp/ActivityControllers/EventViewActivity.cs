@@ -28,9 +28,10 @@ namespace localhost.ActivityControllers
         HorizontalScrollView horizontalScroll;
         LinearLayout eventImages;
         EditText eventNewComment;
-        Button eventSubmitComment;
+        ImageButton eventSubmitComment;
 
         int eventID;
+        double eventLatitude, eventLongitude;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -45,31 +46,27 @@ namespace localhost.ActivityControllers
             eventDescription = FindViewById<TextView>(Resource.Id.txtDescription);
             horizontalScroll = FindViewById<HorizontalScrollView>(Resource.Id.scrIEventImages);
             eventNewComment = FindViewById<EditText>(Resource.Id.edtNewComment);
-            eventSubmitComment = FindViewById<Button>(Resource.Id.btnSubmitComment);
-
-
+            eventSubmitComment = FindViewById<ImageButton>(Resource.Id.btnSubmitComment);
 
             eventID = Intent.GetIntExtra("eventID", 0);
             var @event = RequestSender.GetFullEvent(eventID);
-            var location = GetLocationAsync();
+
+            eventLatitude = @event.Latitude;
+            eventLongitude = @event.Longitude;
+
+            var userLocation = Geolocation.GetLastKnownLocationAsync();
+            double distance = MathSupplement.Distance(eventLatitude, eventLongitude, userLocation.Result.Latitude, userLocation.Result.Longitude);
+            if (userLocation != null)
+            {
+                if (distance < 1000.0) eventDistance.Text = $"{distance:0}m";
+                else eventDistance.Text = $"{distance / 1000.0:0.0}km";
+            }
 
             eventName.Text = @event.Name;
             eventAddress.Text = @event.Address.Address;
 
-            double distance = MathSupplement.Distance(@event.Latitude, @event.Longitude, location.Result.Latitude, location.Result.Longitude);
-            if (distance < 1000.0)
-            {
-                eventDistance.Text = $"{distance:0}m";
-            }
-            else
-            {
-                eventDistance.Text = $"{distance / 1000.0:0.0}km";
-            }
-
-
             ImageView imgView;
             Bitmap img, scaledImg;
-            //double screenWidth = DeviceDisplay.MainDisplayInfo.Width;
             int imageHeight = 500;
             float aspect;
             foreach (var item in @event.Images)
@@ -81,7 +78,7 @@ namespace localhost.ActivityControllers
                     {
                         img = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
                         aspect = (float)img.Width / (float)img.Height;
-                        scaledImg = Bitmap.CreateScaledBitmap(img, (int)(imageHeight*aspect), imageHeight, true);
+                        scaledImg = Bitmap.CreateScaledBitmap(img, (int)(imageHeight * aspect), imageHeight, true);
 
                         imgView = new ImageView(this);
                         imgView.SetImageBitmap(scaledImg);
@@ -94,11 +91,11 @@ namespace localhost.ActivityControllers
             }
 
             eventDescription.Text = @event.Description;
-        }
 
-        private async System.Threading.Tasks.Task<Location> GetLocationAsync()
-        {
-            return await Geolocation.GetLastKnownLocationAsync();
+            eventSubmitComment.Click += (o, e) =>
+            {
+                Toast.MakeText(this, "Not yet implemented", ToastLength.Short).Show();
+            };
         }
     }
 }

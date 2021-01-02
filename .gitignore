@@ -353,3 +353,4 @@ MigrationBackup/
 /MobileAndroidApp/Backend/Location/ApiKeys.cs
 /MobileAndroidApp/Resources/values/apiKey.xml
 /WebApi/Chatrooms
+/MobileAndroidApp/Backend/ApiKeys.cs

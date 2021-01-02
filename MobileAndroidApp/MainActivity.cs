@@ -92,6 +92,8 @@ namespace MobileAndroidApp
 
             var visibility = ViewStates.Visible;
             Console.WriteLine(visibility == ViewStates.Visible);
+
+            AskForLocationAsync();
         }
 
         private void SetUpBottomSheet(int height)
@@ -335,6 +337,10 @@ namespace MobileAndroidApp
         {
              fabMain.Animate().Alpha(1f);
              fabMain.SetVisibility(ViewStates.Visible);
+        }
+        private async System.Threading.Tasks.Task AskForLocationAsync()
+        {
+            await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
         }
     }
 }
