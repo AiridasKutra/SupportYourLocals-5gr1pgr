@@ -15,11 +15,10 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="116dp"/>
     <View
             android:layout_width="300dp"
-            android:layout_height="300dp" android:id="@+id/platformView"
+            android:layout_height="270dp" android:id="@+id/platformView"
             app:layout_constraintTop_toBottomOf="@+id/header" android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.114"
             android:outlineProvider="bounds" android:elevation="4dp"/>
     <EditText
             android:layout_width="wrap_content"
@@ -69,10 +68,4 @@
             app:layout_constraintTop_toBottomOf="@+id/signupPasswordRepeatTextBox" android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="@+id/platformView" app:layout_constraintEnd_toEndOf="@+id/platformView"
             app:layout_constraintVertical_bias="0.5"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/resultLabel"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintBottom_toTopOf="@+id/platformView" app:layout_constraintVertical_bias="0.536"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

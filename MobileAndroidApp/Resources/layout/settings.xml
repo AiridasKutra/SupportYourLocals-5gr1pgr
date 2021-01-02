@@ -80,4 +80,25 @@
             android:layout_marginTop="20dp" android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="@+id/deleteAccountPlatform"
             app:layout_constraintBottom_toBottomOf="@+id/deleteAccountPlatform" android:layout_marginBottom="20dp"/>
+<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/arrow1"
+            android:background="@drawable/chevron_right"
+            app:layout_constraintTop_toTopOf="@+id/changeLocationLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/changeLocationLabel"
+            app:layout_constraintEnd_toEndOf="@+id/changeLocationPlatform" android:layout_marginEnd="25dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/arrow2"
+            android:background="@drawable/chevron_right"
+            app:layout_constraintTop_toTopOf="@id/changePasswordLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/changePasswordLabel"
+            app:layout_constraintEnd_toEndOf="@+id/changePasswordPlatform" android:layout_marginEnd="25dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/arrow3"
+            android:background="@drawable/chevron_right"
+            app:layout_constraintTop_toTopOf="@id/deleteAccountLabel"
+            app:layout_constraintBottom_toBottomOf="@id/deleteAccountLabel"
+            app:layout_constraintEnd_toEndOf="@+id/deleteAccountPlatform" android:layout_marginEnd="25dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,8 @@ using WebApi;
 using Xamarin.Essentials;
 using localhost.Backend.Location;
 using System.Threading.Tasks;
+using localhost.Backend;
+using System.Threading;
 
 namespace localhost.ActivityControllers
 {
@@ -65,29 +67,41 @@ namespace localhost.ActivityControllers
             eventName.Text = @event.Name;
             eventAddress.Text = @event.Address.Address;
 
-            ImageView imgView;
-            Bitmap img, scaledImg;
-            int imageHeight = 500;
+            //double screenWidth = DeviceDisplay.MainDisplayInfo.Width;
+            int imageWidth = 700;
+            int imageHeight = 450;
             float aspect;
             foreach (var item in @event.Images)
             {
-                using (var webClient = new WebClient())
-                {
-                    var imageBytes = webClient.DownloadData(item);
-                    if (imageBytes != null && imageBytes.Length > 0)
-                    {
-                        img = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
-                        aspect = (float)img.Width / (float)img.Height;
-                        scaledImg = Bitmap.CreateScaledBitmap(img, (int)(imageHeight * aspect), imageHeight, true);
+                Bitmap img;
+                Bitmap scaledImg = Bitmap.CreateBitmap(imageWidth, imageHeight, Bitmap.Config.Argb8888);
 
-                        imgView = new ImageView(this);
-                        imgView.SetImageBitmap(scaledImg);
-                        LinearLayout.LayoutParams imgViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent, 0.0f);
-                        imgViewParams.SetMargins(32, 0, 32, 0);
-                        imgView.LayoutParameters = imgViewParams;
-                        eventImages.AddView(imgView);
+                ImageView imgView = new ImageView(this);
+                imgView.SetImageBitmap(scaledImg);
+                LinearLayout.LayoutParams imgViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MatchParent, LinearLayout.LayoutParams.WrapContent, 0.0f);
+                imgViewParams.SetMargins(16, 16, 16, 16);
+                imgView.LayoutParameters = imgViewParams;
+                eventImages.AddView(imgView);
+
+                Thread imageLoader = new Thread(new ThreadStart(() =>
+                {
+                    try
+                    {
+                        using var webClient = new WebClient();
+
+                        var imageBytes = webClient.DownloadData(item);
+                        if (imageBytes != null && imageBytes.Length > 0)
+                        {
+                            img = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                            scaledImg = Helper.ScaleBitmap(img, imageWidth, imageHeight);
+                            imgView.Alpha = 0.0f;
+                            imgView.SetImageBitmap(scaledImg);
+                            imgView.Animate().Alpha(1.0f);
+                        }
                     }
-                }
+                    catch { }
+                }));
+                imageLoader.Start();
             }
 
             eventDescription.Text = @event.Description;
