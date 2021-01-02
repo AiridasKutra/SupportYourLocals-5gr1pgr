@@ -62,25 +62,53 @@ namespace WebApiDatabase.Middleware
         /// <param name="vfid"></param>
         private static void InsertSession(Session newSession)
         {
-            int closestIndex = FindSession(newSession.vfid, false);
-            Session closestSession;
+            int index = 0;
+            foreach (var session in _sessions)
+            {
+                if (session.vfid > newSession.vfid)
+                {
+                    break;
+                }
+                index++;
+            }
+            _sessions.Insert(index, newSession);
+            //int closestIndex = FindSession(newSession.vfid, false);
+            //Session closestSession;
 
-            if (closestIndex > 0)
-            {
-                closestSession = _sessions[closestIndex];
-                if (closestSession.vfid < newSession.vfid)
-                {
-                    _sessions.Insert(closestIndex + 1, newSession);
-                }
-                else
-                {
-                    _sessions.Insert(closestIndex, newSession);
-                }
-            }
-            else
-            {
-                _sessions.Add(newSession);
-            }
+            //if (closestIndex > 0)
+            //{
+            //    closestSession = _sessions[closestIndex];
+            //    if (closestSession.vfid < newSession.vfid)
+            //    {
+            //        do
+            //        {
+            //            closestIndex++;
+            //            if (closestIndex >= _sessions.Count)
+            //            {
+            //                break;
+            //            }
+            //            closestSession = _sessions[closestIndex];
+            //        } while (closestSession.vfid < newSession.vfid);
+            //        _sessions.Insert(closestIndex, newSession);
+            //    }
+            //    else
+            //    {
+            //        do
+            //        {
+            //            closestIndex--;
+            //            if (closestIndex < 0)
+            //            {
+            //                break;
+            //            }
+            //            closestSession = _sessions[closestIndex];
+            //        } while (closestSession.vfid > newSession.vfid);
+            //        _sessions.Insert(closestIndex + 1, newSession);
+            //    }
+            //}
+            //else
+            //{
+            //    _sessions.Add(newSession);
+            //}
         }
 
         public static ulong GenerateUser(int accountId)
@@ -128,6 +156,12 @@ namespace WebApiDatabase.Middleware
                 };
             }
         }
+
+        public static Session GetSessionSlow(ulong vfid)
+        {
+            if (vfid == 0) return null;
+            return _sessions.Find(item => item.vfid == vfid);
+        }
     }
 
     public class UserAuthentication : ICustomMiddleware
@@ -153,11 +187,20 @@ namespace WebApiDatabase.Middleware
                     }
                 }
 
+                Console.Write($"[{vfid}] ");
+
                 // Check against logged in users
                 LoggedUsers.Session session = LoggedUsers.GetSession(vfid);
                 if (session == null)
                 {
+                    Console.Write($"Session not found.");
                     context.Request.Headers.Add("AccountId", "-1");
+
+                    session = LoggedUsers.GetSessionSlow(vfid);
+                    if (session != null && vfid != 0)
+                    {
+                        Console.Write(" Found on repeat search.");
+                    }
                 }
                 else
                 {
@@ -165,13 +208,16 @@ namespace WebApiDatabase.Middleware
                     Account acc = Program.Database.QSelectAccounts(item => item.Id == session.accid).FirstOrDefault();
                     if (acc != null)
                     {
+                        Console.Write($"Session linked to account '{acc.Username}'");
                         context.Request.Headers.Add("AccountId", acc.Id.ToString());
                     }
                     else
                     {
+                        Console.Write($"Session linked to non-existent account");
                         context.Request.Headers.Add("AccountId", "-1");
                     }
                 }
+                Console.WriteLine();
 
                 await next.Invoke();
             };
