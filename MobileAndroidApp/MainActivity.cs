@@ -39,9 +39,13 @@ namespace MobileAndroidApp
         private Button searchButton;
         private CoordinatorLayout mainPanel;
 
+
         private RecyclerView eventList;
         private RecyclerView.Adapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
+
+        private Button filtersButton;
+        private LinearLayout filterView;
 
         private static Bitmap eventPin;
         private static List<Marker> eventMarkers = new List<Marker>();
@@ -64,6 +68,11 @@ namespace MobileAndroidApp
             fabSettings = FindViewById<FloatingActionButton>(Resource.Id.fab_settings);
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
+
+            filtersButton = FindViewById<Button>(Resource.Id.filtersButton);
+            filtersButton.Click += ShowFilters;
+
+            filterView = FindViewById<LinearLayout>(Resource.Id.filtersView);
 
             bottomSheet = FindViewById<RelativeLayout>(Resource.Id.bottom_sheet);
 
@@ -136,6 +145,25 @@ namespace MobileAndroidApp
 
             AskForLocationAsync();
         }
+
+
+ 
+        private void ShowFilters(object o, EventArgs e)
+        {
+            if(filterView.Visibility == ViewStates.Visible)
+            {
+                filterView.Animate().Alpha(0f);
+                filterView.Visibility = ViewStates.Gone;
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter);
+            }
+            else
+            {
+                filterView.Visibility = ViewStates.Visible;
+                filterView.Animate().Alpha(1f);
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter_off);
+            }
+        }
+
 
         private void SetUpBottomSheet(int height)
 
