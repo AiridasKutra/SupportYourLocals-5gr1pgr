@@ -5,6 +5,7 @@ using Android.Animation;
 using Android.App;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using GoogleMaps.LocationServices;
 using Android.Graphics;
 using Android.Media;
 using Android.OS;
@@ -104,10 +105,7 @@ namespace MobileAndroidApp
             // Fill sports list
             List<string> sportList = new List<string>();
             foreach (var sport in RequestSender.GetSports())
-            {
                 sportList.Add(sport.Name);
-            }
-            RequestSender.GetSports();
 
             // Sport spinner
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
@@ -121,36 +119,6 @@ namespace MobileAndroidApp
                 dialog.DatePicker.MinDate = today.Millisecond;
                 dialog.Show();
             };
-
-            // Create events
-            /**events.Add(
-                new EventDataImage
-                {
-                    thumbnail = BitmapFactory.DecodeResource(Resources, Resource.Drawable.event1),
-                    name = "vaxinacija",
-                    description = "Badabing badaboom",
-                    dateTime = (DateTime.Now).AddDays(1).AddHours(8)
-                }
-            ); ;
-            events.Add(
-                new EventDataImage
-                {
-                    thumbnail = BitmapFactory.DecodeResource(Resources, Resource.Drawable.event2),
-                    name = "roskosmos",
-                    description = "WHEEEEEEEEHWOOOWOH",
-                    dateTime = (DateTime.Now).AddDays(7).AddHours(4)
-                }
-            );
-            events.Add(
-                new EventDataImage
-                {
-                    thumbnail = BitmapFactory.DecodeResource(Resources, Resource.Drawable.event3),
-                    name = "Lyrical genius",
-                    description = "Yuh, ooh, brr, brr Gucci gang, ooh (That's it right there, Gnealz) Yuh, Lil Pump, yuh Gucci gang, ooh (Ooh, Bi - Bighead on the beat) Yuh, br",
-                    dateTime = (DateTime.Now).AddDays(11).AddHours(1)
-                }
-            );*/
-
 
             // Load events
             List<WebApi.Classes.Event> events = RequestSender.GetBriefEvents();

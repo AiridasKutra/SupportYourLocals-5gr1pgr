@@ -71,10 +71,6 @@ namespace localhost.ActivityControllers.Recycler_adapters
         {
             LayoutInflater inflater = LayoutInflater.From(parent.Context);
             View itemView = inflater.Inflate(Resource.Layout.pullout_event_card, parent, false);
-            itemView.Click += (o, e) =>
-            {
-                Toast.MakeText(parent.Context, "Clicked", ToastLength.Short).Show();
-            };
             return new PulloutEventAdapterViewHolder(itemView);
         }
     }
