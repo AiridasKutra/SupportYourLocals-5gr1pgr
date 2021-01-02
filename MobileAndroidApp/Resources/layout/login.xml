@@ -62,7 +62,7 @@
             android:text="Log in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/loginButton"
-            android:textColor="#747474" android:backgroundTint="#6DA887"
+            android:textColor="@color/buttonFont" android:backgroundTint="#6DA887"
             android:layout_marginTop="28dp" map:layout_constraintTop_toBottomOf="@+id/passwordTextBox"
             android:layout_marginEnd="112dp" map:layout_constraintEnd_toEndOf="@+id/platformView"
             map:layout_constraintStart_toStartOf="@+id/platformView" android:layout_marginStart="179dp"
@@ -86,7 +86,7 @@
             android:text="Sign up"
             android:layout_width="88dp"
             android:layout_height="42dp" android:id="@+id/signUpButton"
-            android:backgroundTint="#6DA887" android:textColor="#747474"
+            android:backgroundTint="#6DA887" android:textColor="@color/buttonFont"
             map:layout_constraintBottom_toBottomOf="parent" map:layout_constraintTop_toBottomOf="@+id/signUpHeader"
             map:layout_constraintVertical_bias="0.121" map:layout_constraintEnd_toEndOf="parent"
             map:layout_constraintStart_toStartOf="parent" map:layout_constraintHorizontal_bias="0.498"/>

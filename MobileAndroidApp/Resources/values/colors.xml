@@ -3,4 +3,9 @@
     <color name="colorPrimary">#747474</color>
     <color name="colorPrimaryDark">#6DA887</color>
     <color name="colorAccent">#6DA887</color>
+	<color name="buttonFont">#FFFFFF</color>
+	<color name="headerFont">#747474</color>
+	<color name="inactiveButton">#747474</color>
+	<color name="bannedRed">#F85A5A</color>
+	<color name="silencedGray"></color>
 </resources>
