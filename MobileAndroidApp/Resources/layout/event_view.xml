@@ -104,8 +104,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/edtNewComment" android:background="#00000000"
             android:src="@android:drawable/ic_menu_send" android:tint="#6DA887"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="409dp"
-            android:layout_height="245dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/btnSubmitComment" android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/commentRecyclerView"/>

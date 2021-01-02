@@ -50,8 +50,6 @@ namespace MobileAndroidApp
         private static Bitmap eventPin;
         private static List<Marker> eventMarkers = new List<Marker>();
 
-        private List<EventDataImage> events = new List<EventDataImage>();
-
         public static bool IsLoggedIn { get; set; } = false;
         public static bool CanViewAccounts { get; set; } = false;
 
