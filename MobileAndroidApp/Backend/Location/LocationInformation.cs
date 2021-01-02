@@ -1,5 +1,4 @@
 ﻿using GoogleMaps.LocationServices;
-using localhostUI.Classes.LocationClasses;
 using System;
 using System.Diagnostics;
 using System.Linq;

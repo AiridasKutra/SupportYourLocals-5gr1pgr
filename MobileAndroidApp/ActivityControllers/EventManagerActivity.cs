@@ -10,6 +10,9 @@ using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using WebApi;
+using WebApi.Classes;
 
 namespace localhost.ActivityControllers
 {
@@ -18,13 +21,12 @@ namespace localhost.ActivityControllers
     {
         private Button addEventButton;
 
-        private RecyclerView eventList;
+        private RecyclerView eventListView;
+        private RecyclerView draftListView;
         private RecyclerView.Adapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
 
-        private RecyclerView draftList;
-
-        private List<EventData> list = new List<EventData>();
+        private List<Event> eventList = new List<Event>();
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -34,8 +36,8 @@ namespace localhost.ActivityControllers
 
 
             addEventButton = FindViewById<Button>(Resource.Id.addEventButton);
-            eventList = FindViewById<RecyclerView>(Resource.Id.eventEditView);
-            draftList = FindViewById<RecyclerView>(Resource.Id.draftView);
+            eventListView = FindViewById<RecyclerView>(Resource.Id.eventEditView);
+            draftListView = FindViewById<RecyclerView>(Resource.Id.draftView);
             
             //Navigation bar            
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
@@ -43,38 +45,23 @@ namespace localhost.ActivityControllers
             navigation.LayoutParameters.Width = ViewGroup.LayoutParams.FillParent;
             navigation.SetOnNavigationItemSelectedListener(this);
 
+            List<Event> fullEventList = RequestSender.GetBriefEvents();
+            var accounts = RequestSender.GetAccounts();
+            if (RequestSender.ThisAccount().Can((uint)Permissions.EDIT_OTHER_EVENTS))
+            {
+                eventList = fullEventList;
+            }
+            else
+            {
+                eventList = fullEventList.Where(item => item.Author == RequestSender.GetLoggedInAccountId()).ToList();
+            }
 
-
-            list.Add(
-                new EventData
-                {
-                    EventName = "Futbolas 5x5",
-                    Activity = "Active",
-                    DateTime = DateTime.Now
-                }
-                );
-            list.Add(
-                new EventData
-                {
-                    EventName = "Kašis kieme",
-                    Activity = "Inactive",
-                    DateTime = (DateTime.Now).AddDays(10).AddHours(5)
-                }
-                ); 
-            list.Add(
-                new EventData
-                {
-                    EventName = "Greitavaržis",
-                    Activity = "Expired",
-                    DateTime = (DateTime.Now).AddDays(5).AddHours(1.4)
-                }
-                );
-
-            eventList.HasFixedSize = true;
+            eventListView.HasFixedSize = true;
+            eventListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
             eventListLayout = new LinearLayoutManager(this);
-            eventList.SetLayoutManager(eventListLayout);
-            eventListAdapter = new EventListAdapter(list);
-            eventList.SetAdapter(eventListAdapter);
+            eventListView.SetLayoutManager(eventListLayout);
+            eventListAdapter = new EventListAdapter(eventList);
+            eventListView.SetAdapter(eventListAdapter);
 
         }
 
@@ -89,16 +76,12 @@ namespace localhost.ActivityControllers
             switch (item.ItemId)
             {
                 case Resource.Id.navigation_home:
-                    addEventButton.Visibility = ViewStates.Visible;
-                    eventList.Visibility = ViewStates.Visible;
-                    addEventButton.Enabled = true;
-                    draftList.Visibility = ViewStates.Gone;
+                    eventListView.Visibility = ViewStates.Visible;
+                    draftListView.Visibility = ViewStates.Gone;
                     return true;
                 case Resource.Id.navigation_dashboard:
-                    addEventButton.Visibility = ViewStates.Invisible;
-                    addEventButton.Enabled = false;
-                    eventList.Visibility = ViewStates.Gone;
-                    draftList.Visibility = ViewStates.Visible;
+                    eventListView.Visibility = ViewStates.Gone;
+                    draftListView.Visibility = ViewStates.Visible;
                     return true;
             }
             return false;

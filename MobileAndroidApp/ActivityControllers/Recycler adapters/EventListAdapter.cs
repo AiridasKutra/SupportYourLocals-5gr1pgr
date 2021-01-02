@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using MobileAndroidApp;
 using localhost.ActivityControllers.Recycler_helpers;
+using WebApi.Classes;
 
 namespace localhost.ActivityControllers.Recycler_adapters
 {
@@ -21,7 +22,7 @@ namespace localhost.ActivityControllers.Recycler_adapters
         public TextView Activity { get; set; }
         public TextView Date { get; set; }
         public TextView Time { get; set; }
-        public RecyclerViewHolder(View itemView):base(itemView)
+        public RecyclerViewHolder(View itemView) : base(itemView)
         {
             EventName = itemView.FindViewById<TextView>(Resource.Id.eventNameLabel);
             Activity = itemView.FindViewById<TextView>(Resource.Id.activeLabel);
@@ -31,22 +32,22 @@ namespace localhost.ActivityControllers.Recycler_adapters
     }
     class EventListAdapter : RecyclerView.Adapter
     {
-        private List<EventData> dataList = new List<EventData>();
+        private List<Event> eventList = new List<Event>();
         
-        public EventListAdapter(List<EventData> list)
+        public EventListAdapter(List<Event> list)
         {
-            this.dataList = list;
+            this.eventList = list;
         }
 
-        public override int ItemCount => dataList.Count;
+        public override int ItemCount => eventList.Count;
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             RecyclerViewHolder viewHolder = holder as RecyclerViewHolder;
-            viewHolder.EventName.Text = dataList[position].EventName;
-            viewHolder.Activity.Text = dataList[position].Activity;
-            viewHolder.Date.Text = dataList[position].DateTime.Date.ToString("D");
-            viewHolder.Time.Text = dataList[position].DateTime.ToString("t");
+            viewHolder.EventName.Text = eventList[position].Name;
+            viewHolder.Activity.Text = "Active";
+            viewHolder.Date.Text = eventList[position].StartDate.Date.ToString("yyyy-MM-dd");
+            viewHolder.Time.Text = eventList[position].StartDate.ToString("t");
             viewHolder.ItemView.SetY(10);
             viewHolder.ItemView.Click += (o,e) => {
                 Toast.MakeText(viewHolder.ItemView.Context, "Clicked " + position , ToastLength.Short).Show();
