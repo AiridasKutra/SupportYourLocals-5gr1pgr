@@ -12,6 +12,7 @@ using System.Text;
 using MobileAndroidApp;
 using localhost.ActivityControllers.Recycler_helpers;
 using WebApi.Classes;
+using WebApi;
 
 namespace localhost.ActivityControllers.Recycler_adapters
 {
@@ -32,7 +33,8 @@ namespace localhost.ActivityControllers.Recycler_adapters
     }
     class EventListAdapter : RecyclerView.Adapter
     {
-        private List<Event> eventList = new List<Event>();
+        public List<Event> eventList = new List<Event>();
+        public EventManagerActivity managerReference = null;
         
         public EventListAdapter(List<Event> list)
         {
@@ -48,9 +50,15 @@ namespace localhost.ActivityControllers.Recycler_adapters
             viewHolder.Activity.Text = "Active";
             viewHolder.Date.Text = eventList[position].StartDate.Date.ToString("yyyy-MM-dd");
             viewHolder.Time.Text = eventList[position].StartDate.ToString("t");
-            viewHolder.ItemView.SetY(10);
-            viewHolder.ItemView.Click += (o,e) => {
-                Toast.MakeText(viewHolder.ItemView.Context, "Clicked " + position , ToastLength.Short).Show();
+            //viewHolder.ItemView.SetY(10);
+            viewHolder.ItemView.Click += (o,e) =>
+            {
+                EventEditorActivity.SetParams(RequestSender.GetFullEvent(eventList[position].Id), false);
+                viewHolder.ItemView.Context.StartActivity(typeof(EventEditorActivity));
+
+                //Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
+                //intent.PutExtra("eventID", eventList[position].Id);
+                //viewHolder.ItemView.Context.StartActivity(intent);
             };
         }
 
@@ -58,12 +66,7 @@ namespace localhost.ActivityControllers.Recycler_adapters
         {
             LayoutInflater inflater = LayoutInflater.From(parent.Context);
             View itemView = inflater.Inflate(Resource.Layout.event_card, parent, false);
-            /*itemView.Click += (o, e) =>
-            {
-                Toast.MakeText(parent.Context, "Clicked", ToastLength.Short).Show();
-            };*/
             return new RecyclerViewHolder(itemView);
-
         }
     }
 }

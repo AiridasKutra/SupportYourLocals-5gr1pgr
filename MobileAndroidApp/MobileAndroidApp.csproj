@@ -70,6 +70,7 @@
     <Compile Include="ActivityControllers\EventEditorActivity.cs" />
     <Compile Include="ActivityControllers\EventViewActivity.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\AccountListAdapter.cs" />
+    <Compile Include="ActivityControllers\Recycler adapters\DraftListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\PulloutEventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventData.cs" />
@@ -105,6 +106,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\drawable\PlusButton.png" />
     <AndroidResource Include="Resources\font\roboto.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +114,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\content_main.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\menu\event_editor_image_menu.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />
@@ -319,6 +324,27 @@
     <AndroidResource Include="Resources\layout\event_editor.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\event_editor_image_actions.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\image_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\done_button_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\delete_button_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\upload_button_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\save_button_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\image_broken.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

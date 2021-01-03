@@ -23,12 +23,15 @@ namespace localhost.ActivityControllers
 
         private RecyclerView eventListView;
         private RecyclerView draftListView;
-        private RecyclerView.Adapter eventListAdapter;
+        private EventListAdapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
+        private DraftListAdapter draftListAdapter;
+        private RecyclerView.LayoutManager draftListLayout;
 
         private List<Event> eventList = new List<Event>();
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            EventEditorActivity.SetManagerReference(this);
 
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -38,6 +41,8 @@ namespace localhost.ActivityControllers
             addEventButton = FindViewById<Button>(Resource.Id.addEventButton);
             eventListView = FindViewById<RecyclerView>(Resource.Id.eventEditView);
             draftListView = FindViewById<RecyclerView>(Resource.Id.draftView);
+
+            addEventButton.Click += CreateNewEvent;
             
             //Navigation bar            
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
@@ -45,6 +50,26 @@ namespace localhost.ActivityControllers
             navigation.LayoutParameters.Width = ViewGroup.LayoutParams.FillParent;
             navigation.SetOnNavigationItemSelectedListener(this);
 
+            eventListView.HasFixedSize = true;
+            eventListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
+            eventListLayout = new LinearLayoutManager(this);
+            eventListView.SetLayoutManager(eventListLayout);
+            eventListAdapter = new EventListAdapter(eventList);
+            eventListView.SetAdapter(eventListAdapter);
+
+            //draftListView.HasFixedSize = true;
+            //draftListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
+            //draftListLayout = new LinearLayoutManager(this);
+            //draftListView.SetLayoutManager(eventListLayout);
+            //draftListAdapter = new DraftListAdapter();
+            //draftListView.SetAdapter(eventListAdapter);
+
+            LoadEvents();
+            LoadDrafts();
+        }
+
+        public void LoadEvents()
+        {
             List<Event> fullEventList = RequestSender.GetBriefEvents();
             var accounts = RequestSender.GetAccounts();
             if (RequestSender.ThisAccount().Can((uint)Permissions.EDIT_OTHER_EVENTS))
@@ -55,13 +80,12 @@ namespace localhost.ActivityControllers
             {
                 eventList = fullEventList.Where(item => item.Author == RequestSender.GetLoggedInAccountId()).ToList();
             }
+            eventListAdapter.eventList = eventList;
+            eventListAdapter.NotifyDataSetChanged();
+        }
 
-            eventListView.HasFixedSize = true;
-            eventListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
-            eventListLayout = new LinearLayoutManager(this);
-            eventListView.SetLayoutManager(eventListLayout);
-            eventListAdapter = new EventListAdapter(eventList);
-            eventListView.SetAdapter(eventListAdapter);
+        public void LoadDrafts()
+        {
 
         }
 
@@ -87,6 +111,10 @@ namespace localhost.ActivityControllers
             return false;
         }
 
-        
+        public void CreateNewEvent(object o, EventArgs e)
+        {
+            EventEditorActivity.SetParams(null, false);
+            StartActivity(typeof(EventEditorActivity));
+        }
     }
 }

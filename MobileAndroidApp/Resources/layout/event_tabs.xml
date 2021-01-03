@@ -7,16 +7,16 @@
                                                    android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_constraintTop_toBottomOf="@+id/addEventButton" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0" android:layout_marginTop="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView1"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="25dp" android:id="@+id/eventEditView"
-            android:translationY="-3dp"
+            android:id="@+id/eventEditView"
             android:visibility="visible"/>
 
     <Button
             android:text="Create event"
+            android:textSize="8pt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:id="@+id/addEventButton"
@@ -25,16 +25,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" 
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    <View 
+            android:layout_width="fill_parent" 
+            android:layout_height="1dp" 
+            android:background="#74747474" 
+            app:layout_constraintTop_toBottomOf="@+id/addEventButton"
+            android:layout_marginTop="5dp"
+            android:id="@+id/separatorView1"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_constraintTop_toBottomOf="@+id/addEventButton" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0" android:layout_marginTop="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView1"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="25dp" android:id="@+id/draftView"
-            android:translationY="-3dp"
+            android:id="@+id/draftView"
             android:visibility="gone"/>
 
     <android.support.design.widget.BottomNavigationView
