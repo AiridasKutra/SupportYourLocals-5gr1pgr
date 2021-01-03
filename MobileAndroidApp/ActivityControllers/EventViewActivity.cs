@@ -60,6 +60,12 @@ namespace localhost.ActivityControllers
 
             // Get event info
             eventID = Intent.GetIntExtra("eventID", 0);
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
             var @event = RequestSender.GetFullEvent(eventID);
 
             // Setting the distance
@@ -111,6 +117,13 @@ namespace localhost.ActivityControllers
                     catch { }
                 }));
                 imageLoader.Start();
+
+                imgView.Click += (o, e) =>
+                {
+                    Intent intent = new Intent(this, typeof(BitmapImagePopupActivity));
+                    intent.PutExtra("image_link", item);
+                    StartActivity(intent);
+                };
             }
 
             // Event description
@@ -139,7 +152,7 @@ namespace localhost.ActivityControllers
             eventSubmitComment.Click += (o, e) =>
             {
                 RequestSender.CreateComment(eventID, eventNewComment.Text);
-                
+
                 eventNewComment.Text = "";
 
                 commentListView.HasFixedSize = true;
