@@ -19,7 +19,6 @@ namespace Database.TableClasses
         [StringLength(150)]
         public string Name { get; set; }
 
-        [StringLength(150)]
         public AddressInfo Address { get; set; }
 
         public double Latitude { get; set; }
