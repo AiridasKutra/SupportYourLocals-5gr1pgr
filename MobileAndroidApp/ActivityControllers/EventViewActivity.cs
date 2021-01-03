@@ -70,7 +70,6 @@ namespace localhost.ActivityControllers
             //double screenWidth = DeviceDisplay.MainDisplayInfo.Width;
             int imageWidth = 700;
             int imageHeight = 450;
-            float aspect;
             foreach (var item in @event.Images)
             {
                 Bitmap img;
