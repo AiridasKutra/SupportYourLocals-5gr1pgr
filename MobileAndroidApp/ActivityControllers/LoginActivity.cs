@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Text;
 using Android.Widget;
 using localhost.Backend;
 using MobileAndroidApp;
@@ -40,6 +41,21 @@ namespace localhost.ActivityControllers
             string password = passwordEdit.Text;
             bool stayLoggedIn = stayLoggedInCheckBox.Checked;
 
+            if(email == "")
+            {
+                emailEdit.Error = Html.FromHtml("<font color='red'>An email is required</font>").ToString();
+            }
+            if(password == "")
+            {
+                passwordEdit.Error = Html.FromHtml("<font color='red'>A password is required</font>").ToString();
+            }
+
+            if(password == "" || email == "")
+            {
+                return;
+            }
+
+
             VFIDHolder.Value = RequestSender.Login(email, password, false);
 
             if (VFIDHolder.Value > 0)
@@ -76,7 +92,6 @@ namespace localhost.ActivityControllers
         public void SignUp(object o, EventArgs e)
         {
             StartActivity(typeof(SignUpActivity));
-            Finish();
         }
     }
 }
