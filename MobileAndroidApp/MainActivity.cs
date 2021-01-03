@@ -161,7 +161,6 @@ namespace MobileAndroidApp
             searchDates.Click += (sender, e) => {
                 DateTime today = DateTime.Today;
                 DatePickerDialog dialog = new DatePickerDialog(this, OnStartDateSet, today.Year, today.Month, today.Day);
-                dialog.DatePicker.MinDate = today.Millisecond;
                 dialog.Show();
             };
 
@@ -339,7 +338,6 @@ namespace MobileAndroidApp
             searchDates.Text = e.Date.ToShortDateString();
             DateTime startDate = e.Date;
             DatePickerDialog dialog = new DatePickerDialog(this, OnEndDateSet, startDate.Year, startDate.Month, startDate.Day + 1);
-            dialog.DatePicker.MinDate = startDate.Millisecond;
             dialog.Show();
         }
         private void OnEndDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
