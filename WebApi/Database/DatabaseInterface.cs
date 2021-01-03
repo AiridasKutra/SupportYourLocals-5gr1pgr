@@ -48,9 +48,17 @@ namespace Database
         public void QEditEvent(int id, Event @event)
         {
             var ev = _context.Events.FirstOrDefault(item => item.Id == id);
-            @event.Id = ev.Id;
-            @event.Author = ev.Author;
-            ev = @event;
+            ev.Name = @event.Name;
+            ev.StartDate = @event.StartDate;
+            ev.Address = @event.Address;
+            ev.Latitude = @event.Latitude;
+            ev.Longitude = @event.Longitude;
+            ev.Price = @event.Price;
+            ev.Description = @event.Description;
+            ev.Sports = @event.Sports;
+            ev.Links = @event.Links;
+            ev.Tags = @event.Tags;
+            ev.Images = @event.Images;
         }
 
         // Account CRUD
@@ -73,8 +81,10 @@ namespace Database
         public void QEditAccount(int id, Account account)
         {
             var ev = _context.Accounts.FirstOrDefault(item => item.Id == id);
-            account.Id = ev.Id;
-            ev = account;
+            ev.Email = account.Email;
+            ev.PasswordHash = account.PasswordHash;
+            ev.Permissions = account.Permissions;
+            ev.Username = account.Username;
         }
 
         // Report CRUD
@@ -144,7 +154,14 @@ namespace Database
             var room = _chatDataManager.GetMessages(roomId);
             if (room != null)
             {
-                message.Id = room.Last().Id + 1;
+                if (room.Count == 0)
+                {
+                    message.Id = 0;
+                }
+                else
+                {
+                    message.Id = room.Last().Id + 1;
+                }
                 room.Add(message);
             }
             _chatDataManager.Save(true);
