@@ -16,7 +16,6 @@ using WebApi;
 
 namespace localhost.ActivityControllers.Recycler_adapters
 {
-
     class RecyclerViewHolder : RecyclerView.ViewHolder
     {
         public TextView EventName { get; set; }

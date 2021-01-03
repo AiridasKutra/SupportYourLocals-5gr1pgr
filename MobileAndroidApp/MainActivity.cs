@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using Android.Animation;
 using Android.App;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using GoogleMaps.LocationServices;
 using Android.Graphics;
-using Android.Media;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
@@ -18,11 +14,11 @@ using Android.Widget;
 using localhost;
 using localhost.ActivityControllers;
 using localhost.ActivityControllers.Recycler_adapters;
-using localhost.ActivityControllers.Recycler_helpers;
 using WebApi;
 using Android.Content;
 using localhost.Backend;
 using WebApi.Classes;
+using localhost.ActivityControllers.PinClick;
 
 namespace MobileAndroidApp
 {
@@ -39,14 +35,16 @@ namespace MobileAndroidApp
         private Button searchButton;
         private CoordinatorLayout mainPanel;
 
+
         private RecyclerView eventList;
         private RecyclerView.Adapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
 
+        private Button filtersButton;
+        private LinearLayout filterView;
+
         private static Bitmap eventPin;
         private static List<Marker> eventMarkers = new List<Marker>();
-
-        private List<EventDataImage> events = new List<EventDataImage>();
 
         public static bool IsLoggedIn { get; set; } = false;
         public static bool CanViewAccounts { get; set; } = false;
@@ -66,6 +64,11 @@ namespace MobileAndroidApp
             fabSettings = FindViewById<FloatingActionButton>(Resource.Id.fab_settings);
             fabLogin = FindViewById<FloatingActionButton>(Resource.Id.fab_login);
             bgFabMenu = FindViewById<View>(Resource.Id.bg_fab_menu);
+
+            filtersButton = FindViewById<Button>(Resource.Id.filtersButton);
+            filtersButton.Click += ShowFilters;
+
+            filterView = FindViewById<LinearLayout>(Resource.Id.filtersView);
 
             bottomSheet = FindViewById<RelativeLayout>(Resource.Id.bottom_sheet);
 
@@ -97,8 +100,6 @@ namespace MobileAndroidApp
             fabAccount.Click += (o, e) => GoToActivity(typeof(AdminPanelActivity));
             fabLogin.Click += (o, e) => LogIn();
 
-            var visibility = ViewStates.Visible;
-            Console.WriteLine(visibility == ViewStates.Visible);
 
             // Try auto login
             string email = Xamarin.Essentials.Preferences.Get("saved_email", "");
@@ -137,6 +138,24 @@ namespace MobileAndroidApp
             }
 
             AskForLocationAsync();
+        }
+
+
+ 
+        private void ShowFilters(object o, EventArgs e)
+        {
+            if(filterView.Visibility == ViewStates.Visible)
+            {
+                filterView.Animate().Alpha(0f);
+                filterView.Visibility = ViewStates.Gone;
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter);
+            }
+            else
+            {
+                filterView.Visibility = ViewStates.Visible;
+                filterView.Animate().Alpha(1f);
+                filtersButton.Background = GetDrawable(Resource.Drawable.filter_off);
+            }
         }
 
         private void SetUpBottomSheet(int height)
@@ -293,6 +312,8 @@ namespace MobileAndroidApp
         {
             map = googleMap;
 
+            
+
             // Set location focus
             LatLng location = new LatLng(54.729730, 25.263571);
 
@@ -310,7 +331,7 @@ namespace MobileAndroidApp
             // Set a marker
             ReloadMapEventMarkers();
         }
-        public static void ReloadMapEventMarkers()
+        public void ReloadMapEventMarkers()
         {
             // Clear markers
             foreach (var marker in eventMarkers)
@@ -320,16 +341,23 @@ namespace MobileAndroidApp
             eventMarkers.Clear();
 
             // Get events from API
+            
             var events = RequestSender.GetBriefEvents();
-
+            
             // Create markers
             foreach (var @event in events)
             {
+                
                 MarkerOptions marker = new MarkerOptions();
                 marker.SetPosition(new LatLng(@event.Latitude, @event.Longitude));
                 marker.SetTitle(@event.Name);
                 marker.SetIcon(BitmapDescriptorFactory.FromBitmap(eventPin));
+               
                 var mark = map.AddMarker(marker);
+                mark.ZIndex = @event.Id;
+                
+
+                map.SetOnMarkerClickListener(new MarkerListener(this));
                 eventMarkers.Add(mark);
             }
         }
