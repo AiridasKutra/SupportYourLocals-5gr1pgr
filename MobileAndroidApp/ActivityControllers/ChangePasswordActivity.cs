@@ -34,7 +34,12 @@ namespace localhost.ActivityControllers
             changePasswordText = FindViewById<EditText>(Resource.Id.newPasswordTextBox);
             changePasswordRepeatText = FindViewById<EditText>(Resource.Id.newPasswordRepeatTextBox);
             changePasswordButton = FindViewById<View>(Resource.Id.changePasswordButton);
-            changePasswordButton.Click += ChangePassword; 
+            changePasswordButton.Click += ChangePassword;
+
+            var layout = Window.Attributes;
+            layout.DimAmount = 0.5f;
+            Window.AddFlags(WindowManagerFlags.DimBehind);
+            Window.Attributes = layout;
 
             Window.SetLayout((int)(width * 0.8), (int)(height*0.45));
         }

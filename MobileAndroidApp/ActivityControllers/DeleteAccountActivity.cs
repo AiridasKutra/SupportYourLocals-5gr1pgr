@@ -39,6 +39,11 @@ namespace localhost.ActivityControllers
             int width = dm.WidthPixels;
             int height = dm.HeightPixels;
 
+            var layout = Window.Attributes;
+            layout.DimAmount = 0.5f;
+            Window.AddFlags(WindowManagerFlags.DimBehind);
+            Window.Attributes = layout;
+            
             Window.SetLayout((int)(width * 0.8), (int)(height * 0.35));
         }
 
