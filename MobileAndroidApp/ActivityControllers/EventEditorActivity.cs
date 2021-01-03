@@ -18,6 +18,7 @@ using WebApi;
 using WebApi.Classes;
 using localhost.Backend.Location;
 using GoogleMaps.LocationServices;
+using System.IO;
 
 namespace localhost.ActivityControllers
 {
@@ -379,8 +380,18 @@ namespace localhost.ActivityControllers
         {
             //if (!FillEventData()) return;
             // TODO
-            Finish();
 
+            //This is how you use code, first load somewhere and then saving selfexplanatory
+            
+            /*StorageAccess.LoadEventDraft();
+            StorageAccess.EventDrafts.Add(new Event()
+            {
+                Name = "Gycio ir Zygio lenktynes"
+            });
+            StorageAccess.SaveEventDraft();*/
+
+
+            Finish();
             if (_managerReference != null)
             {
                 _managerReference.LoadEvents();
@@ -389,6 +400,7 @@ namespace localhost.ActivityControllers
 
         private void DeleteDraft(object o, EventArgs e)
         {
+
             Finish();
 
             if (_managerReference != null)
