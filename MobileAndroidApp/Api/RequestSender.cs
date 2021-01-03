@@ -387,8 +387,11 @@ namespace WebApi
                 else
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                    List<string> usernameErrorMsgs = response.Headers.GetValues("MessageUsername").ToList();
-                    List<string> emailErrorMsgs = response.Headers.GetValues("MessageEmail").ToList();
+                    List<string> usernameErrorMsgs = new List<string>();
+                    List<string> emailErrorMsgs = new List<string>();
+                    try { usernameErrorMsgs = response.Headers.GetValues("MessageUsername").ToList(); } catch { }
+                    try { emailErrorMsgs = response.Headers.GetValues("MessageEmail").ToList(); } catch { }
+
                     string errorMsg = "";
                     if (usernameErrorMsgs.Count > 0)
                     {
@@ -404,7 +407,6 @@ namespace WebApi
                         return "Unable to create an account.";
                     }
                     return errorMsg;
-
                 }
             }
         }
