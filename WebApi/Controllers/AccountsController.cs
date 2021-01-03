@@ -160,18 +160,20 @@ namespace WebApiDatabase.Controllers
         [HttpPost]
         public void CreateAccount(Account acc)
         {
+            bool success = true;
             if (Program.Database.QSelectAccounts(item => item.Username == acc.Username).Count > 0)
             {
                 HttpContext.Response.StatusCode = 400;
-                HttpContext.Response.Headers.Add("Message", new StringValues("This username is already in use."));
-                return;
+                HttpContext.Response.Headers.Add("MessageUsername", new StringValues("This username is already in use."));
+                success = false;
             }
             if (Program.Database.QSelectAccounts(item => item.Email == acc.Email).Count > 0)
             {
                 HttpContext.Response.StatusCode = 400;
-                HttpContext.Response.Headers.Add("Message", new StringValues("This email is already in use."));
-                return;
+                HttpContext.Response.Headers.Add("MessageEmail", new StringValues("This email is already in use."));
+                success = false;
             }
+            if (!success) return;
 
             acc.Permissions = (uint)AccountType.USER;
 
