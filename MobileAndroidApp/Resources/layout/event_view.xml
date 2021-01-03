@@ -8,7 +8,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        android:background="#FAFAFA">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,13 +79,20 @@
             android:id="@+id/separatorView3"/>
     <TextView
             android:text="Description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@id/txtDescription"
             android:textIsSelectable="true"
             android:textSize="18sp" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@+id/separatorView3" android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" android:justificationMode="inter_word"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            android:justificationMode="inter_word"/>
+    <View 
+            android:layout_width="fill_parent" 
+            android:layout_height="1dp" 
+            android:background="#74747474"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription"
+            android:layout_marginTop="8dp"
+            android:id="@+id/separatorView4"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -93,7 +101,7 @@
             android:id="@+id/edtNewComment"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/btnSubmitComment" android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/txtDescription" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView4" android:layout_marginTop="8dp"
             android:hint="Enter comment"
             android:maxLength="500"/>
     <ImageButton
@@ -106,7 +114,7 @@
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btnSubmitComment" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnSubmitComment" android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/commentRecyclerView"/>
 

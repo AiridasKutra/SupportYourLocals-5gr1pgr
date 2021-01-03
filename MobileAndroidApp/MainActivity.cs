@@ -20,6 +20,7 @@ using localhost.Backend;
 using WebApi.Classes;
 using localhost.ActivityControllers.PinClick;
 
+
 namespace MobileAndroidApp
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
@@ -138,10 +139,11 @@ namespace MobileAndroidApp
             }
 
             AskForLocationAsync();
+
+
+
+
         }
-
-
- 
         private void ShowFilters(object o, EventArgs e)
         {
             if(filterView.Visibility == ViewStates.Visible)

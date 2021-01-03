@@ -216,6 +216,13 @@ namespace localhost.ActivityControllers
                 };
                 eventImages.AddView(imgView);
 
+                imgView.Click += (o, e) =>
+                {
+                    Intent intent = new Intent(this, typeof(BitmapImagePopupActivity));
+                    intent.PutExtra("image_link", item);
+                    StartActivity(intent);
+                };
+
                 RunOnUiThread(() =>
                 {
                     try

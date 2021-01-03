@@ -9,21 +9,22 @@ using Android.Widget;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace localhost.ActivityControllers
 {
-    [Activity(Label = "localhost")]
+    [Activity(Label = "localhost", Theme = "@style/Theme.Transparent")]
     class BitmapImagePopupActivity : Activity
     {
         ImageView imageView;
 
-        public static Bitmap image;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.image_popup);
+
+            string link = Intent.GetStringExtra("image_link");
 
             DisplayMetrics dm = new DisplayMetrics();
             this.WindowManager.DefaultDisplay.GetMetrics(dm);
@@ -31,10 +32,30 @@ namespace localhost.ActivityControllers
             int height = dm.HeightPixels;
 
             imageView = FindViewById<ImageView>(Resource.Id.bitmapImageView);
-            imageView.SetImageBitmap(image);
+            imageView.SetScaleType(ImageView.ScaleType.FitCenter);
 
-            Window.SetLayout((int)(width * 0.9), (int)(height * 0.8));
-            
+            RunOnUiThread(() =>
+            {
+                try
+                {
+                    using var webClient = new WebClient();
+
+                    var imageBytes = webClient.DownloadData(link);
+                    if (imageBytes != null && imageBytes.Length > 0)
+                    {
+                        Bitmap img = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                        imageView.Alpha = 0.0f;
+                        imageView.SetImageBitmap(img);
+                        imageView.Animate().Alpha(1.0f);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Toast.MakeText(this, "Unable to load image", ToastLength.Long).Show();
+                }
+            });
+
+            Window.SetLayout(width, height);
         }
     }
 }
