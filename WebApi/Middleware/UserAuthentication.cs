@@ -1,4 +1,5 @@
-﻿using Database.TableClasses;
+﻿using Database;
+using Database.TableClasses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -265,9 +266,12 @@ namespace WebApiDatabase.Middleware
                             Account loginAcc = Program.Database.QSelectAccounts(item => item.Email == email).FirstOrDefault();
                             if (loginAcc != null)
                             {
-                                if (loginAcc.PasswordHash == passwordHash)
+                                if (!loginAcc.Can((uint)Permissions.BANNED))
                                 {
-                                    vfid = LoggedUsers.GenerateUser(loginAcc.Id);
+                                    if (loginAcc.PasswordHash == passwordHash)
+                                    {
+                                        vfid = LoggedUsers.GenerateUser(loginAcc.Id);
+                                    }
                                 }
                             }
                         }
