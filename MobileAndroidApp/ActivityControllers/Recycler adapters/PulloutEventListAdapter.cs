@@ -48,14 +48,18 @@ namespace localhost.ActivityControllers.Recycler_adapters
 
             if (dataList[position].Images.Count > 0)
             {
-                using (var webClient = new WebClient())
+                try
                 {
-                    var imageBytes = webClient.DownloadData(dataList[position].Images[0]);
-                    if (imageBytes != null && imageBytes.Length > 0)
+                    using (var webClient = new WebClient())
                     {
-                        viewHolder.thumbnail.SetImageBitmap(BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length));
+                        var imageBytes = webClient.DownloadData(dataList[position].Images[0]);
+                        if (imageBytes != null && imageBytes.Length > 0)
+                        {
+                            viewHolder.thumbnail.SetImageBitmap(BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length));
+                        }
                     }
                 }
+                catch { }
             }
 
             viewHolder.eventName.Text = dataList[position].Name;

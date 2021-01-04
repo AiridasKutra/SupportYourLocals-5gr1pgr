@@ -17,23 +17,29 @@ namespace localhost.ActivityControllers.Recycler_adapters
     class AccountListAdapterHolder : RecyclerView.ViewHolder
     {
         public TextView UserName { get; set; }
-        public TextView Activity { get; set; }
-        public TextView Banned { get; set; }
+        public ImageView SilencedIcon { get; set; }
+        public ImageView BannedIcon { get; set; }
         public AccountListAdapterHolder(View itemView):base(itemView)
         {
             UserName = itemView.FindViewById<TextView>(Resource.Id.usernameLabel);
-            Activity = itemView.FindViewById<TextView>(Resource.Id.activeLabel);
-            Banned = itemView.FindViewById<TextView>(Resource.Id.bannedLabel);
+            SilencedIcon = itemView.FindViewById<ImageView>(Resource.Id.accountCardSilencedIcon);
+            BannedIcon = itemView.FindViewById<ImageView>(Resource.Id.accountCardBannedIcon);
         }
     }
 
     class AccountListAdapter : RecyclerView.Adapter
     {
         private List<Account> list = new List<Account>();
+        private List<AccountListAdapterHolder> viewHolders = new List<AccountListAdapterHolder>();
 
         public AccountListAdapter(List<Account> list)
         {
             this.list = list;
+        }
+
+        public void SetData(List<Account> data)
+        {
+            list = data;
         }
 
         public override int ItemCount => list.Count;
@@ -42,22 +48,26 @@ namespace localhost.ActivityControllers.Recycler_adapters
         {
             AccountListAdapterHolder viewHolder = holder as AccountListAdapterHolder;
             viewHolder.UserName.Text = list[position].Username;
-            
-            if (list[position].Can((uint)Permissions.BANNED)){
-                viewHolder.Banned.Text = "Banned";
-            }
+
             if (!list[position].Can((uint)Permissions.SEND_CHAT_MESSAGES))
             {
-                viewHolder.Activity.Text = "Silenced";
+                viewHolder.SilencedIcon.Visibility = ViewStates.Visible;
+            }
+            if (list[position].Can((uint)Permissions.BANNED)){
+                viewHolder.BannedIcon.Visibility = ViewStates.Visible;
             }
 
-            viewHolder.ItemView.Click += (o, e) =>
+            if (!viewHolders.Contains(viewHolder))
             {
-                AdminPanelActivity.WhichSelected = list[position].Id;
-                AdminPanelActivity.accountLabel.Text = list[position].Username;
-                AdminPanelActivity.WhichSilencedTitle = viewHolder.Activity;
-                AdminPanelActivity.WhichBannedTitle = viewHolder.Banned;
-            };
+                viewHolder.ItemView.Click += (o, e) =>
+                {
+                    AdminPanelActivity.WhichSelected = list[position].Id;
+                    AdminPanelActivity.accountLabel.Text = list[position].Username;
+                    AdminPanelActivity.WhichSilencedIcon = viewHolder.SilencedIcon;
+                    AdminPanelActivity.WhichBannedIcon = viewHolder.BannedIcon;
+                };
+                viewHolders.Add(viewHolder);
+            }
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

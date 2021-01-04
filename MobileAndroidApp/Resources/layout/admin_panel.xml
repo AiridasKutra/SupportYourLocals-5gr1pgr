@@ -4,14 +4,14 @@
                                                    android:layout_height="match_parent">
 
     <TextView
-            android:text="Admin panel"
+            android:text="Account manager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/header"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="166dp"
             android:layout_marginEnd="166dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:textColor="#747474"
             android:textSize="30sp" android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/searchBar"/>
+            app:layout_constraintBottom_toTopOf="@+id/adminPanelSearch"/>
     <Button
             android:text="Ban"
             android:layout_width="137dp"
@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toStartOf="@+id/deleteButton"
             app:layout_constraintStart_toEndOf="@+id/silenceButton" android:textColor="#747474"
             android:background="#6DA887"
-            app:layout_constraintTop_toBottomOf="@+id/searchBar" android:layout_marginTop="36dp"
+            app:layout_constraintTop_toBottomOf="@+id/adminPanelSearch" android:layout_marginTop="36dp"
             android:layout_marginBottom="5dp" app:layout_constraintBottom_toTopOf="@+id/selectedAccount"/>
     <Button
             android:text="Silence"
@@ -38,32 +38,44 @@
             android:background="#F85A5A"
             app:layout_constraintTop_toTopOf="@+id/banButton"
             app:layout_constraintBottom_toBottomOf="@+id/banButton" app:layout_constraintVertical_bias="1.0"/>
+    <View 
+            android:layout_width="fill_parent" 
+            android:layout_height="1dp" 
+            android:background="#74747474"
+            app:layout_constraintTop_toBottomOf="@+id/selectedAccount"
+            android:layout_marginTop="8dp"
+            android:id="@+id/separatorView1"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="408dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/recyclerView" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="1dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="1dp" android:layout_marginEnd="1dp" app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/back" android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/selectedAccount"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView1"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
+            android:singleLine="true"
             android:ems="10"
-            android:id="@+id/searchBar"
+            android:id="@+id/adminPanelSearch"
             android:hint="Search" android:layout_marginTop="5dp"
             app:layout_constraintTop_toBottomOf="@+id/header" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="100dp" android:layout_marginEnd="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/banButton" app:layout_constraintHorizontal_bias="0.0"/>
+    <ImageButton
+            android:layout_width="46dp"
+            android:layout_height="46dp" android:id="@+id/adminPanelSearchButton"
+            app:layout_constraintStart_toEndOf="@+id/adminPanelSearch" android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/adminPanelSearch" android:background="#00000000"
+            android:src="@android:drawable/ic_menu_send" android:tint="#6DA887"/>
     <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/selectedAccount"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="157dp"
-            android:layout_marginEnd="158dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/banButton" android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView" android:textColor="#747474"
-            android:textSize="24sp"/>
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/banButton" android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/separatorView1" android:layout_marginBottom="8dp"
+            android:textSize="24sp" android:textColor="#747474"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

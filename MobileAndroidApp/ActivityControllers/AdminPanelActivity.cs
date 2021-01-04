@@ -20,16 +20,20 @@ namespace localhost.ActivityControllers
     {
         private List<Account> list = new List<Account>();
 
+        private EditText searchInput;
+        private ImageButton searchButton;
+
         private static Button silenceButton;
         private Button deleteButton;
         private static Button banButton;
         public static TextView accountLabel;
         
         private RecyclerView accountList;
-        private RecyclerView.Adapter accountListAdapter;
+        private AccountListAdapter accountListAdapter;
         private RecyclerView.LayoutManager accountListLayout;
-        public static TextView WhichSilencedTitle { get;  set; }
-        public static TextView WhichBannedTitle { get; set; }
+
+        public static ImageView WhichSilencedIcon { get;  set; }
+        public static ImageView WhichBannedIcon { get; set; }
 
         private static int whichSelected = -1;
         public static int WhichSelected 
@@ -47,7 +51,11 @@ namespace localhost.ActivityControllers
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.admin_panel);
-            // Create your application here
+
+            searchInput = FindViewById<EditText>(Resource.Id.adminPanelSearch);
+            searchButton = FindViewById<ImageButton>(Resource.Id.adminPanelSearchButton);
+            searchButton.Click += Search;
+
             silenceButton = FindViewById<Button>(Resource.Id.silenceButton);
             silenceButton.Click += SilenceClick;
             deleteButton = FindViewById<Button>(Resource.Id.deleteButton);
@@ -60,47 +68,47 @@ namespace localhost.ActivityControllers
 
             list = RequestSender.GetAccounts();
 
-
             accountList.HasFixedSize = true;
+            accountList.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
             accountListLayout = new LinearLayoutManager(this);
             accountList.SetLayoutManager(accountListLayout);
             accountListAdapter = new AccountListAdapter(list);
             accountList.SetAdapter(accountListAdapter);
+        }
 
+        private void Search(object o, EventArgs e)
+        {
+            string input = searchInput.Text.ToLower();
+            list = RequestSender.GetAccounts().Where(item => item.Username.ToLower().Contains(input)).ToList();
+            accountListAdapter.SetData(list);
+            accountListAdapter.NotifyDataSetChanged();
         }
 
         private void SilenceClick(object o, EventArgs e)
         {
-            if(WhichSelected == -1)
-            {
-                return;
-            }
+            if (WhichSelected == -1) return;
+
             if (selectedAccount.Can((uint)Permissions.SEND_CHAT_MESSAGES))
             {
                 RequestSender.SilenceAccount(WhichSelected);
                 silenceButton.Text = "Unsilence";
                 Toast.MakeText(this, $"Silenced {selectedAccount.Username}", ToastLength.Long).Show();
                 selectedAccount.RemovePermission(Permissions.SEND_CHAT_MESSAGES);
-                WhichSilencedTitle.Text = "Silenced";
-            } else
+                WhichSilencedIcon.Visibility = ViewStates.Visible;
+            }
+            else
             {
                 RequestSender.UnsilenceAccount(WhichSelected);
-                
                 silenceButton.Text = "Silence";
                 Toast.MakeText(this, $"Unsilenced {selectedAccount.Username}", ToastLength.Long).Show();
                 selectedAccount.AddPermission(Permissions.SEND_CHAT_MESSAGES);
-                WhichSilencedTitle.Text = "";
+                WhichSilencedIcon.Visibility = ViewStates.Gone;
             }
-
-
         }
 
         private void DeleteClick(object o, EventArgs e)
         {
-            if (WhichSelected == -1)
-            {
-                return;
-            }
+            if (WhichSelected == -1) return;
             RequestSender.DeleteAccount(WhichSelected);
             list.Remove(list.Find(x => x.Id == whichSelected));
             accountListAdapter.NotifyDataSetChanged();
@@ -108,30 +116,24 @@ namespace localhost.ActivityControllers
 
         private void BanClick(object o, EventArgs e)
         {
-            if (WhichSelected == -1)
-            {
-                return;
-            }
+            if (WhichSelected == -1) return;
 
             if (selectedAccount.Can((uint)Permissions.BANNED))
             {
-                
                 banButton.Text = "Ban";
                 Toast.MakeText(this, $"Unbanned {selectedAccount.Username}", ToastLength.Long).Show();
                 RequestSender.UnbanAccount(WhichSelected);
                 selectedAccount.RemovePermission(Permissions.BANNED);
-                WhichBannedTitle.Text = "";
-            } else
+                WhichBannedIcon.Visibility = ViewStates.Gone;
+            }
+            else
             {
-                
                 banButton.Text = "Unban";
                 Toast.MakeText(this, $"Banned {selectedAccount.Username}", ToastLength.Long).Show();
                 RequestSender.BanAccount(WhichSelected);
                 selectedAccount.AddPermission(Permissions.BANNED);
-                WhichBannedTitle.Text = "Banned";
+                WhichBannedIcon.Visibility = ViewStates.Visible;
             }
-
-
         }
     }
 

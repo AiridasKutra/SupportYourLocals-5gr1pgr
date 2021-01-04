@@ -71,7 +71,6 @@ namespace WebApiDatabase.Controllers
             if (accounts.Count > 0)
             {
                 accounts[0].AddPermission(Permissions.BANNED);
-                Program.Database.QEditAccount(id, accounts[0]);
                 Program.Database.SaveChanges();
                 HttpContext.Response.StatusCode = 200;
                 return;
@@ -86,7 +85,6 @@ namespace WebApiDatabase.Controllers
             if (accounts.Count > 0)
             {
                 accounts[0].RemovePermission(Permissions.BANNED);
-                Program.Database.QEditAccount(id, accounts[0]);
                 Program.Database.SaveChanges();
                 HttpContext.Response.StatusCode = 200;
                 return;
@@ -100,8 +98,7 @@ namespace WebApiDatabase.Controllers
             List<Account> accounts = Program.Database.QSelectAccounts(item => item.Id == id);
             if (accounts.Count > 0)
             {
-                accounts[0].AddPermission(Permissions.SEND_CHAT_MESSAGES);
-                Program.Database.QEditAccount(id, accounts[0]);
+                accounts[0].RemovePermission(Permissions.SEND_CHAT_MESSAGES);
                 Program.Database.SaveChanges();
                 HttpContext.Response.StatusCode = 200;
                 return;
@@ -115,8 +112,7 @@ namespace WebApiDatabase.Controllers
             List<Account> accounts = Program.Database.QSelectAccounts(item => item.Id == id);
             if (accounts.Count > 0)
             {
-                accounts[0].RemovePermission(Permissions.SEND_CHAT_MESSAGES);
-                Program.Database.QEditAccount(id, accounts[0]);
+                accounts[0].AddPermission(Permissions.SEND_CHAT_MESSAGES);
                 Program.Database.SaveChanges();
                 HttpContext.Response.StatusCode = 200;
                 return;
