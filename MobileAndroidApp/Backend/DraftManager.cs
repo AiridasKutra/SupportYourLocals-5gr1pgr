@@ -15,28 +15,49 @@ using WebApi.Classes;
 
 namespace localhost.Backend
 {
-    public class StorageAccess
+    public class DraftManager
     {
-        public static List<Event> EventDrafts;
+        private static List<Event> _eventDrafts;
+
+        public static List<Event> GetDrafts()
+        {
+            return _eventDrafts;
+        }
+
+        public static Event GetDraft(int id)
+        {
+            return _eventDrafts.FirstOrDefault(item => item.Id == id);
+        }
+
+        public static bool SetDraft(int id, Event @event)
+        {
+            Event ev = _eventDrafts.FirstOrDefault(item => item.Id == id);
+            if (ev != null)
+            {
+                ev = @event;
+                return true;
+            }
+            return false;
+        }
         
-        public static void SaveEventDraft()
+        public static void Save()
         {
             var backingFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "EventDrafts.json");
 
             using (var writer = File.CreateText(backingFile))
             {
-                string output = JsonConvert.SerializeObject(EventDrafts);
+                string output = JsonConvert.SerializeObject(_eventDrafts);
                 writer.WriteLine(output);
             }
         }
 
-        public static void LoadEventDraft()
+        public static void Load()
         {
             var backingFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "EventDrafts.json");
 
             if(!File.Exists(backingFile))
             {
-                EventDrafts = new List<Event>();
+                _eventDrafts = new List<Event>();
                 return;
             }
 
@@ -45,12 +66,12 @@ namespace localhost.Backend
             {
                 text = reader.ReadToEnd();
             }
-            EventDrafts = JsonConvert.DeserializeObject<List<Event>>(text);
+            _eventDrafts = JsonConvert.DeserializeObject<List<Event>>(text);
         }
 
         public static void AddDraft(Event @event)
         {
-            var e = EventDrafts.LastOrDefault();
+            var e = _eventDrafts.LastOrDefault();
             if (e == null)
             {
                 @event.Id = 0;
@@ -59,13 +80,12 @@ namespace localhost.Backend
             {
                 @event.Id = e.Id + 1;
             }
-            EventDrafts.Add(@event);
+            _eventDrafts.Add(@event);
         }
 
         public static void RemoveDraft(int Id)
         {
-            EventDrafts.RemoveAll(item => item.Id == Id);
+            _eventDrafts.RemoveAll(item => item.Id == Id);
         }
-
     }
 }

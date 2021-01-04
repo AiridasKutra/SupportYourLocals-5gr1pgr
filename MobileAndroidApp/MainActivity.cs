@@ -150,10 +150,7 @@ namespace MobileAndroidApp
             }
 
             AskForLocationAsync();
-
-
-
-
+            DraftManager.Load();
         }
         private void ShowFilters(object o, EventArgs e)
         {

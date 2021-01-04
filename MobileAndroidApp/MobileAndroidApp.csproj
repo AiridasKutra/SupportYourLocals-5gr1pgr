@@ -96,7 +96,7 @@
     <Compile Include="Api\Sport.cs" />
     <Compile Include="Api\UserAccount.cs" />
     <Compile Include="Api\Validation.cs" />
-    <Compile Include="Backend\StorageAccess.cs" />
+    <Compile Include="Backend\DraftManager.cs" />
     <Compile Include="Backend\Helper.cs" />
     <Compile Include="Backend\Location\ApiKeys.cs" />
     <Compile Include="Backend\Location\LocationInformation.cs" />
@@ -376,6 +376,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mute_icon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\remove_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\LocationPin.png" />
