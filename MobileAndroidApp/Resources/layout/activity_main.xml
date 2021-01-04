@@ -68,10 +68,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/standart_12"
                         android:text="Sport"/>
-                    <Spinner
-                        android:id="@+id/sportSpinner"
+                    <AutoCompleteTextView
+                        android:id="@+id/sportTextEdit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="Sport"/>
                      <TextView
                         android:id="@+id/lblDate"
                         android:layout_width="wrap_content"
@@ -94,12 +96,12 @@
                         android:id="@+id/maxPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="100"/>
+                        android:max="1000"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/lblSelectedPrice"
-                        android:text="0.00€"/>
+                        android:text="100.00€"/>
                     <TextView
                         android:id="@+id/lblMaxDist"
                         android:layout_width="wrap_content"
@@ -111,18 +113,12 @@
                         android:id="@+id/maxDist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="100"/>
+                        android:max="1000"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/lblSelectedDist"
                         android:text="0.00km"/>
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/standart_12"
-                        android:layout_marginBottom="@dimen/standart_12"
-                        android:text="Show invisible"/>
                 </LinearLayout>
                     
                    

@@ -29,6 +29,7 @@ namespace localhost.ActivityControllers
     public class EventViewActivity : Activity
     {
         TextView eventName, eventDistance, eventAddress, eventDescription;
+        ImageButton reportButton;
         ImageView eventLocate;
         HorizontalScrollView horizontalScroll;
         LinearLayout eventImages;
@@ -52,6 +53,7 @@ namespace localhost.ActivityControllers
             eventDistance = FindViewById<TextView>(Resource.Id.txtEventDistance);
             eventAddress = FindViewById<TextView>(Resource.Id.txtEventAddress);
             eventLocate = FindViewById<ImageView>(Resource.Id.imgLocate);
+            reportButton = FindViewById<ImageButton>(Resource.Id.eventViewReportButton);
             eventImages = FindViewById<LinearLayout>(Resource.Id.lnlImages);
             eventDescription = FindViewById<TextView>(Resource.Id.txtDescription);
             horizontalScroll = FindViewById<HorizontalScrollView>(Resource.Id.scrIEventImages);
@@ -79,6 +81,14 @@ namespace localhost.ActivityControllers
             double distance = MathSupplement.Distance(eventLatitude, eventLongitude, MainActivity.currentLatitude, MainActivity.currentLongitude);
             if (distance < 1000.0) eventDistance.Text = $"{distance:0}m";
             else eventDistance.Text = $"{distance / 1000.0:0.0}km";
+
+            // Report button
+            reportButton.Click += (o, e) =>
+            {
+                Intent intent = new Intent(this, typeof(ReportEventActivity));
+                intent.PutExtra("eventID", @event.Id);
+                StartActivity(intent);
+            };
 
             // Event name and address
             eventName.Text = @event.Name;

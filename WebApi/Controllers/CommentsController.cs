@@ -40,7 +40,15 @@ namespace WebApiDatabase.Controllers
         public IEnumerable<Message> GetComments(int eventid)
         {
             HttpContext.Response.StatusCode = 200;
-            return Program.Database.QSelectComments(item => true, eventid);
+            var comments = Program.Database.QSelectComments(item => true, eventid);
+            if (comments == null)
+            {
+                return new List<Message>();
+            }
+            else
+            {
+                return comments;
+            }
         }
 
         [HttpPost("{eventid}")]

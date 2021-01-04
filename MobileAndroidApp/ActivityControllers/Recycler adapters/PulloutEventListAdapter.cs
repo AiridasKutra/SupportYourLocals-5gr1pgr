@@ -34,7 +34,7 @@ namespace localhost.ActivityControllers.Recycler_adapters
     }
     class PulloutEventAdapter : RecyclerView.Adapter
     {
-        private List<Event> dataList = new List<Event>();
+        public List<Event> dataList = new List<Event>();
         private List<PulloutEventAdapterViewHolder> viewHolders = new List<PulloutEventAdapterViewHolder>();
 
         public PulloutEventAdapter(List<Event> list)
@@ -65,19 +65,16 @@ namespace localhost.ActivityControllers.Recycler_adapters
             }
 
             viewHolder.eventName.Text = dataList[position].Name;
-            viewHolder.eventDateAndTime.Text = dataList[position].StartDate.ToString();
+            viewHolder.eventDateAndTime.Text = $"{dataList[position].StartDate:yyyy-MM-dd} at {dataList[position].StartDate:HH:mm}";
             viewHolder.eventDescription.Text = dataList[position].Description;
 
-            if (!viewHolders.Contains(viewHolder))
+            viewHolder.ItemView.Click += (o, e) =>
             {
-                viewHolder.ItemView.Click += (o, e) =>
-                {
-                    Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
-                    intent.PutExtra("eventID", dataList[position].Id);
-                    viewHolder.ItemView.Context.StartActivity(intent);
-                };
-                viewHolders.Add(viewHolder);
-            }
+                Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
+                intent.PutExtra("eventID", dataList[position].Id);
+                viewHolder.ItemView.Context.StartActivity(intent);
+            };
+            viewHolders.Add(viewHolder);
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

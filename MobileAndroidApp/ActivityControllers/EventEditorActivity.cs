@@ -308,6 +308,11 @@ namespace localhost.ActivityControllers
                 priceInput.Error = Html.FromHtml("<font color='red'>Invalid price</font>").ToString();
                 valid = false;
             }
+            else if (verifiedPrice > 100.0m)
+            {
+                priceInput.Error = Html.FromHtml("<font color='red'>Price too high</font>").ToString();
+                valid = false;
+            }
             // Address
             if (addressInput.Text.Length == 0)
             {
