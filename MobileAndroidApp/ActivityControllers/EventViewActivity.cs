@@ -83,7 +83,9 @@ namespace localhost.ActivityControllers
             // Report button
             reportButton.Click += (o, e) =>
             {
-                Toast.MakeText(this, "Cliked", ToastLength.Short).Show();
+                Intent intent = new Intent(this, typeof(ReportEventActivity));
+                intent.PutExtra("eventID", @event.Id);
+                StartActivity(intent);
             };
 
             // Event name and address
