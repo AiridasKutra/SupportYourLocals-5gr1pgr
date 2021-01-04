@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileAndroidApp</string>
+    <string name="app_name">localhost</string>
     <string name="action_settings">Settings</string>
 	<string name="title_home">Events</string>
 	<string name="title_dashboard">Drafts</string>
