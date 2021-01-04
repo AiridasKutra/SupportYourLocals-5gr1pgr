@@ -50,8 +50,8 @@ namespace MobileAndroidApp
         private static Bitmap locationPin;
         private static List<Marker> eventMarkers = new List<Marker>();
 
-        private double currentLongitude;
-        private double currentLatitude;
+        public static double currentLatitude;
+        public static double currentLongitude;
         private LocationManager locationManager;
 
         public static bool IsLoggedIn { get; set; } = false;
@@ -355,7 +355,7 @@ namespace MobileAndroidApp
         protected override void OnResume()
         {
             base.OnResume();
-            locationManager.RemoveUpdates(this);
+            //locationManager.RemoveUpdates(this);
         }
 
         public void ReloadMapEventMarkers()

@@ -21,6 +21,7 @@ using localhost.Backend;
 using System.Threading;
 using Android.Support.V7.Widget;
 using localhost.ActivityControllers.Recycler_adapters;
+using MobileAndroidApp;
 
 namespace localhost.ActivityControllers
 {
@@ -71,13 +72,11 @@ namespace localhost.ActivityControllers
             // Setting the distance
             eventLatitude = @event.Latitude;
             eventLongitude = @event.Longitude;
-            var userLocation = Geolocation.GetLastKnownLocationAsync();
-            double distance = MathSupplement.Distance(eventLatitude, eventLongitude, userLocation.Result.Latitude, userLocation.Result.Longitude);
-            if (userLocation != null)
-            {
-                if (distance < 1000.0) eventDistance.Text = $"{distance:0}m";
-                else eventDistance.Text = $"{distance / 1000.0:0.0}km";
-            }
+            //var userLocation = Geolocation.GetLastKnownLocationAsync();
+            //double distance = MathSupplement.Distance(eventLatitude, eventLongitude, userLocation.Result.Latitude, userLocation.Result.Longitude);
+            double distance = MathSupplement.Distance(eventLatitude, eventLongitude, MainActivity.currentLatitude, MainActivity.currentLongitude);
+            if (distance < 1000.0) eventDistance.Text = $"{distance:0}m";
+            else eventDistance.Text = $"{distance / 1000.0:0.0}km";
 
             // Event name and address
             eventName.Text = @event.Name;
