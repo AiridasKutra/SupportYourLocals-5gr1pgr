@@ -70,6 +70,12 @@ namespace localhost.ActivityControllers
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.event_editor);
 
+            if (_paramsSet == false)
+            {
+                throw new InvalidOperationException("SetParams() must be called before creating EventEditorActivity");
+            }
+            _paramsSet = false;
+
             nameInput = FindViewById<EditText>(Resource.Id.createEventNameTextBox);
             dateInput = FindViewById<EditText>(Resource.Id.createEventDateSelect);
             timeInput = FindViewById<EditText>(Resource.Id.createEventTimeSelect);
@@ -111,7 +117,7 @@ namespace localhost.ActivityControllers
                 {
                     leftFinishButton.Click += EditEvent;
                     leftFinishButton.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.done_button_round));
-                    rightFinishButton.Click += DeleteEvent;
+                    rightFinishButton.Click += DeleteEventClick;
                     rightFinishButton.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.delete_button_round));
                 }
             }
@@ -154,15 +160,16 @@ namespace localhost.ActivityControllers
             LoadImages();
         }
 
-        protected override void OnStart()
+        protected override void OnPause()
         {
-            base.OnStart();
+            base.OnPause();
+            Finish();
+        }
 
-            if (_paramsSet == false)
-            {
-                throw new InvalidOperationException("SetParams() must be called before creating EventEditorActivity");
-            }
-            _paramsSet = false;
+        protected override void OnStop()
+        {
+            base.OnStop();
+            Finish();
         }
 
         private void AddImage(object sernder, EventArgs e)
@@ -314,7 +321,7 @@ namespace localhost.ActivityControllers
                     verifiedAddress = addressInput.Text.FormatAddressInfo();
                     verifiedCoordinates = verifiedAddress.ToStringNormal().LatLongFromString();
                 }
-                catch
+                catch (Exception e)
                 {
                     addressInput.Error = Html.FromHtml("<font color='red'>Invalid address</font>").ToString();
                     valid = false;
@@ -352,6 +359,7 @@ namespace localhost.ActivityControllers
         {
             if (!FillEventData()) return;
             RequestSender.CreateEvent(_event);
+            Toast.MakeText(this, "Event created successfully", ToastLength.Long);
             Finish();
 
             if (_managerReference != null)
@@ -364,6 +372,7 @@ namespace localhost.ActivityControllers
         {
             if (!FillEventData()) return;
             RequestSender.EditEvent(_event);
+            Toast.MakeText(this, "Event updated successfully", ToastLength.Long);
             Finish();
 
             if (_managerReference != null)
@@ -372,9 +381,20 @@ namespace localhost.ActivityControllers
             }
         }
 
-        private void DeleteEvent(object o, EventArgs e)
+        private void DeleteEventClick(object o, EventArgs e)
+        {
+            var dialog = new AlertDialog.Builder(this).Create();
+            dialog.SetTitle("Delete this event?");
+            dialog.SetButton("Delete", (o, e) => { DeleteEvent(); });
+            dialog.SetButton2("Cancel", (o, e) => { });
+            dialog.SetCancelable(false);
+            dialog.Show();
+        }
+
+        private void DeleteEvent()
         {
             RequestSender.DeleteEvent(_event.Id);
+            Toast.MakeText(this, "Event deleted successfully", ToastLength.Long);
             Finish();
 
             if (_managerReference != null)
@@ -385,34 +405,19 @@ namespace localhost.ActivityControllers
 
         private void SaveDraft(object o, EventArgs e)
         {
-            //if (!FillEventData()) return;
-            // TODO
-
-            //This is how you use code, first load somewhere and then saving selfexplanatory
-            
-            /*StorageAccess.LoadEventDraft();
-            StorageAccess.EventDrafts.Add(new Event()
+            if (!FillEventData()) return;
+            if (!DraftManager.SetDraft(_event.Id, _event))
             {
-                Name = "Gycio ir Zygio lenktynes"
-            });
-            StorageAccess.SaveEventDraft();*/
-
-
-            Finish();
-            if (_managerReference != null)
-            {
-                _managerReference.LoadEvents();
+                DraftManager.AddDraft(_event);
             }
-        }
-
-        private void DeleteDraft(object o, EventArgs e)
-        {
-
+            DraftManager.Save();
+            Toast.MakeText(this, "Draft saved", ToastLength.Long);
             Finish();
 
             if (_managerReference != null)
             {
                 _managerReference.LoadEvents();
+                _managerReference.LoadDrafts();
             }
         }
     }

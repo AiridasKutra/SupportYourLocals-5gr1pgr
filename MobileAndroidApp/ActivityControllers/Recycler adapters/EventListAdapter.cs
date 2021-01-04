@@ -30,11 +30,12 @@ namespace localhost.ActivityControllers.Recycler_adapters
             Time = itemView.FindViewById<TextView>(Resource.Id.timeLabel);
         }
     }
+
     class EventListAdapter : RecyclerView.Adapter
     {
         public List<Event> eventList = new List<Event>();
-        public EventManagerActivity managerReference = null;
-        
+        private List<RecyclerViewHolder> viewHolders = new List<RecyclerViewHolder>();
+
         public EventListAdapter(List<Event> list)
         {
             this.eventList = list;
@@ -49,16 +50,15 @@ namespace localhost.ActivityControllers.Recycler_adapters
             viewHolder.Activity.Text = "Active";
             viewHolder.Date.Text = eventList[position].StartDate.Date.ToString("yyyy-MM-dd");
             viewHolder.Time.Text = eventList[position].StartDate.ToString("t");
-            //viewHolder.ItemView.SetY(10);
-            viewHolder.ItemView.Click += (o,e) =>
-            {
-                EventEditorActivity.SetParams(RequestSender.GetFullEvent(eventList[position].Id), false);
-                viewHolder.ItemView.Context.StartActivity(typeof(EventEditorActivity));
 
-                //Intent intent = new Intent(viewHolder.ItemView.Context, typeof(EventViewActivity));
-                //intent.PutExtra("eventID", eventList[position].Id);
-                //viewHolder.ItemView.Context.StartActivity(intent);
-            };
+            if (!viewHolders.Contains(viewHolder))
+            {
+                viewHolder.ItemView.Click += (o, e) => {
+                    EventEditorActivity.SetParams(RequestSender.GetFullEvent(eventList[position].Id), false);
+                    viewHolder.ItemView.Context.StartActivity(typeof(EventEditorActivity));
+                };
+                viewHolders.Add(viewHolder);
+            }
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

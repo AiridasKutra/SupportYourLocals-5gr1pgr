@@ -96,7 +96,7 @@
     <Compile Include="Api\Sport.cs" />
     <Compile Include="Api\UserAccount.cs" />
     <Compile Include="Api\Validation.cs" />
-    <Compile Include="Backend\StorageAccess.cs" />
+    <Compile Include="Backend\DraftManager.cs" />
     <Compile Include="Backend\Helper.cs" />
     <Compile Include="Backend\Location\ApiKeys.cs" />
     <Compile Include="Backend\Location\LocationInformation.cs" />
@@ -377,10 +377,13 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\mute_icon.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\remove_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadGenericExceptionInfoBarMobileAndroidAppHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadGenericExceptionInfoBarMobileAndroidAppHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

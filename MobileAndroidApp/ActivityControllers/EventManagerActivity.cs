@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
+using localhost.Backend;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace localhost.ActivityControllers
     public class EventManagerActivity : Activity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
         private Button addEventButton;
+        private TextView noEventsText;
+        private TextView noDraftsText;
 
         private RecyclerView eventListView;
         private RecyclerView draftListView;
@@ -29,9 +32,14 @@ namespace localhost.ActivityControllers
         private RecyclerView.LayoutManager draftListLayout;
 
         private List<Event> eventList = new List<Event>();
+        private List<Event> draftList = new List<Event>();
+
+        public static EventManagerActivity Instance { get; private set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             EventEditorActivity.SetManagerReference(this);
+            Instance = this;
 
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -39,6 +47,8 @@ namespace localhost.ActivityControllers
 
 
             addEventButton = FindViewById<Button>(Resource.Id.addEventButton);
+            noEventsText = FindViewById<TextView>(Resource.Id.eventManagerNoEventsText);
+            noDraftsText = FindViewById<TextView>(Resource.Id.eventManagerNoDraftsText);
             eventListView = FindViewById<RecyclerView>(Resource.Id.eventEditView);
             draftListView = FindViewById<RecyclerView>(Resource.Id.draftView);
 
@@ -46,7 +56,6 @@ namespace localhost.ActivityControllers
             
             //Navigation bar            
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
-
             navigation.LayoutParameters.Width = ViewGroup.LayoutParams.FillParent;
             navigation.SetOnNavigationItemSelectedListener(this);
 
@@ -57,15 +66,19 @@ namespace localhost.ActivityControllers
             eventListAdapter = new EventListAdapter(eventList);
             eventListView.SetAdapter(eventListAdapter);
 
-            //draftListView.HasFixedSize = true;
-            //draftListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
-            //draftListLayout = new LinearLayoutManager(this);
-            //draftListView.SetLayoutManager(eventListLayout);
-            //draftListAdapter = new DraftListAdapter();
-            //draftListView.SetAdapter(eventListAdapter);
+            draftListView.HasFixedSize = true;
+            draftListView.AddItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.Vertical));
+            draftListLayout = new LinearLayoutManager(this);
+            draftListView.SetLayoutManager(draftListLayout);
+            draftListAdapter = new DraftListAdapter(draftList);
+            draftListView.SetAdapter(draftListAdapter);
 
             LoadEvents();
             LoadDrafts();
+
+            noEventsText.Visibility = ViewStates.Gone;
+            noDraftsText.Visibility = ViewStates.Gone;
+            if (eventList.Count == 0) noEventsText.Visibility = ViewStates.Visible;
         }
 
         public void LoadEvents()
@@ -86,7 +99,9 @@ namespace localhost.ActivityControllers
 
         public void LoadDrafts()
         {
-
+            draftList = DraftManager.GetDrafts();
+            draftListAdapter.draftList = draftList;
+            draftListAdapter.NotifyDataSetChanged();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -97,15 +112,22 @@ namespace localhost.ActivityControllers
         }
         public bool OnNavigationItemSelected(IMenuItem item)
         {
+            noEventsText.Visibility = ViewStates.Gone;
+            noDraftsText.Visibility = ViewStates.Gone;
+
             switch (item.ItemId)
             {
                 case Resource.Id.navigation_home:
                     eventListView.Visibility = ViewStates.Visible;
                     draftListView.Visibility = ViewStates.Gone;
+                    LoadEvents();
+                    if (eventList.Count == 0) noEventsText.Visibility = ViewStates.Visible;
                     return true;
                 case Resource.Id.navigation_dashboard:
                     eventListView.Visibility = ViewStates.Gone;
                     draftListView.Visibility = ViewStates.Visible;
+                    LoadDrafts();
+                    if (draftList.Count == 0) noDraftsText.Visibility = ViewStates.Visible;
                     return true;
             }
             return false;
@@ -115,6 +137,13 @@ namespace localhost.ActivityControllers
         {
             EventEditorActivity.SetParams(null, false);
             StartActivity(typeof(EventEditorActivity));
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            LoadEvents();
+            LoadDrafts();
         }
     }
 }
