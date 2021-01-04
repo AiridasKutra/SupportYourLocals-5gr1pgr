@@ -23,8 +23,9 @@ namespace localhost.ActivityControllers.PinClick
         }
         public bool OnMarkerClick(Marker marker)
         {
+            
             Console.WriteLine("CLICKED");
-            if (marker.Draggable)
+            if (marker.Draggable && !marker.Flat)
             {
                 try
                 {
