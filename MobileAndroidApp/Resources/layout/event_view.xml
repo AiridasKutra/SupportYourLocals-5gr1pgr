@@ -93,6 +93,16 @@
             app:layout_constraintTop_toBottomOf="@+id/txtDescription"
             android:layout_marginTop="8dp"
             android:id="@+id/separatorView4"/>
+    <ImageButton
+            android:id="@+id/btnViewReports"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView4" android:layout_marginTop="8dp"
+            android:src="@drawable/view_reports"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -101,7 +111,7 @@
             android:id="@+id/edtNewComment"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/btnSubmitComment" android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/separatorView4" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnViewReports" android:layout_marginTop="8dp"
             android:hint="Enter comment"
             android:maxLength="500"/>
     <ImageButton

@@ -78,6 +78,7 @@
     <Compile Include="ActivityControllers\Recycler adapters\CommentListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\EventListAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler adapters\PulloutEventListAdapter.cs" />
+    <Compile Include="ActivityControllers\Recycler adapters\ReportViewAdapter.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\CommentData.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventData.cs" />
     <Compile Include="ActivityControllers\Recycler helpers\EventDataImage.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="ActivityControllers\AdminPanelActivity.cs" />
     <Compile Include="ActivityControllers\SettingsActivity.cs" />
     <Compile Include="ActivityControllers\EventManagerActivity.cs" />
+    <Compile Include="ActivityControllers\ViewReportsActivity.cs" />
     <Compile Include="Api\Account.cs" />
     <Compile Include="Api\AddressInfo.cs" />
     <Compile Include="Api\Event.cs" />
@@ -382,6 +384,19 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\LocationPin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\view_reports.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\view_reports_card.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\view_reports.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

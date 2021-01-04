@@ -34,6 +34,7 @@ namespace localhost.ActivityControllers
         LinearLayout eventImages;
         EditText eventNewComment;
         ImageButton eventSubmitComment;
+        ImageButton btnViewReports;
 
         private RecyclerView commentListView;
         private RecyclerView.Adapter commentListAdapter;
@@ -56,6 +57,7 @@ namespace localhost.ActivityControllers
             horizontalScroll = FindViewById<HorizontalScrollView>(Resource.Id.scrIEventImages);
             eventNewComment = FindViewById<EditText>(Resource.Id.edtNewComment);
             eventSubmitComment = FindViewById<ImageButton>(Resource.Id.btnSubmitComment);
+            btnViewReports = FindViewById<ImageButton>(Resource.Id.btnViewReports);
 
             commentListView = FindViewById<RecyclerView>(Resource.Id.commentRecyclerView);
 
@@ -161,6 +163,18 @@ namespace localhost.ActivityControllers
                 commentListView.SetAdapter(commentListAdapter);
 
                 Toast.MakeText(this, "Comment submited!", ToastLength.Short).Show();
+            };
+
+            // Load report button
+            if (RequestSender.ThisAccount().Can((uint)WebApi.Classes.Permissions.DELETE_OTHER_EVENTS))
+            {
+                btnViewReports.Visibility = ViewStates.Visible;
+            }
+            btnViewReports.Click += (o, e) =>
+            {
+                Intent intent = new Intent(this, typeof(ViewReportsActivity));
+                intent.PutExtra("eventID", eventID);
+                StartActivity(intent);
             };
         }
     }
