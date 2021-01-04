@@ -19,12 +19,14 @@ using Android.Content;
 using localhost.Backend;
 using WebApi.Classes;
 using localhost.ActivityControllers.PinClick;
-
+using Android.Locations;
+using localhost.Backend.Location;
+using Android.Runtime;
 
 namespace MobileAndroidApp
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, IOnMapReadyCallback
+    public class MainActivity : AppCompatActivity, IOnMapReadyCallback, ILocationListener
     {
         private static GoogleMap map;
         private static bool isFabOpen = false;
@@ -45,7 +47,12 @@ namespace MobileAndroidApp
         private LinearLayout filterView;
 
         private static Bitmap eventPin;
+        private static Bitmap locationPin;
         private static List<Marker> eventMarkers = new List<Marker>();
+
+        private double currentLongitude;
+        private double currentLatitude;
+        private LocationManager locationManager;
 
         public static bool IsLoggedIn { get; set; } = false;
         public static bool CanViewAccounts { get; set; } = false;
@@ -78,8 +85,12 @@ namespace MobileAndroidApp
             searchButton = FindViewById<Button>(Resource.Id.searchButton);
 
             eventPin = Bitmap.CreateScaledBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.BasePin), 84, 124, true);
+            locationPin = Bitmap.CreateScaledBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.LocationPin), 64, 64, true);
 
             eventList = FindViewById<RecyclerView>(Resource.Id.PulloutEventView);
+
+            locationManager = (LocationManager)GetSystemService(Context.LocationService);
+            locationManager.RequestLocationUpdates(LocationManager.GpsProvider, 400, 1, this);
 
             SetUpBottomSheet(210);
             SetUpMap();
@@ -314,16 +325,26 @@ namespace MobileAndroidApp
         {
             map = googleMap;
 
-            
 
-            // Set location focus
-            LatLng location = new LatLng(54.729730, 25.263571);
+
+            LatLng location = new LatLng(currentLatitude, currentLongitude);
 
             CameraPosition.Builder builder = CameraPosition.InvokeBuilder();
             builder.Target(location);
             builder.Zoom(18);
             builder.Bearing(155);
             builder.Tilt(65);
+
+
+            
+            MarkerOptions marker = new MarkerOptions();
+            marker.SetPosition(new LatLng(currentLatitude, currentLongitude));
+            marker.SetIcon(BitmapDescriptorFactory.FromBitmap(locationPin));
+            marker.Flat(true);
+            marker.Anchor(0.5f, 0.5f);
+            map.AddMarker(marker);
+
+
 
             CameraPosition cameraPosition = builder.Build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
@@ -333,6 +354,13 @@ namespace MobileAndroidApp
             // Set a marker
             ReloadMapEventMarkers();
         }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            locationManager.RemoveUpdates(this);
+        }
+
         public void ReloadMapEventMarkers()
         {
             // Clear markers
@@ -357,11 +385,11 @@ namespace MobileAndroidApp
                
                 var mark = map.AddMarker(marker);
                 mark.ZIndex = @event.Id;
-                
 
-                map.SetOnMarkerClickListener(new MarkerListener(this));
+               
                 eventMarkers.Add(mark);
             }
+            map.SetOnMarkerClickListener(new MarkerListener(this));
         }
         private void OnStartDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
@@ -415,6 +443,27 @@ namespace MobileAndroidApp
             {
                 CloseFabMenu();
             }
+        }
+
+        public void OnLocationChanged(Location location)
+        {
+            currentLatitude = location.Latitude;
+            currentLongitude = location.Longitude;
+        }
+
+        public void OnProviderDisabled(string provider)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnProviderEnabled(string provider)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
+        {
+            //throw new NotImplementedException();
         }
     }
 }
