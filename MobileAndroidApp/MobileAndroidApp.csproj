@@ -67,6 +67,7 @@
     <PackageReference Include="Xamarin.AndroidX.Palette" Version="1.0.0.5" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControllers\ReportEventActivity.cs" />
     <Compile Include="ActivityControllers\BitmapImagePopupActivity.cs" />
     <Compile Include="ActivityControllers\DeleteAccountActivity.cs" />
     <Compile Include="ActivityControllers\ChangePasswordActivity.cs" />
@@ -383,10 +384,13 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\LocationPin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\report_window_popout.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadGenericExceptionInfoBarMobileAndroidAppHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadGenericExceptionInfoBarMobileAndroidAppHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
