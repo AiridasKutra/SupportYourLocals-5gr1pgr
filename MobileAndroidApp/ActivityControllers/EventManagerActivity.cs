@@ -9,6 +9,7 @@ using Android.Widget;
 using localhost.ActivityControllers.Recycler_adapters;
 using localhost.ActivityControllers.Recycler_helpers;
 using localhost.Backend;
+using MobileAndroidApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,6 +145,24 @@ namespace localhost.ActivityControllers
             base.OnResume();
             LoadEvents();
             LoadDrafts();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            MainActivity.thisReference.ReloadMapEventMarkers();
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            MainActivity.thisReference.ReloadMapEventMarkers();
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            MainActivity.thisReference.ReloadMapEventMarkers();
         }
     }
 }

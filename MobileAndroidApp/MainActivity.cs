@@ -22,6 +22,8 @@ using localhost.ActivityControllers.PinClick;
 using Android.Locations;
 using localhost.Backend.Location;
 using Android.Runtime;
+using System.Linq;
+using Java.Interop;
 
 namespace MobileAndroidApp
 {
@@ -33,18 +35,26 @@ namespace MobileAndroidApp
         private static FloatingActionButton fabMain, fabEvents, fabAccount, fabSettings, fabLogin;
         private  View bgFabMenu;
         private  RelativeLayout bottomSheet;
-        private Spinner sportSpinner;
+        private AutoCompleteTextView sportInput;
         private EditText searchDates;
+        private DateTime lowerDate;
+        private DateTime upperDate;
+        private SeekBar maxPriceSlider;
+        private SeekBar maxDistanceSlider;
+        private TextView selectedPrice;
+        private TextView selectedDistance;
+        private EditText searchInput;
         private Button searchButton;
         private CoordinatorLayout mainPanel;
 
 
-        private RecyclerView eventList;
-        private RecyclerView.Adapter eventListAdapter;
+        private RecyclerView eventListView;
+        private PulloutEventAdapter eventListAdapter;
         private RecyclerView.LayoutManager eventListLayout;
 
         private Button filtersButton;
         private LinearLayout filterView;
+        private List<Event> eventList;
 
         private static Bitmap eventPin;
         private static Bitmap locationPin;
@@ -54,6 +64,7 @@ namespace MobileAndroidApp
         public static double currentLongitude;
         private LocationManager locationManager;
 
+        public static MainActivity thisReference;
         public static bool IsLoggedIn { get; set; } = false;
         public static bool CanViewAccounts { get; set; } = false;
 
@@ -61,6 +72,8 @@ namespace MobileAndroidApp
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
+            thisReference = this;
 
             SetContentView(Resource.Layout.activity_main);
 
@@ -75,24 +88,47 @@ namespace MobileAndroidApp
 
             filtersButton = FindViewById<Button>(Resource.Id.filtersButton);
             filtersButton.Click += ShowFilters;
-
             filterView = FindViewById<LinearLayout>(Resource.Id.filtersView);
+            eventList = new List<Event>();
 
             bottomSheet = FindViewById<RelativeLayout>(Resource.Id.bottom_sheet);
 
-            sportSpinner = FindViewById<Spinner>(Resource.Id.sportSpinner);
+            sportInput = FindViewById<AutoCompleteTextView>(Resource.Id.sportTextEdit);
             searchDates = FindViewById<EditText>(Resource.Id.searchDate);
+            maxPriceSlider = FindViewById<SeekBar>(Resource.Id.maxPrice);
+            maxPriceSlider.SetProgress(1000, true);
+            maxDistanceSlider = FindViewById<SeekBar>(Resource.Id.maxDist);
+            maxDistanceSlider.SetProgress(0, false);
+            selectedPrice = FindViewById<TextView>(Resource.Id.lblSelectedPrice);
+            selectedDistance = FindViewById<TextView>(Resource.Id.lblSelectedDist);
+            searchInput = FindViewById<EditText>(Resource.Id.enterKeyword);
             searchButton = FindViewById<Button>(Resource.Id.searchButton);
+            searchButton.Click += SearchClick;
+            maxPriceSlider.ProgressChanged += (o, e) =>
+            {
+                selectedPrice.Text = $"{e.Progress / 10.0m:0.00}€";
+            };
+            maxDistanceSlider.ProgressChanged += (o, e) =>
+            {
+                double distance = e.Progress * 100.0;
+                if (distance < 1000.0)
+                {
+                    selectedDistance.Text = $"{distance:0}m";
+                }
+                else
+                {
+                    selectedDistance.Text = $"{distance / 1000.0:0.0}km";
+                }
+            };
 
             eventPin = Bitmap.CreateScaledBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.BasePin), 84, 124, true);
             locationPin = Bitmap.CreateScaledBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.LocationPin), 64, 64, true);
 
-            eventList = FindViewById<RecyclerView>(Resource.Id.PulloutEventView);
+            eventListView = FindViewById<RecyclerView>(Resource.Id.PulloutEventView);
 
             locationManager = (LocationManager)GetSystemService(Context.LocationService);
             locationManager.RequestLocationUpdates(LocationManager.GpsProvider, 400, 1, this);
 
-            SetUpBottomSheet(210);
             SetUpMap();
 
             fabMain.Click += (o, e) =>
@@ -149,6 +185,7 @@ namespace MobileAndroidApp
                 Xamarin.Essentials.Preferences.Set("saved_password", "");
             }
 
+            SetUpBottomSheet(210);
             AskForLocationAsync();
             DraftManager.Load();
         }
@@ -168,24 +205,133 @@ namespace MobileAndroidApp
             }
         }
 
-        private void SetUpBottomSheet(int height)
+        private void SearchClick(object o, EventArgs e)
+        {
+            FilterAndSearchEvents();
+            eventListAdapter.dataList = eventList;
+            eventListAdapter.NotifyDataSetChanged();
+        }
 
+        private void FilterAndSearchEvents()
+        {
+            string sport = sportInput.Text;
+            decimal maxPrice = maxPriceSlider.Progress / 10.0m;
+            double maxDistance = maxDistanceSlider.Progress * 100.0;
+            string[] keywords = searchInput.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            List<Event> allEvents = RequestSender.GetBriefEvents();
+            List<Event> filteredEvents = new List<Event>();
+            List<int> scores = new List<int>();
+            foreach (var @event in allEvents)
+            {
+                string evSport = @event.Sports.FirstOrDefault();
+
+                if (filterView.Visibility == ViewStates.Visible)
+                {
+                    if (evSport == null) continue;
+                    if (sport.Length > 0) if (!evSport.Contains(sport)) continue;
+                    if (@event.StartDate < lowerDate) continue;
+                    if (@event.StartDate > upperDate) continue;
+                    if (@event.Price > maxPrice) continue;
+                    if (maxDistance > 0)
+                    {
+                        double distance = MathSupplement.Distance(@event.Latitude, @event.Longitude, currentLatitude, currentLongitude);
+                        if (distance > maxDistance)
+                        {
+                            continue;
+                        }
+                    }
+                }
+
+                int score = 0;
+                if (keywords.Length > 0)
+                {
+                    foreach (var keyword in keywords)
+                    {
+                        foreach (var word in @event.Name.Split())
+                        {
+                            if (word.Contains(keyword))
+                            {
+                                score += 100;
+                            }
+                        }
+                        if (evSport != null)
+                        {
+                            foreach (var word in evSport.Split())
+                            {
+                                if (word.Contains(keyword))
+                                {
+                                    score += 500;
+                                }
+                            }
+                        }
+                        foreach (var word in @event.Tags.Split())
+                        {
+                            if (word.Contains(keyword))
+                            {
+                                score += 200;
+                            }
+                        }
+                        foreach (var word in @event.Address.ToStringNormal().Split())
+                        {
+                            if (word.Contains(keyword))
+                            {
+                                score += 200;
+                            }
+                        }
+                    }
+                    if (score == 0) continue;
+                }
+
+                scores.Add(score);
+                filteredEvents.Add(@event);
+            }
+
+            if (keywords.Length > 0)
+            {
+                // Sort by score
+                Event[] eventArray = filteredEvents.ToArray();
+                int[] scoreArray = scores.ToArray();
+                Array.Sort(scoreArray, eventArray);
+                eventList = eventArray.ToList();
+                scores = scoreArray.ToList();
+                eventList.Reverse();
+                scores.Reverse();
+            }
+            else
+            {
+                for (int i = 0; i < filteredEvents.Count - 1; i++)
+                {
+                    for (int j = i; j < filteredEvents.Count; j++)
+                    {
+                        if (filteredEvents[i].StartDate > filteredEvents[j].StartDate)
+                        {
+                            Event temp = filteredEvents[i];
+                            filteredEvents[i] = filteredEvents[j];
+                            filteredEvents[j] = temp;
+                        }
+                    }
+                }
+                eventList = filteredEvents;
+            }
+        }
+
+        private void SetUpBottomSheet(int height)
         {
             // Set up bottom sheet
             BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.From(bottomSheet);
             bottomSheetBehavior.PeekHeight = height;
             bottomSheetBehavior.SetBottomSheetCallback(new BSCallBack(bgFabMenu));
 
-            // Fill sports list
-            List<string> sportList = new List<string>();
-            foreach (var sport in RequestSender.GetSports())
-                sportList.Add(sport.Name);
-
-            // Sport spinner
-            var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerDropDownItem, sportList);
-            sportSpinner.Adapter = adapter;
+            // Add sport selections
+            var sportList = RequestSender.GetSports().Select(item => item.Name).ToArray();
+            ArrayAdapter adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, sportList);
+            sportInput.Adapter = adapter;
 
             // Date picker
+            lowerDate = DateTime.Today.AddDays(-7);
+            upperDate = DateTime.Today.AddMonths(1);
+            searchDates.Text = $"{lowerDate:yyyy-MM-dd} to {upperDate:yyyy-MM-dd}";
             searchDates.Focusable = false;
             searchDates.Click += (sender, e) => {
                 DateTime today = DateTime.Today;
@@ -194,12 +340,13 @@ namespace MobileAndroidApp
             };
 
             // Load events
-            List<WebApi.Classes.Event> events = RequestSender.GetBriefEvents();
-            eventList.HasFixedSize = true;
+            FilterAndSearchEvents();
+            eventListView.HasFixedSize = true;
             eventListLayout = new LinearLayoutManager(this);
-            eventList.SetLayoutManager(eventListLayout);
-            eventListAdapter = new PulloutEventAdapter(events);
-            eventList.SetAdapter(eventListAdapter);
+            eventListView.SetLayoutManager(eventListLayout);
+            eventListAdapter = new PulloutEventAdapter(eventList);
+            eventListView.SetAdapter(eventListAdapter);
+            eventListView.SetItemViewCacheSize(0);
         }
         private void LogIn()
         {
@@ -223,8 +370,6 @@ namespace MobileAndroidApp
         {
             if (BottomSheetBehavior.From(bottomSheet).State != BottomSheetBehavior.StateExpanded)
             {
-                ReloadMapEventMarkers();
-
                 bottomSheet.Animate().TranslationY(0);
 
                 isFabOpen = false;
@@ -390,14 +535,14 @@ namespace MobileAndroidApp
         }
         private void OnStartDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            searchDates.Text = e.Date.ToShortDateString();
-            DateTime startDate = e.Date;
-            DatePickerDialog dialog = new DatePickerDialog(this, OnEndDateSet, startDate.Year, startDate.Month, startDate.Day + 1);
+            searchDates.Text = e.Date.ToString("yyyy-MM-dd");
+            lowerDate = e.Date;
+            DatePickerDialog dialog = new DatePickerDialog(this, OnEndDateSet, e.Date.Year, e.Date.Month, e.Date.Day + 1);
             dialog.Show();
         }
         private void OnEndDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            searchDates.Text += " - " + e.Date.ToShortDateString();
+            searchDates.Text += " to " + e.Date.ToString("yyyy-MM-dd");
         }
         public class BSCallBack : BottomSheetBehavior.BottomSheetCallback
         {
@@ -440,6 +585,7 @@ namespace MobileAndroidApp
             {
                 CloseFabMenu();
             }
+            ReloadMapEventMarkers();
         }
 
         public void OnLocationChanged(Location location)
